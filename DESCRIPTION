@@ -2,7 +2,7 @@ Package: bfsdata
 Type: Package
 Title: Making BFS data accessible to R users
 Version: 0.0.0.9000
-Authors: person("Luginbühl", "Félix", email = "lnghbl@protonmail.com", role = c("aut", "cre"))Maintainer: The package maintainer <yourself@somewhere.net>
+Authors: person("Luginbühl", "Félix", email = "lnghbl@protonmail.com", role = c("aut", "cre"))
 Description: Making Swiss Federal Statistical Office (BFS) accessible to R users
 License: GPL-3
 Encoding: UTF-8
