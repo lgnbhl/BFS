@@ -4,7 +4,7 @@
 \alias{bfs_dir}
 \title{Open BFS dataset directory}
 \usage{
-bfs_dir()
+bfs_dir(dir = paste0("", system.file("extdata/", package = "bfsdata"), ""))
 }
 \description{
 Open BFS dataset directory
