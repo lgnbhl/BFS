@@ -2,7 +2,7 @@
 
 Making Swiss Federal Statistical Office (BFS) data easily accessible to R users.
 
-## Installation (from Github)
+### Installation (from Github)
 
 ```
 # install.packages("devtools")
