@@ -13,6 +13,7 @@ bfs_download <- function(row, name = "bfsData") {
   }
   library(pxR) # read PX files
   bfsPxData <- pxR::read.px(paste0("", bfsDataPath, "/",bfs_metadataSubset[row, 4],".px"))
+  assign("bfsPxData", bfsPxData, envir = .GlobalEnv)
   bfsData <- as.data.frame(bfsPxData)
   write.csv(bfsData, file = paste0("", bfsDataPath, "/", name,".csv"), row.names = FALSE)
   assign(paste0("", name,""), bfsData, envir = .GlobalEnv)
