@@ -5,6 +5,7 @@
 bfs_download <- function(row, name = "bfsData") {
   bfsDataPath <- system.file("extdata/", package = "bfsdata")
   assign("bfsDataPath", bfsDataPath, envir = .GlobalEnv)
+  library(pxR)
   if(!file.exists(system.file(paste0("extdata/", bfsMetadataSubset[row, 4], ".px"), package = "bfsdata"))) {
     download.file(url = paste0("https://www.pxweb.bfs.admin.ch/DownloadFile.aspx?file=", bfsMetadataSubset[row,4], ""),
                   destfile = paste0("", bfsDataPath, "/", bfsMetadataSubset[row, 4],".px"))
