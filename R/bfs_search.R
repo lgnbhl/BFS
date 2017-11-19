@@ -5,6 +5,7 @@
 bfs_search <- function(word = NULL, word2 = NULL, langage = "de") {
   bfsDataPath <- system.file("extdata", package = "bfsdata")
   assign("bfsDataPath", bfsDataPath, envir = .GlobalEnv)
+  library(readxl)
   if(langage == "de") {
     if(!file.exists(system.file("extdata/bfsMetadata_de.xls", package = "bfsdata"))) {
     download.file(url = "https://www.pxweb.bfs.admin.ch/ShowCubeList.aspx?px_language=de",
