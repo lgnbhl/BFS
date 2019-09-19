@@ -65,4 +65,7 @@ df_edu
 
 ### Other information
 
+Alternative R package: [pxweb
+](https://github.com/rOpenGov/pxweb){target="_blank"}
+
 This package is in no way officially related to or endorsed by the Swiss Federal Statistical Office (BFS).
