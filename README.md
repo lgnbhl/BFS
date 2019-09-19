@@ -45,7 +45,9 @@ meta_en <- bfs_get_metadata(language = "en")
 meta_en_edu <- bfs_search("education", data = meta_en)
 ```
 
-To download the BFS dataset, select the `url_px` link from the metadata.
+To download a BFS dataset, add the related url link from the `url_px`
+column of the downloaded metadata as an argument to the
+`bfs_get_dataset` function.
 
 ``` r
 df_edu <- bfs_get_dataset(meta_en_edu$url_px[3])
