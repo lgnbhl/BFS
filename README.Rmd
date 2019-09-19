@@ -43,7 +43,7 @@ publication dates, observation periods, website urls and download urls of availa
 BFS datasets in a given language (in German by default):
 
 ```{r bfs_get_metadata, eval=FALSE}
-df_de <- bfs_get_metadata()
+meta_de <- bfs_get_metadata()
 ```
 
 You can also retrieve the metadata in French ("fr"), Italian ("it") or English ("en").
@@ -52,14 +52,15 @@ Note that Italian and English languages give access to less datasets.
 To find a dataset, use either `View` in Rstudio or `bfs_search`:
 
 ```{r bfs_search, eval=FALSE}
-df_en <- bfs_get_metadata(language = "en")
-bfs_edu <- bfs_search("education", data = df_en)
+meta_en <- bfs_get_metadata(language = "en")
+meta_en_edu <- bfs_search("education", data = df_en)
 ```
 
 To download the BFS dataset, select the `url_px` link from the metadata.
 
 ```{r bfs_get_dataset, eval=FALSE}
-df_edu <- bfs_get_dataset(bfs_edu$url_px[3])
+df_edu <- bfs_get_dataset(meta_en_edu$url_px[3])
+df_edu
 ```
 
 ### Other information

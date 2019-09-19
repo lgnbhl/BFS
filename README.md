@@ -31,7 +31,7 @@ download urls of available BFS datasets in a given language (in German
 by default):
 
 ``` r
-df_de <- bfs_get_metadata()
+meta_de <- bfs_get_metadata()
 ```
 
 You can also retrieve the metadata in French (“fr”), Italian (“it”) or
@@ -41,14 +41,15 @@ less datasets.
 To find a dataset, use either `View` in Rstudio or `bfs_search`:
 
 ``` r
-df_en <- bfs_get_metadata(language = "en")
-bfs_edu <- bfs_search("education", data = df_en)
+meta_en <- bfs_get_metadata(language = "en")
+meta_en_edu <- bfs_search("education", data = df_en)
 ```
 
 To download the BFS dataset, select the `url_px` link from the metadata.
 
 ``` r
-df_edu <- bfs_get_dataset(bfs_edu$url_px[3])
+df_edu <- bfs_get_dataset(meta_en_edu$url_px[3])
+df_edu
 ```
 
 ### Other information
