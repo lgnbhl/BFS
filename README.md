@@ -5,8 +5,8 @@ status](https://www.r-pkg.org/badges/version/BFS)](https://CRAN.R-project.org/pa
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-BFS
----
+BFS <img src="man/figures/logo.png" align="right" />
+----------------------------------------------------
 
 ### Introduction
 
