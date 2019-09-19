@@ -1,5 +1,4 @@
 ## Making a hex sticker for polyglot
-## Image under license: CC0 Public Domain
 library(hexSticker)
 library(magick)
 library(magrittr)
