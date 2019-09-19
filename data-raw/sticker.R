@@ -1,4 +1,4 @@
-## Making a hex sticker for polyglot
+## Making a hex sticker for BFS
 library(hexSticker)
 library(magick)
 library(magrittr)
