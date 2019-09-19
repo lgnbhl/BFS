@@ -25,15 +25,16 @@ library(BFS)
 
 ### Usage Example
 
-The `bfs_get_metadata` function returns a data frame/tibble with
-information for all available dataset in a given language (in German by
-default):
+The `bfs_get_metadata` function returns a data frame/tibble containing
+the titles, publication dates, observation periods, website urls and
+download urls of available BFS datasets in a given language (in German
+by default):
 
 ``` r
 df_de <- bfs_get_metadata()
 ```
 
-You can retrieve the metadata in French (“fr”), Italian (“it”) or
+You can also retrieve the metadata in French (“fr”), Italian (“it”) or
 English (“en”). Note that Italian and English languages give access to
 less datasets.
 
