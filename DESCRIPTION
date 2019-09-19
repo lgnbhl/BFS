@@ -1,12 +1,18 @@
-Package: bfsdata
+Package: BFS
 Type: Package
-Title: Making BFS data accessible to R users
-Version: 0.0.0.9000
-Authors: person("Luginbühl", "Félix", email = "lnghbl@protonmail.com", role = c("aut", "cre"))
-Description: Making Swiss Federal Statistical Office (BFS) accessible to R users
-License: GPL-3 + file LICENSE
+Title: Search and Download Data from the Swiss Federal Statistical Office (BFS)
+Version: 0.2.0
+Authors@R: person("Felix", "Luginbuhl", email = "felix.luginbuhl@protonmail.ch", role = c("aut", "cre"))
+Maintainer: Felix Luginbuhl <felix.luginbuhl@protonmail.ch>
+Description: Search and download data from the Swiss Federal Statistical Office (BFS).
+License: MIT + file LICENSE
+Imports: xml2,
+    rvest,
+    tibble,
+    magrittr,
+    purrr,
+    here,
+    pxR
 Encoding: UTF-8
 LazyData: true
-Imports: readxl, pxR
-Remotes: lgnbhl/pxR
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
