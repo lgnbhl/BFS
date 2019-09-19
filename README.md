@@ -10,8 +10,8 @@ BFS
 
 ### Introduction
 
-The `BFS` package allows the user to download public data from the [the
-Swiss Federal Statistical Office (BFS)](https://www.bfs.admin.ch) in a
+The `BFS` package allows the user to download public data from the
+[Swiss Federal Statistical Office (BFS)](https://www.bfs.admin.ch) in a
 dynamic and reproducible way.
 
 The package can be installed from Github (development version):
