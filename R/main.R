@@ -1,4 +1,5 @@
-utils::globalVariables(".")
+utils::globalVariables(c(".", "pb"))
+env <- new.env(parent = emptyenv())
 
 #' Get metadata of a give url page
 #'
@@ -13,6 +14,7 @@ utils::globalVariables(".")
 #' @importFrom purrr map_dfr
 #' @importFrom pxR read.px
 #' @importFrom here here
+#' @importFrom progress progress_bar
 #' @importFrom utils download.file
 
 get_bfs_metadata <- function(url) {
@@ -65,9 +67,7 @@ get_bfs_metadata <- function(url) {
 #'
 
 get_bfs_metadata_all <- function(i) {
-  
-  cat(paste("Get page index:", gsub("[^0-9]", "", i), "\n"))
-  
+  env$pb$tick() # progress bar
   df_metadata <- get_bfs_metadata(i)
   df_metadata_all <- rbind.data.frame(df_metadata,
                                       tibble::tibble(
@@ -119,23 +119,28 @@ bfs_get_metadata <- function(language = "de") {
   
   if (language == "de") {
     url_de <- "https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.dynamiclist.html?pageIndex="
-    url_all <- paste0(url_de, bfs_loadpages(url_de[1]))
+    url_all <- paste0(url_de, bfs_loadpages(url_de))
   } else if (language == "fr") {
     url_fr <- "https://www.bfs.admin.ch/bfs/fr/home/statistiques/catalogues-banques-donnees/donnees/_jcr_content/par/ws_catalog.dynamiclist.html?pageIndex="
-    url_all <- paste0(url_fr, bfs_loadpages(url_fr[1]))
+    url_all <- paste0(url_fr, bfs_loadpages(url_fr))
   } else if (language == "it") {
     url_it <- "https://www.bfs.admin.ch/bfs/it/home/statistiche/cataloghi-banche-dati/dati/_jcr_content/par/ws_catalog.dynamiclist.html?pageIndex="
-    url_all <- paste0(url_it, bfs_loadpages(url_it[1]))
+    url_all <- paste0(url_it, bfs_loadpages(url_it))
   } else if (language == "en") {
     url_en <- "https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data/_jcr_content/par/ws_catalog.dynamiclist.html?pageIndex="
-    url_all <- paste0(url_en, bfs_loadpages(url_en[1]))
+    url_all <- paste0(url_en, bfs_loadpages(url_en))
   } else {
     cat("Please select between the following languages: de, fr, it, en")
   }
   
+  env$pb <- progress::progress_bar$new(
+    format = "  downloading [:bar] :percent in :elapsed",
+    total = length(url_all), clear = FALSE)
+  
   bfs_metadata <- purrr::map_dfr(url_all, get_bfs_metadata_all) %>%
     tibble::as_tibble()
   
+  rm(pb, envir = env)
   closeAllConnections()
   
   return(bfs_metadata)

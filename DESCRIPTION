@@ -12,6 +12,7 @@ Imports: xml2,
     magrittr,
     purrr,
     here,
+    progress,
     pxR
 Remotes: lgnbhl/pxR
 Encoding: UTF-8
