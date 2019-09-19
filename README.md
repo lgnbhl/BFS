@@ -58,7 +58,7 @@ In case the `url_px` link to download the PC-Axis file is broken, you
 can have a look at its related BFS webpage using the `url` link.
 
 ``` r
-browseURL(meta_en_edu$url[3]) # open related BFS webpage
+browseURL(meta_en_edu$url[3])
 ```
 
 ### Other information
