@@ -53,7 +53,7 @@ To find a dataset, use either `View` in Rstudio or `bfs_search`:
 
 ```{r bfs_search, eval=FALSE}
 meta_en <- bfs_get_metadata(language = "en")
-meta_en_edu <- bfs_search("education", data = df_en)
+meta_en_edu <- bfs_search("education", data = meta_en)
 ```
 
 To download the BFS dataset, select the `url_px` link from the metadata.
