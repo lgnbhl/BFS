@@ -54,6 +54,13 @@ df_edu <- bfs_get_dataset(meta_en_edu$url_px[3])
 df_edu
 ```
 
+In case the `url_px` link to download the PC-Axis file is broken, you
+can have a look at its related BFS webpage using the `url` link.
+
+``` r
+browseURL(meta_en_edu$url[3]) # open related BFS webpage
+```
+
 ### Other information
 
 Alternative R package:
