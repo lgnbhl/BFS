@@ -20,6 +20,6 @@ hexSticker::sticker("https://upload.wikimedia.org/wikipedia/commons/b/b5/Wenger_
                     u_color = "black",
                     filename="man/figures/BFS.png")
 
-graduate <- magick::image_read("man/figures/BFS.png")
-magick::image_scale(graduate, "130") %>%
+bfs <- magick::image_read("man/figures/BFS.png")
+magick::image_scale(bfs, "130") %>%
   magick::image_write(path = "man/figures/logo.png", format = "png")
