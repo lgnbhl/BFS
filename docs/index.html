@@ -85,13 +85,13 @@
 <div id="usage-example" class="section level3">
 <h3 class="hasAnchor">
 <a href="#usage-example" class="anchor"></a>Usage Example</h3>
-<p>The <code>bfs_get_metadata</code> function returns a data frame/tibble containing the titles, publication dates, observation periods, website urls and download urls of available BFS datasets in a given language (in German by default):</p>
+<p>The <code><a href="reference/bfs_get_metadata.html">bfs_get_metadata()</a></code> function returns a data frame/tibble containing the titles, publication dates, observation periods, website urls and download urls of available BFS datasets in a given language (in German by default):</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">meta_de &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_get_metadata.html">bfs_get_metadata</a></span>()</a></code></pre></div>
 <p>You can also retrieve the metadata in French (“fr”), Italian (“it”) or English (“en”). Note that Italian and English languages give access to less datasets.</p>
-<p>To find a dataset, use either <code>View</code> in RStudio or <code>bfs_search</code>:</p>
+<p>To find a dataset, use either <code><a href="https://rdrr.io/r/utils/View.html">View()</a></code> in RStudio or the <code><a href="reference/bfs_search.html">bfs_search()</a></code> function:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">meta_en &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_get_metadata.html">bfs_get_metadata</a></span>(<span class="dt">language =</span> <span class="st">"en"</span>)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">meta_en_edu &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_search.html">bfs_search</a></span>(<span class="st">"education"</span>, <span class="dt">data =</span> meta_en)</a></code></pre></div>
-<p>To download a BFS dataset, add the related url link from the <code>url_px</code> column of the downloaded metadata as an argument to the <code>bfs_get_dataset</code> function.</p>
+<p>To download a BFS dataset, add the related url link from the <code>url_px</code> column of the downloaded metadata as an argument to the <code><a href="reference/bfs_get_dataset.html">bfs_get_dataset()</a></code> function.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">df_edu &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_get_dataset.html">bfs_get_dataset</a></span>(meta_en_edu<span class="op">$</span>url_px[<span class="dv">3</span>])</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">df_edu</a></code></pre></div>
 <p>In case the <code>url_px</code> link to download the PC-Axis file is broken, you can have a look at its related BFS webpage using the <code>url</code> link.</p>

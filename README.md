@@ -23,7 +23,7 @@ library(BFS)
 
 ### Usage Example
 
-The `bfs_get_metadata` function returns a data frame/tibble containing
+The `bfs_get_metadata()` function returns a data frame/tibble containing
 the titles, publication dates, observation periods, website urls and
 download urls of available BFS datasets in a given language (in German
 by default):
@@ -36,7 +36,8 @@ You can also retrieve the metadata in French (“fr”), Italian (“it”) or
 English (“en”). Note that Italian and English languages give access to
 less datasets.
 
-To find a dataset, use either `View` in RStudio or `bfs_search`:
+To find a dataset, use either `View()` in RStudio or the `bfs_search()`
+function:
 
 ``` r
 meta_en <- bfs_get_metadata(language = "en")
@@ -45,7 +46,7 @@ meta_en_edu <- bfs_search("education", data = meta_en)
 
 To download a BFS dataset, add the related url link from the `url_px`
 column of the downloaded metadata as an argument to the
-`bfs_get_dataset` function.
+`bfs_get_dataset()` function.
 
 ``` r
 df_edu <- bfs_get_dataset(meta_en_edu$url_px[3])
