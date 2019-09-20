@@ -12,7 +12,7 @@ hexSticker::sticker("https://upload.wikimedia.org/wikipedia/commons/b/b5/Wenger_
                     h_size = 2,
                     h_color = "black",
                     h_fill = "white",
-                    s_x = 1.025, s_y = 0.85, s_width=0.8,
+                    s_x = 1.02, s_y = 0.95, s_width = 0.9,
                     url="BFS - R package",
                     u_size = 2,
                     u_y = 0.15,
