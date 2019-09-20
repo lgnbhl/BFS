@@ -6,7 +6,6 @@ output:
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/BFS)](https://CRAN.R-project.org/package=BFS)
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 ## BFS <img src="man/figures/logo.png" align="right" />
@@ -49,7 +48,7 @@ meta_de <- bfs_get_metadata()
 You can also retrieve the metadata in French ("fr"), Italian ("it") or English ("en").
 Note that Italian and English languages give access to less datasets.
 
-To find a dataset, use either `View` in Rstudio or `bfs_search`:
+To find a dataset, use either `View` in RStudio or `bfs_search`:
 
 ```{r bfs_search, eval=FALSE}
 meta_en <- bfs_get_metadata(language = "en")
