@@ -22,7 +22,6 @@ observation periods, metadata urls and download urls of
 available BFS datasets in a given language.
 }
 \examples{
-df_en <- bfs_get_metadata(language = "en")
-head(df_en)
+\dontrun{df_en <- bfs_get_metadata(language = "en")}
 
 }

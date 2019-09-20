@@ -95,8 +95,7 @@ get_bfs_metadata_all <- function(i) {
 #' @return A tibble
 #'
 #' @examples
-#' df_en <- bfs_get_metadata(language = "en")
-#' head(df_en)
+#' \dontrun{df_en <- bfs_get_metadata(language = "en")}
 #'
 #' @export
 
