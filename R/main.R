@@ -191,5 +191,5 @@ bfs_search <- function(string, data = bfs_get_metadata(), ignore.case = TRUE) {
 bfs_get_dataset <- function(url_px) {
   px_name <- paste0("bfs_data_", gsub("[^0-9]", "", url_px), ".px")
   download.file(url_px, destfile = here::here(px_name))
-  tibble::as_tibble(as.data.frame(pxR::read.px(here::here(px_name))))
+  tibble::as_tibble(as.data.frame(pxR::read.px(here::here(px_name), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))))
 }
