@@ -14,7 +14,6 @@ Imports: xml2,
     here,
     progress,
     pxR
-Remotes: lgnbhl/pxR
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
