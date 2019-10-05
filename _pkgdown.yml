@@ -24,5 +24,3 @@ reference:
       - bfs_get_metadata
       - bfs_search
       - bfs_get_dataset
-
-
