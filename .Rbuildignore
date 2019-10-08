@@ -1,4 +1,8 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$
-^Test\.Rmd$
+^test\.Rmd$
+^_pkgdown.yml
+^data-raw
+^docs
+^pkgdown
