@@ -55,6 +55,9 @@ df_edu
 
 In case the `url_px` link to download the PC-Axis file is broken, you
 can have a look at its related BFS webpage using the `url` link.
+Sometimes the PC-Axis file of the dataset doesn’t exists. You should
+then use the “STAT-TAB - interactive table” service provided by BFS to
+download manually the dataset.
 
 ``` r
 browseURL(meta_en_edu$url[3])
