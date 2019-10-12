@@ -13,7 +13,7 @@ env <- new.env(parent = emptyenv())
 #' @importFrom tibble tibble as_tibble
 #' @importFrom purrr map_dfr
 #' @importFrom pxR read.px
-#' @importFrom here here
+#' @importFrom janitor clean_names
 #' @importFrom progress progress_bar
 #' @importFrom utils download.file
 
@@ -95,7 +95,7 @@ get_bfs_metadata_all <- function(i) {
 #' @return A tibble
 #'
 #' @examples
-#' \dontrun{df_en <- bfs_get_metadata(language = "en")}
+#' \donttest{df_en <- bfs_get_metadata(language = "en")}
 #'
 #' @export
 
@@ -166,8 +166,8 @@ bfs_get_metadata <- function(language = "de") {
 #' @seealso \code{\link{bfs_get_metadata}}
 #'
 #' @examples
-#' \dontrun{df_en <- bfs_get_metadata(language = "en")}
-#' \dontrun{bfs_search("education", df_en)}
+#' \donttest{df_en <- bfs_get_metadata(language = "en")}
+#' \donttest{bfs_search("education", df_en)}
 #'
 #' @export
 
@@ -182,14 +182,18 @@ bfs_search <- function(string, data = bfs_get_metadata(), ignore.case = TRUE) {
 #' @param url_px The url link to download the PC-Axis file.
 #'
 #' @examples
-#' \dontrun{df_en <- bfs_get_metadata(language = "en")}
-#' \dontrun{bfs_search("education", df_en)}
-#' \dontrun{bfs_get_dataset(df_en$url_px[3])}
+#' \donttest{df_en <- bfs_get_metadata(language = "en")}
+#' \donttest{bfs_search("education", df_en)}
+#' \donttest{bfs_get_dataset(df_en$url_px[3])}
 #'
 #' @export
 
 bfs_get_dataset <- function(url_px) {
   px_name <- paste0("bfs_data_", gsub("[^0-9]", "", url_px), ".px")
-  download.file(url_px, destfile = here::here(px_name))
-  tibble::as_tibble(as.data.frame(pxR::read.px(here::here(px_name), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))))
+  tempfile_path <- paste0(tempdir(), "/", px_name)
+  download.file(url_px, destfile = file.path(tempfile_path))
+  df <- tibble::as_tibble(as.data.frame(pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))))
+  df <- janitor::clean_names(df)
+  file.remove(tempfile_path)
+  return(df)
 }

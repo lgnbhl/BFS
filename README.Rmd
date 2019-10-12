@@ -22,7 +22,7 @@ library(BFS)
 
 ### Introduction
 
-The `BFS` package allows the user to download public data from the 
+The `BFS` package allows the user to search and download public data from the 
 [Swiss Federal Statistical Office (BFS)](https://www.bfs.admin.ch/bfs/en/home.html){target="_blank"}
 in a dynamic and reproducible way.
 
@@ -37,22 +37,28 @@ library(BFS)
 
 ### Usage Example
 
-The `bfs_get_metadata()` function returns a data frame/tibble containing the titles, 
-publication dates, observation periods, website urls and download urls of available 
-BFS datasets in a given language (in German by default):
+To search and download data from the BFS, you first need to retrieve information about the available datasets. The `bfs_get_metadata()` function returns a data frame/tibble containing the titles, publication dates, observation periods, website urls and download urls of all available BFS datasets of a given language: Germand ("de", by default), French ("fr"), Italian ("it") or English ("en"). Note that Italian and English languages give access to less datasets.
 
 ```{r bfs_get_metadata, eval=FALSE}
-meta_de <- bfs_get_metadata()
+meta_en <- bfs_get_metadata(language = "en")
 ```
 
-You can also retrieve the metadata in French ("fr"), Italian ("it") or English ("en").
-Note that Italian and English languages give access to less datasets.
-
-To find a dataset, use either `View()` in RStudio or the `bfs_search()` function:
+To search for a dataset, you can use the `bfs_search()` function.
 
 ```{r bfs_search, eval=FALSE}
-meta_en <- bfs_get_metadata(language = "en")
 meta_en_edu <- bfs_search("education", data = meta_en)
+
+print(meta_en_edu)
+```
+```
+# A tibble: 5 x 5
+  title               observation_period   published  url                url_px         
+  <chr>               <chr>                <chr>      <chr>              <chr>          
+1 Difficulties in re… Observation period:… 29.08.2019 https://www.bfs.a… https://www.bf…
+2 Difficulties in re… Observation period:… 29.08.2019 https://www.bfs.a… https://www.bf…
+3 University of appl… Observation period:… 27.03.2019 https://www.bfs.a… https://www.bf…
+4 University of appl… Observation period:… 27.03.2019 https://www.bfs.a… https://www.bf…
+5 Compulsory educati… Observation period:… 28.02.2019 https://www.bfs.a… https://www.bf…
 ```
 
 To download a BFS dataset, add the related url link from the `url_px` column of the downloaded metadata as an argument to the `bfs_get_dataset()` function.
@@ -61,12 +67,30 @@ To download a BFS dataset, add the related url link from the `url_px` column of 
 df_edu <- bfs_get_dataset(meta_en_edu$url_px[3])
 df_edu
 ```
+```
+# A tibble: 7,392 x 5
+   studienstufe      geschlecht isced_field                                  jahr  value
+   <fct>             <fct>      <fct>                                        <fct> <dbl>
+ 1 Diploma           Male       Education science                            1997      0
+ 2 Bachelor          Male       Education science                            1997      0
+ 3 Master            Male       Education science                            1997      0
+ 4 Further education Male       Education science                            1997      0
+ 5 Diploma           Female     Education science                            1997      0
+ 6 Bachelor          Female     Education science                            1997      0
+ 7 Master            Female     Education science                            1997      0
+ 8 Further education Female     Education science                            1997      0
+ 9 Diploma           Male       Teacher training without subject specialisa… 1997      0
+10 Bachelor          Male       Teacher training without subject specialisa… 1997      0
+# … with 7,382 more rows
+```
 
-In case the `url_px` link to download the PC-Axis file is broken, you can have a look at its related BFS webpage using the `url` link. Sometimes the PC-Axis file of the dataset doesn't exists. You should then use the "STAT-TAB - interactive table" service provided by BFS to download manually the dataset.
+In case the `url_px` link to download the PC-Axis file is broken, you can have a look at its related BFS webpage using the `url` link. 
 
 ```{r browseURL, eval=FALSE}
-browseURL(meta_en_edu$url[3])
+browseURL(meta_en_edu$url[3]) # open Web page
 ```
+
+Sometimes the PC-Axis file of the dataset doesn't exists. You should then use the "STAT-TAB - interactive table" service provided by BFS to download manually the dataset.
 
 ### Other information
 

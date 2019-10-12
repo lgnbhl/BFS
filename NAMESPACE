@@ -3,7 +3,7 @@
 export(bfs_get_dataset)
 export(bfs_get_metadata)
 export(bfs_search)
-importFrom(here,here)
+importFrom(janitor,clean_names)
 importFrom(magrittr,"%>%")
 importFrom(progress,progress_bar)
 importFrom(purrr,map_dfr)
