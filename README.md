@@ -8,7 +8,7 @@ BFS <img src="man/figures/logo.png" align="right" />
 
 ### Introduction
 
-The `BFS` package allows the user to search and download public data
+The `BFS` R package allows the user to search and download public data
 from the
 <a href="https://www.bfs.admin.ch/bfs/en/home.html" target="_blank">Swiss Federal Statistical Office (BFS)</a>
 in a dynamic and reproducible way.
