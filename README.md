@@ -13,13 +13,13 @@ from the
 <a href="https://www.bfs.admin.ch/bfs/en/home.html" target="_blank">Swiss Federal Statistical Office (BFS)</a>
 in a dynamic and reproducible way.
 
-The package can be installed from Github (development version):
+The package can be installed from CRAN and Github (development version):
 
 ``` r
-# From Github
-library(devtools)
-install_github("lgnbhl/BFS")
-library(BFS)
+install.packages("BFS")
+
+# install.packages("devtools")
+# devtools::install_github("lgnbhl/BFS")
 ```
 
 ### Usage Example
@@ -28,11 +28,13 @@ To search and download data from the BFS, you first need to retrieve
 information about the available datasets. The `bfs_get_metadata()`
 function returns a data frame/tibble containing the titles, publication
 dates, observation periods, website urls and download urls of all
-available BFS datasets of a given language: Germand (“de”, by default),
+available BFS datasets of a given language: German (“de”, by default),
 French (“fr”), Italian (“it”) or English (“en”). Note that Italian and
 English languages give access to less datasets.
 
 ``` r
+library(BFS)
+
 meta_en <- bfs_get_metadata(language = "en")
 ```
 
@@ -59,7 +61,8 @@ column of the downloaded metadata as an argument to the
 
 ``` r
 df_edu <- bfs_get_dataset(meta_en_edu$url_px[3])
-df_edu
+
+print(df_edu)
 ```
 
     # A tibble: 7,392 x 5
