@@ -13,12 +13,11 @@ from the
 <a href="https://www.bfs.admin.ch/bfs/en/home.html" target="_blank">Swiss Federal Statistical Office (BFS)</a>
 in a dynamic and reproducible way.
 
-The package can be installed from CRAN and Github (development version):
-
 ``` r
+# install from CRAN
 install.packages("BFS")
 
-# install.packages("devtools")
+# install from Github
 # devtools::install_github("lgnbhl/BFS")
 ```
 
