@@ -61,7 +61,6 @@ print(meta_en_edu)
     4 University of appl… Observation period:… 27.03.2019 https://www.bfs.a… https://www.bf…
     5 Compulsory educati… Observation period:… 28.02.2019 https://www.bfs.a… https://www.bf…
 
-
 To download a BFS dataset, add the related url link from the `url_px` column of the downloaded metadata as an argument to the `bfs_get_dataset()` function.
 
 ```{r bfs_get_dataset, eval=FALSE}
