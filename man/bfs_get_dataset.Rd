@@ -16,8 +16,8 @@ using the \code{\link[janitor]{clean_names}} function of the
 janitor package.
 }
 \examples{
-\dontrun{df_en <- bfs_get_metadata(language = "en")}
-\dontrun{bfs_search("education", df_en)}
-\dontrun{bfs_get_dataset(df_en$url_px[3])}
+\donttest{df_en <- bfs_get_metadata(language = "en")}
+\donttest{bfs_search("education", df_en)}
+\donttest{bfs_get_dataset(df_en$url_px[3])}
 
 }
