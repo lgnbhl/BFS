@@ -51,16 +51,16 @@ meta_en_edu <- bfs_search("education", data = meta_en)
 
 print(meta_en_edu)
 ```
-```
-# A tibble: 5 x 5
-  title               observation_period   published  url                url_px         
-  <chr>               <chr>                <chr>      <chr>              <chr>          
-1 Difficulties in re… Observation period:… 29.08.2019 https://www.bfs.a… https://www.bf…
-2 Difficulties in re… Observation period:… 29.08.2019 https://www.bfs.a… https://www.bf…
-3 University of appl… Observation period:… 27.03.2019 https://www.bfs.a… https://www.bf…
-4 University of appl… Observation period:… 27.03.2019 https://www.bfs.a… https://www.bf…
-5 Compulsory educati… Observation period:… 28.02.2019 https://www.bfs.a… https://www.bf…
-```
+
+    # A tibble: 5 x 5
+      title               observation_period   published  url                url_px         
+      <chr>               <chr>                <chr>      <chr>              <chr>          
+    1 Difficulties in re… Observation period:… 29.08.2019 https://www.bfs.a… https://www.bf…
+    2 Difficulties in re… Observation period:… 29.08.2019 https://www.bfs.a… https://www.bf…
+    3 University of appl… Observation period:… 27.03.2019 https://www.bfs.a… https://www.bf…
+    4 University of appl… Observation period:… 27.03.2019 https://www.bfs.a… https://www.bf…
+    5 Compulsory educati… Observation period:… 28.02.2019 https://www.bfs.a… https://www.bf…
+
 
 To download a BFS dataset, add the related url link from the `url_px` column of the downloaded metadata as an argument to the `bfs_get_dataset()` function.
 
@@ -69,22 +69,21 @@ df_edu <- bfs_get_dataset(meta_en_edu$url_px[3])
 
 print(df_edu)
 ```
-```
-# A tibble: 7,392 x 5
-   studienstufe      geschlecht isced_field                                  jahr  value
-   <fct>             <fct>      <fct>                                        <fct> <dbl>
- 1 Diploma           Male       Education science                            1997      0
- 2 Bachelor          Male       Education science                            1997      0
- 3 Master            Male       Education science                            1997      0
- 4 Further education Male       Education science                            1997      0
- 5 Diploma           Female     Education science                            1997      0
- 6 Bachelor          Female     Education science                            1997      0
- 7 Master            Female     Education science                            1997      0
- 8 Further education Female     Education science                            1997      0
- 9 Diploma           Male       Teacher training without subject specialisa… 1997      0
-10 Bachelor          Male       Teacher training without subject specialisa… 1997      0
-# … with 7,382 more rows
-```
+
+    # A tibble: 7,392 x 5
+       studienstufe      geschlecht isced_field                                  jahr  value
+       <fct>             <fct>      <fct>                                        <fct> <dbl>
+     1 Diploma           Male       Education science                            1997      0
+     2 Bachelor          Male       Education science                            1997      0
+     3 Master            Male       Education science                            1997      0
+     4 Further education Male       Education science                            1997      0
+     5 Diploma           Female     Education science                            1997      0
+     6 Bachelor          Female     Education science                            1997      0
+     7 Master            Female     Education science                            1997      0
+     8 Further education Female     Education science                            1997      0
+     9 Diploma           Male       Teacher training without subject specialisa… 1997      0
+    10 Bachelor          Male       Teacher training without subject specialisa… 1997      0
+    # … with 7,382 more rows
 
 In case the `url_px` link to download the PC-Axis file is broken, you can have a look at its related BFS webpage using the `url` link. 
 
