@@ -2,7 +2,7 @@
 % Please edit documentation in R/main.R
 \name{bfs_get_dataset}
 \alias{bfs_get_dataset}
-\title{Get BFS PC-Axis files as data frame}
+\title{Get BFS PC-Axis files as data frames}
 \usage{
 bfs_get_dataset(url_px)
 }
@@ -10,7 +10,10 @@ bfs_get_dataset(url_px)
 \item{url_px}{The url link to download the PC-Axis file.}
 }
 \description{
-The PC-Axis file dowloaded is saved in the working directory.
+Returns a data frame/tibble from a given BFS PC-Axis file. The
+column names are always rendered in German and are renamed 
+using the \code{\link[janitor]{clean_names}} function of the
+janitor package.
 }
 \examples{
 \dontrun{df_en <- bfs_get_metadata(language = "en")}

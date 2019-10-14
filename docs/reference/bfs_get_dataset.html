@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get BFS PC-Axis files as data frame — bfs_get_dataset • BFS</title>
+<title>Get BFS PC-Axis files as data frames — bfs_get_dataset • BFS</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,12 @@
 
 
 
-<meta property="og:title" content="Get BFS PC-Axis files as data frame — bfs_get_dataset" />
+<meta property="og:title" content="Get BFS PC-Axis files as data frames — bfs_get_dataset" />
 
-<meta property="og:description" content="The PC-Axis file dowloaded is saved in the working directory." />
+<meta property="og:description" content="Returns a data frame/tibble from a given BFS PC-Axis file. The
+column names are always rendered in German and are renamed 
+using the clean_names function of the
+janitor package." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -127,14 +130,17 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get BFS PC-Axis files as data frame</h1>
+    <h1>Get BFS PC-Axis files as data frames</h1>
     <small class="dont-index">Source: <a href='https://github.com/lgnbhl/BFS/blob/master/R/main.R'><code>R/main.R</code></a></small>
     <div class="hidden name"><code>bfs_get_dataset.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The PC-Axis file dowloaded is saved in the working directory.</p>
+    <p>Returns a data frame/tibble from a given BFS PC-Axis file. The
+column names are always rendered in German and are renamed 
+using the <code><a href='https://rdrr.io/pkg/janitor/man/clean_names.html'>clean_names</a></code> function of the
+janitor package.</p>
     
     </div>
 

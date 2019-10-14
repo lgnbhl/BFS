@@ -1,0 +1,26 @@
+template:
+  params:
+    bootswatch: united
+
+navbar:
+  left:
+  - text: Home
+    href: index.html
+  - text: Reference
+    href: reference/index.html
+  right:
+   - icon: fa-linkedin
+     href: https://www.linkedin.com/in/felixluginbuhl
+   - icon: fa-twitter
+     href: https://twitter.com/lgnbhl
+   - icon: fa-github
+     href: https://github.com/lgnbhl/BFS
+   - icon: fa-home
+     href: http://felixluginbuhl.com
+
+reference:
+  - title: "Functions"
+    contents: 
+      - bfs_get_metadata
+      - bfs_search
+      - bfs_get_dataset

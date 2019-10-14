@@ -175,9 +175,12 @@ bfs_search <- function(string, data = bfs_get_metadata(), ignore.case = TRUE) {
   data[grepl(string, data$title, ignore.case = ignore.case), ]
 }
 
-#' Get BFS PC-Axis files as data frame
+#' Get BFS PC-Axis files as data frames
 #'
-#' The PC-Axis file dowloaded is saved in the working directory.
+#' Returns a data frame/tibble from a given BFS PC-Axis file. The
+#' column names are always rendered in German and are renamed 
+#' using the \code{\link[janitor]{clean_names}} function of the
+#' janitor package.
 #'
 #' @param url_px The url link to download the PC-Axis file.
 #'
