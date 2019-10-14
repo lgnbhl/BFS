@@ -95,7 +95,7 @@ get_bfs_metadata_all <- function(i) {
 #' @return A tibble
 #'
 #' @examples
-#' \dontrun{df_en <- bfs_get_metadata(language = "en")}
+#' \donttest{df_en <- bfs_get_metadata(language = "en")}
 #'
 #' @export
 
@@ -166,8 +166,8 @@ bfs_get_metadata <- function(language = "de") {
 #' @seealso \code{\link{bfs_get_metadata}}
 #'
 #' @examples
-#' \dontrun{df_en <- bfs_get_metadata(language = "en")}
-#' \dontrun{bfs_search("education", df_en)}
+#' \donttest{df_en <- bfs_get_metadata(language = "en")}
+#' \donttest{bfs_search("education", df_en)}
 #'
 #' @export
 
@@ -175,16 +175,19 @@ bfs_search <- function(string, data = bfs_get_metadata(), ignore.case = TRUE) {
   data[grepl(string, data$title, ignore.case = ignore.case), ]
 }
 
-#' Get BFS PC-Axis files as data frame
+#' Get BFS PC-Axis files as data frames
 #'
-#' The PC-Axis file dowloaded is saved in the working directory.
+#' Returns a data frame/tibble from a given BFS PC-Axis file. The
+#' column names are always rendered in German and are renamed 
+#' using the \code{\link[janitor]{clean_names}} function of the
+#' janitor package.
 #'
 #' @param url_px The url link to download the PC-Axis file.
 #'
 #' @examples
-#' \dontrun{df_en <- bfs_get_metadata(language = "en")}
-#' \dontrun{bfs_search("education", df_en)}
-#' \dontrun{bfs_get_dataset(df_en$url_px[3])}
+#' \donttest{df_en <- bfs_get_metadata(language = "en")}
+#' \donttest{bfs_search("education", df_en)}
+#' \donttest{bfs_get_dataset(df_en$url_px[3])}
 #'
 #' @export
 
