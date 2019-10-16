@@ -95,7 +95,7 @@ get_bfs_metadata_all <- function(i) {
 #' @return A tibble
 #'
 #' @examples
-#' \donttest{df_en <- bfs_get_metadata(language = "en")}
+#' \dontrun{df_en <- bfs_get_metadata(language = "en")}
 #'
 #' @export
 
@@ -166,8 +166,8 @@ bfs_get_metadata <- function(language = "de") {
 #' @seealso \code{\link{bfs_get_metadata}}
 #'
 #' @examples
-#' \donttest{df_en <- bfs_get_metadata(language = "en")}
-#' \donttest{bfs_search("education", df_en)}
+#' \dontrun{df_en <- bfs_get_metadata(language = "en")}
+#' \dontrun{bfs_search("education", df_en)}
 #'
 #' @export
 
@@ -185,9 +185,9 @@ bfs_search <- function(string, data = bfs_get_metadata(), ignore.case = TRUE) {
 #' @param url_px The url link to download the PC-Axis file.
 #'
 #' @examples
-#' \donttest{df_en <- bfs_get_metadata(language = "en")}
-#' \donttest{bfs_search("education", df_en)}
-#' \donttest{bfs_get_dataset(df_en$url_px[3])}
+#' \dontrun{df_en <- bfs_get_metadata(language = "en")}
+#' \dontrun{bfs_search("education", df_en)}
+#' \dontrun{bfs_get_dataset(df_en$url_px[3])}
 #'
 #' @export
 
