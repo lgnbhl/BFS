@@ -90,7 +90,7 @@ In case the `url_px` link to download the PC-Axis file is broken, you can have a
 browseURL(meta_en_edu$url[3]) # open webpage
 ```
 
-Sometimes the PC-Axis file of the dataset doesn't exists. You should then use the "STAT-TAB - interactive table" service provided by BFS to download manually the dataset.
+Sometimes the PC-Axis file of the dataset doesn't exist. You should then use the "STAT-TAB - interactive table" service provided by BFS to download manually the dataset.
 
 ### Other information
 

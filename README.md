@@ -86,8 +86,8 @@ can have a look at its related BFS webpage using the `url` link.
 browseURL(meta_en_edu$url[3]) # open webpage
 ```
 
-Sometimes the PC-Axis file of the dataset doesn’t exists. You should
-then use the “STAT-TAB - interactive table” service provided by BFS to
+Sometimes the PC-Axis file of the dataset doesn’t exist. You should then
+use the “STAT-TAB - interactive table” service provided by BFS to
 download manually the dataset.
 
 ### Other information
