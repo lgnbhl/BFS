@@ -124,7 +124,7 @@
 <a class="sourceLine" id="cb4-7" data-line-number="7"><span class="dv">4</span> University of appl… Observation period<span class="op">:</span>… <span class="dv">27</span>.<span class="fl">03.2019</span> https<span class="op">:</span><span class="er">//</span>www.bfs.a… https<span class="op">:</span><span class="er">//</span>www.bf…</a>
 <a class="sourceLine" id="cb4-8" data-line-number="8"><span class="dv">5</span> Compulsory educati… Observation period<span class="op">:</span>… <span class="dv">28</span>.<span class="fl">02.2019</span> https<span class="op">:</span><span class="er">//</span>www.bfs.a… https<span class="op">:</span><span class="er">//</span>www.bf…</a></code></pre></div>
 <p>To download a BFS dataset, add the related url link from the <code>url_px</code> column of the downloaded metadata as an argument to the <code><a href="reference/bfs_get_dataset.html">bfs_get_dataset()</a></code> function.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">df_edu &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_get_dataset.html">bfs_get_dataset</a></span>(meta_en_edu<span class="op">$</span>url_px[<span class="dv">3</span>])</a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">df_edu &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_get_dataset.html">bfs_get_dataset</a></span>(meta_en_edu<span class="op">$</span>url_px[<span class="dv">3</span>]) <span class="co"># get 3rd dataset of meta_en_edu</span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(df_edu)</a></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># A tibble: 7,392 x 5</span></a>
@@ -143,7 +143,7 @@
 <a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co"># … with 7,382 more rows</span></a></code></pre></div>
 <p>In case the <code>url_px</code> link to download the PC-Axis file is broken, you can have a look at its related BFS webpage using the <code>url</code> link.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/browseURL.html">browseURL</a></span>(meta_en_edu<span class="op">$</span>url[<span class="dv">3</span>]) <span class="co"># open webpage</span></a></code></pre></div>
-<p>Sometimes the PC-Axis file of the dataset doesn’t exists. You should then use the “STAT-TAB - interactive table” service provided by BFS to download manually the dataset.</p>
+<p>Sometimes the PC-Axis file of the dataset doesn’t exist. You should then use the “STAT-TAB - interactive table” service provided by BFS to download manually the dataset.</p>
 </div>
 <div id="other-information" class="section level3">
 <h3 class="hasAnchor">
@@ -159,6 +159,8 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
+<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=BFS">https://​cloud.r-project.org/​package=BFS</a>
+</li>
 <li>Browse source code at <br><a href="https://github.com/lgnbhl/BFS">https://​github.com/​lgnbhl/​BFS</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/lgnbhl/BFS/issues">https://​github.com/​lgnbhl/​BFS/​issues</a>

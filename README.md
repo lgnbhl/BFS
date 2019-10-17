@@ -59,7 +59,7 @@ column of the downloaded metadata as an argument to the
 `bfs_get_dataset()` function.
 
 ``` r
-df_edu <- bfs_get_dataset(meta_en_edu$url_px[3])
+df_edu <- bfs_get_dataset(meta_en_edu$url_px[3]) # get 3rd dataset of meta_en_edu
 
 print(df_edu)
 ```
