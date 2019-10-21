@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">BFS</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -115,32 +115,32 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">meta_en_edu &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_search.html">bfs_search</a></span>(<span class="st">"education"</span>, <span class="dt">data =</span> meta_en)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(meta_en_edu)</a></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># A tibble: 5 x 5</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">  title               observation_period   published  url                url_px         </a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st">               </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">                </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">      </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">              </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">          </span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="dv">1</span> Difficulties <span class="cf">in</span> re… Observation period<span class="op">:</span>… <span class="dv">29</span>.<span class="fl">08.2019</span> https<span class="op">:</span><span class="er">//</span>www.bfs.a… https<span class="op">:</span><span class="er">//</span>www.bf…</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="dv">2</span> Difficulties <span class="cf">in</span> re… Observation period<span class="op">:</span>… <span class="dv">29</span>.<span class="fl">08.2019</span> https<span class="op">:</span><span class="er">//</span>www.bfs.a… https<span class="op">:</span><span class="er">//</span>www.bf…</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="dv">3</span> University of appl… Observation period<span class="op">:</span>… <span class="dv">27</span>.<span class="fl">03.2019</span> https<span class="op">:</span><span class="er">//</span>www.bfs.a… https<span class="op">:</span><span class="er">//</span>www.bf…</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="dv">4</span> University of appl… Observation period<span class="op">:</span>… <span class="dv">27</span>.<span class="fl">03.2019</span> https<span class="op">:</span><span class="er">//</span>www.bfs.a… https<span class="op">:</span><span class="er">//</span>www.bf…</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="dv">5</span> Compulsory educati… Observation period<span class="op">:</span>… <span class="dv">28</span>.<span class="fl">02.2019</span> https<span class="op">:</span><span class="er">//</span>www.bfs.a… https<span class="op">:</span><span class="er">//</span>www.bf…</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co">## # A tibble: 5 x 5</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">##   title          observation_period  published  url           url_px       </span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">##   &lt;chr&gt;          &lt;chr&gt;               &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt;        </span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">## 1 Difficulties … Observation period… 29.08.2019 https://www.… https://www.…</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">## 2 Difficulties … Observation period… 29.08.2019 https://www.… https://www.…</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">## 3 University of… Observation period… 27.03.2019 https://www.… https://www.…</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">## 4 University of… Observation period… 27.03.2019 https://www.… https://www.…</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">## 5 Compulsory ed… Observation period… 28.02.2019 https://www.… https://www.…</span></a></code></pre></div>
 <p>To download a BFS dataset, add the related url link from the <code>url_px</code> column of the downloaded metadata as an argument to the <code><a href="reference/bfs_get_dataset.html">bfs_get_dataset()</a></code> function.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">df_edu &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_get_dataset.html">bfs_get_dataset</a></span>(meta_en_edu<span class="op">$</span>url_px[<span class="dv">3</span>]) <span class="co"># get 3rd dataset of meta_en_edu</span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(df_edu)</a></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># A tibble: 7,392 x 5</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">   studienstufe      geschlecht isced_field                                  jahr  value</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">   <span class="op">&lt;</span>fct<span class="op">&gt;</span><span class="st">             </span><span class="er">&lt;</span>fct<span class="op">&gt;</span><span class="st">      </span><span class="er">&lt;</span>fct<span class="op">&gt;</span><span class="st">                                        </span><span class="er">&lt;</span>fct<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st"> </span><span class="dv">1</span> Diploma           Male       Education science                            <span class="dv">1997</span>      <span class="dv">0</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"> <span class="dv">2</span> Bachelor          Male       Education science                            <span class="dv">1997</span>      <span class="dv">0</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"> <span class="dv">3</span> Master            Male       Education science                            <span class="dv">1997</span>      <span class="dv">0</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"> <span class="dv">4</span> Further education Male       Education science                            <span class="dv">1997</span>      <span class="dv">0</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"> <span class="dv">5</span> Diploma           Female     Education science                            <span class="dv">1997</span>      <span class="dv">0</span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"> <span class="dv">6</span> Bachelor          Female     Education science                            <span class="dv">1997</span>      <span class="dv">0</span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"> <span class="dv">7</span> Master            Female     Education science                            <span class="dv">1997</span>      <span class="dv">0</span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"> <span class="dv">8</span> Further education Female     Education science                            <span class="dv">1997</span>      <span class="dv">0</span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"> <span class="dv">9</span> Diploma           Male       Teacher training without subject specialisa… <span class="dv">1997</span>      <span class="dv">0</span></a>
-<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="dv">10</span> Bachelor          Male       Teacher training without subject specialisa… <span class="dv">1997</span>      <span class="dv">0</span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co"># … with 7,382 more rows</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co">## # A tibble: 7,392 x 5</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">##    studienstufe     geschlecht isced_field                      jahr  value</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">##    &lt;fct&gt;            &lt;fct&gt;      &lt;fct&gt;                            &lt;fct&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">##  1 Diploma          Male       Education science                1997      0</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">##  2 Bachelor         Male       Education science                1997      0</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">##  3 Master           Male       Education science                1997      0</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">##  4 Further educati… Male       Education science                1997      0</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">##  5 Diploma          Female     Education science                1997      0</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">##  6 Bachelor         Female     Education science                1997      0</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">##  7 Master           Female     Education science                1997      0</span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">##  8 Further educati… Female     Education science                1997      0</span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">##  9 Diploma          Male       Teacher training without subjec… 1997      0</span></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">## 10 Bachelor         Male       Teacher training without subjec… 1997      0</span></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">## # … with 7,382 more rows</span></a></code></pre></div>
 <p>In case the <code>url_px</code> link to download the PC-Axis file is broken, you can have a look at its related BFS webpage using the <code>url</code> link.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/browseURL.html">browseURL</a></span>(meta_en_edu<span class="op">$</span>url[<span class="dv">3</span>]) <span class="co"># open webpage</span></a></code></pre></div>
 <p>Sometimes the PC-Axis file of the dataset doesn’t exist. You should then use the “STAT-TAB - interactive table” service provided by BFS to download manually the dataset.</p>

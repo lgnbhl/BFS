@@ -17,7 +17,7 @@ janitor package.
 }
 \examples{
 \donttest{df_en <- bfs_get_metadata(language = "en")}
-\donttest{bfs_search("education", df_en)}
-\donttest{bfs_get_dataset(df_en$url_px[3])}
+\donttest{bfs_meta_edu <- bfs_search("education", df_en)}
+\donttest{bfs_get_dataset(bfs_meta_edu$url_px[3])}
 
 }
