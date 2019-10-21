@@ -140,8 +140,7 @@ bfs_get_metadata <- function(language = "de") {
     tibble::as_tibble()
   
   rm(pb, envir = env)
-  closeAllConnections()
-  
+
   return(bfs_metadata)
 }
 
