@@ -78,7 +78,7 @@ janitor package." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BFS</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
       </span>
     </div>
 
@@ -144,7 +144,7 @@ janitor package.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>bfs_get_dataset</span>(<span class='no'>url_px</span>)</pre>
+    <pre class="usage"><span class='fu'>bfs_get_dataset</span>(<span class='no'>url_px</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,6 +152,10 @@ janitor package.</p>
     <tr>
       <th>url_px</th>
       <td><p>The url link to download the PC-Axis file.</p></td>
+    </tr>
+    <tr>
+      <th>path</th>
+      <td><p>The local folder to use as a cache, defaults to tempfile().</p></td>
     </tr>
     </table>
     
