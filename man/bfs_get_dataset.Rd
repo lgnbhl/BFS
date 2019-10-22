@@ -4,10 +4,12 @@
 \alias{bfs_get_dataset}
 \title{Get BFS PC-Axis files as data frames}
 \usage{
-bfs_get_dataset(url_px)
+bfs_get_dataset(url_px, path = tempfile())
 }
 \arguments{
 \item{url_px}{The url link to download the PC-Axis file.}
+
+\item{path}{The local folder to use as a cache, defaults to tempfile().}
 }
 \description{
 Returns a data frame/tibble from a given BFS PC-Axis file. The
@@ -16,8 +18,8 @@ using the \code{\link[janitor]{clean_names}} function of the
 janitor package.
 }
 \examples{
-\donttest{df_en <- bfs_get_metadata(language = "en")}
-\donttest{bfs_meta_edu <- bfs_search("education", df_en)}
-\donttest{bfs_get_dataset(bfs_meta_edu$url_px[3])}
+df_en <- bfs_get_metadata(language = "en")
+bfs_meta_edu <- bfs_search("education", df_en)
+bfs_get_dataset(bfs_meta_edu$url_px[3])
 
 }

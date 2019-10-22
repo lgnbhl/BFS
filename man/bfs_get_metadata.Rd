@@ -4,10 +4,12 @@
 \alias{bfs_get_metadata}
 \title{Get all BFS metadata in a given language}
 \usage{
-bfs_get_metadata(language = "de")
+bfs_get_metadata(language = "de", path = tempfile())
 }
 \arguments{
-\item{language}{character The language of the metadata
+\item{language}{character The language of the metadata.}
+
+\item{path}{The local folder to use as a cache, defaults to tempfile().
 
 Languages availables are German ("de", as default), French ("fr"),
 Italian ("it") and English ("en"). Note that Italian and English BFS
@@ -22,6 +24,6 @@ observation periods, metadata urls and download urls of
 available BFS datasets in a given language.
 }
 \examples{
-\donttest{df_en <- bfs_get_metadata(language = "en")}
+df_en <- bfs_get_metadata(language = "en")
 
 }

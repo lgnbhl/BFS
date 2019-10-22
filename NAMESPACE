@@ -2,9 +2,13 @@
 
 export(bfs_get_dataset)
 export(bfs_get_metadata)
+export(bfs_open_dir)
 export(bfs_search)
 importFrom(janitor,clean_names)
 importFrom(magrittr,"%>%")
+importFrom(pins,board_local_storage)
+importFrom(pins,board_register_local)
+importFrom(pins,pin)
 importFrom(progress,progress_bar)
 importFrom(purrr,map_dfr)
 importFrom(pxR,read.px)

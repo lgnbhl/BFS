@@ -16,6 +16,8 @@ env <- new.env(parent = emptyenv())
 #' @importFrom janitor clean_names
 #' @importFrom progress progress_bar
 #' @importFrom utils download.file
+#' @importFrom pins pin board_register_local board_local_storage
+
 
 get_bfs_metadata <- function(url) {
   
@@ -86,7 +88,8 @@ get_bfs_metadata_all <- function(i) {
 #' observation periods, metadata urls and download urls of
 #' available BFS datasets in a given language.
 #'
-#' @param language character The language of the metadata
+#' @param language character The language of the metadata.
+#' @param path The local folder to use as a cache, defaults to tempfile().
 #'
 #' Languages availables are German ("de", as default), French ("fr"),
 #' Italian ("it") and English ("en"). Note that Italian and English BFS
@@ -95,11 +98,13 @@ get_bfs_metadata_all <- function(i) {
 #' @return A tibble
 #'
 #' @examples
-#' \donttest{df_en <- bfs_get_metadata(language = "en")}
+#' df_en <- bfs_get_metadata(language = "en")
 #'
 #' @export
 
-bfs_get_metadata <- function(language = "de") {
+bfs_get_metadata <- function(language = "de", path = tempfile()) {
+  
+  pins::board_register_local(cache = path) # temp folder by default
   
   # extract the number pages to load
   bfs_loadpages <- function(url) {
@@ -139,6 +144,8 @@ bfs_get_metadata <- function(language = "de") {
   bfs_metadata <- purrr::map_dfr(url_all, get_bfs_metadata_all) %>%
     tibble::as_tibble()
   
+  pins::pin(bfs_metadata, name = paste0("bfs_meta"), board = "local")
+  
   rm(pb, envir = env)
 
   return(bfs_metadata)
@@ -165,8 +172,8 @@ bfs_get_metadata <- function(language = "de") {
 #' @seealso \code{\link{bfs_get_metadata}}
 #'
 #' @examples
-#' \donttest{df_en <- bfs_get_metadata(language = "en")}
-#' \donttest{bfs_search("education", df_en)}
+#' df_en <- bfs_get_metadata(language = "en")
+#' bfs_search("education", df_en)
 #'
 #' @export
 
@@ -182,20 +189,47 @@ bfs_search <- function(string, data = bfs_get_metadata(), ignore.case = TRUE) {
 #' janitor package.
 #'
 #' @param url_px The url link to download the PC-Axis file.
+#' @param path The local folder to use as a cache, defaults to tempfile().
 #'
 #' @examples
-#' \donttest{df_en <- bfs_get_metadata(language = "en")}
-#' \donttest{bfs_meta_edu <- bfs_search("education", df_en)}
-#' \donttest{bfs_get_dataset(bfs_meta_edu$url_px[3])}
+#' df_en <- bfs_get_metadata(language = "en")
+#' bfs_meta_edu <- bfs_search("education", df_en)
+#' bfs_get_dataset(bfs_meta_edu$url_px[3])
 #'
 #' @export
 
-bfs_get_dataset <- function(url_px) {
-  px_name <- paste0("bfs_data_", gsub("[^0-9]", "", url_px), ".px")
-  tempfile_path <- paste0(tempdir(), "/", px_name)
+bfs_get_dataset <- function(url_px, path = tempfile()) {
+  pins::board_register_local(cache = path) # temp folder by default
+  px_name <- paste0("bfs_data_", gsub("[^0-9]", "", url_px))
+  tempfile_path <- paste0(tempdir(), "/", px_name, ".px")
   download.file(url_px, destfile = file.path(tempfile_path))
   df <- tibble::as_tibble(as.data.frame(pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))))
   df <- janitor::clean_names(df)
+  pins::pin(df, name = paste0(px_name), board = "local")
   file.remove(tempfile_path)
   return(df)
 }
+
+#' Open Temp folder containing all downloaded BFS datasets
+#'
+#' Opens the folder which contains all the BFS datasets downloaded
+#' using the bfs_get_dataset() function. As it is a temp folder, the
+#' BFS datasets downloaded are cleared when the R session restarts.
+#'
+#' @param bfs_data_dir A string
+#'
+#' @seealso \code{\link{bfs_get_dataset}}
+#'
+#' @examples
+#' bfs_open_dir()
+#'
+#' @export
+
+bfs_open_dir <- function(bfs_data_dir = paste0(pins::board_local_storage())){
+  if (.Platform['OS.type'] == "windows"){
+    shell.exec(bfs_data_dir)
+  } else {
+    system(paste(Sys.getenv("R_BROWSER"), bfs_data_dir))
+  }
+}
+
