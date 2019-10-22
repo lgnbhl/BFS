@@ -4,7 +4,7 @@
 \alias{bfs_get_metadata}
 \title{Get all BFS metadata in a given language}
 \usage{
-bfs_get_metadata(language = "de", path = tempfile())
+bfs_get_metadata(language = "de", path = pins::board_cache_path())
 }
 \arguments{
 \item{language}{character The language of the metadata.}

@@ -59,7 +59,7 @@ column of the downloaded metadata as an argument to the
 `bfs_get_dataset()` function.
 
 ``` r
-df_edu <- bfs_get_dataset(meta_en_edu$url_px[3]) # get 3rd dataset of meta_en_edu
+df_edu <- bfs_get_dataset(meta_en_edu$url_px[3])
 
 print(df_edu)
 ```
@@ -89,6 +89,17 @@ browseURL(meta_en_edu$url[3]) # open webpage
 Sometimes the PC-Axis file of the dataset doesn’t exist. You should then
 use the “STAT-TAB - interactive table” service provided by BFS to
 download manually the dataset.
+
+To open the folder containing the downloaded BFS dataset, you can simply
+use the `bfs_open_dir()` function.
+
+``` r
+bfs_open_dir()
+```
+
+Caching and path gestion is handled using the new `pins` package. To
+leverage the `pins` package, you can learn more
+<a href="https://rstudio.github.io/pins/" target="_blank">here</a>.
 
 ### Other information
 

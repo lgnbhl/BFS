@@ -102,7 +102,7 @@ get_bfs_metadata_all <- function(i) {
 #'
 #' @export
 
-bfs_get_metadata <- function(language = "de", path = tempfile()) {
+bfs_get_metadata <- function(language = "de", path = pins::board_cache_path()) {
   
   pins::board_register_local(cache = path) # temp folder by default
   
@@ -186,10 +186,14 @@ bfs_search <- function(string, data = bfs_get_metadata(), ignore.case = TRUE) {
 #' Returns a data frame/tibble from a given BFS PC-Axis file. The
 #' column names are always rendered in German and are renamed 
 #' using the \code{\link[janitor]{clean_names}} function of the
-#' janitor package.
+#' janitor package. If no path argument is provided, the 
+#' downloaded BFS dataset will be saved in the default cache 
+#' folder of the {pins} package. 
 #'
 #' @param url_px The url link to download the PC-Axis file.
 #' @param path The local folder to use as a cache, defaults to tempfile().
+#'
+#' @seealso <https://rstudio.github.io/pins/>
 #'
 #' @examples
 #' df_en <- bfs_get_metadata(language = "en")
@@ -198,25 +202,28 @@ bfs_search <- function(string, data = bfs_get_metadata(), ignore.case = TRUE) {
 #'
 #' @export
 
-bfs_get_dataset <- function(url_px, path = tempfile()) {
-  pins::board_register_local(cache = path) # temp folder by default
+bfs_get_dataset <- function(url_px, path = pins::board_cache_path()) {
+  pins::board_register_local(cache = path) # temp folder of the spins package
   px_name <- paste0("bfs_data_", gsub("[^0-9]", "", url_px))
-  tempfile_path <- paste0(tempdir(), "/", px_name, ".px")
+  tempfile_path <- paste0(tempdir(), "/", px_name, ".px") # normal temp folder
+  
   download.file(url_px, destfile = file.path(tempfile_path))
   df <- tibble::as_tibble(as.data.frame(pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))))
   df <- janitor::clean_names(df)
-  pins::pin(df, name = paste0(px_name), board = "local")
+  
+  pins::pin(df, name = paste0(px_name), board = "local") # caching df in spins
   file.remove(tempfile_path)
   return(df)
 }
 
-#' Open Temp folder containing all downloaded BFS datasets
+#' Open folder containing all downloaded BFS datasets
 #'
 #' Opens the folder which contains all the BFS datasets downloaded
-#' using the bfs_get_dataset() function. As it is a temp folder, the
-#' BFS datasets downloaded are cleared when the R session restarts.
+#' relatively to their path argument, using the {pins} package. If
+#' no path argument is provided, the downloaded BFS datasets will be
+#' saved in the default cache folder of the {pins} package.
 #'
-#' @param bfs_data_dir A string
+#' @param path The local folder used as a cache.
 #'
 #' @seealso \code{\link{bfs_get_dataset}}
 #'
@@ -225,11 +232,10 @@ bfs_get_dataset <- function(url_px, path = tempfile()) {
 #'
 #' @export
 
-bfs_open_dir <- function(bfs_data_dir = paste0(pins::board_local_storage())){
+bfs_open_dir <- function(path = pins::board_local_storage()){
   if (.Platform['OS.type'] == "windows"){
-    shell.exec(bfs_data_dir)
+    shell.exec(path)
   } else {
-    system(paste(Sys.getenv("R_BROWSER"), bfs_data_dir))
+    system(paste(Sys.getenv("R_BROWSER"), path))
   }
 }
-

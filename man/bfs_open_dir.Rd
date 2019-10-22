@@ -2,17 +2,18 @@
 % Please edit documentation in R/main.R
 \name{bfs_open_dir}
 \alias{bfs_open_dir}
-\title{Open Temp folder containing all downloaded BFS datasets}
+\title{Open folder containing all downloaded BFS datasets}
 \usage{
-bfs_open_dir(bfs_data_dir = paste0(pins::board_local_storage()))
+bfs_open_dir(path = pins::board_local_storage())
 }
 \arguments{
-\item{bfs_data_dir}{A string}
+\item{path}{The local folder used as a cache.}
 }
 \description{
 Opens the folder which contains all the BFS datasets downloaded
-using the bfs_get_dataset() function. As it is a temp folder, the
-BFS datasets downloaded are cleared when the R session restarts.
+relatively to their path argument, using the {pins} package. If
+no path argument is provided, the downloaded BFS datasets will be
+saved in the default cache folder of the {pins} package.
 }
 \examples{
 bfs_open_dir()
