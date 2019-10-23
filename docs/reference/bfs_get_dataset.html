@@ -44,7 +44,7 @@
 <meta property="og:description" content="Returns a data frame/tibble from a given BFS PC-Axis file. The
 column names are always rendered in German and are renamed 
 using the clean_names function of the
-janitor package. If no path argument is provided, the 
+janitor package. If the path of the cache argument is provided, the 
 downloaded BFS dataset will be saved in the default cache 
 folder of the pins package." />
 
@@ -142,7 +142,7 @@ folder of the pins package." />
     <p>Returns a data frame/tibble from a given BFS PC-Axis file. The
 column names are always rendered in German and are renamed 
 using the <code><a href='https://rdrr.io/pkg/janitor/man/clean_names.html'>clean_names</a></code> function of the
-janitor package. If no path argument is provided, the 
+janitor package. If the path of the cache argument is provided, the 
 downloaded BFS dataset will be saved in the default cache 
 folder of the pins package.</p>
     
@@ -159,13 +159,9 @@ folder of the pins package.</p>
     </tr>
     <tr>
       <th>path</th>
-      <td><p>The local folder to use as a cache, defaults to tempfile().</p></td>
+      <td><p>The local folder to use as a cache, default to pins cache.</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>&lt;https://rstudio.github.io/pins/&gt;</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -191,9 +187,7 @@ folder of the pins package.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#see-also">See also</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 
