@@ -7,7 +7,7 @@
 bfs_open_dir(path = pins::board_local_storage())
 }
 \arguments{
-\item{path}{The local folder used as a cache.}
+\item{path}{The local folder to use as a cache, default to {pins} cache.}
 }
 \description{
 Opens the folder which contains all the BFS datasets downloaded

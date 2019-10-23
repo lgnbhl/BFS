@@ -89,7 +89,7 @@ get_bfs_metadata_all <- function(i) {
 #' available BFS datasets in a given language.
 #'
 #' @param language character The language of the metadata.
-#' @param path The local folder to use as a cache, defaults to tempfile().
+#' @param path Path to local folder to use as a cache, default to {pins} cache.
 #'
 #' Languages availables are German ("de", as default), French ("fr"),
 #' Italian ("it") and English ("en"). Note that Italian and English BFS
@@ -186,14 +186,12 @@ bfs_search <- function(string, data = bfs_get_metadata(), ignore.case = TRUE) {
 #' Returns a data frame/tibble from a given BFS PC-Axis file. The
 #' column names are always rendered in German and are renamed 
 #' using the \code{\link[janitor]{clean_names}} function of the
-#' janitor package. If no path argument is provided, the 
+#' janitor package. If the path of the cache argument is provided, the 
 #' downloaded BFS dataset will be saved in the default cache 
 #' folder of the {pins} package. 
 #'
 #' @param url_px The url link to download the PC-Axis file.
-#' @param path The local folder to use as a cache, defaults to tempfile().
-#'
-#' @seealso <https://rstudio.github.io/pins/>
+#' @param path The local folder to use as a cache, default to {pins} cache.
 #'
 #' @examples
 #' df_en <- bfs_get_metadata(language = "en")
@@ -223,7 +221,7 @@ bfs_get_dataset <- function(url_px, path = pins::board_cache_path()) {
 #' no path argument is provided, the downloaded BFS datasets will be
 #' saved in the default cache folder of the {pins} package.
 #'
-#' @param path The local folder used as a cache.
+#' @param path The local folder to use as a cache, default to {pins} cache.
 #'
 #' @seealso \code{\link{bfs_get_dataset}}
 #'

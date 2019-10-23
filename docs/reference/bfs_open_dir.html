@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Open Temp folder containing all downloaded BFS datasets — bfs_open_dir • BFS</title>
+<title>Open folder containing all downloaded BFS datasets — bfs_open_dir • BFS</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,11 +39,12 @@
 
 
 
-<meta property="og:title" content="Open Temp folder containing all downloaded BFS datasets — bfs_open_dir" />
+<meta property="og:title" content="Open folder containing all downloaded BFS datasets — bfs_open_dir" />
 
 <meta property="og:description" content="Opens the folder which contains all the BFS datasets downloaded
-using the bfs_get_dataset() function. As it is a temp folder, the
-BFS datasets downloaded are cleared when the R session restarts." />
+relatively to their path argument, using the pins package. If
+no path argument is provided, the downloaded BFS datasets will be
+saved in the default cache folder of the pins package." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -129,7 +130,7 @@ BFS datasets downloaded are cleared when the R session restarts." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Open Temp folder containing all downloaded BFS datasets</h1>
+    <h1>Open folder containing all downloaded BFS datasets</h1>
     <small class="dont-index">Source: <a href='https://github.com/lgnbhl/BFS/blob/master/R/main.R'><code>R/main.R</code></a></small>
     <div class="hidden name"><code>bfs_open_dir.Rd</code></div>
     </div>
@@ -137,19 +138,20 @@ BFS datasets downloaded are cleared when the R session restarts." />
     <div class="ref-description">
     
     <p>Opens the folder which contains all the BFS datasets downloaded
-using the bfs_get_dataset() function. As it is a temp folder, the
-BFS datasets downloaded are cleared when the R session restarts.</p>
+relatively to their path argument, using the pins package. If
+no path argument is provided, the downloaded BFS datasets will be
+saved in the default cache folder of the pins package.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>bfs_open_dir</span>(<span class='kw'>bfs_data_dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='kw pkg'>pins</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/pins/man/custom-boards-utils.html'>board_local_storage</a></span>()))</pre>
+    <pre class="usage"><span class='fu'>bfs_open_dir</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='kw pkg'>pins</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/pins/man/custom-boards-utils.html'>board_local_storage</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>bfs_data_dir</th>
-      <td><p>A string</p></td>
+      <th>path</th>
+      <td><p>The local folder used as a cache.</p></td>
     </tr>
     </table>
     

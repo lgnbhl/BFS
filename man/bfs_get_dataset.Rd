@@ -9,13 +9,13 @@ bfs_get_dataset(url_px, path = pins::board_cache_path())
 \arguments{
 \item{url_px}{The url link to download the PC-Axis file.}
 
-\item{path}{The local folder to use as a cache, defaults to tempfile().}
+\item{path}{The local folder to use as a cache, default to {pins} cache.}
 }
 \description{
 Returns a data frame/tibble from a given BFS PC-Axis file. The
 column names are always rendered in German and are renamed 
 using the \code{\link[janitor]{clean_names}} function of the
-janitor package. If no path argument is provided, the 
+janitor package. If the path of the cache argument is provided, the 
 downloaded BFS dataset will be saved in the default cache 
 folder of the {pins} package.
 }
@@ -24,7 +24,4 @@ df_en <- bfs_get_metadata(language = "en")
 bfs_meta_edu <- bfs_search("education", df_en)
 bfs_get_dataset(bfs_meta_edu$url_px[3])
 
-}
-\seealso{
-<https://rstudio.github.io/pins/>
 }

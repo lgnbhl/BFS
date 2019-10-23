@@ -9,7 +9,7 @@ bfs_get_metadata(language = "de", path = pins::board_cache_path())
 \arguments{
 \item{language}{character The language of the metadata.}
 
-\item{path}{The local folder to use as a cache, defaults to tempfile().
+\item{path}{Path to local folder to use as a cache, default to {pins} cache.
 
 Languages availables are German ("de", as default), French ("fr"),
 Italian ("it") and English ("en"). Note that Italian and English BFS
