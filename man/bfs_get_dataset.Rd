@@ -20,8 +20,8 @@ downloaded BFS dataset will be saved in the default cache
 folder of the {pins} package.
 }
 \examples{
-df_en <- bfs_get_metadata(language = "en")
-bfs_meta_edu <- bfs_search("education", df_en)
-bfs_get_dataset(bfs_meta_edu$url_px[3])
+\donttest{df_en <- bfs_get_metadata(language = "en")}
+\donttest{bfs_meta_edu <- bfs_search("education", df_en)}
+\donttest{bfs_get_dataset(bfs_meta_edu$url_px[3])}
 
 }

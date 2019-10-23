@@ -98,7 +98,7 @@ get_bfs_metadata_all <- function(i) {
 #' @return A tibble
 #'
 #' @examples
-#' df_en <- bfs_get_metadata(language = "en")
+#' \donttest{df_en <- bfs_get_metadata(language = "en")}
 #'
 #' @export
 
@@ -172,8 +172,8 @@ bfs_get_metadata <- function(language = "de", path = pins::board_cache_path()) {
 #' @seealso \code{\link{bfs_get_metadata}}
 #'
 #' @examples
-#' df_en <- bfs_get_metadata(language = "en")
-#' bfs_search("education", df_en)
+#' \donttest{df_en <- bfs_get_metadata(language = "en")}
+#' \donttest{bfs_search("education", df_en)}
 #'
 #' @export
 
@@ -194,9 +194,9 @@ bfs_search <- function(string, data = bfs_get_metadata(), ignore.case = TRUE) {
 #' @param path The local folder to use as a cache, default to {pins} cache.
 #'
 #' @examples
-#' df_en <- bfs_get_metadata(language = "en")
-#' bfs_meta_edu <- bfs_search("education", df_en)
-#' bfs_get_dataset(bfs_meta_edu$url_px[3])
+#' \donttest{df_en <- bfs_get_metadata(language = "en")}
+#' \donttest{bfs_meta_edu <- bfs_search("education", df_en)}
+#' \donttest{bfs_get_dataset(bfs_meta_edu$url_px[3])}
 #'
 #' @export
 
@@ -226,7 +226,7 @@ bfs_get_dataset <- function(url_px, path = pins::board_cache_path()) {
 #' @seealso \code{\link{bfs_get_dataset}}
 #'
 #' @examples
-#' bfs_open_dir()
+#' \donttest{bfs_open_dir()}
 #'
 #' @export
 
