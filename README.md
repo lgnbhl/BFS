@@ -98,7 +98,7 @@ bfs_open_dir()
 ```
 
 Caching and path gestion is handled using the new `pins` package. To
-leverage the `pins` package, you can learn more
+take full advantage of the `pins` package, you can learn more
 <a href="https://rstudio.github.io/pins/" target="_blank">here</a>.
 
 ### Other information

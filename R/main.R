@@ -104,7 +104,7 @@ get_bfs_metadata_all <- function(i) {
 
 bfs_get_metadata <- function(language = "de", path = pins::board_cache_path()) {
   
-  pins::board_register_local(cache = path) # temp folder by default
+  pins::board_register_local(cache = path) # pins temp folder by default
   
   # extract the number pages to load
   bfs_loadpages <- function(url) {
