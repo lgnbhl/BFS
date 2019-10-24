@@ -18,9 +18,9 @@ in a dynamic and reproducible way.
 install.packages("BFS")
 ```
 
-Caching and path gestion will be improved in the next package release
-using the `pins` package (for now only available on Github). You can try
-it by installing the development version of the package from Github.
+Caching and path gestion will be improved in the next `BFS` package
+release (for now only available on Github) using the `pins` R package.
+You can try the `BFS` development version by installing it from Github.
 
 ``` r
 # install from Github
