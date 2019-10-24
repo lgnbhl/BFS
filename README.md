@@ -16,9 +16,15 @@ in a dynamic and reproducible way.
 ``` r
 # install from CRAN
 install.packages("BFS")
+```
 
+Caching and path gestion will be improved in the next package release
+using the `pins` package (for now only available on Github). You can try
+it by installing the development version of the package from Github.
+
+``` r
 # install from Github
-# devtools::install_github("lgnbhl/BFS")
+devtools::install_github("lgnbhl/BFS")
 ```
 
 ### Usage Example
@@ -90,16 +96,13 @@ Sometimes the PC-Axis file of the dataset doesn’t exist. You should then
 use the “STAT-TAB - interactive table” service provided by BFS to
 download manually the dataset.
 
-To open the folder containing the downloaded BFS dataset, you can simply
-use the `bfs_open_dir()` function.
+To open the folder containing the downloaded BFS dataset (only available
+in the development version on Github for now), you can simply use the
+`bfs_open_dir()` function.
 
 ``` r
 bfs_open_dir()
 ```
-
-Caching and path gestion is handled using the new `pins` package. Learn
-more about it
-<a href="https://rstudio.github.io/pins/" target="_blank">here</a>.
 
 ### Other information
 
