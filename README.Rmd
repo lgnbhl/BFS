@@ -6,6 +6,8 @@ output:
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/BFS)](https://CRAN.R-project.org/package=BFS)
+[![Grand total](http://cranlogs.r-pkg.org/badges/grand-total/BFS)](https://cran.r-project.org/package=BFS)
+[![pipeline status](https://gitlab.com/lgnbhl/BFS/badges/master/pipeline.svg)](https://gitlab.com/lgnbhl/BFS/pipelines)
 <!-- badges: end -->
 
 ## BFS <img src="man/figures/logo.png" align="right" />
@@ -24,14 +26,14 @@ The `BFS` R package allows the user to search and download public data from the
 [Swiss Federal Statistical Office (BFS)](https://www.bfs.admin.ch/bfs/en/home.html){target="_blank"}
 in a dynamic and reproducible way.
 
-```{r install cran}
+```{r eval=FALSE}
 # install from CRAN
 install.packages("BFS")
 ```
 
 Caching and path gestion will be improved in the next `BFS` package release (for now only available on Github) using the `pins` R package. You can try the `BFS` development version by installing it from Github.
 
-```{r install github}
+```{r eval=FALSE}
 # install from Github
 devtools::install_github("lgnbhl/BFS")
 ```

@@ -1,6 +1,10 @@
 <!-- badges: start -->
 [![CRAN
 status](https://www.r-pkg.org/badges/version/BFS)](https://CRAN.R-project.org/package=BFS)
+[![Grand
+total](http://cranlogs.r-pkg.org/badges/grand-total/BFS)](https://cran.r-project.org/package=BFS)
+[![pipeline
+status](https://gitlab.com/lgnbhl/BFS/badges/master/pipeline.svg)](https://gitlab.com/lgnbhl/BFS/pipelines)
 <!-- badges: end -->
 
 BFS <img src="man/figures/logo.png" align="right" />
@@ -52,13 +56,13 @@ print(meta_en_edu)
 ```
 
     ## # A tibble: 5 x 5
-    ##   title          observation_period  published  url           url_px       
-    ##   <chr>          <chr>               <chr>      <chr>         <chr>        
-    ## 1 Difficulties … Observation period… 29.08.2019 https://www.… https://www.…
-    ## 2 Difficulties … Observation period… 29.08.2019 https://www.… https://www.…
-    ## 3 University of… Observation period… 27.03.2019 https://www.… https://www.…
-    ## 4 University of… Observation period… 27.03.2019 https://www.… https://www.…
-    ## 5 Compulsory ed… Observation period… 28.02.2019 https://www.… https://www.…
+    ##   title            observation_period   published url             url_px        
+    ##   <chr>            <chr>                <chr>     <chr>           <chr>         
+    ## 1 Difficulties in… Observation period:… 26.11.20… https://www.bf… https://www.b…
+    ## 2 Difficulties in… Observation period:… 26.11.20… https://www.bf… https://www.b…
+    ## 3 University of a… Observation period:… 27.03.20… https://www.bf… https://www.b…
+    ## 4 University of a… Observation period:… 27.03.20… https://www.bf… https://www.b…
+    ## 5 Compulsory educ… Observation period:… 28.02.20… https://www.bf… https://www.b…
 
 To download a BFS dataset, add the related url link from the `url_px`
 column of the downloaded metadata as an argument to the
@@ -71,18 +75,18 @@ print(df_edu)
 ```
 
     ## # A tibble: 7,392 x 5
-    ##    studienstufe     geschlecht isced_field                      jahr  value
-    ##    <fct>            <fct>      <fct>                            <fct> <dbl>
-    ##  1 Diploma          Male       Education science                1997      0
-    ##  2 Bachelor         Male       Education science                1997      0
-    ##  3 Master           Male       Education science                1997      0
-    ##  4 Further educati… Male       Education science                1997      0
-    ##  5 Diploma          Female     Education science                1997      0
-    ##  6 Bachelor         Female     Education science                1997      0
-    ##  7 Master           Female     Education science                1997      0
-    ##  8 Further educati… Female     Education science                1997      0
-    ##  9 Diploma          Male       Teacher training without subjec… 1997      0
-    ## 10 Bachelor         Male       Teacher training without subjec… 1997      0
+    ##    studienstufe     geschlecht isced_field                           jahr  value
+    ##    <fct>            <fct>      <fct>                                 <fct> <dbl>
+    ##  1 Diploma          Male       Education science                     1997      0
+    ##  2 Bachelor         Male       Education science                     1997      0
+    ##  3 Master           Male       Education science                     1997      0
+    ##  4 Further educati… Male       Education science                     1997      0
+    ##  5 Diploma          Female     Education science                     1997      0
+    ##  6 Bachelor         Female     Education science                     1997      0
+    ##  7 Master           Female     Education science                     1997      0
+    ##  8 Further educati… Female     Education science                     1997      0
+    ##  9 Diploma          Male       Teacher training without subject spe… 1997      0
+    ## 10 Bachelor         Male       Teacher training without subject spe… 1997      0
     ## # … with 7,382 more rows
 
 In case the `url_px` link to download the PC-Axis file is broken, you
