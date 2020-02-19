@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -39,14 +41,14 @@
 
 
 
-<meta property="og:title" content="Get all BFS metadata in a given language — bfs_get_metadata" />
 
+<meta property="og:title" content="Get all BFS metadata in a given language — bfs_get_metadata" />
 <meta property="og:description" content="Returns a tibble containing the titles, publication dates,
 observation periods, metadata urls and download urls of
 available BFS datasets in a given language." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -59,6 +61,16 @@ available BFS datasets in a given language." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-158089797-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-158089797-1');
+</script>
 
 
   </head>
@@ -90,7 +102,6 @@ available BFS datasets in a given language." />
   <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://www.linkedin.com/in/felixluginbuhl">
@@ -135,15 +146,13 @@ available BFS datasets in a given language." />
     </div>
 
     <div class="ref-description">
-    
     <p>Returns a tibble containing the titles, publication dates,
 observation periods, metadata urls and download urls of
 available BFS datasets in a given language.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>bfs_get_metadata</span>(<span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"de"</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='kw pkg'>pins</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/pins/man/board_cache_path.html'>board_cache_path</a></span>())</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -159,11 +168,10 @@ Italian ("it") and English ("en"). Note that Italian and English BFS
 metadata doesn't give access to all the BFS datasets availables online.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A tibble</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>df_en</span> <span class='kw'>&lt;-</span> <span class='fu'>bfs_get_metadata</span>(<span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"en"</span>)</div></pre>
@@ -172,9 +180,7 @@ metadata doesn't give access to all the BFS datasets availables online.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

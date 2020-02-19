@@ -1,6 +1,7 @@
 template:
   params:
-    bootswatch: united
+    bootswatch: cosmo
+    ganalytics: UA-158089797-1
 
 navbar:
   left:
