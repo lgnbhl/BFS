@@ -56,10 +56,10 @@ print(meta_en_edu)
 ```
 
     ## # A tibble: 2 x 6
-    ##   title         observation_period published source   url           url_px      
-    ##   <chr>         <chr>              <chr>     <chr>    <chr>         <chr>       
-    ## 1 University s… Observation perio… 27.03.20… Federal… https://www.… https://www…
-    ## 2 University s… Observation perio… 27.03.20… Federal… https://www.… https://www…
+    ##   title           period     published  source   url_bfs           url_px       
+    ##   <chr>           <chr>      <chr>      <chr>    <chr>             <chr>        
+    ## 1 University stu… Observati… 27.03.2019 Federal… https://www.bfs.… https://www.…
+    ## 2 University stu… Observati… 27.03.2019 Federal… https://www.bfs.… https://www.…
 
 To download a BFS dataset, add the related url link from the `url_px`
 column of the downloaded metadata as an argument to the

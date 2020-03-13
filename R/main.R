@@ -51,10 +51,10 @@ get_bfs_metadata <- function(url) {
   
   df <- tibble::tibble(
     title = metadata_title,
-    observation_period = metadata_observation_period,
+    period = metadata_observation_period,
     published = metadata_published,
     source = source,
-    url = metadata_href,
+    url_bfs = metadata_href,
     url_px = metadata_url_px
   )
   
@@ -74,10 +74,10 @@ get_bfs_metadata_all <- function(i) {
   df_metadata_all <- rbind.data.frame(df_metadata,
                                       tibble::tibble(
                                         title = character(0),
-                                        observation_period = character(0),
+                                        period = character(0),
                                         published = character(0),
                                         source = character(0),
-                                        url = character(0),
+                                        url_bfs = character(0),
                                         url_px = character(0)
                                       )
   )
