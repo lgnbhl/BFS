@@ -55,11 +55,11 @@ meta_en_edu <- bfs_search("university students", data = meta_en)
 print(meta_en_edu)
 ```
 
-    ## # A tibble: 2 x 5
-    ##   title            observation_period  published url              url_px        
-    ##   <chr>            <chr>               <chr>     <chr>            <chr>         
-    ## 1 University stud… Observation period… 27.03.20… https://www.bfs… https://www.b…
-    ## 2 University stud… Observation period… 27.03.20… https://www.bfs… https://www.b…
+    ## # A tibble: 2 x 6
+    ##   title         observation_period published source   url           url_px      
+    ##   <chr>         <chr>              <chr>     <chr>    <chr>         <chr>       
+    ## 1 University s… Observation perio… 27.03.20… Federal… https://www.… https://www…
+    ## 2 University s… Observation perio… 27.03.20… Federal… https://www.… https://www…
 
 To download a BFS dataset, add the related url link from the `url_px`
 column of the downloaded metadata as an argument to the

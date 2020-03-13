@@ -26,7 +26,7 @@ A tibble
 }
 \description{
 Returns a tibble containing the titles, publication dates,
-observation periods, metadata webpage urls and download link urls 
+observation periods, data source, metadata webpage urls and download link urls 
 in a given language of the current public BFS datasets available.
 }
 \examples{

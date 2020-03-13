@@ -21,7 +21,7 @@ A data frame.
 }
 \description{
 Returns a tibble containing the titles, publication date,
-observation periods, metadata url and download urls of
+observation periods, data source, metadata url and download urls of
 available BFS datasets in a given language which match
 the given criteria.
 }

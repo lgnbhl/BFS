@@ -31,7 +31,7 @@ get_bfs_metadata <- function(url) {
   metadata_observation_period <- tryCatch(metadata_info[seq(1, length(metadata_info), 3)], error = function(e) NA)
   # metadata_observation_period <- gsub("[^0-9.-]", "", metadata_observation_period)
   
-  #metadata_source <- metadata_info[seq(2, length(metadata_info), 3)]
+  source <- tryCatch(metadata_info[seq(2, length(metadata_info), 3)], error = function(e) NA)
   
   metadata_info3 <- tryCatch(metadata_info[seq(3, length(metadata_info), 3)], error = function(e) NA)
   metadata_published <- tryCatch(gsub("[^0-9.-]", "", metadata_info3), error = function(e) NA)
@@ -53,6 +53,7 @@ get_bfs_metadata <- function(url) {
     title = metadata_title,
     observation_period = metadata_observation_period,
     published = metadata_published,
+    source = source,
     url = metadata_href,
     url_px = metadata_url_px
   )
@@ -75,6 +76,7 @@ get_bfs_metadata_all <- function(i) {
                                         title = character(0),
                                         observation_period = character(0),
                                         published = character(0),
+                                        source = character(0),
                                         url = character(0),
                                         url_px = character(0)
                                       )
@@ -84,7 +86,7 @@ get_bfs_metadata_all <- function(i) {
 #' Get all BFS metadata in a given language
 #'
 #' Returns a tibble containing the titles, publication dates,
-#' observation periods, metadata webpage urls and download link urls 
+#' observation periods, data source, metadata webpage urls and download link urls 
 #' in a given language of the current public BFS datasets available.
 #'
 #' @param language character The language of the metadata.
@@ -170,7 +172,7 @@ bfs_get_metadata <- function(language = "de", path = pins::board_cache_path()) {
 #' Search titles of available BFS datasets
 #'
 #' Returns a tibble containing the titles, publication date,
-#' observation periods, metadata url and download urls of
+#' observation periods, data source, metadata url and download urls of
 #' available BFS datasets in a given language which match
 #' the given criteria.
 #'

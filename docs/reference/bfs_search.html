@@ -44,7 +44,7 @@
 
 <meta property="og:title" content="Search titles of available BFS datasets — bfs_search" />
 <meta property="og:description" content="Returns a tibble containing the titles, publication date,
-observation periods, metadata url and download urls of
+observation periods, data source, metadata url and download urls of
 available BFS datasets in a given language which match
 the given criteria." />
 <meta property="og:image" content="/logo.png" />
@@ -148,7 +148,7 @@ the given criteria." />
 
     <div class="ref-description">
     <p>Returns a tibble containing the titles, publication date,
-observation periods, metadata url and download urls of
+observation periods, data source, metadata url and download urls of
 available BFS datasets in a given language which match
 the given criteria.</p>
     </div>
@@ -184,14 +184,14 @@ adds a few seconds to each search query.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>meta_en</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bfs_get_metadata.html'>bfs_get_metadata</a></span>(<span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"en"</span>)
-<span class='fu'>bfs_search</span>(<span class='st'>"education"</span>, <span class='no'>meta_en</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 5</span><span>
-#&gt;   title            observation_period   published url             url_px        
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         
-#&gt; </span><span style='color: #555555;'>1</span><span> Compulsory educ… Observation period:… 25.02.20… https://www.bf… https://www.b…
-#&gt; </span><span style='color: #555555;'>2</span><span> Difficulties in… Observation period:… 25.02.20… https://www.bf… https://www.b…
-#&gt; </span><span style='color: #555555;'>3</span><span> Difficulties in… Observation period:… 25.02.20… https://www.bf… https://www.b…
-#&gt; </span><span style='color: #555555;'>4</span><span> University of a… Observation period:… 27.03.20… https://www.bf… https://www.b…
-#&gt; </span><span style='color: #555555;'>5</span><span> University of a… Observation period:… 27.03.20… https://www.bf… https://www.b…</div><div class='input'>
+<span class='fu'>bfs_search</span>(<span class='st'>"education"</span>, <span class='no'>meta_en</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 6</span><span>
+#&gt;   title         observation_period  published  source   url          url_px     
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
+#&gt; </span><span style='color: #555555;'>1</span><span> Compulsory e… Observation period… 25.02.2020 Federal… https://www… https://ww…
+#&gt; </span><span style='color: #555555;'>2</span><span> Difficulties… Observation period… 25.02.2020 Federal… https://www… https://ww…
+#&gt; </span><span style='color: #555555;'>3</span><span> Difficulties… Observation period… 25.02.2020 Federal… https://www… https://ww…
+#&gt; </span><span style='color: #555555;'>4</span><span> University o… Observation period… 27.03.2019 Federal… https://www… https://ww…
+#&gt; </span><span style='color: #555555;'>5</span><span> University o… Observation period… 27.03.2019 Federal… https://www… https://ww…</div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
