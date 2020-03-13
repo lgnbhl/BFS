@@ -50,9 +50,9 @@ meta_en <- bfs_get_metadata(language = "en")
 To search for a dataset, you can use the `bfs_search()` function.
 
 ``` r
-meta_en_edu <- bfs_search("university students", data = meta_en)
+meta_en_uni <- bfs_search("university students", data = meta_en)
 
-print(meta_en_edu)
+print(meta_en_uni)
 ```
 
     ## # A tibble: 2 x 6
@@ -66,9 +66,9 @@ column of the downloaded metadata as an argument to the
 `bfs_get_dataset()` function.
 
 ``` r
-df_edu <- bfs_get_dataset(meta_en_edu$url_px[1])
+df_uni <- bfs_get_dataset(meta_en_uni$url_px[1])
 
-print(df_edu)
+print(df_uni)
 ```
 
     ## # A tibble: 16,380 x 5
@@ -90,7 +90,7 @@ In case the `url_px` link to download the PC-Axis file is broken, you
 can have a look at its related BFS webpage using the `url` link.
 
 ``` r
-browseURL(meta_en_edu$url[3]) # open webpage
+browseURL(df_uni$url_bfs[1]) # open webpage
 ```
 
 Sometimes the PC-Axis file of the dataset doesn’t exist. You should then
