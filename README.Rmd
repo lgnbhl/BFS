@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 ### Introduction
 
 The `BFS` R package allows the user to search and download public data from the 
-[Swiss Federal Statistical Office (BFS)](https://www.bfs.admin.ch/bfs/en/home.html){target="_blank"}
+[Swiss Federal Statistical Office (BFS)](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html){target="_blank"}
 in a dynamic and reproducible way.
 
 ```{r eval=FALSE}
