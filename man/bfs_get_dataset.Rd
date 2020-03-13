@@ -9,7 +9,13 @@ bfs_get_dataset(url_px, path = pins::board_cache_path())
 \arguments{
 \item{url_px}{The url link to download the PC-Axis file.}
 
-\item{path}{The local folder to use as a cache, default to {pins} cache.}
+\item{path}{The local folder to use as a cache, default to {pins} cache.
+
+The BFS data is saved in a local folder using the pins package. The
+function allows to download the BFS data only once per day. If the data 
+has alread been downloaded during the day, the existing dataset is loaded 
+into R from the pins caching folder instead of downloading again the 
+data from the BFS website.}
 }
 \description{
 Returns a data frame/tibble from a given BFS PC-Axis file. The
@@ -20,8 +26,8 @@ downloaded BFS dataset will be saved in the default cache
 folder of the {pins} package.
 }
 \examples{
-\donttest{df_en <- bfs_get_metadata(language = "en")}
-\donttest{bfs_meta_edu <- bfs_search("education", df_en)}
-\donttest{bfs_get_dataset(bfs_meta_edu$url_px[3])}
+\donttest{meta_en <- bfs_get_metadata(language = "en")}
+\donttest{bfs_meta_edu <- bfs_search("university students", meta_en)}
+\donttest{bfs_get_dataset(bfs_meta_edu$url_px[1])}
 
 }

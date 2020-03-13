@@ -26,8 +26,8 @@ available BFS datasets in a given language which match
 the given criteria.
 }
 \examples{
-\donttest{df_en <- bfs_get_metadata(language = "en")}
-\donttest{bfs_search("education", df_en)}
+\donttest{meta_en <- bfs_get_metadata(language = "en")}
+\donttest{bfs_search("education", meta_en)}
 
 }
 \seealso{

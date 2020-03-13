@@ -16,8 +16,7 @@ env <- new.env(parent = emptyenv())
 #' @importFrom janitor clean_names
 #' @importFrom progress progress_bar
 #' @importFrom utils download.file
-#' @importFrom pins pin board_register_local board_local_storage
-
+#' @importFrom pins pin pin_get board_register_local board_local_storage
 
 get_bfs_metadata <- function(url) {
   
@@ -29,13 +28,13 @@ get_bfs_metadata <- function(url) {
     rvest::html_nodes(".data") %>%
     rvest::html_text()
   
-  metadata_observation_period <- metadata_info[seq(1, length(metadata_info), 3)]
+  metadata_observation_period <- tryCatch(metadata_info[seq(1, length(metadata_info), 3)], error = function(e) NA)
   # metadata_observation_period <- gsub("[^0-9.-]", "", metadata_observation_period)
   
   #metadata_source <- metadata_info[seq(2, length(metadata_info), 3)]
   
-  metadata_info3 <- metadata_info[seq(3, length(metadata_info), 3)]
-  metadata_published <- gsub("[^0-9.-]", "", metadata_info3)
+  metadata_info3 <- tryCatch(metadata_info[seq(3, length(metadata_info), 3)], error = function(e) NA)
+  metadata_published <- tryCatch(gsub("[^0-9.-]", "", metadata_info3), error = function(e) NA)
   
   metadata_title <- html_data %>%
     rvest::html_nodes("a") %>%
@@ -85,8 +84,8 @@ get_bfs_metadata_all <- function(i) {
 #' Get all BFS metadata in a given language
 #'
 #' Returns a tibble containing the titles, publication dates,
-#' observation periods, metadata urls and download urls of
-#' available BFS datasets in a given language.
+#' observation periods, metadata webpage urls and download link urls 
+#' in a given language of the current public BFS datasets available.
 #'
 #' @param language character The language of the metadata.
 #' @param path Path to local folder to use as a cache, default to {pins} cache.
@@ -95,16 +94,27 @@ get_bfs_metadata_all <- function(i) {
 #' Italian ("it") and English ("en"). Note that Italian and English BFS
 #' metadata doesn't give access to all the BFS datasets availables online.
 #'
+#' The BFS metadata is saved in a local folder using the pins package. The
+#' function allows to download the BFS metadata only once per day in a given
+#' language. If the metadata has alread been downloaded in a given language 
+#' during the day, the existing dataset is loaded into R from the pins caching 
+#' folder instead of downloading again the metadata from the BFS website.
+#'
 #' @return A tibble
 #'
 #' @examples
-#' \donttest{df_en <- bfs_get_metadata(language = "en")}
+#' \donttest{meta_en <- bfs_get_metadata(language = "en")}
 #'
 #' @export
 
 bfs_get_metadata <- function(language = "de", path = pins::board_cache_path()) {
   
   pins::board_register_local(cache = path) # pins temp folder by default
+  
+  # Do NOT download metadata again if metadata already downloaded today
+  bfs_metadata <- tryCatch(attr(pins::pin_get(paste0("bfs_meta_", language), board = "local"), "metadata") == Sys.Date(), error = function(e) "Metadata not downloaded today")
+  
+  if(bfs_metadata == "Metadata not downloaded today"){
   
   # extract the number pages to load
   bfs_loadpages <- function(url) {
@@ -144,10 +154,16 @@ bfs_get_metadata <- function(language = "de", path = pins::board_cache_path()) {
   bfs_metadata <- purrr::map_dfr(url_all, get_bfs_metadata_all) %>%
     tibble::as_tibble()
   
-  pins::pin(bfs_metadata, name = paste0("bfs_meta"), board = "local")
+  attr(bfs_metadata, "metadata") <- Sys.Date()
+  
+  pins::pin(bfs_metadata, name = paste0("bfs_meta_", language), board = "local")
   
   rm(pb, envir = env)
-
+  
+  }
+  
+  bfs_metadata <- pins::pin_get(paste0("bfs_meta_", language), board = "local")
+  
   return(bfs_metadata)
 }
 
@@ -172,8 +188,8 @@ bfs_get_metadata <- function(language = "de", path = pins::board_cache_path()) {
 #' @seealso \code{\link{bfs_get_metadata}}
 #'
 #' @examples
-#' \donttest{df_en <- bfs_get_metadata(language = "en")}
-#' \donttest{bfs_search("education", df_en)}
+#' \donttest{meta_en <- bfs_get_metadata(language = "en")}
+#' \donttest{bfs_search("education", meta_en)}
 #'
 #' @export
 
@@ -193,25 +209,40 @@ bfs_search <- function(string, data = bfs_get_metadata(), ignore.case = TRUE) {
 #' @param url_px The url link to download the PC-Axis file.
 #' @param path The local folder to use as a cache, default to {pins} cache.
 #'
+#' The BFS data is saved in a local folder using the pins package. The
+#' function allows to download the BFS data only once per day. If the data 
+#' has alread been downloaded during the day, the existing dataset is loaded 
+#' into R from the pins caching folder instead of downloading again the 
+#' data from the BFS website.
+#'
 #' @examples
-#' \donttest{df_en <- bfs_get_metadata(language = "en")}
-#' \donttest{bfs_meta_edu <- bfs_search("education", df_en)}
-#' \donttest{bfs_get_dataset(bfs_meta_edu$url_px[3])}
+#' \donttest{meta_en <- bfs_get_metadata(language = "en")}
+#' \donttest{bfs_meta_edu <- bfs_search("university students", meta_en)}
+#' \donttest{bfs_get_dataset(bfs_meta_edu$url_px[1])}
 #'
 #' @export
 
 bfs_get_dataset <- function(url_px, path = pins::board_cache_path()) {
   pins::board_register_local(cache = path) # temp folder of the spins package
-  px_name <- paste0("bfs_data_", gsub("[^0-9]", "", url_px))
-  tempfile_path <- paste0(tempdir(), "/", px_name, ".px") # normal temp folder
+  dataset_name <- paste0("bfs_data_", gsub("[^0-9]", "", url_px))
+  tempfile_path <- paste0(tempdir(), "/", dataset_name, ".px") # normal temp folder
   
-  download.file(url_px, destfile = file.path(tempfile_path))
-  df <- tibble::as_tibble(as.data.frame(pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))))
-  df <- janitor::clean_names(df)
+  # Do NOT download data again if data already downloaded today
+  bfs_data <- tryCatch(attr(pins::pin_get(dataset_name, board = "local"), "metadata") == Sys.Date(), error = function(e) "Data not downloaded today")
   
-  pins::pin(df, name = paste0(px_name), board = "local") # caching df in spins
-  file.remove(tempfile_path)
-  return(df)
+  if(bfs_data == "Data not downloaded today"){
+    download.file(url_px, destfile = file.path(tempfile_path))
+    bfs_data <- tibble::as_tibble(as.data.frame(pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))))
+    bfs_data <- janitor::clean_names(bfs_data)
+
+    attr(bfs_data, "metadata") <- Sys.Date()
+    
+    pins::pin(bfs_data, name = paste0(dataset_name), board = "local") # caching bfs_data in spin
+  }
+  
+  bfs_data <- pins::pin_get(dataset_name, board = "local")
+  
+  return(bfs_data)
 }
 
 #' Open folder containing all downloaded BFS datasets

@@ -50,44 +50,41 @@ meta_en <- bfs_get_metadata(language = "en")
 To search for a dataset, you can use the `bfs_search()` function.
 
 ``` r
-meta_en_edu <- bfs_search("education", data = meta_en)
+meta_en_edu <- bfs_search("university students", data = meta_en)
 
 print(meta_en_edu)
 ```
 
-    ## # A tibble: 5 x 5
-    ##   title            observation_period   published url             url_px        
-    ##   <chr>            <chr>                <chr>     <chr>           <chr>         
-    ## 1 Difficulties in… Observation period:… 26.11.20… https://www.bf… https://www.b…
-    ## 2 Difficulties in… Observation period:… 26.11.20… https://www.bf… https://www.b…
-    ## 3 University of a… Observation period:… 27.03.20… https://www.bf… https://www.b…
-    ## 4 University of a… Observation period:… 27.03.20… https://www.bf… https://www.b…
-    ## 5 Compulsory educ… Observation period:… 28.02.20… https://www.bf… https://www.b…
+    ## # A tibble: 2 x 5
+    ##   title            observation_period  published url              url_px        
+    ##   <chr>            <chr>               <chr>     <chr>            <chr>         
+    ## 1 University stud… Observation period… 27.03.20… https://www.bfs… https://www.b…
+    ## 2 University stud… Observation period… 27.03.20… https://www.bfs… https://www.b…
 
 To download a BFS dataset, add the related url link from the `url_px`
 column of the downloaded metadata as an argument to the
 `bfs_get_dataset()` function.
 
 ``` r
-df_edu <- bfs_get_dataset(meta_en_edu$url_px[3])
+df_edu <- bfs_get_dataset(meta_en_edu$url_px[1])
 
 print(df_edu)
 ```
 
-    ## # A tibble: 7,392 x 5
-    ##    studienstufe     geschlecht isced_field                           jahr  value
-    ##    <fct>            <fct>      <fct>                                 <fct> <dbl>
-    ##  1 Diploma          Male       Education science                     1997      0
-    ##  2 Bachelor         Male       Education science                     1997      0
-    ##  3 Master           Male       Education science                     1997      0
-    ##  4 Further educati… Male       Education science                     1997      0
-    ##  5 Diploma          Female     Education science                     1997      0
-    ##  6 Bachelor         Female     Education science                     1997      0
-    ##  7 Master           Female     Education science                     1997      0
-    ##  8 Further educati… Female     Education science                     1997      0
-    ##  9 Diploma          Male       Teacher training without subject spe… 1997      0
-    ## 10 Bachelor         Male       Teacher training without subject spe… 1997      0
-    ## # … with 7,382 more rows
+    ## # A tibble: 16,380 x 5
+    ##    studienstufe                           geschlecht isced_field     jahr  value
+    ##    <fct>                                  <fct>      <fct>           <fct> <dbl>
+    ##  1 First university degree or diploma     Male       Education scie… 1980    545
+    ##  2 Bachelor                               Male       Education scie… 1980      0
+    ##  3 Master                                 Male       Education scie… 1980      0
+    ##  4 Doctorate                              Male       Education scie… 1980     93
+    ##  5 Further education, advanced studies a… Male       Education scie… 1980     13
+    ##  6 First university degree or diploma     Female     Education scie… 1980    946
+    ##  7 Bachelor                               Female     Education scie… 1980      0
+    ##  8 Master                                 Female     Education scie… 1980      0
+    ##  9 Doctorate                              Female     Education scie… 1980     70
+    ## 10 Further education, advanced studies a… Female     Education scie… 1980     52
+    ## # … with 16,370 more rows
 
 In case the `url_px` link to download the PC-Axis file is broken, you
 can have a look at its related BFS webpage using the `url` link.

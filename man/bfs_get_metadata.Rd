@@ -13,17 +13,23 @@ bfs_get_metadata(language = "de", path = pins::board_cache_path())
 
 Languages availables are German ("de", as default), French ("fr"),
 Italian ("it") and English ("en"). Note that Italian and English BFS
-metadata doesn't give access to all the BFS datasets availables online.}
+metadata doesn't give access to all the BFS datasets availables online.
+
+The BFS metadata is saved in a local folder using the pins package. The
+function allows to download the BFS metadata only once per day in a given
+language. If the metadata has alread been downloaded in a given language 
+during the day, the existing dataset is loaded into R from the pins caching 
+folder instead of downloading again the metadata from the BFS website.}
 }
 \value{
 A tibble
 }
 \description{
 Returns a tibble containing the titles, publication dates,
-observation periods, metadata urls and download urls of
-available BFS datasets in a given language.
+observation periods, metadata webpage urls and download link urls 
+in a given language of the current public BFS datasets available.
 }
 \examples{
-\donttest{df_en <- bfs_get_metadata(language = "en")}
+\donttest{meta_en <- bfs_get_metadata(language = "en")}
 
 }

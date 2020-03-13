@@ -51,7 +51,7 @@ meta_en <- bfs_get_metadata(language = "en")
 To search for a dataset, you can use the `bfs_search()` function.
 
 ```{r bfs_search}
-meta_en_edu <- bfs_search("education", data = meta_en)
+meta_en_edu <- bfs_search("university students", data = meta_en)
 
 print(meta_en_edu)
 ```
@@ -59,7 +59,7 @@ print(meta_en_edu)
 To download a BFS dataset, add the related url link from the `url_px` column of the downloaded metadata as an argument to the `bfs_get_dataset()` function. 
 
 ```{r bfs_get_dataset}
-df_edu <- bfs_get_dataset(meta_en_edu$url_px[3])
+df_edu <- bfs_get_dataset(meta_en_edu$url_px[1])
 
 print(df_edu)
 ```
