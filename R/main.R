@@ -114,9 +114,10 @@ bfs_get_metadata <- function(language = "de", path = pins::board_cache_path()) {
   pins::board_register_local(cache = path) # pins temp folder by default
   
   # Do NOT download metadata again if metadata already downloaded today
-  bfs_metadata <- tryCatch(attr(pins::pin_get(paste0("bfs_meta_", language), board = "local"), "metadata") == Sys.Date(), error = function(e) "Metadata not downloaded today")
+  bfs_metadata <- tryCatch(pins::pin_get(paste0("bfs_meta_", language), board = "local"), error = function(e) "Metadata not downloaded today")
+  bfs_metadata_today <- attr(bfs_metadata, "metadata") == Sys.Date()
   
-  if(bfs_metadata == "Metadata not downloaded today"){
+  if(!isTRUE(bfs_metadata_today)){
   
   # extract the number pages to load
   bfs_loadpages <- function(url) {
@@ -230,16 +231,17 @@ bfs_get_dataset <- function(url_px, path = pins::board_cache_path()) {
   tempfile_path <- paste0(tempdir(), "/", dataset_name, ".px") # normal temp folder
   
   # Do NOT download data again if data already downloaded today
-  bfs_data <- tryCatch(attr(pins::pin_get(dataset_name, board = "local"), "metadata") == Sys.Date(), error = function(e) "Data not downloaded today")
+  bfs_data <- tryCatch(pins::pin_get(dataset_name, board = "local"), error = function(e) "Data not downloaded today")
+  bfs_data_today <- attr(bfs_data, "metadata") == Sys.Date()
   
-  if(bfs_data == "Data not downloaded today"){
+  if(!isTRUE(bfs_data_today)){
     download.file(url_px, destfile = file.path(tempfile_path))
     bfs_data <- tibble::as_tibble(as.data.frame(pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))))
     bfs_data <- janitor::clean_names(bfs_data)
 
     attr(bfs_data, "metadata") <- Sys.Date()
     
-    pins::pin(bfs_data, name = paste0(dataset_name), board = "local") # caching bfs_data in spin
+    pins::pin(bfs_data, name = dataset_name, board = "local") # caching bfs_data in spin
   }
   
   bfs_data <- pins::pin_get(dataset_name, board = "local")
