@@ -177,12 +177,12 @@ bfs_get_metadata <- function(language = "de", path = pins::board_cache_path()) {
 #' available BFS datasets in a given language which match
 #' the given criteria.
 #'
-#' @param string A regular expression string to search for.
-#'
 #' @param data The data frame to search. This can be either a data frame
 #' previously fetched using \code{\link{bfs_get_metadata}} (recommended) or left
 #' blank, in which case a temporary data frame is fetched. The second option
 #' adds a few seconds to each search query.
+#'
+#' @param string A regular expression string to search for.
 #'
 #' @param ignore.case Whether the search should be case-insensitive.
 #'
@@ -196,7 +196,7 @@ bfs_get_metadata <- function(language = "de", path = pins::board_cache_path()) {
 #'
 #' @export
 
-bfs_search <- function(string, data = bfs_get_metadata(), ignore.case = TRUE) {
+bfs_search <- function(data = bfs_get_metadata(), string, ignore.case = TRUE) {
   data[grepl(string, data$title, ignore.case = ignore.case), ]
 }
 

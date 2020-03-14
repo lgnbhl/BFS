@@ -96,65 +96,77 @@
   <div class="contents col-md-9">
 
 
-<div id="bfs" class="section level2">
-<h2 class="hasAnchor">
+<div id="bfs" class="section level1">
+<div class="page-header"><h1 class="hasAnchor">
 <a href="#bfs" class="anchor"></a>BFS <img src="reference/figures/logo.png" align="right">
-</h2>
-<div id="introduction" class="section level3">
-<h3 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h3>
-<p>The <code>BFS</code> R package allows the user to search and download public data from the <a href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html" target="_blank">Swiss Federal Statistical Office (BFS)</a> in a dynamic and reproducible way.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install from CRAN</span></a>
+</h1></div>
+<p>The <code>BFS</code> package allows to search and download public data from the <a href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html" target="_blank">Swiss Federal Statistical Office (BFS)</a> in a dynamic and reproducible way.</p>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Install the released version from CRAN:</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"BFS"</span>)</a></code></pre></div>
-<p>Caching and path gestion will be improved in the next <code>BFS</code> package release (for now only available on Github) using the <code>pins</code> R package. You can try the <code>BFS</code> development version by installing it from Github.</p>
+<p>To get a bug fix, or use a feature from the development version, you can install BFS from GitHub.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># install from Github</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"lgnbhl/BFS"</span>)</a></code></pre></div>
 </div>
-<div id="usage-example" class="section level3">
+<div id="usage" class="section level2">
+<h2 class="hasAnchor">
+<a href="#usage" class="anchor"></a>Usage</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(BFS)</a></code></pre></div>
+<div id="download-metadata" class="section level3">
 <h3 class="hasAnchor">
-<a href="#usage-example" class="anchor"></a>Usage Example</h3>
-<p>To search and download data from the BFS, you first need to retrieve information about the available datasets. The <code><a href="reference/bfs_get_metadata.html">bfs_get_metadata()</a></code> function returns a data frame/tibble containing the titles, publication dates, observation periods, website urls and download urls of all available BFS datasets of a given language: German (“de”, by default), French (“fr”), Italian (“it”) or English (“en”). Note that Italian and English languages give access to less datasets.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(BFS)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">meta_en &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_get_metadata.html">bfs_get_metadata</a></span>(<span class="dt">language =</span> <span class="st">"en"</span>)</a></code></pre></div>
-<p>To search for a dataset, you can use the <code><a href="reference/bfs_search.html">bfs_search()</a></code> function.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">meta_en_uni &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_search.html">bfs_search</a></span>(<span class="st">"university students"</span>, <span class="dt">data =</span> meta_en)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(meta_en_uni)</a></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co">## # A tibble: 2 x 6</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">##   title           period     published  source   url_bfs           url_px       </span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">##   &lt;chr&gt;           &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;             &lt;chr&gt;        </span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">## 1 University stu… Observati… 27.03.2019 Federal… https://www.bfs.… https://www.…</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">## 2 University stu… Observati… 27.03.2019 Federal… https://www.bfs.… https://www.…</span></a></code></pre></div>
+<a href="#download-metadata" class="anchor"></a>Download metadata</h3>
+<p>To search and download data from the Swiss Federal Statistical Office, you first need to retrieve information about the available public datasets. The <code><a href="reference/bfs_get_metadata.html">bfs_get_metadata()</a></code> function returns a data frame/tibble containing the titles, publication dates, observation periods, data sources, website urls and download urls of all the BFS datasets available in a given language. You can choose between German (“de”, by default), French (“fr”), Italian (“it”) or English (“en”). Note that Italian and English languages give access to less datasets.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">meta_en &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_get_metadata.html">bfs_get_metadata</a></span>(<span class="dt">language =</span> <span class="st">"en"</span>)</a></code></pre></div>
+<p>To search for a dataset in the BFS metadata, you can use the <code><a href="reference/bfs_search.html">bfs_search()</a></code> function.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">meta_en_uni &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_search.html">bfs_search</a></span>(<span class="dt">data =</span> meta_en, <span class="dt">string =</span> <span class="st">"university students"</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(meta_en_uni)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co">## # A tibble: 2 x 6</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">##   title           period     published  source   url_bfs           url_px       </span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">##   &lt;chr&gt;           &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;             &lt;chr&gt;        </span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">## 1 University stu… Observati… 27.03.2019 Federal… https://www.bfs.… https://www.…</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">## 2 University stu… Observati… 27.03.2019 Federal… https://www.bfs.… https://www.…</span></a></code></pre></div>
+</div>
+<div id="download-datasets" class="section level3">
+<h3 class="hasAnchor">
+<a href="#download-datasets" class="anchor"></a>Download datasets</h3>
 <p>To download a BFS dataset, add the related url link from the <code>url_px</code> column of the downloaded metadata as an argument to the <code><a href="reference/bfs_get_dataset.html">bfs_get_dataset()</a></code> function.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">df_uni &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_get_dataset.html">bfs_get_dataset</a></span>(meta_en_uni<span class="op">$</span>url_px[<span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(df_uni)</a></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co">## # A tibble: 16,380 x 5</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">##    studienstufe                           geschlecht isced_field     jahr  value</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">##    &lt;fct&gt;                                  &lt;fct&gt;      &lt;fct&gt;           &lt;fct&gt; &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">##  1 First university degree or diploma     Male       Education scie… 1980    545</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">##  2 Bachelor                               Male       Education scie… 1980      0</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">##  3 Master                                 Male       Education scie… 1980      0</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">##  4 Doctorate                              Male       Education scie… 1980     93</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">##  5 Further education, advanced studies a… Male       Education scie… 1980     13</span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">##  6 First university degree or diploma     Female     Education scie… 1980    946</span></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">##  7 Bachelor                               Female     Education scie… 1980      0</span></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">##  8 Master                                 Female     Education scie… 1980      0</span></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">##  9 Doctorate                              Female     Education scie… 1980     70</span></a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">## 10 Further education, advanced studies a… Female     Education scie… 1980     52</span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">## # … with 16,370 more rows</span></a></code></pre></div>
-<p>In case the <code>url_px</code> link to download the PC-Axis file is broken, you can have a look at its related BFS webpage using the <code>url</code> link.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/browseURL.html">browseURL</a></span>(df_uni<span class="op">$</span>url_bfs[<span class="dv">1</span>]) <span class="co"># open webpage</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">df_uni &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_get_dataset.html">bfs_get_dataset</a></span>(<span class="dt">url_px =</span> meta_en_uni<span class="op">$</span>url_px[<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(df_uni)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co">## # A tibble: 16,380 x 5</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">##    studienstufe                           geschlecht isced_field     jahr  value</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">##    &lt;fct&gt;                                  &lt;fct&gt;      &lt;fct&gt;           &lt;fct&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">##  1 First university degree or diploma     Male       Education scie… 1980    545</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">##  2 Bachelor                               Male       Education scie… 1980      0</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">##  3 Master                                 Male       Education scie… 1980      0</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">##  4 Doctorate                              Male       Education scie… 1980     93</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">##  5 Further education, advanced studies a… Male       Education scie… 1980     13</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">##  6 First university degree or diploma     Female     Education scie… 1980    946</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">##  7 Bachelor                               Female     Education scie… 1980      0</span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">##  8 Master                                 Female     Education scie… 1980      0</span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">##  9 Doctorate                              Female     Education scie… 1980     70</span></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">## 10 Further education, advanced studies a… Female     Education scie… 1980     52</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">## # … with 16,370 more rows</span></a></code></pre></div>
+<p>In case the <code>url_px</code> link to download the PC-Axis file is broken, you can have a look at its related BFS webpage using the <code>url_bfs</code> link.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/browseURL.html">browseURL</a></span>(meta_en_uni<span class="op">$</span>url_bfs[<span class="dv">1</span>]) <span class="co"># open webpage</span></a></code></pre></div>
 <p>Sometimes the PC-Axis file of the dataset doesn’t exist. You should then use the “STAT-TAB - interactive table” service provided by BFS to download manually the dataset.</p>
-<p>To open the folder containing the downloaded BFS dataset (only available in the development version on Github for now), you can simply use the <code><a href="reference/bfs_open_dir.html">bfs_open_dir()</a></code> function.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="reference/bfs_open_dir.html">bfs_open_dir</a></span>()</a></code></pre></div>
+</div>
+<div id="data-caching" class="section level3">
+<h3 class="hasAnchor">
+<a href="#data-caching" class="anchor"></a>Data caching</h3>
+<p>Data caching is handled using the <a href="https://pins.rstudio.com/">pins</a> R package. To open the folder containing all the BFS datasets you alreaded downloaded, you can use the <code><a href="reference/bfs_open_dir.html">bfs_open_dir()</a></code> function.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="reference/bfs_open_dir.html">bfs_open_dir</a></span>()</a></code></pre></div>
+<p>If a dataset has already been downloaded during the day, the functions <code><a href="reference/bfs_get_metadata.html">bfs_get_metadata()</a></code> and <code><a href="reference/bfs_get_dataset.html">bfs_get_dataset()</a></code> retrieve the already downloaded datasets from your local pins caching folder. Caching speeds up code and reduces BFS server requests. However, if a given dataset has not been downloaded during the day, the functions download it again to be sure that you have the last BFS data available.</p>
 </div>
 <div id="other-information" class="section level3">
 <h3 class="hasAnchor">
 <a href="#other-information" class="anchor"></a>Other information</h3>
 <p>Alternative R package: <a href="https://github.com/rOpenGov/pxweb" target="_blank">pxweb</a></p>
 <p>This package is in no way officially related to or endorsed by the Swiss Federal Statistical Office (BFS).</p>
+</div>
 </div>
 </div>
 
