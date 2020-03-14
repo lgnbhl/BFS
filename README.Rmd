@@ -27,7 +27,7 @@ in a dynamic and reproducible way.
 ## Installation
 
 ```{r eval=FALSE}
-# Install the released version from CRAN:
+# Install the released version from CRAN
 install.packages("BFS")
 ```
 
@@ -80,7 +80,7 @@ Sometimes the PC-Axis file of the dataset doesn't exist. You should then use the
 
 ### Data caching
 
-Data caching is handled using the [pins](https://pins.rstudio.com/) R package. To open the folder containing all the BFS datasets you alreaded downloaded, you can use the `bfs_open_dir()` function.
+Data caching is handled using the [pins](https://pins.rstudio.com/) R package. To open the folder containing all the BFS datasets you already downloaded, you can use the `bfs_open_dir()` function.
 
 ```{r, eval = FALSE}
 bfs_open_dir()

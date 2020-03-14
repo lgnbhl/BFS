@@ -104,7 +104,7 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Install the released version from CRAN:</span></a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Install the released version from CRAN</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"BFS"</span>)</a></code></pre></div>
 <p>To get a bug fix, or use a feature from the development version, you can install BFS from GitHub.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># install from Github</span></a>
@@ -117,7 +117,7 @@
 <div id="download-metadata" class="section level3">
 <h3 class="hasAnchor">
 <a href="#download-metadata" class="anchor"></a>Download metadata</h3>
-<p>To search and download data from the Swiss Federal Statistical Office, you first need to retrieve information about the available public datasets. The <code><a href="reference/bfs_get_metadata.html">bfs_get_metadata()</a></code> function returns a data frame/tibble containing the titles, publication dates, observation periods, data sources, website urls and download urls of all the BFS datasets available in a given language. You can choose between German (“de”, by default), French (“fr”), Italian (“it”) or English (“en”). Note that Italian and English languages give access to less datasets.</p>
+<p>To search and download data from the Swiss Federal Statistical Office, you first need to retrieve information about the available public datasets. The <code><a href="reference/bfs_get_metadata.html">bfs_get_metadata()</a></code> function returns a data frame/tibble containing the titles, publication dates, observation periods, data sources, website urls and download urls of all the BFS datasets available in a given language. You can get the metadata in German (“de”, by default), French (“fr”), Italian (“it”) or English (“en”). Note that Italian and English metadata give access to less datasets.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">meta_en &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_get_metadata.html">bfs_get_metadata</a></span>(<span class="dt">language =</span> <span class="st">"en"</span>)</a></code></pre></div>
 <p>To search for a dataset in the BFS metadata, you can use the <code><a href="reference/bfs_search.html">bfs_search()</a></code> function.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">meta_en_uni &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_search.html">bfs_search</a></span>(<span class="dt">data =</span> meta_en, <span class="dt">string =</span> <span class="st">"university students"</span>)</a>
@@ -157,7 +157,7 @@
 <div id="data-caching" class="section level3">
 <h3 class="hasAnchor">
 <a href="#data-caching" class="anchor"></a>Data caching</h3>
-<p>Data caching is handled using the <a href="https://pins.rstudio.com/">pins</a> R package. To open the folder containing all the BFS datasets you alreaded downloaded, you can use the <code><a href="reference/bfs_open_dir.html">bfs_open_dir()</a></code> function.</p>
+<p>Data caching is handled using the <a href="https://pins.rstudio.com/">pins</a> R package. To open the folder containing all the BFS datasets you already downloaded, you can use the <code><a href="reference/bfs_open_dir.html">bfs_open_dir()</a></code> function.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="reference/bfs_open_dir.html">bfs_open_dir</a></span>()</a></code></pre></div>
 <p>If a dataset has already been downloaded during the day, the functions <code><a href="reference/bfs_get_metadata.html">bfs_get_metadata()</a></code> and <code><a href="reference/bfs_get_dataset.html">bfs_get_dataset()</a></code> retrieve the already downloaded datasets from your local pins caching folder. Caching speeds up code and reduces BFS server requests. However, if a given dataset has not been downloaded during the day, the functions download it again to be sure that you have the last BFS data available.</p>
 </div>

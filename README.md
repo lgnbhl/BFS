@@ -18,7 +18,7 @@ Installation
 ------------
 
 ``` r
-# Install the released version from CRAN:
+# Install the released version from CRAN
 install.packages("BFS")
 ```
 
@@ -108,7 +108,7 @@ download manually the dataset.
 ### Data caching
 
 Data caching is handled using the [pins](https://pins.rstudio.com/) R
-package. To open the folder containing all the BFS datasets you alreaded
+package. To open the folder containing all the BFS datasets you already
 downloaded, you can use the `bfs_open_dir()` function.
 
 ``` r

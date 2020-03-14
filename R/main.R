@@ -192,7 +192,7 @@ bfs_get_metadata <- function(language = "de", path = pins::board_cache_path()) {
 #'
 #' @examples
 #' meta_en <- bfs_get_metadata(language = "en")
-#' bfs_search("university students", meta_en)
+#' bfs_search(data = meta_en, string = "university students")
 #'
 #' @export
 
@@ -220,7 +220,7 @@ bfs_search <- function(data = bfs_get_metadata(), string, ignore.case = TRUE) {
 #'
 #' @examples
 #' meta_en <- bfs_get_metadata(language = "en")
-#' bfs_meta_edu <- bfs_search("university students", meta_en)
+#' bfs_meta_edu <- bfs_search(data = meta_en, string = "university students")
 #' bfs_get_dataset(bfs_meta_edu$url_px[1])
 #'
 #' @export

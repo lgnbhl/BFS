@@ -27,7 +27,7 @@ folder of the {pins} package.
 }
 \examples{
 meta_en <- bfs_get_metadata(language = "en")
-bfs_meta_edu <- bfs_search("university students", meta_en)
+bfs_meta_edu <- bfs_search(data = meta_en, string = "university students")
 bfs_get_dataset(bfs_meta_edu$url_px[1])
 
 }
