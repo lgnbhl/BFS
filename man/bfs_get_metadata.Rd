@@ -30,6 +30,6 @@ observation periods, data source, metadata webpage urls and download link urls
 in a given language of the current public BFS datasets available.
 }
 \examples{
-meta_en <- bfs_get_metadata(language = "en")
+\donttest{meta_en <- bfs_get_metadata(language = "en")}
 
 }

@@ -105,7 +105,7 @@ get_bfs_metadata_all <- function(i) {
 #' @return A tibble
 #'
 #' @examples
-#' meta_en <- bfs_get_metadata(language = "en")
+#' \donttest{meta_en <- bfs_get_metadata(language = "en")}
 #'
 #' @export
 
@@ -191,8 +191,8 @@ bfs_get_metadata <- function(language = "de", path = pins::board_cache_path()) {
 #' @seealso \code{\link{bfs_get_metadata}}
 #'
 #' @examples
-#' meta_en <- bfs_get_metadata(language = "en")
-#' bfs_search(data = meta_en, string = "university students")
+#' \donttest{meta_en <- bfs_get_metadata(language = "en")}
+#' \donttest{bfs_search(data = meta_en, string = "university students")}
 #'
 #' @export
 
@@ -219,9 +219,9 @@ bfs_search <- function(data = bfs_get_metadata(), string, ignore.case = TRUE) {
 #' data from the BFS website.
 #'
 #' @examples
-#' meta_en <- bfs_get_metadata(language = "en")
-#' bfs_meta_edu <- bfs_search(data = meta_en, string = "university students")
-#' bfs_get_dataset(bfs_meta_edu$url_px[1])
+#' \donttest{meta_en <- bfs_get_metadata(language = "en")}
+#' \donttest{bfs_meta_edu <- bfs_search(data = meta_en, string = "university students")}
+#' \donttest{bfs_get_dataset(bfs_meta_edu$url_px[1])}
 #'
 #' @export
 
@@ -261,7 +261,7 @@ bfs_get_dataset <- function(url_px, path = pins::board_cache_path()) {
 #' @seealso \code{\link{bfs_get_dataset}}
 #'
 #' @examples
-#' bfs_open_dir()
+#' \donttest{bfs_open_dir()}
 #'
 #' @export
 

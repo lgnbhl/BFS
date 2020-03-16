@@ -7,5 +7,3 @@
 ^docs
 ^pkgdown
 ^\.gitlab-ci\.yml$
-man/figures/BFS_mod.png
-man/figures/BFS.png
