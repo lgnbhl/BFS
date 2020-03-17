@@ -30,6 +30,10 @@ install BFS from GitHub.
 devtools::install_github("lgnbhl/BFS")
 ```
 
+The current development version of BFS allows the user to choose the
+language in which the downloaded dataset is translated (only in German
+on CRAN). Be sure to check it out!
+
 Usage
 -----
 
