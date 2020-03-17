@@ -254,7 +254,6 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     new_names <- names(bfs_px$VALUES.fr.)
     n_names <- length(default_names)
     
-    default_categories <- bfs_px$VALUES
     # ! possible bugs in new_categories
     new_categories <- gsub('\", \"', "\n", bfs_px$VALUES.fr.)
     new_categories <- gsub('\",\"', "\n", new_categories)
@@ -280,7 +279,6 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     new_names <- names(bfs_px$VALUES.it.)
     n_names <- length(default_names)
     
-    default_categories <- bfs_px$VALUES
     # ! possible bugs in new_categories
     new_categories <- gsub('\", \"', "\n", bfs_px$VALUES.it.)
     new_categories <- gsub('\",\"', "\n", new_categories)
@@ -306,7 +304,6 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     new_names <- names(bfs_px$VALUES.en.)
     n_names <- length(default_names)
     
-    default_categories <- bfs_px$VALUES
     # ! possible bugs in new_categories
     new_categories <- gsub('\", \"', "\n", bfs_px$VALUES.en.)
     new_categories <- gsub('\",\"', "\n", new_categories)
