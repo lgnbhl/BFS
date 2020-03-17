@@ -87,7 +87,9 @@ get_bfs_metadata_all <- function(i) {
 #'
 #' Returns a tibble containing the titles, publication dates,
 #' observation periods, data source, metadata webpage urls and download link urls 
-#' in a given language of the current public BFS datasets available.
+#' in a given language of the current public BFS datasets available. If the path of 
+#' the cache argument is not provided, the downloaded BFS dataset will be saved in 
+#' the default cache folder of the {pins} package. 
 #'
 #' @param language character The language of the metadata.
 #' @param path Path to local folder to use as a cache, default to {pins} cache.
@@ -204,9 +206,9 @@ bfs_search <- function(data = bfs_get_metadata(), string, ignore.case = TRUE) {
 #' Get BFS PC-Axis files as data frames
 #'
 #' Returns a data frame/tibble from a given BFS PC-Axis file. The
-#' column names are always rendered in German and are renamed 
+#' default language is German and the column names are renamed 
 #' using the \code{\link[janitor]{clean_names}} function of the
-#' janitor package. If the path of the cache argument is provided, the 
+#' janitor package. If the path of the cache argument is not provided, the 
 #' downloaded BFS dataset will be saved in the default cache 
 #' folder of the {pins} package. 
 #'
@@ -241,7 +243,6 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     download.file(url_px, destfile = file.path(tempfile_path))
     bfs_data <- tibble::as_tibble(as.data.frame(pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))))
     bfs_data <- janitor::clean_names(bfs_data)
-    
     attr(bfs_data, "metadata") <- Sys.Date()
     pins::pin(bfs_data, name = paste0(dataset_name), board = "local")
   } else if (!isTRUE(bfs_data_today) & language == "fr" | force == TRUE & language == "fr") {
@@ -252,7 +253,20 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     default_names <- names(bfs_px$VALUES)
     new_names <- names(bfs_px$VALUES.fr.)
     n_names <- length(default_names)
-    for(i in 1:n_names) names(bfs_data)[names(bfs_data) == default_names[i]] <- new_names[i]
+    
+    default_categories <- bfs_px$VALUES
+    # ! possible bugs in new_categories
+    new_categories <- gsub('\", \"', "\n", bfs_px$VALUES.fr.)
+    new_categories <- gsub('\",\"', "\n", new_categories)
+    new_categories <- gsub(' \"', "", new_categories)
+    new_categories <- strsplit(new_categories, "\n")
+    
+    for(i in 1:n_names) {
+      names(bfs_data)[names(bfs_data) == default_names[i]] <- new_names[i]
+      l <- as.name(new_names[i])
+      levels(bfs_data[[l]]) <- new_categories[[i]]
+      replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
+    }
     
     bfs_data <- janitor::clean_names(bfs_data)
     attr(bfs_data, "metadata") <- Sys.Date()
@@ -265,7 +279,20 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     default_names <- names(bfs_px$VALUES)
     new_names <- names(bfs_px$VALUES.it.)
     n_names <- length(default_names)
-    for(i in 1:n_names) names(bfs_data)[names(bfs_data) == default_names[i]] <- new_names[i]
+    
+    default_categories <- bfs_px$VALUES
+    # ! possible bugs in new_categories
+    new_categories <- gsub('\", \"', "\n", bfs_px$VALUES.it.)
+    new_categories <- gsub('\",\"', "\n", new_categories)
+    new_categories <- gsub(' \"', "", new_categories)
+    new_categories <- strsplit(new_categories, "\n")
+    
+    for(i in 1:n_names) {
+      names(bfs_data)[names(bfs_data) == default_names[i]] <- new_names[i]
+      l <- as.name(new_names[i])
+      levels(bfs_data[[l]]) <- new_categories[[i]]
+      replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
+    }
     
     bfs_data <- janitor::clean_names(bfs_data)
     attr(bfs_data, "metadata") <- Sys.Date()
@@ -278,7 +305,20 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     default_names <- names(bfs_px$VALUES)
     new_names <- names(bfs_px$VALUES.en.)
     n_names <- length(default_names)
-    for(i in 1:n_names) names(bfs_data)[names(bfs_data) == default_names[i]] <- new_names[i]
+    
+    default_categories <- bfs_px$VALUES
+    # ! possible bugs in new_categories
+    new_categories <- gsub('\", \"', "\n", bfs_px$VALUES.en.)
+    new_categories <- gsub('\",\"', "\n", new_categories)
+    new_categories <- gsub(' \"', "", new_categories)
+    new_categories <- strsplit(new_categories, "\n")
+    
+    for(i in 1:n_names) {
+      names(bfs_data)[names(bfs_data) == default_names[i]] <- new_names[i]
+      l <- as.name(new_names[i])
+      levels(bfs_data[[l]]) <- new_categories[[i]]
+      replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
+    }
     
     bfs_data <- janitor::clean_names(bfs_data)
     attr(bfs_data, "metadata") <- Sys.Date()

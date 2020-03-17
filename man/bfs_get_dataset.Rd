@@ -28,9 +28,9 @@ data from the BFS website.}
 }
 \description{
 Returns a data frame/tibble from a given BFS PC-Axis file. The
-column names are always rendered in German and are renamed 
+default language is German and the column names are renamed 
 using the \code{\link[janitor]{clean_names}} function of the
-janitor package. If the path of the cache argument is provided, the 
+janitor package. If the path of the cache argument is not provided, the 
 downloaded BFS dataset will be saved in the default cache 
 folder of the {pins} package.
 }

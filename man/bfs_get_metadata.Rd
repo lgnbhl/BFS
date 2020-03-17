@@ -33,7 +33,9 @@ A tibble
 \description{
 Returns a tibble containing the titles, publication dates,
 observation periods, data source, metadata webpage urls and download link urls 
-in a given language of the current public BFS datasets available.
+in a given language of the current public BFS datasets available. If the path of 
+the cache argument is not provided, the downloaded BFS dataset will be saved in 
+the default cache folder of the {pins} package.
 }
 \examples{
 \donttest{meta_en <- bfs_get_metadata(language = "en")}
