@@ -157,7 +157,12 @@ downloaded BFS dataset will be saved in the default cache
 folder of the pins package.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bfs_get_dataset</span>(<span class='no'>url_px</span>, <span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"de"</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='kw pkg'>pins</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/pins/man/board_cache_path.html'>board_cache_path</a></span>())</pre>
+    <pre class="usage"><span class='fu'>bfs_get_dataset</span>(
+  <span class='no'>url_px</span>,
+  <span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"de"</span>,
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='kw pkg'>pins</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/pins/man/board_cache_path.html'>board_cache_path</a></span>(),
+  <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,7 +177,11 @@ folder of the pins package.</p>
     </tr>
     <tr>
       <th>path</th>
-      <td><p>The local folder to use as a cache, default to pins cache.</p>
+      <td><p>The local folder to use as a cache, default to pins cache.</p></td>
+    </tr>
+    <tr>
+      <th>force</th>
+      <td><p>Force download to download data even if already downloaded today.</p>
 <p>The BFS data is saved in a local folder using the pins package. The
 function allows to download the BFS data only once per day. If the data 
 has alread been downloaded during the day, the existing dataset is loaded 

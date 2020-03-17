@@ -4,12 +4,18 @@
 \alias{bfs_get_metadata}
 \title{Get all BFS metadata in a given language}
 \usage{
-bfs_get_metadata(language = "de", path = pins::board_cache_path())
+bfs_get_metadata(
+  language = "de",
+  path = pins::board_cache_path(),
+  force = FALSE
+)
 }
 \arguments{
 \item{language}{character The language of the metadata.}
 
-\item{path}{Path to local folder to use as a cache, default to {pins} cache.
+\item{path}{Path to local folder to use as a cache, default to {pins} cache.}
+
+\item{force}{Force to download metadata even if already downloaded today.
 
 Languages availables are German ("de", as default), French ("fr"),
 Italian ("it") and English ("en"). Note that Italian and English BFS

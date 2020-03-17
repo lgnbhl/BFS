@@ -91,6 +91,7 @@ get_bfs_metadata_all <- function(i) {
 #'
 #' @param language character The language of the metadata.
 #' @param path Path to local folder to use as a cache, default to {pins} cache.
+#' @param force Force to download metadata even if already downloaded today.
 #'
 #' Languages availables are German ("de", as default), French ("fr"),
 #' Italian ("it") and English ("en"). Note that Italian and English BFS
@@ -109,7 +110,7 @@ get_bfs_metadata_all <- function(i) {
 #'
 #' @export
 
-bfs_get_metadata <- function(language = "de", path = pins::board_cache_path()) {
+bfs_get_metadata <- function(language = "de", path = pins::board_cache_path(), force = FALSE) {
   
   pins::board_register_local(cache = path) # pins temp folder by default
   
@@ -117,7 +118,7 @@ bfs_get_metadata <- function(language = "de", path = pins::board_cache_path()) {
   bfs_metadata <- tryCatch(pins::pin_get(paste0("bfs_meta_", language), board = "local"), error = function(e) "Metadata not downloaded today")
   bfs_metadata_today <- attr(bfs_metadata, "metadata") == Sys.Date()
   
-  if(!isTRUE(bfs_metadata_today)){
+  if(!isTRUE(bfs_metadata_today) | force == TRUE){
   
   # extract the number pages to load
   bfs_loadpages <- function(url) {
@@ -212,6 +213,7 @@ bfs_search <- function(data = bfs_get_metadata(), string, ignore.case = TRUE) {
 #' @param url_px The url link to download the PC-Axis file.
 #' @param language Language of the dataset to be translated if exists.
 #' @param path The local folder to use as a cache, default to {pins} cache.
+#' @param force Force download to download data even if already downloaded today.
 #'
 #' The BFS data is saved in a local folder using the pins package. The
 #' function allows to download the BFS data only once per day. If the data 
@@ -226,7 +228,7 @@ bfs_search <- function(data = bfs_get_metadata(), string, ignore.case = TRUE) {
 #'
 #' @export
 
-bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_path()) {
+bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_path(), force = FALSE) {
   pins::board_register_local(cache = path) # temp folder of the spins package
   dataset_name <- paste0("bfs_data_", gsub("[^0-9]", "", url_px), "_", language)
   tempfile_path <- paste0(tempdir(), "/", dataset_name, ".px") # normal temp folder
@@ -235,14 +237,14 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
   bfs_data <- tryCatch(pins::pin_get(dataset_name, board = "local"), error = function(e) "Data not downloaded today")
   bfs_data_today <- attr(bfs_data, "metadata") == Sys.Date()
   
-  if(!isTRUE(bfs_data_today) & language == "de"){
+  if(!isTRUE(bfs_data_today) & language == "de" | force == TRUE & language == "de"){
     download.file(url_px, destfile = file.path(tempfile_path))
     bfs_data <- tibble::as_tibble(as.data.frame(pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))))
     bfs_data <- janitor::clean_names(bfs_data)
     
     attr(bfs_data, "metadata") <- Sys.Date()
     pins::pin(bfs_data, name = paste0(dataset_name), board = "local")
-  } else if (!isTRUE(bfs_data_today) & language == "fr") {
+  } else if (!isTRUE(bfs_data_today) & language == "fr" | force == TRUE & language == "fr") {
     download.file(url_px, destfile = file.path(tempfile_path))
     bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
     bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
@@ -255,7 +257,7 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     bfs_data <- janitor::clean_names(bfs_data)
     attr(bfs_data, "metadata") <- Sys.Date()
     pins::pin(bfs_data, name = paste0(dataset_name), board = "local")
-  } else if (!isTRUE(bfs_data_today) & language == "it") {
+  } else if (!isTRUE(bfs_data_today) & language == "it" | force == TRUE & language == "it") {
     download.file(url_px, destfile = file.path(tempfile_path))
     bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
     bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
@@ -268,7 +270,7 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     bfs_data <- janitor::clean_names(bfs_data)
     attr(bfs_data, "metadata") <- Sys.Date()
     pins::pin(bfs_data, name = paste0(dataset_name), board = "local")
-  } else if (!isTRUE(bfs_data_today) & language == "en") {
+  } else if (!isTRUE(bfs_data_today) & language == "en" | force == TRUE & language == "en") {
     download.file(url_px, destfile = file.path(tempfile_path))
     bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
     bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
