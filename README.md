@@ -32,7 +32,7 @@ devtools::install_github("lgnbhl/BFS")
 
 The current development version of BFS allows the user to choose the
 language in which the downloaded dataset is translated (only in German
-on CRAN). Be sure to check it out!
+on CRAN). It allows also to force the download. Be sure to check it out!
 
 Usage
 -----
@@ -78,25 +78,29 @@ column of the downloaded metadata as an argument to the
 `bfs_get_dataset()` function.
 
 ``` r
-df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[1], language = "en")
+df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[1])
 
 print(df_uni)
 ```
 
     ## # A tibble: 16,380 x 5
-    ##    level_of_study                            gender isced_field      year  value
-    ##    <fct>                                     <fct>  <fct>            <fct> <dbl>
-    ##  1 First university degree or diploma        Male   Education scien… 1980    545
-    ##  2 Bachelor                                  Male   Education scien… 1980      0
-    ##  3 Master                                    Male   Education scien… 1980      0
-    ##  4 Doctorate                                 Male   Education scien… 1980     93
-    ##  5 Further education, advanced studies and … Male   Education scien… 1980     13
-    ##  6 First university degree or diploma        Female Education scien… 1980    946
-    ##  7 Bachelor                                  Female Education scien… 1980      0
-    ##  8 Master                                    Female Education scien… 1980      0
-    ##  9 Doctorate                                 Female Education scien… 1980     70
-    ## 10 Further education, advanced studies and … Female Education scien… 1980     52
+    ##    studienstufe                           geschlecht isced_field     jahr  value
+    ##    <fct>                                  <fct>      <fct>           <fct> <dbl>
+    ##  1 First university degree or diploma     Male       Education scie… 1980    545
+    ##  2 Bachelor                               Male       Education scie… 1980      0
+    ##  3 Master                                 Male       Education scie… 1980      0
+    ##  4 Doctorate                              Male       Education scie… 1980     93
+    ##  5 Further education, advanced studies a… Male       Education scie… 1980     13
+    ##  6 First university degree or diploma     Female     Education scie… 1980    946
+    ##  7 Bachelor                               Female     Education scie… 1980      0
+    ##  8 Master                                 Female     Education scie… 1980      0
+    ##  9 Doctorate                              Female     Education scie… 1980     70
+    ## 10 Further education, advanced studies a… Female     Education scie… 1980     52
     ## # … with 16,370 more rows
+
+Note that the development version of BFS on Github allows the user to
+choose the language in which the dataset is downloaded (only in German
+in the current release on CRAN).
 
 In case the `url_px` link to download the PC-Axis file is broken, you
 can have a look at its related BFS webpage using the `url_bfs` link.
