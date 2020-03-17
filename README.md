@@ -74,24 +74,24 @@ column of the downloaded metadata as an argument to the
 `bfs_get_dataset()` function.
 
 ``` r
-df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[1])
+df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[1], language = "en")
 
 print(df_uni)
 ```
 
     ## # A tibble: 16,380 x 5
-    ##    studienstufe                           geschlecht isced_field     jahr  value
-    ##    <fct>                                  <fct>      <fct>           <fct> <dbl>
-    ##  1 First university degree or diploma     Male       Education scie… 1980    545
-    ##  2 Bachelor                               Male       Education scie… 1980      0
-    ##  3 Master                                 Male       Education scie… 1980      0
-    ##  4 Doctorate                              Male       Education scie… 1980     93
-    ##  5 Further education, advanced studies a… Male       Education scie… 1980     13
-    ##  6 First university degree or diploma     Female     Education scie… 1980    946
-    ##  7 Bachelor                               Female     Education scie… 1980      0
-    ##  8 Master                                 Female     Education scie… 1980      0
-    ##  9 Doctorate                              Female     Education scie… 1980     70
-    ## 10 Further education, advanced studies a… Female     Education scie… 1980     52
+    ##    level_of_study                            gender isced_field      year  value
+    ##    <fct>                                     <fct>  <fct>            <fct> <dbl>
+    ##  1 First university degree or diploma        Male   Education scien… 1980    545
+    ##  2 Bachelor                                  Male   Education scien… 1980      0
+    ##  3 Master                                    Male   Education scien… 1980      0
+    ##  4 Doctorate                                 Male   Education scien… 1980     93
+    ##  5 Further education, advanced studies and … Male   Education scien… 1980     13
+    ##  6 First university degree or diploma        Female Education scien… 1980    946
+    ##  7 Bachelor                                  Female Education scien… 1980      0
+    ##  8 Master                                    Female Education scien… 1980      0
+    ##  9 Doctorate                                 Female Education scien… 1980     70
+    ## 10 Further education, advanced studies and … Female Education scien… 1980     52
     ## # … with 16,370 more rows
 
 In case the `url_px` link to download the PC-Axis file is broken, you

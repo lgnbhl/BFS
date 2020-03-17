@@ -133,22 +133,22 @@
 <h3 class="hasAnchor">
 <a href="#download-datasets" class="anchor"></a>Download datasets</h3>
 <p>To download a BFS dataset, add the related url link from the <code>url_px</code> column of the downloaded metadata as an argument to the <code><a href="reference/bfs_get_dataset.html">bfs_get_dataset()</a></code> function.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">df_uni &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_get_dataset.html">bfs_get_dataset</a></span>(<span class="dt">url_px =</span> meta_en_uni<span class="op">$</span>url_px[<span class="dv">1</span>])</a>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">df_uni &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_get_dataset.html">bfs_get_dataset</a></span>(<span class="dt">url_px =</span> meta_en_uni<span class="op">$</span>url_px[<span class="dv">1</span>], <span class="dt">language =</span> <span class="st">"en"</span>)</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(df_uni)</a></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co">## # A tibble: 16,380 x 5</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">##    studienstufe                           geschlecht isced_field     jahr  value</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">##    &lt;fct&gt;                                  &lt;fct&gt;      &lt;fct&gt;           &lt;fct&gt; &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">##  1 First university degree or diploma     Male       Education scie… 1980    545</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">##  2 Bachelor                               Male       Education scie… 1980      0</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">##  3 Master                                 Male       Education scie… 1980      0</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">##  4 Doctorate                              Male       Education scie… 1980     93</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">##  5 Further education, advanced studies a… Male       Education scie… 1980     13</span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">##  6 First university degree or diploma     Female     Education scie… 1980    946</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">##  7 Bachelor                               Female     Education scie… 1980      0</span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">##  8 Master                                 Female     Education scie… 1980      0</span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">##  9 Doctorate                              Female     Education scie… 1980     70</span></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">## 10 Further education, advanced studies a… Female     Education scie… 1980     52</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">##    level_of_study                            gender isced_field      year  value</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">##    &lt;fct&gt;                                     &lt;fct&gt;  &lt;fct&gt;            &lt;fct&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">##  1 First university degree or diploma        Male   Education scien… 1980    545</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">##  2 Bachelor                                  Male   Education scien… 1980      0</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">##  3 Master                                    Male   Education scien… 1980      0</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">##  4 Doctorate                                 Male   Education scien… 1980     93</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">##  5 Further education, advanced studies and … Male   Education scien… 1980     13</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">##  6 First university degree or diploma        Female Education scien… 1980    946</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">##  7 Bachelor                                  Female Education scien… 1980      0</span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">##  8 Master                                    Female Education scien… 1980      0</span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">##  9 Doctorate                                 Female Education scien… 1980     70</span></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">## 10 Further education, advanced studies and … Female Education scien… 1980     52</span></a>
 <a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">## # … with 16,370 more rows</span></a></code></pre></div>
 <p>In case the <code>url_px</code> link to download the PC-Axis file is broken, you can have a look at its related BFS webpage using the <code>url_bfs</code> link.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/browseURL.html">browseURL</a></span>(meta_en_uni<span class="op">$</span>url_bfs[<span class="dv">1</span>]) <span class="co"># open webpage</span></a></code></pre></div>

@@ -210,6 +210,7 @@ bfs_search <- function(data = bfs_get_metadata(), string, ignore.case = TRUE) {
 #' folder of the {pins} package. 
 #'
 #' @param url_px The url link to download the PC-Axis file.
+#' @param language Language of the dataset to be translated if exists.
 #' @param path The local folder to use as a cache, default to {pins} cache.
 #'
 #' The BFS data is saved in a local folder using the pins package. The
@@ -221,27 +222,65 @@ bfs_search <- function(data = bfs_get_metadata(), string, ignore.case = TRUE) {
 #' @examples
 #' \donttest{meta_en <- bfs_get_metadata(language = "en")}
 #' \donttest{bfs_meta_edu <- bfs_search(data = meta_en, string = "university students")}
-#' \donttest{bfs_get_dataset(bfs_meta_edu$url_px[1])}
+#' \donttest{bfs_get_dataset(bfs_meta_edu$url_px[1], language = "en")}
 #'
 #' @export
 
-bfs_get_dataset <- function(url_px, path = pins::board_cache_path()) {
+bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_path()) {
   pins::board_register_local(cache = path) # temp folder of the spins package
-  dataset_name <- paste0("bfs_data_", gsub("[^0-9]", "", url_px))
+  dataset_name <- paste0("bfs_data_", gsub("[^0-9]", "", url_px), "_", language)
   tempfile_path <- paste0(tempdir(), "/", dataset_name, ".px") # normal temp folder
   
   # Do NOT download data again if data already downloaded today
   bfs_data <- tryCatch(pins::pin_get(dataset_name, board = "local"), error = function(e) "Data not downloaded today")
   bfs_data_today <- attr(bfs_data, "metadata") == Sys.Date()
   
-  if(!isTRUE(bfs_data_today)){
+  if(!isTRUE(bfs_data_today) & language == "de"){
     download.file(url_px, destfile = file.path(tempfile_path))
     bfs_data <- tibble::as_tibble(as.data.frame(pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))))
     bfs_data <- janitor::clean_names(bfs_data)
-
-    attr(bfs_data, "metadata") <- Sys.Date()
     
-    pins::pin(bfs_data, name = dataset_name, board = "local") # caching bfs_data in spin
+    attr(bfs_data, "metadata") <- Sys.Date()
+    pins::pin(bfs_data, name = paste0(dataset_name), board = "local")
+  } else if (!isTRUE(bfs_data_today) & language == "fr") {
+    download.file(url_px, destfile = file.path(tempfile_path))
+    bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
+    bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
+    
+    default_names <- names(bfs_px$VALUES)
+    new_names <- names(bfs_px$VALUES.fr.)
+    n_names <- length(default_names)
+    for(i in 1:n_names) names(bfs_data)[names(bfs_data) == default_names[i]] <- new_names[i]
+    
+    bfs_data <- janitor::clean_names(bfs_data)
+    attr(bfs_data, "metadata") <- Sys.Date()
+    pins::pin(bfs_data, name = paste0(dataset_name), board = "local")
+  } else if (!isTRUE(bfs_data_today) & language == "it") {
+    download.file(url_px, destfile = file.path(tempfile_path))
+    bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
+    bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
+    
+    default_names <- names(bfs_px$VALUES)
+    new_names <- names(bfs_px$VALUES.it.)
+    n_names <- length(default_names)
+    for(i in 1:n_names) names(bfs_data)[names(bfs_data) == default_names[i]] <- new_names[i]
+    
+    bfs_data <- janitor::clean_names(bfs_data)
+    attr(bfs_data, "metadata") <- Sys.Date()
+    pins::pin(bfs_data, name = paste0(dataset_name), board = "local")
+  } else if (!isTRUE(bfs_data_today) & language == "en") {
+    download.file(url_px, destfile = file.path(tempfile_path))
+    bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
+    bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
+    
+    default_names <- names(bfs_px$VALUES)
+    new_names <- names(bfs_px$VALUES.en.)
+    n_names <- length(default_names)
+    for(i in 1:n_names) names(bfs_data)[names(bfs_data) == default_names[i]] <- new_names[i]
+    
+    bfs_data <- janitor::clean_names(bfs_data)
+    attr(bfs_data, "metadata") <- Sys.Date()
+    pins::pin(bfs_data, name = paste0(dataset_name), board = "local")
   }
   
   bfs_data <- pins::pin_get(dataset_name, board = "local")

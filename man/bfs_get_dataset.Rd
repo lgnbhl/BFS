@@ -4,10 +4,12 @@
 \alias{bfs_get_dataset}
 \title{Get BFS PC-Axis files as data frames}
 \usage{
-bfs_get_dataset(url_px, path = pins::board_cache_path())
+bfs_get_dataset(url_px, language = "de", path = pins::board_cache_path())
 }
 \arguments{
 \item{url_px}{The url link to download the PC-Axis file.}
+
+\item{language}{Language of the dataset to be translated if exists.}
 
 \item{path}{The local folder to use as a cache, default to {pins} cache.
 
@@ -28,6 +30,6 @@ folder of the {pins} package.
 \examples{
 \donttest{meta_en <- bfs_get_metadata(language = "en")}
 \donttest{bfs_meta_edu <- bfs_search(data = meta_en, string = "university students")}
-\donttest{bfs_get_dataset(bfs_meta_edu$url_px[1])}
+\donttest{bfs_get_dataset(bfs_meta_edu$url_px[1], language = "en")}
 
 }

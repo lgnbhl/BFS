@@ -65,7 +65,7 @@ print(meta_en_uni)
 To download a BFS dataset, add the related url link from the `url_px` column of the downloaded metadata as an argument to the `bfs_get_dataset()` function. 
 
 ```{r bfs_get_dataset}
-df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[1])
+df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[1], language = "en")
 
 print(df_uni)
 ```
