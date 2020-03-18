@@ -31,9 +31,8 @@ devtools::install_github("lgnbhl/BFS")
 ```
 
 The current development version of BFS allows the user to choose the
-language in which the downloaded dataset is translated (the current
-release gives access to the default BFS language, mostly German). It
-allows also the user to force the download. Be sure to check it out!
+language in which the downloaded dataset is translated and to get
+additional information about it. Be sure to try it out!
 
 Usage
 -----
