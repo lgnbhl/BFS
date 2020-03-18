@@ -250,6 +250,18 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
     bfs_data <- janitor::clean_names(bfs_data)
     
+    attr(bfs_data, "download_date") <- Sys.Date()
+    attr(bfs_data, "contact") <- bfs_px$CONTACT[[1]]
+    attr(bfs_data, "description") <- bfs_px$DESCRIPTION[[1]]
+    attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
+    attr(bfs_data, "link") <- bfs_px$LINK[[1]]
+    attr(bfs_data, "note") <- bfs_px$NOTE[[1]]
+    attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA[[1]]
+    attr(bfs_data, "survey") <- bfs_px$SURVEY[[1]]
+    attr(bfs_data, "title") <- bfs_px$TITLE[[1]]
+    attr(bfs_data, "source") <- bfs_px$SOURCE[[1]]
+    attr(bfs_data, "units") <- bfs_px$UNITS[[1]]
+    
     languages_availables <- strsplit(bfs_px$LANGUAGES[[1]], '\",\"', "\n")[[1]]
     if(!is.element(language, languages_availables)) warning(paste0('Language "', language, '" not available. Dataset downloaded in the default language. Try with another language.'))
     
@@ -270,6 +282,18 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     download.file(url_px, destfile = file.path(tempfile_path))
     bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
     bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
+    
+    attr(bfs_data, "download_date") <- Sys.Date()
+    attr(bfs_data, "contact") <- bfs_px$CONTACT[[1]]
+    attr(bfs_data, "description") <- bfs_px$DESCRIPTION[[1]]
+    attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
+    attr(bfs_data, "link") <- bfs_px$LINK[[1]]
+    attr(bfs_data, "note") <- bfs_px$NOTE[[1]]
+    attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA[[1]]
+    attr(bfs_data, "survey") <- bfs_px$SURVEY[[1]]
+    attr(bfs_data, "title") <- bfs_px$TITLE[[1]]
+    attr(bfs_data, "source") <- bfs_px$SOURCE[[1]]
+    attr(bfs_data, "units") <- bfs_px$UNITS[[1]]
     
     languages_availables <- strsplit(bfs_px$LANGUAGES[[1]], '\",\"', "\n")[[1]]
     if(!is.element(language, languages_availables)) warning(paste0('Language "', language, '" not available. Dataset downloaded in the default language. Try with another language.'))
@@ -313,6 +337,18 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
     bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
     
+    attr(bfs_data, "download_date") <- Sys.Date()
+    attr(bfs_data, "contact") <- bfs_px$CONTACT[[1]]
+    attr(bfs_data, "description") <- bfs_px$DESCRIPTION[[1]]
+    attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
+    attr(bfs_data, "link") <- bfs_px$LINK[[1]]
+    attr(bfs_data, "note") <- bfs_px$NOTE[[1]]
+    attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA[[1]]
+    attr(bfs_data, "survey") <- bfs_px$SURVEY[[1]]
+    attr(bfs_data, "title") <- bfs_px$TITLE[[1]]
+    attr(bfs_data, "source") <- bfs_px$SOURCE[[1]]
+    attr(bfs_data, "units") <- bfs_px$UNITS[[1]]
+    
     languages_availables <- strsplit(bfs_px$LANGUAGES[[1]], '\",\"', "\n")[[1]]
     if(!is.element(language, languages_availables)) warning(paste0('Language "', language, '" not available. Dataset downloaded in the default language. Try with another language.'))
     
@@ -354,6 +390,18 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     download.file(url_px, destfile = file.path(tempfile_path))
     bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
     bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
+    
+    attr(bfs_data, "download_date") <- Sys.Date()
+    attr(bfs_data, "contact") <- bfs_px$CONTACT[[1]]
+    attr(bfs_data, "description") <- bfs_px$DESCRIPTION[[1]]
+    attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
+    attr(bfs_data, "link") <- bfs_px$LINK[[1]]
+    attr(bfs_data, "note") <- bfs_px$NOTE[[1]]
+    attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA[[1]]
+    attr(bfs_data, "survey") <- bfs_px$SURVEY[[1]]
+    attr(bfs_data, "title") <- bfs_px$TITLE[[1]]
+    attr(bfs_data, "source") <- bfs_px$SOURCE[[1]]
+    attr(bfs_data, "units") <- bfs_px$UNITS[[1]]
     
     languages_availables <- strsplit(bfs_px$LANGUAGES[[1]], '\",\"', "\n")[[1]]
     if(!is.element(language, languages_availables)) warning(paste0('Language "', language, '" not available. Dataset downloaded in the default language. Try with another language.'))
