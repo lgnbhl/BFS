@@ -25,4 +25,5 @@ reference:
       - bfs_get_metadata
       - bfs_search
       - bfs_get_dataset
+      - bfs_get_dataset_meta
       - bfs_open_dir

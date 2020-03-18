@@ -327,6 +327,36 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
   return(bfs_data)
 }
 
+#' Get the metadata of a BFS data frame
+#'
+#' Returns all the metadata in a data frame/tibble from a given BFS 
+#' PC-Axis file. If the path of the cache argument is not provided, the 
+#' downloaded BFS dataset will be saved in the default cache 
+#' folder of the {pins} package. 
+#'
+#' @param url_px The url link to download the PC-Axis file.
+#' @param force Force download to download data even if already downloaded today.
+#'
+#' The data frame is saved in a temporary folder by default.
+#'
+#' @examples
+#' \donttest{meta_en <- bfs_get_metadata(language = "en")}
+#' \donttest{bfs_meta_edu <- bfs_search(data = meta_en, string = "university students")}
+#' \donttest{bfs_get_dataset_meta(bfs_meta_edu$url_px[1])}
+#'
+#' @export
+
+bfs_get_dataset_meta <- function(url_px, force = FALSE) {
+  dataset_name <- paste0("bfs_data_", gsub("[^0-9]", "", url_px), "_", "_meta")
+  tempfile_path <- paste0(tempdir(), "/", dataset_name, ".px") # normal temp folder
+  
+  download.file(url_px, destfile = file.path(tempfile_path))
+  bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
+  bfs_data_meta <- tibble(variable = names(bfs_px), metadata = bfs_px)
+
+  return(bfs_data_meta)
+}
+
 #' Open folder containing all downloaded BFS datasets
 #'
 #' Opens the folder which contains all the BFS datasets downloaded

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • BFS</title>
+<title>Get the metadata of a BFS data frame — bfs_get_dataset_meta • BFS</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,7 +42,11 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Get the metadata of a BFS data frame — bfs_get_dataset_meta" />
+<meta property="og:description" content="Returns all the metadata in a data frame/tibble from a given BFS 
+PC-Axis file. If the path of the cache argument is not provided, the 
+downloaded BFS dataset will be saved in the default cache 
+folder of the pins package." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -73,7 +77,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -135,66 +139,63 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Get the metadata of a BFS data frame</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lgnbhl/BFS/blob/master/R/main.R'><code>R/main.R</code></a></small>
+    <div class="hidden name"><code>bfs_get_dataset_meta.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Returns all the metadata in a data frame/tibble from a given BFS 
+PC-Axis file. If the path of the cache argument is not provided, the 
+downloaded BFS dataset will be saved in the default cache 
+folder of the pins package.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>bfs_get_dataset_meta</span>(<span class='no'>url_px</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-functions" class="hasAnchor"><a href="#section-functions" class="anchor"></a>Functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="bfs_get_metadata.html">bfs_get_metadata()</a></code> </p>
-        </td>
-        <td><p>Get all BFS metadata in a given language</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bfs_search.html">bfs_search()</a></code> </p>
-        </td>
-        <td><p>Search titles of available BFS datasets</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bfs_get_dataset.html">bfs_get_dataset()</a></code> </p>
-        </td>
-        <td><p>Get BFS PC-Axis files as data frames</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bfs_get_dataset_meta.html">bfs_get_dataset_meta()</a></code> </p>
-        </td>
-        <td><p>Get the metadata of a BFS data frame</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bfs_open_dir.html">bfs_open_dir()</a></code> </p>
-        </td>
-        <td><p>Open folder containing all downloaded BFS datasets</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>url_px</th>
+      <td><p>The url link to download the PC-Axis file.</p></td>
+    </tr>
+    <tr>
+      <th>force</th>
+      <td><p>Force download to download data even if already downloaded today.</p>
+<p>The data frame is saved in a temporary folder by default.</p></td>
+    </tr>
     </table>
-  </div>
 
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>meta_en</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bfs_get_metadata.html'>bfs_get_metadata</a></span>(<span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"en"</span>)
+<span class='no'>bfs_meta_edu</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bfs_search.html'>bfs_search</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>meta_en</span>, <span class='kw'>string</span> <span class='kw'>=</span> <span class='st'>"university students"</span>)
+<span class='fu'>bfs_get_dataset_meta</span>(<span class='no'>bfs_meta_edu</span>$<span class='no'>url_px</span>[<span class='fl'>1</span>])</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 100 x 2</span><span>
+#&gt;    variable     metadata        
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;named list&gt;</span><span>    
+#&gt; </span><span style='color: #555555;'> 1</span><span> AXIS.VERSION </span><span style='color: #555555;'>&lt;named list [1]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 2</span><span> CHARSET      </span><span style='color: #555555;'>&lt;named list [1]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 3</span><span> CODEPAGE     </span><span style='color: #555555;'>&lt;named list [1]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 4</span><span> CODES        </span><span style='color: #555555;'>&lt;named list [1]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 5</span><span> CODES.en.    </span><span style='color: #555555;'>&lt;named list [1]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 6</span><span> CODES.fr.    </span><span style='color: #555555;'>&lt;named list [1]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 7</span><span> CODES.it.    </span><span style='color: #555555;'>&lt;named list [1]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 8</span><span> CONTACT      </span><span style='color: #555555;'>&lt;named list [1]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 9</span><span> CONTACT.en.  </span><span style='color: #555555;'>&lt;named list [1]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>10</span><span> CONTACT.fr.  </span><span style='color: #555555;'>&lt;named list [1]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'># … with 90 more rows</span><span></div><div class='input'>
+</div></span></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-functions">Functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 
