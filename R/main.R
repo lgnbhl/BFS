@@ -250,6 +250,9 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
     bfs_data <- janitor::clean_names(bfs_data)
     
+    languages_availables <- strsplit(bfs_px$LANGUAGES[[1]], '\",\"', "\n")[[1]]
+    if(!is.element(language, languages_availables)) warning(paste0('Language "', language, '" not available. Dataset downloaded in the default language. Try with another language.'))
+    
     attr(bfs_data, "download_date") <- Sys.Date()
     attr(bfs_data, "contact") <- bfs_px$CONTACT[[1]]
     attr(bfs_data, "description") <- bfs_px$DESCRIPTION[[1]]
@@ -268,111 +271,125 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
     bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
     
-    default_names <- names(bfs_px$VALUES)
-    new_names <- names(bfs_px$VALUES.fr.)
-    n_names <- length(default_names)
+    languages_availables <- strsplit(bfs_px$LANGUAGES[[1]], '\",\"', "\n")[[1]]
+    if(!is.element(language, languages_availables)) warning(paste0('Language "', language, '" not available. Dataset downloaded in the default language. Try with another language.'))
     
-    # ! possible bugs in new_categories
-    new_categories <- gsub('\", \"', "\n", bfs_px$VALUES.fr.)
-    new_categories <- gsub('\",\"', "\n", new_categories)
-    new_categories <- gsub(' \"', "", new_categories)
-    new_categories <- strsplit(new_categories, "\n")
-    
-    for(i in 1:n_names) {
-      names(bfs_data)[names(bfs_data) == default_names[i]] <- new_names[i]
-      l <- as.name(new_names[i])
-      levels(bfs_data[[l]]) <- new_categories[[i]]
-      replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
+    if(is.element(language, languages_availables)){
+      default_names <- names(bfs_px$VALUES)
+      new_names <- names(bfs_px$VALUES.fr.)
+      n_names <- length(default_names)
+      
+      # ! possible bugs in new_categories
+      new_categories <- gsub('\", \"', "\n", bfs_px$VALUES.fr.)
+      new_categories <- gsub('\",\"', "\n", new_categories)
+      new_categories <- gsub(' \"', "", new_categories)
+      new_categories <- strsplit(new_categories, "\n")
+      
+      for(i in 1:n_names) {
+        names(bfs_data)[names(bfs_data) == default_names[i]] <- new_names[i]
+        l <- as.name(new_names[i])
+        levels(bfs_data[[l]]) <- new_categories[[i]]
+        replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
+      }
+      
+      bfs_data <- janitor::clean_names(bfs_data)
+      
+      attr(bfs_data, "download_date") <- Sys.Date()
+      attr(bfs_data, "contact") <- bfs_px$CONTACT.fr.[[1]]
+      attr(bfs_data, "description") <- bfs_px$DESCRIPTION.fr.[[1]]
+      attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
+      attr(bfs_data, "link") <- bfs_px$LINK.fr.[[1]]
+      attr(bfs_data, "note") <- bfs_px$NOTE.fr.[[1]]
+      attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA.fr.[[1]]
+      attr(bfs_data, "survey") <- bfs_px$SURVEY.fr.[[1]]
+      attr(bfs_data, "title") <- bfs_px$TITLE.fr.[[1]]
+      attr(bfs_data, "source") <- bfs_px$SOURCE.fr.[[1]]
+      attr(bfs_data, "units") <- bfs_px$UNITS.fr.[[1]]
     }
-    
-    bfs_data <- janitor::clean_names(bfs_data)
-    
-    attr(bfs_data, "download_date") <- Sys.Date()
-    attr(bfs_data, "contact") <- bfs_px$CONTACT.fr.[[1]]
-    attr(bfs_data, "description") <- bfs_px$DESCRIPTION.fr.[[1]]
-    attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
-    attr(bfs_data, "link") <- bfs_px$LINK.fr.[[1]]
-    attr(bfs_data, "note") <- bfs_px$NOTE.fr.[[1]]
-    attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA.fr.[[1]]
-    attr(bfs_data, "survey") <- bfs_px$SURVEY.fr.[[1]]
-    attr(bfs_data, "title") <- bfs_px$TITLE.fr.[[1]]
-    attr(bfs_data, "source") <- bfs_px$SOURCE.fr.[[1]]
-    attr(bfs_data, "units") <- bfs_px$UNITS.fr.[[1]]
-    
     pins::pin(bfs_data, name = paste0(dataset_name), board = "local")
+    
   } else if (!isTRUE(bfs_data_today) & language == "it" | force == TRUE & language == "it") {
     download.file(url_px, destfile = file.path(tempfile_path))
     bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
     bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
     
-    default_names <- names(bfs_px$VALUES)
-    new_names <- names(bfs_px$VALUES.it.)
-    n_names <- length(default_names)
+    languages_availables <- strsplit(bfs_px$LANGUAGES[[1]], '\",\"', "\n")[[1]]
+    if(!is.element(language, languages_availables)) warning(paste0('Language "', language, '" not available. Dataset downloaded in the default language. Try with another language.'))
     
-    # ! possible bugs in new_categories
-    new_categories <- gsub('\", \"', "\n", bfs_px$VALUES.it.)
-    new_categories <- gsub('\",\"', "\n", new_categories)
-    new_categories <- gsub(' \"', "", new_categories)
-    new_categories <- strsplit(new_categories, "\n")
+    if(is.element(language, languages_availables)){
+      default_names <- names(bfs_px$VALUES)
+      new_names <- names(bfs_px$VALUES.it.)
+      n_names <- length(default_names)
+      
+      # ! possible bugs in new_categories
+      new_categories <- gsub('\", \"', "\n", bfs_px$VALUES.it.)
+      new_categories <- gsub('\",\"', "\n", new_categories)
+      new_categories <- gsub(' \"', "", new_categories)
+      new_categories <- strsplit(new_categories, "\n")
+      
+      for(i in 1:n_names) {
+        names(bfs_data)[names(bfs_data) == default_names[i]] <- new_names[i]
+        l <- as.name(new_names[i])
+        levels(bfs_data[[l]]) <- new_categories[[i]]
+        replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
+      }
     
-    for(i in 1:n_names) {
-      names(bfs_data)[names(bfs_data) == default_names[i]] <- new_names[i]
-      l <- as.name(new_names[i])
-      levels(bfs_data[[l]]) <- new_categories[[i]]
-      replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
+      bfs_data <- janitor::clean_names(bfs_data)
+      
+      attr(bfs_data, "download_date") <- Sys.Date()
+      attr(bfs_data, "contact") <- bfs_px$CONTACT.it.[[1]]
+      attr(bfs_data, "description") <- bfs_px$DESCRIPTION.it.[[1]]
+      attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
+      attr(bfs_data, "link") <- bfs_px$LINK.it.[[1]]
+      attr(bfs_data, "note") <- bfs_px$NOTE.it.[[1]]
+      attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA.it.[[1]]
+      attr(bfs_data, "survey") <- bfs_px$SURVEY.it.[[1]]
+      attr(bfs_data, "title") <- bfs_px$TITLE.it.[[1]]
+      attr(bfs_data, "source") <- bfs_px$SOURCE.it.[[1]]
+      attr(bfs_data, "units") <- bfs_px$UNITS.it.[[1]]
     }
-    
-    bfs_data <- janitor::clean_names(bfs_data)
-    
-    attr(bfs_data, "download_date") <- Sys.Date()
-    attr(bfs_data, "contact") <- bfs_px$CONTACT.it.[[1]]
-    attr(bfs_data, "description") <- bfs_px$DESCRIPTION.it.[[1]]
-    attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
-    attr(bfs_data, "link") <- bfs_px$LINK.it.[[1]]
-    attr(bfs_data, "note") <- bfs_px$NOTE.it.[[1]]
-    attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA.it.[[1]]
-    attr(bfs_data, "survey") <- bfs_px$SURVEY.it.[[1]]
-    attr(bfs_data, "title") <- bfs_px$TITLE.it.[[1]]
-    attr(bfs_data, "source") <- bfs_px$SOURCE.it.[[1]]
-    attr(bfs_data, "units") <- bfs_px$UNITS.it.[[1]]
-
     pins::pin(bfs_data, name = paste0(dataset_name), board = "local")
+    
   } else if (!isTRUE(bfs_data_today) & language == "en" | force == TRUE & language == "en") {
     download.file(url_px, destfile = file.path(tempfile_path))
     bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
     bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
     
-    default_names <- names(bfs_px$VALUES)
-    new_names <- names(bfs_px$VALUES.en.)
-    n_names <- length(default_names)
+    languages_availables <- strsplit(bfs_px$LANGUAGES[[1]], '\",\"', "\n")[[1]]
+    if(!is.element(language, languages_availables)) warning(paste0('Language "', language, '" not available. Dataset downloaded in the default language. Try with another language.'))
     
-    # ! possible bugs in new_categories
-    new_categories <- gsub('\", \"', "\n", bfs_px$VALUES.en.)
-    new_categories <- gsub('\",\"', "\n", new_categories)
-    new_categories <- gsub(' \"', "", new_categories)
-    new_categories <- strsplit(new_categories, "\n")
-    
-    for(i in 1:n_names) {
-      names(bfs_data)[names(bfs_data) == default_names[[i]]] <- new_names[i]
-      l <- as.name(new_names[[i]])
-      levels(bfs_data[[l]]) <- new_categories[[i]]
-      replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
+    if(is.element(language, languages_availables)){
+      default_names <- names(bfs_px$VALUES)
+      new_names <- names(bfs_px$VALUES.en.)
+      n_names <- length(default_names)
+      
+      # ! possible bugs in new_categories
+      new_categories <- gsub('\", \"', "\n", bfs_px$VALUES.en.)
+      new_categories <- gsub('\",\"', "\n", new_categories)
+      new_categories <- gsub(' \"', "", new_categories)
+      new_categories <- strsplit(new_categories, "\n")
+      
+      for(i in 1:n_names) {
+        names(bfs_data)[names(bfs_data) == default_names[[i]]] <- new_names[i]
+        l <- as.name(new_names[[i]])
+        levels(bfs_data[[l]]) <- new_categories[[i]]
+        replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
+      }
+      
+      bfs_data <- janitor::clean_names(bfs_data)
+      
+      attr(bfs_data, "download_date") <- Sys.Date()
+      attr(bfs_data, "contact") <- bfs_px$CONTACT.en.[[1]]
+      attr(bfs_data, "description") <- bfs_px$DESCRIPTION.en.[[1]]
+      attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
+      attr(bfs_data, "link") <- bfs_px$LINK.en.[[1]]
+      attr(bfs_data, "note") <- bfs_px$NOTE.en.[[1]]
+      attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA.en.[[1]]
+      attr(bfs_data, "survey") <- bfs_px$SURVEY.en.[[1]]
+      attr(bfs_data, "title") <- bfs_px$TITLE.en.[[1]]
+      attr(bfs_data, "source") <- bfs_px$SOURCE.en.[[1]]
+      attr(bfs_data, "units") <- bfs_px$UNITS.en.[[1]]
     }
-    
-    bfs_data <- janitor::clean_names(bfs_data)
-    
-    attr(bfs_data, "download_date") <- Sys.Date()
-    attr(bfs_data, "contact") <- bfs_px$CONTACT.en.[[1]]
-    attr(bfs_data, "description") <- bfs_px$DESCRIPTION.en.[[1]]
-    attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
-    attr(bfs_data, "link") <- bfs_px$LINK.en.[[1]]
-    attr(bfs_data, "note") <- bfs_px$NOTE.en.[[1]]
-    attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA.en.[[1]]
-    attr(bfs_data, "survey") <- bfs_px$SURVEY.en.[[1]]
-    attr(bfs_data, "title") <- bfs_px$TITLE.en.[[1]]
-    attr(bfs_data, "source") <- bfs_px$SOURCE.en.[[1]]
-    attr(bfs_data, "units") <- bfs_px$UNITS.en.[[1]]
-    
     pins::pin(bfs_data, name = paste0(dataset_name), board = "local")
   }
   
