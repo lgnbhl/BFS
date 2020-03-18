@@ -67,7 +67,7 @@ pipe `%>%`.
 library(magrittr)
 
 meta_en_uni <- bfs_get_metadata("en") %>%
-  bfs_search(pattern = "university students")
+  bfs_search("university students")
 
 print(meta_en_uni)
 ```
