@@ -38,7 +38,7 @@ data from the BFS website.
 }
 \examples{
 \donttest{meta_en <- bfs_get_metadata(language = "en")}
-\donttest{bfs_meta_edu <- bfs_search(data = meta_en, string = "university students")}
+\donttest{bfs_meta_edu <- bfs_search(data = meta_en, pattern = "university students")}
 \donttest{bfs_get_dataset(bfs_meta_edu$url_px[1], language = "en")}
 
 }

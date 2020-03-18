@@ -57,11 +57,18 @@ Italian and English metadata give access to less datasets.
 meta_en <- bfs_get_metadata(language = "en")
 ```
 
-To search for a dataset in the BFS metadata, you can use the
-`bfs_search()` function.
+### Search for data
+
+To search for a specific dataset title in the BFS metadata, you can use
+the `bfs_search()` function. This function leverages the R base function
+`grepl()` but calls the `data` argument first to allow the use of the
+pipe `%>%`.
 
 ``` r
-meta_en_uni <- bfs_search(data = meta_en, string = "university students")
+library(magrittr)
+
+meta_en_uni <- bfs_get_metadata("en") %>%
+  bfs_search(pattern = "university students")
 
 print(meta_en_uni)
 ```
@@ -72,7 +79,7 @@ print(meta_en_uni)
     ## 1 University stu… Observati… 27.03.2019 Federal… https://www.bfs.… https://www.…
     ## 2 University stu… Observati… 27.03.2019 Federal… https://www.bfs.… https://www.…
 
-### Download datasets
+### Download dataset
 
 To download a BFS dataset, add the related url link from the `url_px`
 column of the downloaded metadata as an argument to the
@@ -115,6 +122,14 @@ Sometimes the PC-Axis file of the dataset doesn’t exist. You should then
 use the “STAT-TAB - interactive table” service provided by BFS to
 download manually the dataset.
 
+The development version of BFS on Github allows to access additional
+information about the downloaded dataset using the R base `attributes()`
+function.
+
+``` r
+str(attributes(df_uni))
+```
+
 ### Data caching
 
 Data caching is handled using the [pins](https://pins.rstudio.com/) R
@@ -130,9 +145,11 @@ If a dataset has already been downloaded during the day, the functions
 downloaded datasets from your local pins caching folder. Caching speeds
 up code and reduces BFS server requests. However, if a given dataset has
 not been downloaded during the day, the functions download it again to
-be sure that you have the last BFS data available.
+be sure that you have the last BFS data available. You can however force
+the download using the `force` argument.
 
-### Other information
+Other information
+-----------------
 
 A [blog article](https://felixluginbuhl.com/blog/2019/11/07/swiss-data)
 showing a concret example about how to use the BFS package.

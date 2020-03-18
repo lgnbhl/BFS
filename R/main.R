@@ -180,16 +180,16 @@ bfs_get_metadata <- function(language = "de", path = pins::board_cache_path(), f
 #' Returns a tibble containing the titles, publication date,
 #' observation periods, data source, metadata url and download urls of
 #' available BFS datasets in a given language which match
-#' the given criteria.
+#' the given criteria. This function leverages the R base function \code{grepl} 
+#' but calls the data argument first to allow the use of the pipe from magrittr.
 #'
 #' @param data The data frame to search. This can be either a data frame
 #' previously fetched using \code{\link{bfs_get_metadata}} (recommended) or left
 #' blank, in which case a temporary data frame is fetched. The second option
 #' adds a few seconds to each search query.
-#'
-#' @param string A regular expression string to search for.
-#'
+#' @param pattern A regular expression string to search for.
 #' @param ignore.case Whether the search should be case-insensitive.
+#' @param fixed logical. If TRUE, pattern is a string to be matched as is.
 #'
 #' @return A data frame.
 #'
@@ -197,12 +197,12 @@ bfs_get_metadata <- function(language = "de", path = pins::board_cache_path(), f
 #'
 #' @examples
 #' \donttest{meta_en <- bfs_get_metadata(language = "en")}
-#' \donttest{bfs_search(data = meta_en, string = "university students")}
+#' \donttest{bfs_search(data = meta_en, pattern = "university students")}
 #'
 #' @export
 
-bfs_search <- function(data = bfs_get_metadata(), string, ignore.case = TRUE) {
-  data[grepl(string, data$title, ignore.case = ignore.case), ]
+bfs_search <- function(data = bfs_get_metadata(), pattern, ignore.case = TRUE, fixed = FALSE) {
+  data[grepl(pattern, data$title, ignore.case = ignore.case, fixed = fixed), ]
 }
 
 #' Download BFS dataset in a given language
@@ -230,7 +230,7 @@ bfs_search <- function(data = bfs_get_metadata(), string, ignore.case = TRUE) {
 #'
 #' @examples
 #' \donttest{meta_en <- bfs_get_metadata(language = "en")}
-#' \donttest{bfs_meta_edu <- bfs_search(data = meta_en, string = "university students")}
+#' \donttest{bfs_meta_edu <- bfs_search(data = meta_en, pattern = "university students")}
 #' \donttest{bfs_get_dataset(bfs_meta_edu$url_px[1], language = "en")}
 #'
 #' @export

@@ -17,7 +17,7 @@ test_that("bfs_get_dataset() returns a data frame with positive length", {
 test_that("bfs_search('kanton') returns a data frame with positive length and more than one column", {
   skip_on_cran()
   meta_de <- bfs_get_metadata()
-  meta_kanton <- bfs_search(data = meta_de, string = 'kanton')
+  meta_kanton <- bfs_search(data = meta_de, pattern = 'kanton')
   expect_equal(class(meta_kanton), c("tbl_df", "tbl", "data.frame"))
   expect_true(nrow(meta_kanton) > 0)
   expect_true(ncol(meta_kanton) > 1)

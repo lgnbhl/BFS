@@ -120,19 +120,26 @@
 <a href="#download-metadata" class="anchor"></a>Download metadata</h3>
 <p>To search and download data from the Swiss Federal Statistical Office, you first need to retrieve information about the available public datasets. The <code><a href="reference/bfs_get_metadata.html">bfs_get_metadata()</a></code> function returns a data frame/tibble containing the titles, publication dates, observation periods, data sources, website urls and download urls of all the BFS datasets available in a given language. You can get the metadata in German (“de”, by default), French (“fr”), Italian (“it”) or English (“en”). Note that Italian and English metadata give access to less datasets.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">meta_en &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_get_metadata.html">bfs_get_metadata</a></span>(<span class="dt">language =</span> <span class="st">"en"</span>)</a></code></pre></div>
-<p>To search for a dataset in the BFS metadata, you can use the <code><a href="reference/bfs_search.html">bfs_search()</a></code> function.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">meta_en_uni &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_search.html">bfs_search</a></span>(<span class="dt">data =</span> meta_en, <span class="dt">string =</span> <span class="st">"university students"</span>)</a>
+</div>
+<div id="search-for-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#search-for-data" class="anchor"></a>Search for data</h3>
+<p>To search for a specific dataset title in the BFS metadata, you can use the <code><a href="reference/bfs_search.html">bfs_search()</a></code> function. This function leverages the R base function <code><a href="https://rdrr.io/r/base/grep.html">grepl()</a></code> but calls the <code>data</code> argument first to allow the use of the pipe <code><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(meta_en_uni)</a></code></pre></div>
+<a class="sourceLine" id="cb5-3" data-line-number="3">meta_en_uni &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_get_metadata.html">bfs_get_metadata</a></span>(<span class="st">"en"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="reference/bfs_search.html">bfs_search</a></span>(<span class="dt">pattern =</span> <span class="st">"university students"</span>)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(meta_en_uni)</a></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co">## # A tibble: 2 x 6</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">##   title           period     published  source   url_bfs           url_px       </span></a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">##   &lt;chr&gt;           &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;             &lt;chr&gt;        </span></a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">## 1 University stu… Observati… 27.03.2019 Federal… https://www.bfs.… https://www.…</span></a>
 <a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">## 2 University stu… Observati… 27.03.2019 Federal… https://www.bfs.… https://www.…</span></a></code></pre></div>
 </div>
-<div id="download-datasets" class="section level3">
+<div id="download-dataset" class="section level3">
 <h3 class="hasAnchor">
-<a href="#download-datasets" class="anchor"></a>Download datasets</h3>
+<a href="#download-dataset" class="anchor"></a>Download dataset</h3>
 <p>To download a BFS dataset, add the related url link from the <code>url_px</code> column of the downloaded metadata as an argument to the <code><a href="reference/bfs_get_dataset.html">bfs_get_dataset()</a></code> function.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">df_uni &lt;-<span class="st"> </span><span class="kw"><a href="reference/bfs_get_dataset.html">bfs_get_dataset</a></span>(<span class="dt">url_px =</span> meta_en_uni<span class="op">$</span>url_px[<span class="dv">1</span>])</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"></a>
@@ -155,21 +162,23 @@
 <p>In case the <code>url_px</code> link to download the PC-Axis file is broken, you can have a look at its related BFS webpage using the <code>url_bfs</code> link.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/browseURL.html">browseURL</a></span>(meta_en_uni<span class="op">$</span>url_bfs[<span class="dv">1</span>]) <span class="co"># open webpage</span></a></code></pre></div>
 <p>Sometimes the PC-Axis file of the dataset doesn’t exist. You should then use the “STAT-TAB - interactive table” service provided by BFS to download manually the dataset.</p>
+<p>The development version of BFS on Github allows to access additional information about the downloaded dataset using the R base <code><a href="https://rdrr.io/r/base/attributes.html">attributes()</a></code> function.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span>(df_uni))</a></code></pre></div>
 </div>
 <div id="data-caching" class="section level3">
 <h3 class="hasAnchor">
 <a href="#data-caching" class="anchor"></a>Data caching</h3>
 <p>Data caching is handled using the <a href="https://pins.rstudio.com/">pins</a> R package. To open the folder containing all the BFS datasets you already downloaded, you can use the <code><a href="reference/bfs_open_dir.html">bfs_open_dir()</a></code> function.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="reference/bfs_open_dir.html">bfs_open_dir</a></span>()</a></code></pre></div>
-<p>If a dataset has already been downloaded during the day, the functions <code><a href="reference/bfs_get_metadata.html">bfs_get_metadata()</a></code> and <code><a href="reference/bfs_get_dataset.html">bfs_get_dataset()</a></code> retrieve the already downloaded datasets from your local pins caching folder. Caching speeds up code and reduces BFS server requests. However, if a given dataset has not been downloaded during the day, the functions download it again to be sure that you have the last BFS data available.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="reference/bfs_open_dir.html">bfs_open_dir</a></span>()</a></code></pre></div>
+<p>If a dataset has already been downloaded during the day, the functions <code><a href="reference/bfs_get_metadata.html">bfs_get_metadata()</a></code> and <code><a href="reference/bfs_get_dataset.html">bfs_get_dataset()</a></code> retrieve the already downloaded datasets from your local pins caching folder. Caching speeds up code and reduces BFS server requests. However, if a given dataset has not been downloaded during the day, the functions download it again to be sure that you have the last BFS data available. You can however force the download using the <code>force</code> argument.</p>
 </div>
-<div id="other-information" class="section level3">
-<h3 class="hasAnchor">
-<a href="#other-information" class="anchor"></a>Other information</h3>
+</div>
+<div id="other-information" class="section level2">
+<h2 class="hasAnchor">
+<a href="#other-information" class="anchor"></a>Other information</h2>
 <p>A <a href="https://felixluginbuhl.com/blog/2019/11/07/swiss-data">blog article</a> showing a concret example about how to use the BFS package.</p>
 <p>Alternative R package: <a href="https://github.com/rOpenGov/pxweb" target="_blank">pxweb</a>.</p>
 <p>This package is in no way officially related to or endorsed by the Swiss Federal Statistical Office (BFS).</p>
-</div>
 </div>
 </div>
 
