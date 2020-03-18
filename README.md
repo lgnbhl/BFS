@@ -31,8 +31,9 @@ devtools::install_github("lgnbhl/BFS")
 ```
 
 The current development version of BFS allows the user to choose the
-language in which the downloaded dataset is translated (only in German
-on CRAN). It allows also to force the download. Be sure to check it out!
+language in which the downloaded dataset is translated (the current
+release gives access to the default BFS language, mostly in German). It
+allows also the user to force the download. Be sure to check it out!
 
 Usage
 -----
@@ -99,8 +100,8 @@ print(df_uni)
     ## # … with 16,370 more rows
 
 Note that the development version of BFS on Github allows the user to
-choose the language in which the dataset is downloaded (only in German
-in the current release on CRAN).
+choose the language (German, French, Italian or English) in which the
+dataset is translated. Give it a try.
 
 In case the `url_px` link to download the PC-Axis file is broken, you
 can have a look at its related BFS webpage using the `url_bfs` link.
