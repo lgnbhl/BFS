@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get all BFS metadata in a given language — bfs_get_metadata • BFS</title>
+<title>Download BFS metadata in a given language — bfs_get_metadata • BFS</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,7 +42,7 @@
 
 
 
-<meta property="og:title" content="Get all BFS metadata in a given language — bfs_get_metadata" />
+<meta property="og:title" content="Download BFS metadata in a given language — bfs_get_metadata" />
 <meta property="og:description" content="Returns a tibble containing the titles, publication dates,
 observation periods, data source, metadata webpage urls and download link urls 
 in a given language of the current public BFS datasets available. If the path of 
@@ -142,7 +142,7 @@ the default cache folder of the pins package." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get all BFS metadata in a given language</h1>
+    <h1>Download BFS metadata in a given language</h1>
     <small class="dont-index">Source: <a href='https://github.com/lgnbhl/BFS/blob/master/R/main.R'><code>R/main.R</code></a></small>
     <div class="hidden name"><code>bfs_get_metadata.Rd</code></div>
     </div>
@@ -174,21 +174,26 @@ the default cache folder of the pins package.</p>
     </tr>
     <tr>
       <th>force</th>
-      <td><p>Force to download metadata even if already downloaded today.</p>
-<p>Languages availables are German ("de", as default), French ("fr"),
-Italian ("it") and English ("en"). Note that Italian and English BFS
-metadata doesn't give access to all the BFS datasets availables online.</p>
-<p>The BFS metadata is saved in a local folder using the pins package. The
-function allows to download the BFS metadata only once per day in a given
-language. If the metadata has alread been downloaded in a given language 
-during the day, the existing dataset is loaded into R from the pins caching 
-folder instead of downloading again the metadata from the BFS website.</p></td>
+      <td><p>Force to download metadata even if already downloaded today.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A tibble</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Languages availables are German ("de", as default), French ("fr"),
+Italian ("it") and English ("en"). Note that Italian and English BFS
+metadata doesn't give access to all the BFS datasets availables online.</p>
+<p>The BFS metadata is saved in a local folder using the pins package. The
+function allows to download the BFS metadata only once per day in a given
+language. If the metadata has alread been downloaded in a given language 
+during the day, the existing dataset is loaded into R from the pins caching 
+folder instead of downloading again the metadata from the BFS website.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='bfs_get_dataset.html'>bfs_get_dataset</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>meta_en</span> <span class='kw'>&lt;-</span> <span class='fu'>bfs_get_metadata</span>(<span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"en"</span>)</div></pre>
@@ -198,6 +203,8 @@ folder instead of downloading again the metadata from the BFS website.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
+      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

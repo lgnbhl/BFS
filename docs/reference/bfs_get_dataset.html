@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get BFS PC-Axis files as data frames — bfs_get_dataset • BFS</title>
+<title>Download BFS dataset in a given language — bfs_get_dataset • BFS</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,13 +42,14 @@
 
 
 
-<meta property="og:title" content="Get BFS PC-Axis files as data frames — bfs_get_dataset" />
-<meta property="og:description" content="Returns a data frame/tibble from a given BFS PC-Axis file. The
-default language is German and the column names are renamed 
+<meta property="og:title" content="Download BFS dataset in a given language — bfs_get_dataset" />
+<meta property="og:description" content="Returns a data frame/tibble from  the URL of a given BFS PC-Axis file. 
+The default language is German and the column names are renamed 
 using the clean_names function of the
 janitor package. If the path of the cache argument is not provided, the 
 downloaded BFS dataset will be saved in the default cache 
-folder of the pins package." />
+folder of the pins package. The metadata can be accessed by making the
+downloaded dataset an argument of the base R function attributes()." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -143,18 +144,19 @@ folder of the pins package." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get BFS PC-Axis files as data frames</h1>
+    <h1>Download BFS dataset in a given language</h1>
     <small class="dont-index">Source: <a href='https://github.com/lgnbhl/BFS/blob/master/R/main.R'><code>R/main.R</code></a></small>
     <div class="hidden name"><code>bfs_get_dataset.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Returns a data frame/tibble from a given BFS PC-Axis file. The
-default language is German and the column names are renamed 
+    <p>Returns a data frame/tibble from  the URL of a given BFS PC-Axis file. 
+The default language is German and the column names are renamed 
 using the <code><a href='https://rdrr.io/pkg/janitor/man/clean_names.html'>clean_names</a></code> function of the
 janitor package. If the path of the cache argument is not provided, the 
 downloaded BFS dataset will be saved in the default cache 
-folder of the pins package.</p>
+folder of the pins package. The metadata can be accessed by making the
+downloaded dataset an argument of the base R function <code><a href='https://rdrr.io/r/base/attributes.html'>attributes()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>bfs_get_dataset</span>(
@@ -181,15 +183,20 @@ folder of the pins package.</p>
     </tr>
     <tr>
       <th>force</th>
-      <td><p>Force download to download data even if already downloaded today.</p>
-<p>The BFS data is saved in a local folder using the pins package. The
-function allows to download the BFS data only once per day. If the data 
-has alread been downloaded during the day, the existing dataset is loaded 
-into R from the pins caching folder instead of downloading again the 
-data from the BFS website.</p></td>
+      <td><p>Force download to download data even if already downloaded today.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The BFS data is saved in a local folder using the pins package. The
+function allows to download the BFS data only once per day. If the data 
+has alread been downloaded during the day, the existing dataset is loaded 
+into R from the pins caching folder instead of downloading again the 
+data from the BFS website.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='bfs_get_metadata.html'>bfs_get_metadata</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>meta_en</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bfs_get_metadata.html'>bfs_get_metadata</a></span>(<span class='kw'>language</span> <span class='kw'>=</span> <span class='st'>"en"</span>)
@@ -214,6 +221,8 @@ data from the BFS website.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#details">Details</a></li>
+      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

@@ -38,7 +38,7 @@ To get a bug fix, or use a feature from the development version, you can install
 devtools::install_github("lgnbhl/BFS")
 ```
 
-The current development version of BFS allows the user to choose the language in which the downloaded dataset is translated (the current release gives access to the default BFS language, mostly in German). It allows also the user to force the download. Be sure to check it out!
+The current development version of BFS allows the user to choose the language in which the downloaded dataset is translated (the current release gives access to the default BFS language, mostly German). It allows also the user to force the download. Be sure to check it out!
 
 ## Usage
 
@@ -72,7 +72,7 @@ df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[1])
 print(df_uni)
 ```
 
-Note that the development version of BFS on Github allows the user to choose the language (German, French, Italian or English) in which the dataset is translated. Give it a try.
+Note that the development version of BFS on Github allows the user to choose the language (German, French, Italian or English) in which the dataset is translated. It also allows to access its metadata using the R base function `attributes()`. Give it a try.
 
 In case the `url_px` link to download the PC-Axis file is broken, you can have a look at its related BFS webpage using the `url_bfs` link. 
 
@@ -94,6 +94,8 @@ If a dataset has already been downloaded during the day, the functions `bfs_get_
 
 ### Other information
 
-Alternative R package: [pxweb](https://github.com/rOpenGov/pxweb){target="_blank"}
+A [blog article](https://felixluginbuhl.com/blog/2019/11/07/swiss-data) showing a concret example about how to use the BFS package.
+
+Alternative R package: [pxweb](https://github.com/rOpenGov/pxweb){target="_blank"}.
 
 This package is in no way officially related to or endorsed by the Swiss Federal Statistical Office (BFS).

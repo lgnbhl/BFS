@@ -2,7 +2,7 @@
 % Please edit documentation in R/main.R
 \name{bfs_get_dataset}
 \alias{bfs_get_dataset}
-\title{Get BFS PC-Axis files as data frames}
+\title{Download BFS dataset in a given language}
 \usage{
 bfs_get_dataset(
   url_px,
@@ -18,25 +18,30 @@ bfs_get_dataset(
 
 \item{path}{The local folder to use as a cache, default to {pins} cache.}
 
-\item{force}{Force download to download data even if already downloaded today.
-
+\item{force}{Force download to download data even if already downloaded today.}
+}
+\description{
+Returns a data frame/tibble from  the URL of a given BFS PC-Axis file. 
+The default language is German and the column names are renamed 
+using the \code{\link[janitor]{clean_names}} function of the
+janitor package. If the path of the cache argument is not provided, the 
+downloaded BFS dataset will be saved in the default cache 
+folder of the {pins} package. The metadata can be accessed by making the
+downloaded dataset an argument of the base R function \code{attributes()}.
+}
+\details{
 The BFS data is saved in a local folder using the pins package. The
 function allows to download the BFS data only once per day. If the data 
 has alread been downloaded during the day, the existing dataset is loaded 
 into R from the pins caching folder instead of downloading again the 
-data from the BFS website.}
-}
-\description{
-Returns a data frame/tibble from a given BFS PC-Axis file. The
-default language is German and the column names are renamed 
-using the \code{\link[janitor]{clean_names}} function of the
-janitor package. If the path of the cache argument is not provided, the 
-downloaded BFS dataset will be saved in the default cache 
-folder of the {pins} package.
+data from the BFS website.
 }
 \examples{
 \donttest{meta_en <- bfs_get_metadata(language = "en")}
 \donttest{bfs_meta_edu <- bfs_search(data = meta_en, string = "university students")}
 \donttest{bfs_get_dataset(bfs_meta_edu$url_px[1], language = "en")}
 
+}
+\seealso{
+\code{\link{bfs_get_metadata}}
 }

@@ -83,17 +83,13 @@ get_bfs_metadata_all <- function(i) {
   )
 }
 
-#' Get all BFS metadata in a given language
+#' Download BFS metadata in a given language
 #'
 #' Returns a tibble containing the titles, publication dates,
 #' observation periods, data source, metadata webpage urls and download link urls 
 #' in a given language of the current public BFS datasets available. If the path of 
 #' the cache argument is not provided, the downloaded BFS dataset will be saved in 
 #' the default cache folder of the {pins} package. 
-#'
-#' @param language character The language of the metadata.
-#' @param path Path to local folder to use as a cache, default to {pins} cache.
-#' @param force Force to download metadata even if already downloaded today.
 #'
 #' Languages availables are German ("de", as default), French ("fr"),
 #' Italian ("it") and English ("en"). Note that Italian and English BFS
@@ -105,7 +101,13 @@ get_bfs_metadata_all <- function(i) {
 #' during the day, the existing dataset is loaded into R from the pins caching 
 #' folder instead of downloading again the metadata from the BFS website.
 #'
+#' @param language character The language of the metadata.
+#' @param path Path to local folder to use as a cache, default to {pins} cache.
+#' @param force Force to download metadata even if already downloaded today.
+#'
 #' @return A tibble
+#'
+#' @seealso \code{\link{bfs_get_dataset}}
 #'
 #' @examples
 #' \donttest{meta_en <- bfs_get_metadata(language = "en")}
@@ -118,7 +120,7 @@ bfs_get_metadata <- function(language = "de", path = pins::board_cache_path(), f
   
   # Do NOT download metadata again if metadata already downloaded today
   bfs_metadata <- tryCatch(pins::pin_get(paste0("bfs_meta_", language), board = "local"), error = function(e) "Metadata not downloaded today")
-  bfs_metadata_today <- attr(bfs_metadata, "metadata") == Sys.Date()
+  bfs_metadata_today <- attr(bfs_metadata, "download_date") == Sys.Date()
   
   if(!isTRUE(bfs_metadata_today) | force == TRUE){
   
@@ -160,7 +162,7 @@ bfs_get_metadata <- function(language = "de", path = pins::board_cache_path(), f
   bfs_metadata <- purrr::map_dfr(url_all, get_bfs_metadata_all) %>%
     tibble::as_tibble()
   
-  attr(bfs_metadata, "metadata") <- Sys.Date()
+  attr(bfs_metadata, "download_date") <- Sys.Date()
   
   pins::pin(bfs_metadata, name = paste0("bfs_meta_", language), board = "local")
   
@@ -203,25 +205,28 @@ bfs_search <- function(data = bfs_get_metadata(), string, ignore.case = TRUE) {
   data[grepl(string, data$title, ignore.case = ignore.case), ]
 }
 
-#' Get BFS PC-Axis files as data frames
+#' Download BFS dataset in a given language
 #'
-#' Returns a data frame/tibble from a given BFS PC-Axis file. The
-#' default language is German and the column names are renamed 
+#' Returns a data frame/tibble from  the URL of a given BFS PC-Axis file. 
+#' The default language is German and the column names are renamed 
 #' using the \code{\link[janitor]{clean_names}} function of the
 #' janitor package. If the path of the cache argument is not provided, the 
 #' downloaded BFS dataset will be saved in the default cache 
-#' folder of the {pins} package. 
-#'
-#' @param url_px The url link to download the PC-Axis file.
-#' @param language Language of the dataset to be translated if exists.
-#' @param path The local folder to use as a cache, default to {pins} cache.
-#' @param force Force download to download data even if already downloaded today.
+#' folder of the {pins} package. The metadata can be accessed by making the
+#' downloaded dataset an argument of the base R function \code{attributes()}.
 #'
 #' The BFS data is saved in a local folder using the pins package. The
 #' function allows to download the BFS data only once per day. If the data 
 #' has alread been downloaded during the day, the existing dataset is loaded 
 #' into R from the pins caching folder instead of downloading again the 
 #' data from the BFS website.
+#'
+#' @param url_px The url link to download the PC-Axis file.
+#' @param language Language of the dataset to be translated if exists.
+#' @param path The local folder to use as a cache, default to {pins} cache.
+#' @param force Force download to download data even if already downloaded today.
+#'
+#' @seealso \code{\link{bfs_get_metadata}}
 #'
 #' @examples
 #' \donttest{meta_en <- bfs_get_metadata(language = "en")}
@@ -237,13 +242,26 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
   
   # Do NOT download data again if data already downloaded today
   bfs_data <- tryCatch(pins::pin_get(dataset_name, board = "local"), error = function(e) "Data not downloaded today")
-  bfs_data_today <- attr(bfs_data, "metadata") == Sys.Date()
+  bfs_data_today <- attr(bfs_data, "download_date") == Sys.Date()
   
   if(!isTRUE(bfs_data_today) & language == "de" | force == TRUE & language == "de"){
     download.file(url_px, destfile = file.path(tempfile_path))
-    bfs_data <- tibble::as_tibble(as.data.frame(pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))))
+    bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
+    bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
     bfs_data <- janitor::clean_names(bfs_data)
-    attr(bfs_data, "metadata") <- Sys.Date()
+    
+    attr(bfs_data, "download_date") <- Sys.Date()
+    attr(bfs_data, "contact") <- bfs_px$CONTACT[[1]]
+    attr(bfs_data, "description") <- bfs_px$DESCRIPTION[[1]]
+    attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
+    attr(bfs_data, "link") <- bfs_px$LINK[[1]]
+    attr(bfs_data, "note") <- bfs_px$NOTE[[1]]
+    attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA[[1]]
+    attr(bfs_data, "survey") <- bfs_px$SURVEY[[1]]
+    attr(bfs_data, "title") <- bfs_px$TITLE[[1]]
+    attr(bfs_data, "source") <- bfs_px$SOURCE[[1]]
+    attr(bfs_data, "units") <- bfs_px$UNITS[[1]]
+
     pins::pin(bfs_data, name = paste0(dataset_name), board = "local")
   } else if (!isTRUE(bfs_data_today) & language == "fr" | force == TRUE & language == "fr") {
     download.file(url_px, destfile = file.path(tempfile_path))
@@ -268,7 +286,19 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     }
     
     bfs_data <- janitor::clean_names(bfs_data)
-    attr(bfs_data, "metadata") <- Sys.Date()
+    
+    attr(bfs_data, "download_date") <- Sys.Date()
+    attr(bfs_data, "contact") <- bfs_px$CONTACT.fr.[[1]]
+    attr(bfs_data, "description") <- bfs_px$DESCRIPTION.fr.[[1]]
+    attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
+    attr(bfs_data, "link") <- bfs_px$LINK.fr.[[1]]
+    attr(bfs_data, "note") <- bfs_px$NOTE.fr.[[1]]
+    attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA.fr.[[1]]
+    attr(bfs_data, "survey") <- bfs_px$SURVEY.fr.[[1]]
+    attr(bfs_data, "title") <- bfs_px$TITLE.fr.[[1]]
+    attr(bfs_data, "source") <- bfs_px$SOURCE.fr.[[1]]
+    attr(bfs_data, "units") <- bfs_px$UNITS.fr.[[1]]
+    
     pins::pin(bfs_data, name = paste0(dataset_name), board = "local")
   } else if (!isTRUE(bfs_data_today) & language == "it" | force == TRUE & language == "it") {
     download.file(url_px, destfile = file.path(tempfile_path))
@@ -293,7 +323,19 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     }
     
     bfs_data <- janitor::clean_names(bfs_data)
-    attr(bfs_data, "metadata") <- Sys.Date()
+    
+    attr(bfs_data, "download_date") <- Sys.Date()
+    attr(bfs_data, "contact") <- bfs_px$CONTACT.it.[[1]]
+    attr(bfs_data, "description") <- bfs_px$DESCRIPTION.it.[[1]]
+    attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
+    attr(bfs_data, "link") <- bfs_px$LINK.it.[[1]]
+    attr(bfs_data, "note") <- bfs_px$NOTE.it.[[1]]
+    attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA.it.[[1]]
+    attr(bfs_data, "survey") <- bfs_px$SURVEY.it.[[1]]
+    attr(bfs_data, "title") <- bfs_px$TITLE.it.[[1]]
+    attr(bfs_data, "source") <- bfs_px$SOURCE.it.[[1]]
+    attr(bfs_data, "units") <- bfs_px$UNITS.it.[[1]]
+
     pins::pin(bfs_data, name = paste0(dataset_name), board = "local")
   } else if (!isTRUE(bfs_data_today) & language == "en" | force == TRUE & language == "en") {
     download.file(url_px, destfile = file.path(tempfile_path))
@@ -311,50 +353,32 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     new_categories <- strsplit(new_categories, "\n")
     
     for(i in 1:n_names) {
-      names(bfs_data)[names(bfs_data) == default_names[i]] <- new_names[i]
-      l <- as.name(new_names[i])
+      names(bfs_data)[names(bfs_data) == default_names[[i]]] <- new_names[i]
+      l <- as.name(new_names[[i]])
       levels(bfs_data[[l]]) <- new_categories[[i]]
       replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
     }
     
     bfs_data <- janitor::clean_names(bfs_data)
-    attr(bfs_data, "metadata") <- Sys.Date()
+    
+    attr(bfs_data, "download_date") <- Sys.Date()
+    attr(bfs_data, "contact") <- bfs_px$CONTACT.en.[[1]]
+    attr(bfs_data, "description") <- bfs_px$DESCRIPTION.en.[[1]]
+    attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
+    attr(bfs_data, "link") <- bfs_px$LINK.en.[[1]]
+    attr(bfs_data, "note") <- bfs_px$NOTE.en.[[1]]
+    attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA.en.[[1]]
+    attr(bfs_data, "survey") <- bfs_px$SURVEY.en.[[1]]
+    attr(bfs_data, "title") <- bfs_px$TITLE.en.[[1]]
+    attr(bfs_data, "source") <- bfs_px$SOURCE.en.[[1]]
+    attr(bfs_data, "units") <- bfs_px$UNITS.en.[[1]]
+    
     pins::pin(bfs_data, name = paste0(dataset_name), board = "local")
   }
   
   bfs_data <- pins::pin_get(dataset_name, board = "local")
   
   return(bfs_data)
-}
-
-#' Get the metadata of a BFS data frame
-#'
-#' Returns all the metadata in a data frame/tibble from a given BFS 
-#' PC-Axis file. If the path of the cache argument is not provided, the 
-#' downloaded BFS dataset will be saved in the default cache 
-#' folder of the {pins} package. 
-#'
-#' @param url_px The url link to download the PC-Axis file.
-#' @param force Force download to download data even if already downloaded today.
-#'
-#' The data frame is saved in a temporary folder by default.
-#'
-#' @examples
-#' \donttest{meta_en <- bfs_get_metadata(language = "en")}
-#' \donttest{bfs_meta_edu <- bfs_search(data = meta_en, string = "university students")}
-#' \donttest{bfs_get_dataset_meta(bfs_meta_edu$url_px[1])}
-#'
-#' @export
-
-bfs_get_dataset_meta <- function(url_px, force = FALSE) {
-  dataset_name <- paste0("bfs_data_", gsub("[^0-9]", "", url_px), "_", "_meta")
-  tempfile_path <- paste0(tempdir(), "/", dataset_name, ".px") # normal temp folder
-  
-  download.file(url_px, destfile = file.path(tempfile_path))
-  bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
-  bfs_data_meta <- tibble(variable = names(bfs_px), metadata = bfs_px)
-
-  return(bfs_data_meta)
 }
 
 #' Open folder containing all downloaded BFS datasets
