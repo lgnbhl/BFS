@@ -29,7 +29,10 @@ get_bfs_metadata <- function(url) {
     rvest::html_text()
   
   metadata_observation_period <- tryCatch(metadata_info[seq(1, length(metadata_info), 3)], error = function(e) NA)
-  # metadata_observation_period <- gsub("[^0-9.-]", "", metadata_observation_period)
+  metadata_observation_period <- gsub("Dargestellter Zeitraum: ", "", metadata_observation_period)
+  metadata_observation_period <- gsub("Période d'observation: ", "", metadata_observation_period)
+  metadata_observation_period <- gsub("Periodo contemplato: ", "", metadata_observation_period)
+  metadata_observation_period <- gsub("Observation period: ", "", metadata_observation_period)
   
   source <- tryCatch(metadata_info[seq(2, length(metadata_info), 3)], error = function(e) NA)
   
@@ -51,7 +54,7 @@ get_bfs_metadata <- function(url) {
   
   df <- tibble::tibble(
     title = metadata_title,
-    period = metadata_observation_period,
+    observation_period = metadata_observation_period,
     published = metadata_published,
     source = source,
     url_bfs = metadata_href,
@@ -74,7 +77,7 @@ get_bfs_metadata_all <- function(i) {
   df_metadata_all <- rbind.data.frame(df_metadata,
                                       tibble::tibble(
                                         title = character(0),
-                                        period = character(0),
+                                        observation_period = character(0),
                                         published = character(0),
                                         source = character(0),
                                         url_bfs = character(0),
