@@ -181,7 +181,8 @@ bfs_get_metadata <- function(language = "de", path = pins::board_cache_path(), f
 #' observation periods, data source, metadata url and download urls of
 #' available BFS datasets in a given language which match
 #' the given criteria. This function leverages the R base function \code{grepl} 
-#' but calls the data argument first to allow the use of the pipe from magrittr.
+#' but calls the data argument first to allow the use of the pipe operator from 
+#' magrittr.
 #'
 #' @param data The data frame to search. This can be either a data frame
 #' previously fetched using \code{\link{bfs_get_metadata}} (recommended) or left

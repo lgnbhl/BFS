@@ -31,7 +31,8 @@ Returns a tibble containing the titles, publication date,
 observation periods, data source, metadata url and download urls of
 available BFS datasets in a given language which match
 the given criteria. This function leverages the R base function \code{grepl} 
-but calls the data argument first to allow the use of the pipe from magrittr.
+but calls the data argument first to allow the use of the pipe operator from 
+magrittr.
 }
 \examples{
 \donttest{meta_en <- bfs_get_metadata(language = "en")}

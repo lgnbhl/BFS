@@ -48,7 +48,7 @@ library(BFS)
 
 ### Download metadata
 
-To search and download data from the Swiss Federal Statistical Office, you first need to retrieve information about the available public datasets. The `bfs_get_metadata()` function returns a data frame/tibble containing the titles, publication dates, observation periods, data sources, website urls and download urls of all the BFS datasets available in a given language. You can get the metadata in German ("de", by default), French ("fr"), Italian ("it") or English ("en"). Note that Italian and English metadata give access to less datasets.
+To search and download data from the Swiss Federal Statistical Office, you first need to retrieve information about the available public datasets. The function `bfs_get_metadata()` returns a data frame/tibble containing the titles, publication dates, observation periods, data sources, website urls and download urls of all the BFS datasets available in a given language. You can get the metadata in German ("de", by default), French ("fr"), Italian ("it") or English ("en"). Note that Italian and English metadata give access to less datasets.
 
 ```{r bfs_get_metadata}
 meta_en <- bfs_get_metadata(language = "en")
@@ -56,7 +56,7 @@ meta_en <- bfs_get_metadata(language = "en")
 
 ### Search for data
 
-To search for a specific dataset title in the BFS metadata, you can use the `bfs_search()` function. This function leverages the R base function `grepl()` but calls the `data` argument first to allow the use of the pipe ``%>%``.
+To search for a specific dataset title in the BFS metadata, you can use the `bfs_search()` function. This function leverages the R base function `grepl()` but calls the `data` argument first to allow the use of the pipe operator ``%>%``.
 
 ```{r bfs_search}
 library(magrittr)
@@ -77,7 +77,7 @@ df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[1])
 print(df_uni)
 ```
 
-Note that the development version of BFS on Github allows the user to choose the language (German, French, Italian or English) in which the dataset is translated. It also allows to access its metadata using the R base function `attributes()`. Give it a try.
+Note that the development version of BFS on Github allows the user to choose the language (German, French, Italian or English) in which the dataset is translated.
 
 In case the `url_px` link to download the PC-Axis file is broken, you can have a look at its related BFS webpage using the `url_bfs` link. 
 
@@ -101,7 +101,7 @@ Data caching is handled using the [pins](https://pins.rstudio.com/) R package. T
 bfs_open_dir()
 ```
 
-If a dataset has already been downloaded during the day, the functions `bfs_get_metadata()` and `bfs_get_dataset()` retrieve the already downloaded datasets from your local pins caching folder. Caching speeds up code and reduces BFS server requests. However, if a given dataset has not been downloaded during the day, the functions download it again to be sure that you have the last BFS data available. You can however force the download using the `force` argument.
+If a dataset has already been downloaded during the day, the functions `bfs_get_metadata()` and `bfs_get_dataset()` retrieve the already downloaded datasets from your local pins caching folder. Caching speeds up code and reduces BFS server requests. However, if a given dataset has not been downloaded during the day, the functions download it again to be sure that you have the lastest data available. You can also force the download using the `force` argument.
 
 ## Other information
 

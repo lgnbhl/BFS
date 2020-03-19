@@ -45,7 +45,7 @@ library(BFS)
 
 To search and download data from the Swiss Federal Statistical Office,
 you first need to retrieve information about the available public
-datasets. The `bfs_get_metadata()` function returns a data frame/tibble
+datasets. The function `bfs_get_metadata()` returns a data frame/tibble
 containing the titles, publication dates, observation periods, data
 sources, website urls and download urls of all the BFS datasets
 available in a given language. You can get the metadata in German (“de”,
@@ -61,7 +61,7 @@ meta_en <- bfs_get_metadata(language = "en")
 To search for a specific dataset title in the BFS metadata, you can use
 the `bfs_search()` function. This function leverages the R base function
 `grepl()` but calls the `data` argument first to allow the use of the
-pipe `%>%`.
+pipe operator `%>%`.
 
 ``` r
 library(magrittr)
@@ -107,8 +107,7 @@ print(df_uni)
 
 Note that the development version of BFS on Github allows the user to
 choose the language (German, French, Italian or English) in which the
-dataset is translated. It also allows to access its metadata using the R
-base function `attributes()`. Give it a try.
+dataset is translated.
 
 In case the `url_px` link to download the PC-Axis file is broken, you
 can have a look at its related BFS webpage using the `url_bfs` link.
@@ -144,8 +143,8 @@ If a dataset has already been downloaded during the day, the functions
 downloaded datasets from your local pins caching folder. Caching speeds
 up code and reduces BFS server requests. However, if a given dataset has
 not been downloaded during the day, the functions download it again to
-be sure that you have the last BFS data available. You can however force
-the download using the `force` argument.
+be sure that you have the lastest data available. You can also force the
+download using the `force` argument.
 
 Other information
 -----------------
