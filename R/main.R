@@ -29,8 +29,9 @@ get_bfs_metadata <- function(url) {
     rvest::html_text()
   
   metadata_observation_period <- tryCatch(metadata_info[seq(1, length(metadata_info), 3)], error = function(e) NA)
+  metadata_observation_period <- iconv(metadata_observation_period, "latin1", "ASCII", sub="") # remove non-ASCII characters
   metadata_observation_period <- gsub("Dargestellter Zeitraum: ", "", metadata_observation_period)
-  metadata_observation_period <- gsub("Période d'observation: ", "", metadata_observation_period)
+  metadata_observation_period <- gsub("Priode d'observation: ", "", metadata_observation_period)
   metadata_observation_period <- gsub("Periodo contemplato: ", "", metadata_observation_period)
   metadata_observation_period <- gsub("Observation period: ", "", metadata_observation_period)
   
