@@ -38,8 +38,6 @@ To get a bug fix, or use a feature from the development version, you can install
 devtools::install_github("lgnbhl/BFS")
 ```
 
-The current development version of BFS allows the user to choose the language in which the downloaded dataset is translated and to get additional information about it. Be sure to try it out!
-
 ## Usage
 
 ```{r load BFS}
@@ -52,6 +50,8 @@ To search and download data from the Swiss Federal Statistical Office, you first
 
 ```{r bfs_get_metadata}
 meta_en <- bfs_get_metadata(language = "en")
+
+head(meta_en)
 ```
 
 ### Search for data
@@ -69,17 +69,22 @@ print(meta_en_uni)
 
 ### Download dataset
 
-To download a BFS dataset, add the related url link from the `url_px` column of the downloaded metadata as an argument to the `bfs_get_dataset()` function. 
+To download a BFS dataset, add the related url link from the `url_px` column of the downloaded metadata as an argument to the `bfs_get_dataset()` function. You can choose the language (German, French, Italian or English if any) in which the dataset is downloaded with the `language` argument.
 
 ```{r bfs_get_dataset}
-df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[1])
+df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[1], language = "en")
 
 print(df_uni)
 ```
 
-Note that the development version of BFS on Github allows the user to choose the language (German, French, Italian or English) in which the dataset is translated.
+You can access additional information about the downloaded dataset using the R base `attributes()` function.
 
-In case the `url_px` link to download the PC-Axis file is broken, you can have a look at its related BFS webpage using the `url_bfs` link. 
+```{r attributes}
+attributes(df_uni) %>%
+  str()
+```
+
+In case the function fails to download the dataset, you can have a look at its related BFS webpage using the `url_bfs` link. 
 
 ```{r browseURL, eval=FALSE}
 browseURL(meta_en_uni$url_bfs[1]) # open webpage
@@ -87,17 +92,11 @@ browseURL(meta_en_uni$url_bfs[1]) # open webpage
 
 Sometimes the PC-Axis file of the dataset doesn't exist. You should then use the "STAT-TAB - interactive table" service provided by BFS to download manually the dataset.
 
-The development version of BFS on Github allows to access additional information about the downloaded dataset using the R base `attributes()` function.
-
-```{r, eval=FALSE}
-str(attributes(df_uni))
-```
-
 ### Data caching
 
 Data caching is handled using the [pins](https://pins.rstudio.com/) R package. To open the folder containing all the BFS datasets you already downloaded, you can use the `bfs_open_dir()` function.
 
-```{r, eval = FALSE}
+```{r bfs_open_dir, eval = FALSE}
 bfs_open_dir()
 ```
 

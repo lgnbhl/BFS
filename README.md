@@ -30,10 +30,6 @@ install BFS from GitHub.
 devtools::install_github("lgnbhl/BFS")
 ```
 
-The current development version of BFS allows the user to choose the
-language in which the downloaded dataset is translated and to get
-additional information about it. Be sure to try it out!
-
 Usage
 -----
 
@@ -54,7 +50,19 @@ Italian and English metadata give access to less datasets.
 
 ``` r
 meta_en <- bfs_get_metadata(language = "en")
+
+head(meta_en)
 ```
+
+    ## # A tibble: 6 x 6
+    ##   title         observation_peri… published  source   url_bfs        url_px     
+    ##   <chr>         <chr>             <chr>      <chr>    <chr>          <chr>      
+    ## 1 University o… 1997-2019         25.03.2020 Federal… https://www.b… https://ww…
+    ## 2 University o… 1997-2019         25.03.2020 Federal… https://www.b… https://ww…
+    ## 3 University s… 1980-2019         25.03.2020 Federal… https://www.b… https://ww…
+    ## 4 University s… 1990-2019         25.03.2020 Federal… https://www.b… https://ww…
+    ## 5 Criminal off… 2009-2019         23.03.2020 Federal… https://www.b… https://ww…
+    ## 6 Defendants r… 2009-2019         23.03.2020 Federal… https://www.b… https://ww…
 
 ### Search for data
 
@@ -73,44 +81,66 @@ print(meta_en_uni)
 ```
 
     ## # A tibble: 2 x 6
-    ##   title           period     published  source   url_bfs           url_px       
-    ##   <chr>           <chr>      <chr>      <chr>    <chr>             <chr>        
-    ## 1 University stu… Observati… 27.03.2019 Federal… https://www.bfs.… https://www.…
-    ## 2 University stu… Observati… 27.03.2019 Federal… https://www.bfs.… https://www.…
+    ##   title         observation_peri… published  source   url_bfs        url_px     
+    ##   <chr>         <chr>             <chr>      <chr>    <chr>          <chr>      
+    ## 1 University s… 1980-2019         25.03.2020 Federal… https://www.b… https://ww…
+    ## 2 University s… 1990-2019         25.03.2020 Federal… https://www.b… https://ww…
 
 ### Download dataset
 
 To download a BFS dataset, add the related url link from the `url_px`
 column of the downloaded metadata as an argument to the
-`bfs_get_dataset()` function.
+`bfs_get_dataset()` function. You can choose the language (German,
+French, Italian or English if any) in which the dataset is downloaded
+with the `language` argument.
 
 ``` r
-df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[1])
+df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[1], language = "en")
 
 print(df_uni)
 ```
 
-    ## # A tibble: 16,380 x 5
-    ##    studienstufe                           geschlecht isced_field     jahr  value
-    ##    <fct>                                  <fct>      <fct>           <fct> <dbl>
-    ##  1 First university degree or diploma     Male       Education scie… 1980    545
-    ##  2 Bachelor                               Male       Education scie… 1980      0
-    ##  3 Master                                 Male       Education scie… 1980      0
-    ##  4 Doctorate                              Male       Education scie… 1980     93
-    ##  5 Further education, advanced studies a… Male       Education scie… 1980     13
-    ##  6 First university degree or diploma     Female     Education scie… 1980    946
-    ##  7 Bachelor                               Female     Education scie… 1980      0
-    ##  8 Master                                 Female     Education scie… 1980      0
-    ##  9 Doctorate                              Female     Education scie… 1980     70
-    ## 10 Further education, advanced studies a… Female     Education scie… 1980     52
-    ## # … with 16,370 more rows
+    ## # A tibble: 16,800 x 5
+    ##    level_of_study                           gender isced_field      year   value
+    ##    <fct>                                    <fct>  <fct>            <fct>  <dbl>
+    ##  1 First university degree or diploma       Male   Education scien… 2019/…    46
+    ##  2 Bachelor                                 Male   Education scien… 2019/…   149
+    ##  3 Master                                   Male   Education scien… 2019/…   131
+    ##  4 Doctorate                                Male   Education scien… 2019/…   120
+    ##  5 Further education, advanced studies and… Male   Education scien… 2019/…    14
+    ##  6 First university degree or diploma       Female Education scien… 2019/…    62
+    ##  7 Bachelor                                 Female Education scien… 2019/…   696
+    ##  8 Master                                   Female Education scien… 2019/…   540
+    ##  9 Doctorate                                Female Education scien… 2019/…   313
+    ## 10 Further education, advanced studies and… Female Education scien… 2019/…    24
+    ## # … with 16,790 more rows
 
-Note that the development version of BFS on Github allows the user to
-choose the language (German, French, Italian or English) in which the
-dataset is translated.
+You can access additional information about the downloaded dataset using
+the R base `attributes()` function.
 
-In case the `url_px` link to download the PC-Axis file is broken, you
-can have a look at its related BFS webpage using the `url_bfs` link.
+``` r
+attributes(df_uni) %>%
+  str()
+```
+
+    ## List of 14
+    ##  $ names        : chr [1:5] "level_of_study" "gender" "isced_field" "year" ...
+    ##  $ row.names    : int [1:16800] 1 2 3 4 5 6 7 8 9 10 ...
+    ##  $ download_date: Date[1:1], format: "2020-03-25"
+    ##  $ contact      : chr "Section Educational Processes, e-mail  <a href=mailto:sius@bfs.admin.ch>sius@bfs.admin.ch</a>"
+    ##  $ description  : chr "University students by year, ISCED field, gender and level of study"
+    ##  $ last_update  : chr "20200325 08:30"
+    ##  $ link         : chr "https://www.bfs.admin.ch/asset/en/px-x-1502040100_131"
+    ##  $ note         : chr "<B>Meta information</B>#Data as of: 25.03.2020#Survey: Students and graduates in higher education institutions "| __truncated__
+    ##  $ subject_area : chr "15 - Education and science"
+    ##  $ survey       : chr "Students and degrees of higher education institutions (SHIS-studex)"
+    ##  $ title        : chr "University students by Year, ISCED field, Gender and Level of study"
+    ##  $ source       : chr "FSO - Students and degrees of higher education institutions - © FSO"
+    ##  $ units        : chr "Person"
+    ##  $ class        : chr [1:3] "tbl_df" "tbl" "data.frame"
+
+In case the function fails to download the dataset, you can have a look
+at its related BFS webpage using the `url_bfs` link.
 
 ``` r
 browseURL(meta_en_uni$url_bfs[1]) # open webpage
@@ -119,14 +149,6 @@ browseURL(meta_en_uni$url_bfs[1]) # open webpage
 Sometimes the PC-Axis file of the dataset doesn’t exist. You should then
 use the “STAT-TAB - interactive table” service provided by BFS to
 download manually the dataset.
-
-The development version of BFS on Github allows to access additional
-information about the downloaded dataset using the R base `attributes()`
-function.
-
-``` r
-str(attributes(df_uni))
-```
 
 ### Data caching
 
