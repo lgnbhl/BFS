@@ -1,4 +1,8 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <!-- badges: start -->
+
 [![CRAN
 status](https://www.r-pkg.org/badges/version/BFS)](https://CRAN.R-project.org/package=BFS)
 [![Grand
@@ -7,15 +11,16 @@ total](http://cranlogs.r-pkg.org/badges/grand-total/BFS)](https://cran.r-project
 status](https://gitlab.com/lgnbhl/BFS/badges/master/pipeline.svg)](https://gitlab.com/lgnbhl/BFS/pipelines)
 <!-- badges: end -->
 
-BFS <img src="man/figures/logo.png" align="right" />
-====================================================
+# BFS <img src="man/figures/logo.png" align="right" />
+
+> Search and download data from the Swiss Federal Statistical Office
 
 The `BFS` package allows to search and download public data from the
-<a href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html" target="_blank">Swiss Federal Statistical Office (BFS)</a>
+[Swiss Federal Statistical Office
+(BFS)](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html)
 in a dynamic and reproducible way.
 
-Installation
-------------
+## Installation
 
 ``` r
 # Install the released version from CRAN
@@ -30,8 +35,7 @@ install BFS from GitHub.
 devtools::install_github("lgnbhl/BFS")
 ```
 
-Usage
------
+## Usage
 
 ``` r
 library(BFS)
@@ -92,7 +96,8 @@ To download a BFS dataset, add the related url link from the `url_px`
 column of the downloaded metadata as an argument to the
 `bfs_get_dataset()` function. You can choose the language (German,
 French, Italian or English if any) in which the dataset is downloaded
-with the `language` argument.
+with the `language`
+argument.
 
 ``` r
 df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[1], language = "en")
@@ -126,7 +131,7 @@ attributes(df_uni) %>%
     ## List of 14
     ##  $ names        : chr [1:5] "level_of_study" "gender" "isced_field" "year" ...
     ##  $ row.names    : int [1:16800] 1 2 3 4 5 6 7 8 9 10 ...
-    ##  $ download_date: Date[1:1], format: "2020-03-25"
+    ##  $ download_date: Date[1:1], format: "2020-03-30"
     ##  $ contact      : chr "Section Educational Processes, e-mail  <a href=mailto:sius@bfs.admin.ch>sius@bfs.admin.ch</a>"
     ##  $ description  : chr "University students by year, ISCED field, gender and level of study"
     ##  $ last_update  : chr "20200325 08:30"
@@ -168,14 +173,12 @@ not been downloaded during the day, the functions download it again to
 be sure that you have the lastest data available. You can also force the
 download using the `force` argument.
 
-Other information
------------------
+## Other information
 
 A [blog article](https://felixluginbuhl.com/blog/2019/11/07/swiss-data)
 showing a concret example about how to use the BFS package.
 
-Alternative R package:
-<a href="https://github.com/rOpenGov/pxweb" target="_blank">pxweb</a>.
+Alternative R package: [pxweb](https://github.com/rOpenGov/pxweb).
 
 This package is in no way officially related to or endorsed by the Swiss
 Federal Statistical Office (BFS).

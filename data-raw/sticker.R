@@ -3,7 +3,7 @@ library(hexSticker)
 library(magick)
 library(magrittr)
 
-hexSticker::sticker("man/figures/logo.svg",
+hexSticker::sticker("man/figures/logo_icon.svg",
                     package = "",
                     #p_color = "black",
                     #p_size = 7,

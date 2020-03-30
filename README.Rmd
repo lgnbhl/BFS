@@ -1,8 +1,8 @@
 ---
-output:
-  md_document:
-    variant: markdown_github
+output: github_document
 ---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/BFS)](https://CRAN.R-project.org/package=BFS)
@@ -19,6 +19,8 @@ knitr::opts_chunk$set(
 	warning = FALSE
 )
 ```
+
+> Search and download data from the Swiss Federal Statistical Office
 
 The `BFS` package allows to search and download public data from the 
 [Swiss Federal Statistical Office (BFS)](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html){target="_blank"}
