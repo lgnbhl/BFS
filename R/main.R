@@ -251,7 +251,7 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
   
   if(!isTRUE(bfs_data_today) & language == "de" | force == TRUE & language == "de"){
     download.file(url_px, destfile = file.path(tempfile_path))
-    bfs_px <- pxR::read.px(file.path(tempfile_path), encoding = "", na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
+    bfs_px <- pxR::read.px(file.path(tempfile_path), encoding = "latin1", na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
     bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
     bfs_data <- janitor::clean_names(bfs_data)
     
@@ -285,7 +285,7 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     pins::pin(bfs_data, name = paste0(dataset_name), board = "local")
   } else if (!isTRUE(bfs_data_today) & language == "fr" | force == TRUE & language == "fr") {
     download.file(url_px, destfile = file.path(tempfile_path))
-    bfs_px <- pxR::read.px(file.path(tempfile_path), encoding = "", na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
+    bfs_px <- pxR::read.px(file.path(tempfile_path), encoding = "latin1", na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
     bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
     
     attr(bfs_data, "download_date") <- Sys.Date()
@@ -339,7 +339,7 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     
   } else if (!isTRUE(bfs_data_today) & language == "it" | force == TRUE & language == "it") {
     download.file(url_px, destfile = file.path(tempfile_path))
-    bfs_px <- pxR::read.px(file.path(tempfile_path), encoding = "", na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
+    bfs_px <- pxR::read.px(file.path(tempfile_path), encoding = "latin1", na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
     bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
     
     attr(bfs_data, "download_date") <- Sys.Date()
@@ -393,7 +393,7 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     
   } else if (!isTRUE(bfs_data_today) & language == "en" | force == TRUE & language == "en") {
     download.file(url_px, destfile = file.path(tempfile_path))
-    bfs_px <- pxR::read.px(file.path(tempfile_path), encoding = "", na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
+    bfs_px <- pxR::read.px(file.path(tempfile_path), encoding = "latin1", na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
     bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
     
     attr(bfs_data, "download_date") <- Sys.Date()
