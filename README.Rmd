@@ -30,7 +30,7 @@ in a dynamic and reproducible way.
 
 ```{r eval=FALSE}
 # Install the released version from CRAN
-install.packages("BFS")
+# install.packages("BFS")
 ```
 
 To get a bug fix, or use a feature from the development version, you can install BFS from GitHub.
