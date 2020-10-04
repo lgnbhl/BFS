@@ -8,3 +8,4 @@
 ^pkgdown
 ^\.gitlab-ci\.yml$
 man/figures/logo.svg
+^\.github$
