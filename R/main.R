@@ -243,7 +243,7 @@ bfs_search <- function(data = bfs_get_metadata(), pattern, ignore.case = TRUE, f
 bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_path(), force = FALSE) {
   pins::board_register_local(cache = path) # temp folder of the spins package
   dataset_name <- paste0("bfs_data_", gsub("[^0-9]", "", url_px), "_", language)
-  tempfile_path <- paste0(tempdir(), "/", dataset_name, ".px") # normal temp folder
+  tempfile_path <- paste0(tempdir(), "\\", dataset_name, ".px") # normal temp folder
   
   # Do NOT download data again if data already downloaded today
   bfs_data <- tryCatch(pins::pin_get(dataset_name, board = "local"), error = function(e) "Data not downloaded today")
@@ -251,7 +251,7 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
   
   if(!isTRUE(bfs_data_today) & language == "de" | force == TRUE & language == "de"){
     download.file(url_px, destfile = file.path(tempfile_path))
-    bfs_px <- pxR::read.px(file.path(tempfile_path), encoding = "latin1", na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
+    bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
     bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
     bfs_data <- janitor::clean_names(bfs_data)
     
