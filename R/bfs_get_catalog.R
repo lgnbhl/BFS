@@ -39,7 +39,7 @@ get_bfs_catalog <- function(language = c("de", "fr", "it", "en")) {
     dplyr::mutate(language = language) %>%
     dplyr::mutate(url_px = gsub(base_url_bfs, base_url_px, url_bfs),
                   url_px = gsub(".html$", "/master", url_px)) %>%
-    select(title, language, published, url_bfs, url_px)
+    dplyr::select(title, language, published, url_bfs, url_px)
   
   return(df)
 }
