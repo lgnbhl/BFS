@@ -33,7 +33,7 @@ in a dynamic and reproducible way.
 
 ```{r eval=FALSE}
 # Install the released version from CRAN
-# install.packages("BFS")
+install.packages("BFS")
 ```
 
 To get a bug fix, or use a feature from the development version, you can install BFS from GitHub.
@@ -63,8 +63,10 @@ Using the development version on Github, you can also get the catalog data by la
 new function `bfs_get_catalog()` get the metadata based on the new RSS feed provided by the Swiss Federal Statistical Office. 
 Note that the number of datasets available may differ from the output of the `bfs_get_metadata()`.
 
-```{r bfs_get_metadata}
+```{r}
 catalog_en <- bfs_get_catalog(language = "en")
+
+head(catalog_en) 
 ```
 
 ### Search for data
@@ -76,23 +78,19 @@ library(magrittr)
 
 meta_en_uni <- bfs_get_metadata("en") %>%
   bfs_search("university students")
-
-print(meta_en_uni)
 ```
 
 ### Download data set
 
 To download a BFS data set, add the related URL link from the `url_px` column of the downloaded metadata as an argument to the `bfs_get_data set()` function. You can choose the language (German, French, Italian or English if any) in which the data set is downloaded with the `language` argument.
 
-```{r bfs_get_data set}
+```{r bfs_get_dataset, eval=FALSE}
 df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[1], language = "en")
-
-print(df_uni)
 ```
 
 You can access additional information about the downloaded data set using the R base `attributes()` function.
 
-```{r attributes}
+```{r attributes, eval=FALSE}
 attributes(df_uni) %>%
   str()
 ```

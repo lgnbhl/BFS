@@ -251,7 +251,7 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
   
   if(!isTRUE(bfs_data_today) & language == "de" | force == TRUE & language == "de"){
     download.file(url_px, destfile = file.path(tempfile_path))
-    bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
+    bfs_px <- pxR::read.px(file.path(tempfile_path), encoding = "latin1", na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
     bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
     bfs_data <- janitor::clean_names(bfs_data)
     

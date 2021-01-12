@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Search titles of available BFS datasets — bfs_search • BFS</title>
+<title>Pipe operator — %&gt;% • BFS</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,13 +46,8 @@
 
 
 
-<meta property="og:title" content="Search titles of available BFS datasets — bfs_search" />
-<meta property="og:description" content="Returns a tibble containing the titles, publication date,
-observation periods, data source, metadata url and download urls of
-available BFS datasets in a given language which match
-the given criteria. This function leverages the R base function grepl 
-but calls the data argument first to allow the use of the pipe operator from 
-magrittr." />
+<meta property="og:title" content="Pipe operator — %&gt;%" />
+<meta property="og:description" content="See magrittr::%&amp;gt;% for details." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -146,67 +141,19 @@ magrittr." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Search titles of available BFS datasets</h1>
-    <small class="dont-index">Source: <a href='https://github.com/lgnbhl/BFS/blob/master/R/main.R'><code>R/main.R</code></a></small>
-    <div class="hidden name"><code>bfs_search.Rd</code></div>
+    <h1>Pipe operator</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lgnbhl/BFS/blob/master/R/utils-pipe.R'><code>R/utils-pipe.R</code></a></small>
+    <div class="hidden name"><code>pipe.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Returns a tibble containing the titles, publication date,
-observation periods, data source, metadata url and download urls of
-available BFS datasets in a given language which match
-the given criteria. This function leverages the R base function <code>grepl</code> 
-but calls the data argument first to allow the use of the pipe operator from 
-magrittr.</p>
+    <p>See <code>magrittr::%&gt;%</code> for details.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bfs_search</span><span class='op'>(</span>
-  data <span class='op'>=</span> <span class='fu'><a href='bfs_get_metadata.html'>bfs_get_metadata</a></span><span class='op'>(</span><span class='op'>)</span>,
-  <span class='va'>pattern</span>,
-  ignore.case <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  fixed <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='va'>lhs</span> <span class='op'>%&gt;%</span> <span class='va'>rhs</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>data</th>
-      <td><p>The data frame to search. This can be either a data frame
-previously fetched using <code><a href='bfs_get_metadata.html'>bfs_get_metadata</a></code> (recommended) or left
-blank, in which case a temporary data frame is fetched. The second option
-adds a few seconds to each search query.</p></td>
-    </tr>
-    <tr>
-      <th>pattern</th>
-      <td><p>A regular expression string to search for.</p></td>
-    </tr>
-    <tr>
-      <th>ignore.case</th>
-      <td><p>Whether the search should be case-insensitive.</p></td>
-    </tr>
-    <tr>
-      <th>fixed</th>
-      <td><p>logical. If TRUE, pattern is a string to be matched as is.</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='bfs_get_metadata.html'>bfs_get_metadata</a></code></p></div>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>meta_en</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bfs_get_metadata.html'>bfs_get_metadata</a></span><span class='op'>(</span>language <span class='op'>=</span> <span class='st'>"en"</span><span class='op'>)</span>
-<span class='fu'>bfs_search</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>meta_en</span>, pattern <span class='op'>=</span> <span class='st'>"university students"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 6</span><span>
-#&gt;   title         observation_peri~ published  source   url_bfs        url_px     
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
-#&gt; </span><span style='color: #555555;'>1</span><span> University s~ 1980-2019         25.03.2020 Federal~ https://www.b~ https://ww~
-#&gt; </span><span style='color: #555555;'>2</span><span> University s~ 1990-2019         25.03.2020 Federal~ https://www.b~ https://ww~</div><div class='input'>
-</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
