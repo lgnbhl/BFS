@@ -59,6 +59,14 @@ meta_en <- bfs_get_metadata(language = "en")
 head(meta_en)
 ```
 
+Using the development version on Github, you can also get the catalog data by language. The
+new function `bfs_get_catalog()` get the metadata based on the new RSS feed provided by the Swiss Federal Statistical Office. 
+Note that the number of dataset available may differ from the output of the `bfs_get_metadata()`.
+
+```{r bfs_get_metadata}
+catalog_en <- bfs_get_catalog(language = "en")
+```
+
 ### Search for data
 
 To search for a specific data set title in the BFS metadata, you can use the `bfs_search()` function. This function leverages the R base function `grepl()` but calls the `data` argument first to allow the use of the pipe operator ``%>%``.

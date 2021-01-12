@@ -68,6 +68,16 @@ head(meta_en)
     ## 5 Criminal off… 2009-2019         23.03.2020 Federal… https://www.b… https://ww…
     ## 6 Defendants r… 2009-2019         23.03.2020 Federal… https://www.b… https://ww…
 
+
+Using the development version on Github, you can also get the catalog data by language. The
+new function `bfs_get_catalog()` get the metadata based on the new RSS feed provided by the Swiss Federal Statistical Office. 
+Note that the number of dataset available may differ from the output of the `bfs_get_metadata()`.
+
+``` r
+catalog_en <- bfs_get_catalog(language = "en")
+```
+
+
 ### Search for data
 
 To search for a specific dataset title in the BFS metadata, you can use
