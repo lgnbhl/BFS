@@ -27,6 +27,8 @@ The `BFS` package allows to search and download public data from the
 [Swiss Federal Statistical Office (BFS)](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html){target="_blank"}
 in a dynamic and reproducible way.
 
+:warning::warning::warning: *the bfs_get_data() function is sometimes not working on Windows* :warning::warning::warning:
+
 ## Installation
 
 ```{r eval=FALSE}
@@ -75,7 +77,7 @@ print(meta_en_uni)
 To download a BFS data set, add the related URL link from the `url_px` column of the downloaded metadata as an argument to the `bfs_get_data set()` function. You can choose the language (German, French, Italian or English if any) in which the data set is downloaded with the `language` argument.
 
 ```{r bfs_get_data set}
-df_uni <- bfs_get_data set(url_px = meta_en_uni$url_px[1], language = "en")
+df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[1], language = "en")
 
 print(df_uni)
 ```
