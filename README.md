@@ -18,7 +18,7 @@ The `BFS` package allows to search and download public data from the
 (BFS)](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html)
 in a dynamic and reproducible way.
 
-:warning::warning::warning: *the bfs_get_data() function is sometimes not working on Windows* :warning::warning::warning:
+:warning::warning::warning: **the bfs_get_data() function is sometimes not working on Windows** :warning::warning::warning:
 
 ## Installation
 
