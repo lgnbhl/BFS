@@ -16,7 +16,7 @@
 #' 
 #' @export
 
-get_bfs_catalog <- function(language = c("de", "fr", "it", "en")) {
+bfs_get_catalog <- function(language = c("de", "fr", "it", "en")) {
   
   if(missing(language)) stop("must choose a language, either 'de', 'fr', 'it' or 'en'", call. = FALSE)
   
