@@ -23,6 +23,7 @@ reference:
   - title: "Functions"
     contents: 
       - bfs_get_metadata
+      - bfs_get_catalog
       - bfs_get_dataset
       - bfs_search
       - bfs_open_dir

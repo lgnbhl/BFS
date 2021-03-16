@@ -56,24 +56,7 @@ Italian and English metadata give access to less data sets.
 
 ``` r
 meta_en <- bfs_get_metadata(language = "en")
-
-meta_en
 ```
-
-    ## # A tibble: 161 x 6
-    ##    title        observation_period  published  source  url_bfs       url_px     
-    ##    <chr>        <chr>               <chr>      <chr>   <chr>         <chr>      
-    ##  1 New registr~ 1.1.2020-29.2.2020~ 15.03.2021 Federa~ https://www.~ https://ww~
-    ##  2 Hotel accom~ 1.1.2005-31.1.2021  08.03.2021 Federa~ https://www.~ https://ww~
-    ##  3 Hotel accom~ 1.1.2005-31.1.2021  08.03.2021 Federa~ https://www.~ https://ww~
-    ##  4 Hotel accom~ 1.1.2013-31.1.2021  08.03.2021 Federa~ https://www.~ https://ww~
-    ##  5 Hotel secto~ 1.1.2005-31.1.2021  08.03.2021 Federa~ https://www.~ https://ww~
-    ##  6 Hotel secto~ 1.1.2005-31.1.2021  08.03.2021 Federa~ https://www.~ https://ww~
-    ##  7 Hotel secto~ 1.1.2013-31.1.2021  08.03.2021 Federa~ https://www.~ https://ww~
-    ##  8 Retail Trad~ 1.1.2000-31.1.2021  01.03.2021 Federa~ https://www.~ https://ww~
-    ##  9 Retail Trad~ 1.1.2000-31.1.2021  01.03.2021 Federa~ https://www.~ https://ww~
-    ## 10 Retail Trad~ 1.1.2000-31.1.2021  01.03.2021 Federa~ https://www.~ https://ww~
-    ## # ... with 151 more rows
 
 You can also get the catalog data by language. The new function
 `bfs_get_catalog()` get the metadata based on the new RSS feed provided
@@ -83,24 +66,7 @@ datasets available may differ from the output of the
 
 ``` r
 catalog_en <- bfs_get_catalog(language = "en")
-
-catalog_en
 ```
-
-    ## # A tibble: 161 x 5
-    ##    title            language published           url_bfs           url_px       
-    ##    <chr>            <chr>    <dttm>              <chr>             <chr>        
-    ##  1 New registratio~ en       2021-03-15 08:30:00 https://www.bfs.~ https://www.~
-    ##  2 Hotel accommoda~ en       2021-03-08 08:30:00 https://www.bfs.~ https://www.~
-    ##  3 Hotel accommoda~ en       2021-03-08 08:30:00 https://www.bfs.~ https://www.~
-    ##  4 Hotel accommoda~ en       2021-03-08 08:30:00 https://www.bfs.~ https://www.~
-    ##  5 Hotel sector: S~ en       2021-03-08 08:30:00 https://www.bfs.~ https://www.~
-    ##  6 Hotel sector: S~ en       2021-03-08 08:30:00 https://www.bfs.~ https://www.~
-    ##  7 Hotel sector: s~ en       2021-03-08 08:30:00 https://www.bfs.~ https://www.~
-    ##  8 Retail Trade Tu~ en       2021-03-01 08:30:00 https://www.bfs.~ https://www.~
-    ##  9 Retail Trade Tu~ en       2021-03-01 08:30:00 https://www.bfs.~ https://www.~
-    ## 10 Retail Trade Tu~ en       2021-03-01 08:30:00 https://www.bfs.~ https://www.~
-    ## # ... with 151 more rows
 
 ### Search for data
 
@@ -114,15 +80,7 @@ library(magrittr)
 
 meta_en_uni <- bfs_get_metadata("en") %>%
   bfs_search("university students")
-
-meta_en_uni
 ```
-
-    ## # A tibble: 2 x 6
-    ##   title         observation_peri~ published  source   url_bfs        url_px     
-    ##   <chr>         <chr>             <chr>      <chr>    <chr>          <chr>      
-    ## 1 University s~ 1980-2019         25.03.2020 Federal~ https://www.b~ https://ww~
-    ## 2 University s~ 1990-2019         25.03.2020 Federal~ https://www.b~ https://ww~
 
 ### Download data set
 
@@ -134,24 +92,7 @@ argument.
 
 ``` r
 df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[1], language = "en")
-
-df_uni
 ```
-
-    ## # A tibble: 16,800 x 5
-    ##    level_of_study                           gender isced_field      year   value
-    ##    <fct>                                    <fct>  <fct>            <fct>  <dbl>
-    ##  1 First university degree or diploma       Male   Education scien~ 2019/~    46
-    ##  2 Bachelor                                 Male   Education scien~ 2019/~   149
-    ##  3 Master                                   Male   Education scien~ 2019/~   131
-    ##  4 Doctorate                                Male   Education scien~ 2019/~   120
-    ##  5 Further education, advanced studies and~ Male   Education scien~ 2019/~    14
-    ##  6 First university degree or diploma       Female Education scien~ 2019/~    62
-    ##  7 Bachelor                                 Female Education scien~ 2019/~   696
-    ##  8 Master                                   Female Education scien~ 2019/~   540
-    ##  9 Doctorate                                Female Education scien~ 2019/~   313
-    ## 10 Further education, advanced studies and~ Female Education scien~ 2019/~    24
-    ## # ... with 16,790 more rows
 
 You can access additional information about the downloaded data set
 using the R base `attributes()` function.
@@ -160,22 +101,6 @@ using the R base `attributes()` function.
 attributes(df_uni) %>%
   str()
 ```
-
-    ## List of 14
-    ##  $ names        : chr [1:5] "level_of_study" "gender" "isced_field" "year" ...
-    ##  $ row.names    : int [1:16800] 1 2 3 4 5 6 7 8 9 10 ...
-    ##  $ download_date: Date[1:1], format: "2021-03-16"
-    ##  $ contact      : chr "Section Educational Processes, email: sius@bfs.admin.ch"
-    ##  $ description  : chr "University students by year, ISCED field, gender and level of study"
-    ##  $ last_update  : chr "20200325 08:30"
-    ##  $ link         : chr "https://www.bfs.admin.ch/asset/en/px-x-1502040100_131"
-    ##  $ note         : chr "<B>Meta information</B>#Data as of: 25.03.2020#Survey: Students and graduates in higher education institutions "| __truncated__
-    ##  $ subject_area : chr "15 - Education and science"
-    ##  $ survey       : chr "Students and degrees of higher education institutions (SHIS-studex)"
-    ##  $ title        : chr "University students by Year, ISCED field, Gender and Level of study"
-    ##  $ source       : chr "FSO - Students and degrees of higher education institutions - © FSO"
-    ##  $ units        : chr "Person"
-    ##  $ class        : chr [1:3] "tbl_df" "tbl" "data.frame"
 
 In case the function fails to download the data set, you can have a look
 at its related BFS webpage using the `url_bfs` link.
