@@ -234,9 +234,9 @@ bfs_search <- function(data = bfs_get_metadata(), pattern, ignore.case = TRUE, f
 #' @seealso \code{\link{bfs_get_metadata}}
 #'
 #' @examples
-#' \donttest{meta_en <- bfs_get_metadata(language = "en")}
-#' \donttest{bfs_meta_edu <- bfs_search(data = meta_en, pattern = "university students")}
-#' \donttest{bfs_get_dataset(bfs_meta_edu$url_px[1], language = "en")}
+#' \dontrun{meta_en <- bfs_get_metadata(language = "en")}
+#' \dontrun{bfs_meta_edu <- bfs_search(data = meta_en, pattern = "university students")}
+#' \dontrun{bfs_get_dataset(bfs_meta_edu$url_px[1], language = "en")}
 #'
 #' @export
 
