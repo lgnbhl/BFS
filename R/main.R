@@ -1,3 +1,6 @@
+utils::globalVariables(c(".", "pb"))
+env <- new.env(parent = emptyenv())
+
 #' Get metadata of a give url page
 #'
 #' @param url character The url of a BFS webpage
