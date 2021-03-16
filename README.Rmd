@@ -61,7 +61,7 @@ You can also get the catalog data by language. The new function `bfs_get_catalog
 the new RSS feed provided by the Swiss Federal Statistical Office.  Note that the number of datasets available may 
 differ from the output of the `bfs_get_metadata()`.
 
-```{r}
+```{r, eval=FALSE}
 catalog_en <- bfs_get_catalog(language = "en")
 
 catalog_en
