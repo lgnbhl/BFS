@@ -1,4 +1,4 @@
-utils::globalVariables(c(".", "pb"))
+utils::globalVariables(c(".", "pb", "url_px", "link_2", "pubDate_2", "published", "title", "title_2", "url_bfs", "url_p"))
 env <- new.env(parent = emptyenv())
 
 #' Get metadata of a give url page
