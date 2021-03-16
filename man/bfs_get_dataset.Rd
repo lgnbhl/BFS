@@ -8,6 +8,7 @@ bfs_get_dataset(
   url_px,
   language = "de",
   path = pins::board_cache_path(),
+  clean_names = TRUE,
   force = FALSE
 )
 }
@@ -17,6 +18,8 @@ bfs_get_dataset(
 \item{language}{Language of the dataset to be translated if exists.}
 
 \item{path}{The local folder to use as a cache, default to {pins} cache.}
+
+\item{clean_names}{Clean column names using \code{janitor::clean_names()}}
 
 \item{force}{Force download to download data even if already downloaded today.}
 }

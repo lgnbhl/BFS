@@ -230,6 +230,7 @@ bfs_search <- function(data = bfs_get_metadata(), pattern, ignore.case = TRUE, f
 #' @param language Language of the dataset to be translated if exists.
 #' @param path The local folder to use as a cache, default to {pins} cache.
 #' @param force Force download to download data even if already downloaded today.
+#' @param clean_names Clean column names using \code{janitor::clean_names()}
 #'
 #' @seealso \code{\link{bfs_get_metadata}}
 #'
@@ -240,7 +241,7 @@ bfs_search <- function(data = bfs_get_metadata(), pattern, ignore.case = TRUE, f
 #'
 #' @export
 
-bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_path(), force = FALSE) {
+bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_path(), clean_names = TRUE, force = FALSE) {
   pins::board_register_local(cache = path) # temp folder of the spins package
   dataset_name <- paste0("bfs_data_", gsub("[^0-9]", "", url_px), "_", language)
   tempfile_path <- paste0(tempdir(), "\\", dataset_name, ".px") # normal temp folder
@@ -253,13 +254,16 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     download.file(url_px, destfile = file.path(tempfile_path))
     # ADD FIX. see: https://github.com/cjgb/pxR/issues/1#issuecomment-800023341
     x <- iconv(readLines(file.path(tempfile_path), encoding = "CP1252"), from = "CP1252", to = "Latin1", sub = "")
-    #x <- gsub('\"......\"', '\"....\"', x, fixed = TRUE)
-    #x <- gsub('\".....\"', '\"....\"', x, fixed = TRUE)
+    x <- gsub('\"......\"', '\"....\"', x, fixed = TRUE)
+    x <- gsub('\".....\"', '\"....\"', x, fixed = TRUE)
     writeLines(x, con = file.path(tempfile_path), useBytes = TRUE)
     # END FIX
     bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
     bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
-    bfs_data <- janitor::clean_names(bfs_data)
+    
+    if(clean_names){
+      bfs_data <- janitor::clean_names(bfs_data)
+    }
     
     attr(bfs_data, "download_date") <- Sys.Date()
     attr(bfs_data, "contact") <- bfs_px$CONTACT[[1]]
@@ -293,8 +297,8 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     download.file(url_px, destfile = file.path(tempfile_path))
     # ADD FIX. see: https://github.com/cjgb/pxR/issues/1#issuecomment-800023341
     x <- iconv(readLines(file.path(tempfile_path), encoding = "CP1252"), from = "CP1252", to = "Latin1", sub = "")
-    #x <- gsub('\"......\"', '\"....\"', x, fixed = TRUE)
-    #x <- gsub('\".....\"', '\"....\"', x, fixed = TRUE)
+    x <- gsub('\"......\"', '\"....\"', x, fixed = TRUE)
+    x <- gsub('\".....\"', '\"....\"', x, fixed = TRUE)
     writeLines(x, con = file.path(tempfile_path), useBytes = TRUE)
     # END FIX
     bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
@@ -333,7 +337,9 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
         replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
       }
       
-      bfs_data <- janitor::clean_names(bfs_data)
+      if(clean_names){
+        bfs_data <- janitor::clean_names(bfs_data)
+      }
       
       attr(bfs_data, "download_date") <- Sys.Date()
       attr(bfs_data, "contact") <- bfs_px$CONTACT.fr.[[1]]
@@ -353,8 +359,8 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     download.file(url_px, destfile = file.path(tempfile_path))
     # ADD FIX. see: https://github.com/cjgb/pxR/issues/1#issuecomment-800023341
     x <- iconv(readLines(file.path(tempfile_path), encoding = "CP1252"), from = "CP1252", to = "Latin1", sub = "")
-    #x <- gsub('\"......\"', '\"....\"', x, fixed = TRUE)
-    #x <- gsub('\".....\"', '\"....\"', x, fixed = TRUE)
+    x <- gsub('\"......\"', '\"....\"', x, fixed = TRUE)
+    x <- gsub('\".....\"', '\"....\"', x, fixed = TRUE)
     writeLines(x, con = file.path(tempfile_path), useBytes = TRUE)
     # END FIX
     bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
@@ -393,7 +399,9 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
         replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
       }
     
-      bfs_data <- janitor::clean_names(bfs_data)
+      if(clean_names){
+        bfs_data <- janitor::clean_names(bfs_data)
+      }
       
       attr(bfs_data, "download_date") <- Sys.Date()
       attr(bfs_data, "contact") <- bfs_px$CONTACT.it.[[1]]
@@ -413,8 +421,8 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     download.file(url_px, destfile = file.path(tempfile_path))
     # ADD FIX. see: https://github.com/cjgb/pxR/issues/1#issuecomment-800023341
     x <- iconv(readLines(file.path(tempfile_path), encoding = "CP1252"), from = "CP1252", to = "Latin1", sub = "")
-    #x <- gsub('\"......\"', '\"....\"', x, fixed = TRUE)
-    #x <- gsub('\".....\"', '\"....\"', x, fixed = TRUE)
+    x <- gsub('\"......\"', '\"....\"', x, fixed = TRUE)
+    x <- gsub('\".....\"', '\"....\"', x, fixed = TRUE)
     writeLines(x, con = file.path(tempfile_path), useBytes = TRUE)
     # END FIX
     bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
@@ -453,7 +461,9 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
         replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
       }
       
-      bfs_data <- janitor::clean_names(bfs_data)
+      if(clean_names){
+        bfs_data <- janitor::clean_names(bfs_data)
+      }
       
       attr(bfs_data, "download_date") <- Sys.Date()
       attr(bfs_data, "contact") <- bfs_px$CONTACT.en.[[1]]
