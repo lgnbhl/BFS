@@ -47,11 +47,14 @@ library(BFS)
 
 To search and download data from the Swiss Federal Statistical Office,
 you first need to retrieve information about the available public data
-sets. The function `bfs_get_metadata()` returns a data frame/tibble
-containing the titles, publication dates, observation periods, data
-sources, website URLs and download URLs of all the BFS data sets
-available in a given language. You can get the metadata in German (“de”,
-by default), French (“fr”), Italian (“it”) or English (“en”). Note that
+sets.
+
+The function `bfs_get_metadata()` returns a data frame/tibble containing
+the titles, publication dates, observation periods, data sources,
+website URLs and download URLs of all the [BFS data sets
+available](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html)
+in a given language. You can get the metadata in German (“de”, by
+default), French (“fr”), Italian (“it”) or English (“en”). Note that
 Italian and English metadata give access to less data sets.
 
 ``` r
@@ -75,11 +78,10 @@ meta_en
     ## 10 Retail Trad~ 1.1.2000-31.1.2021  01.03.2021 Federa~ https://www.~ https://ww~
     ## # ... with 151 more rows
 
-You can also get the catalog data by language. The new function
-`bfs_get_catalog()` get the metadata based on the new RSS feed provided
-by the Swiss Federal Statistical Office. Note that the number of
-datasets available may differ from the output of the
-`bfs_get_metadata()`.
+You can also get the catalog data by language based on the new RSS feed
+provided by the Swiss Federal Statistical Office. Note that the number
+of datasets available with `bfs_get_catalog()` may differ from the
+output of the `bfs_get_metadata()`.
 
 ``` r
 catalog_en <- bfs_get_catalog(language = "en")
