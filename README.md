@@ -141,18 +141,18 @@ df_uni
 ```
 
     ## # A tibble: 16,800 x 5
-    ##    level_of_study                           gender isced_field      year   value
-    ##    <fct>                                    <fct>  <fct>            <fct>  <dbl>
-    ##  1 First university degree or diploma       Male   Education scien~ 2019/~    46
-    ##  2 Bachelor                                 Male   Education scien~ 2019/~   149
-    ##  3 Master                                   Male   Education scien~ 2019/~   131
-    ##  4 Doctorate                                Male   Education scien~ 2019/~   120
-    ##  5 Further education, advanced studies and~ Male   Education scien~ 2019/~    14
-    ##  6 First university degree or diploma       Female Education scien~ 2019/~    62
-    ##  7 Bachelor                                 Female Education scien~ 2019/~   696
-    ##  8 Master                                   Female Education scien~ 2019/~   540
-    ##  9 Doctorate                                Female Education scien~ 2019/~   313
-    ## 10 Further education, advanced studies and~ Female Education scien~ 2019/~    24
+    ##    level_of_study                      gender isced_field           year   value
+    ##    <fct>                               <fct>  <fct>                 <fct>  <dbl>
+    ##  1 Lizenziat/Diplom                    Mann   Erziehungswissenscha~ 2019/~    46
+    ##  2 Bachelor                            Mann   Erziehungswissenscha~ 2019/~   149
+    ##  3 Master                              Mann   Erziehungswissenscha~ 2019/~   131
+    ##  4 Doktorat                            Mann   Erziehungswissenscha~ 2019/~   120
+    ##  5 Weiterbildung, Vertiefung und Ande~ Mann   Erziehungswissenscha~ 2019/~    14
+    ##  6 Lizenziat/Diplom                    Frau   Erziehungswissenscha~ 2019/~    62
+    ##  7 Bachelor                            Frau   Erziehungswissenscha~ 2019/~   696
+    ##  8 Master                              Frau   Erziehungswissenscha~ 2019/~   540
+    ##  9 Doktorat                            Frau   Erziehungswissenscha~ 2019/~   313
+    ## 10 Weiterbildung, Vertiefung und Ande~ Frau   Erziehungswissenscha~ 2019/~    24
     ## # ... with 16,790 more rows
 
 You can access additional information about the downloaded data set

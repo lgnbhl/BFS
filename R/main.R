@@ -278,7 +278,7 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     attr(bfs_data, "units") <- bfs_px$UNITS[[1]]
     
     languages_availables <- strsplit(bfs_px$LANGUAGES[[1]], '\",\"', "\n")[[1]]
-    if(!is.element(language, languages_availables)) warning(paste0('Language "', language, '" not available. Dataset downloaded in the default language. Try with another language.'))
+    if(!is.element(language, languages_availables)) cat(paste0('Language "', language, '" not available. Dataset downloaded in the default language. Try with another language.'))
     
     attr(bfs_data, "download_date") <- Sys.Date()
     attr(bfs_data, "contact") <- bfs_px$CONTACT[[1]]
@@ -317,7 +317,7 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     attr(bfs_data, "units") <- bfs_px$UNITS[[1]]
     
     languages_availables <- strsplit(bfs_px$LANGUAGES[[1]], '\",\"', "\n")[[1]]
-    if(!is.element(language, languages_availables)) warning(paste0('Language "', language, '" not available. Dataset downloaded in the default language. Try with another language.'))
+    if(!is.element(language, languages_availables)) cat(paste0('Language "', language, '" not available. Dataset downloaded in the default language. Try with another language.'))
     
     if(is.element(language, languages_availables)){
       default_names <- names(bfs_px$VALUES)
@@ -331,10 +331,13 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
       new_categories <- strsplit(new_categories, "\n")
       
       for(i in 1:n_names) {
-        names(bfs_data)[names(bfs_data) == default_names[i]] <- new_names[i]
-        l <- as.name(new_names[i])
-        levels(bfs_data[[l]]) <- new_categories[[i]]
-        replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
+        tryCatch({
+          names(bfs_data)[names(bfs_data) == default_names[[i]]] <- new_names[i]
+          l <- as.name(new_names[[i]])
+          levels(bfs_data[[l]]) <- new_categories[[i]]
+          replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
+        }, error= function(e) {cat("Failed to translate name.", "\n")
+        })
       }
       
       if(clean_names){
@@ -379,7 +382,7 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     attr(bfs_data, "units") <- bfs_px$UNITS[[1]]
     
     languages_availables <- strsplit(bfs_px$LANGUAGES[[1]], '\",\"', "\n")[[1]]
-    if(!is.element(language, languages_availables)) warning(paste0('Language "', language, '" not available. Dataset downloaded in the default language. Try with another language.'))
+    if(!is.element(language, languages_availables)) cat(paste0('Language "', language, '" not available. Dataset downloaded in the default language. Try with another language.'))
     
     if(is.element(language, languages_availables)){
       default_names <- names(bfs_px$VALUES)
@@ -393,10 +396,13 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
       new_categories <- strsplit(new_categories, "\n")
       
       for(i in 1:n_names) {
-        names(bfs_data)[names(bfs_data) == default_names[i]] <- new_names[i]
-        l <- as.name(new_names[i])
-        levels(bfs_data[[l]]) <- new_categories[[i]]
-        replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
+        tryCatch({
+          names(bfs_data)[names(bfs_data) == default_names[[i]]] <- new_names[i]
+          l <- as.name(new_names[[i]])
+          levels(bfs_data[[l]]) <- new_categories[[i]]
+          replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
+        }, error= function(e) {cat("Failed to translate name.", "\n")
+        })
       }
     
       if(clean_names){
@@ -441,7 +447,7 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     attr(bfs_data, "units") <- bfs_px$UNITS[[1]]
     
     languages_availables <- strsplit(bfs_px$LANGUAGES[[1]], '\",\"', "\n")[[1]]
-    if(!is.element(language, languages_availables)) warning(paste0('Language "', language, '" not available. Dataset downloaded in the default language. Try with another language.'))
+    if(!is.element(language, languages_availables)) cat(paste0('Language "', language, '" not available. Dataset downloaded in the default language. Try with another language.'))
     
     if(is.element(language, languages_availables)){
       default_names <- names(bfs_px$VALUES)
@@ -455,10 +461,13 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
       new_categories <- strsplit(new_categories, "\n")
       
       for(i in 1:n_names) {
-        names(bfs_data)[names(bfs_data) == default_names[[i]]] <- new_names[i]
-        l <- as.name(new_names[[i]])
-        levels(bfs_data[[l]]) <- new_categories[[i]]
-        replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
+        tryCatch({
+          names(bfs_data)[names(bfs_data) == default_names[[i]]] <- new_names[i]
+          l <- as.name(new_names[[i]])
+          levels(bfs_data[[l]]) <- new_categories[[i]]
+          replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
+        }, error= function(e) {cat("Failed to translate name.", "\n")
+      })
       }
       
       if(clean_names){
