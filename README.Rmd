@@ -27,8 +27,6 @@ The `BFS` package allows to search and download public data from the
 [Swiss Federal Statistical Office (BFS)](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html){target="_blank"}
 in a dynamic and reproducible way.
 
-:warning::warning::warning: **the bfs_get_data() function is sometimes not working on Windows** :warning::warning::warning:
-
 ## Installation
 
 ```{r eval=FALSE}
@@ -56,17 +54,17 @@ To search and download data from the Swiss Federal Statistical Office, you first
 ```{r bfs_get_metadata}
 meta_en <- bfs_get_metadata(language = "en")
 
-head(meta_en)
+meta_en
 ```
 
-Using the development version on Github, you can also get the catalog data by language. The
-new function `bfs_get_catalog()` get the metadata based on the new RSS feed provided by the Swiss Federal Statistical Office. 
-Note that the number of datasets available may differ from the output of the `bfs_get_metadata()`.
+You can also get the catalog data by language. The new function `bfs_get_catalog()` get the metadata based on 
+the new RSS feed provided by the Swiss Federal Statistical Office.  Note that the number of datasets available may 
+differ from the output of the `bfs_get_metadata()`.
 
 ```{r}
 catalog_en <- bfs_get_catalog(language = "en")
 
-head(catalog_en) 
+catalog_en
 ```
 
 ### Search for data
@@ -78,19 +76,23 @@ library(magrittr)
 
 meta_en_uni <- bfs_get_metadata("en") %>%
   bfs_search("university students")
+
+meta_en_uni
 ```
 
 ### Download data set
 
 To download a BFS data set, add the related URL link from the `url_px` column of the downloaded metadata as an argument to the `bfs_get_data set()` function. You can choose the language (German, French, Italian or English if any) in which the data set is downloaded with the `language` argument.
 
-```{r bfs_get_dataset, eval=FALSE}
+```{r bfs_get_dataset}
 df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[1], language = "en")
+
+df_uni
 ```
 
 You can access additional information about the downloaded data set using the R base `attributes()` function.
 
-```{r attributes, eval=FALSE}
+```{r attributes}
 attributes(df_uni) %>%
   str()
 ```

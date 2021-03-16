@@ -16,7 +16,7 @@ A data frame
 This function scraps the RSS Feed of the Swiss Federal Statistical Office data catalog.
 }
 \examples{
-\donttest{get_bfs_catalog(language = "de")}
+\donttest{bfs_get_catalog(language = "de")}
 
 }
 \seealso{

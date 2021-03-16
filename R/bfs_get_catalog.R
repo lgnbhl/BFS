@@ -8,11 +8,12 @@
 #'
 #' @importFrom tidyRSS tidyfeed
 #' @importFrom janitor clean_names
+#' @importFrom dplyr select mutate
 #' 
 #' @seealso \code{\link{bfs_get_metadata}}
 #'
 #' @examples
-#' \donttest{get_bfs_catalog(language = "de")}
+#' \donttest{bfs_get_catalog(language = "de")}
 #' 
 #' @export
 

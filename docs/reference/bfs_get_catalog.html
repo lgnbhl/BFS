@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BFS</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -169,9 +169,22 @@
     <div class='dont-index'><p><code><a href='bfs_get_metadata.html'>bfs_get_metadata</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>get_bfs_catalog</span><span class='op'>(</span>language <span class='op'>=</span> <span class='st'>"de"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in get_bfs_catalog(language = "de"): impossible de trouver la fonction "get_bfs_catalog"</span></div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>bfs_get_catalog</span><span class='op'>(</span>language <span class='op'>=</span> <span class='st'>"de"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>GET request successful. Parsing...</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 350 x 5</span><span>
+#&gt;    title            language published           url_bfs           url_px       
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        
+#&gt; </span><span style='color: #555555;'> 1</span><span> Neue Inverkehrs~ de       2021-03-15 </span><span style='color: #555555;'>08:30:00</span><span> https://www.bfs.~ https://www.~
+#&gt; </span><span style='color: #555555;'> 2</span><span> Hotellerie: Ang~ de       2021-03-08 </span><span style='color: #555555;'>08:30:00</span><span> https://www.bfs.~ https://www.~
+#&gt; </span><span style='color: #555555;'> 3</span><span> Hotellerie: Ang~ de       2021-03-08 </span><span style='color: #555555;'>08:30:00</span><span> https://www.bfs.~ https://www.~
+#&gt; </span><span style='color: #555555;'> 4</span><span> Hotellerie: Ang~ de       2021-03-08 </span><span style='color: #555555;'>08:30:00</span><span> https://www.bfs.~ https://www.~
+#&gt; </span><span style='color: #555555;'> 5</span><span> Hotellerie: Ank~ de       2021-03-08 </span><span style='color: #555555;'>08:30:00</span><span> https://www.bfs.~ https://www.~
+#&gt; </span><span style='color: #555555;'> 6</span><span> Hotellerie: Ank~ de       2021-03-08 </span><span style='color: #555555;'>08:30:00</span><span> https://www.bfs.~ https://www.~
+#&gt; </span><span style='color: #555555;'> 7</span><span> Hotellerie: Ank~ de       2021-03-08 </span><span style='color: #555555;'>08:30:00</span><span> https://www.bfs.~ https://www.~
+#&gt; </span><span style='color: #555555;'> 8</span><span> Detailhandelsum~ de       2021-03-01 </span><span style='color: #555555;'>08:30:00</span><span> https://www.bfs.~ https://www.~
+#&gt; </span><span style='color: #555555;'> 9</span><span> Detailhandelsum~ de       2021-03-01 </span><span style='color: #555555;'>08:30:00</span><span> https://www.bfs.~ https://www.~
+#&gt; </span><span style='color: #555555;'>10</span><span> Detailhandelsum~ de       2021-03-01 </span><span style='color: #555555;'>08:30:00</span><span> https://www.bfs.~ https://www.~
+#&gt; </span><span style='color: #555555;'># ... with 340 more rows</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -96,7 +96,7 @@ downloaded dataset an argument of the base R function attributes()." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BFS</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -205,8 +205,21 @@ data from the BFS website.</p>
     <pre class="examples"><div class='input'><span class='va'>meta_en</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bfs_get_metadata.html'>bfs_get_metadata</a></span><span class='op'>(</span>language <span class='op'>=</span> <span class='st'>"en"</span><span class='op'>)</span>
 <span class='va'>bfs_meta_edu</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bfs_search.html'>bfs_search</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>meta_en</span>, pattern <span class='op'>=</span> <span class='st'>"university students"</span><span class='op'>)</span>
 <span class='fu'>bfs_get_dataset</span><span class='op'>(</span><span class='va'>bfs_meta_edu</span><span class='op'>$</span><span class='va'>url_px</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, language <span class='op'>=</span> <span class='st'>"en"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: entrée incorrecte trouvée dans la connexion en entrée 'C:\Users\felix\AppData\Local\Temp\RtmpYxlnxA\bfs_data_12347092_en.px'</span></div><div class='output co'>#&gt; <span class='error'>Error in pxR::read.px(file.path(tempfile_path), na.strings = c("\".\"",     "\"..\"", "\"...\"", "\"....\"", "\".....\"", "\"......\"",     "\":\"")): The input file is malformed: data and varnames length differ</span></div><div class='input'>
-</div></pre>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 16,800 x 5</span><span>
+#&gt;    level_of_study                           gender isced_field      year   value
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>                                    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> First university degree or diploma       Male   Education scien~ 2019/~    46
+#&gt; </span><span style='color: #555555;'> 2</span><span> Bachelor                                 Male   Education scien~ 2019/~   149
+#&gt; </span><span style='color: #555555;'> 3</span><span> Master                                   Male   Education scien~ 2019/~   131
+#&gt; </span><span style='color: #555555;'> 4</span><span> Doctorate                                Male   Education scien~ 2019/~   120
+#&gt; </span><span style='color: #555555;'> 5</span><span> Further education, advanced studies and~ Male   Education scien~ 2019/~    14
+#&gt; </span><span style='color: #555555;'> 6</span><span> First university degree or diploma       Female Education scien~ 2019/~    62
+#&gt; </span><span style='color: #555555;'> 7</span><span> Bachelor                                 Female Education scien~ 2019/~   696
+#&gt; </span><span style='color: #555555;'> 8</span><span> Master                                   Female Education scien~ 2019/~   540
+#&gt; </span><span style='color: #555555;'> 9</span><span> Doctorate                                Female Education scien~ 2019/~   313
+#&gt; </span><span style='color: #555555;'>10</span><span> Further education, advanced studies and~ Female Education scien~ 2019/~    24
+#&gt; </span><span style='color: #555555;'># ... with 16,790 more rows</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
