@@ -253,8 +253,8 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     download.file(url_px, destfile = file.path(tempfile_path))
     # ADD FIX. see: https://github.com/cjgb/pxR/issues/1#issuecomment-800023341
     x <- iconv(readLines(file.path(tempfile_path), encoding = "CP1252"), from = "CP1252", to = "Latin1", sub = "")
-    x <- gsub("\"......\"", "\"....\"", x, fixed = TRUE)
-    x <- gsub("\".....\"", "\"....\"", x, fixed = TRUE)
+    x <- gsub('\"......\"", "\"....\"', x, fixed = TRUE)
+    x <- gsub('\".....\"", "\"....\"', x, fixed = TRUE)
     writeLines(x, con = file.path(tempfile_path), useBytes = TRUE)
     # END FIX
     bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
@@ -293,8 +293,8 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     download.file(url_px, destfile = file.path(tempfile_path))
     # ADD FIX. see: https://github.com/cjgb/pxR/issues/1#issuecomment-800023341
     x <- iconv(readLines(file.path(tempfile_path), encoding = "CP1252"), from = "CP1252", to = "Latin1", sub = "")
-    x <- gsub("\"......\"", "\"....\"", x, fixed = TRUE)
-    x <- gsub("\".....\"", "\"....\"", x, fixed = TRUE)
+    x <- gsub('\"......\"", "\"....\"', x, fixed = TRUE)
+    x <- gsub('\".....\"", "\"....\"', x, fixed = TRUE)
     writeLines(x, con = file.path(tempfile_path), useBytes = TRUE)
     # END FIX
     bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
@@ -353,8 +353,8 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     download.file(url_px, destfile = file.path(tempfile_path))
     # ADD FIX. see: https://github.com/cjgb/pxR/issues/1#issuecomment-800023341
     x <- iconv(readLines(file.path(tempfile_path), encoding = "CP1252"), from = "CP1252", to = "Latin1", sub = "")
-    x <- gsub("\"......\"", "\"....\"", x, fixed = TRUE)
-    x <- gsub("\".....\"", "\"....\"", x, fixed = TRUE)
+    x <- gsub('\"......\"", "\"....\"', x, fixed = TRUE)
+    x <- gsub('\".....\"", "\"....\"', x, fixed = TRUE)
     writeLines(x, con = file.path(tempfile_path), useBytes = TRUE)
     # END FIX
     bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
@@ -413,8 +413,8 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
     download.file(url_px, destfile = file.path(tempfile_path))
     # ADD FIX. see: https://github.com/cjgb/pxR/issues/1#issuecomment-800023341
     x <- iconv(readLines(file.path(tempfile_path), encoding = "CP1252"), from = "CP1252", to = "Latin1", sub = "")
-    x <- gsub("\"......\"", "\"....\"", x, fixed = TRUE)
-    x <- gsub("\".....\"", "\"....\"", x, fixed = TRUE)
+    x <- gsub('\"......\"", "\"....\"', x, fixed = TRUE)
+    x <- gsub('\".....\"", "\"....\"', x, fixed = TRUE)
     writeLines(x, con = file.path(tempfile_path), useBytes = TRUE)
     # END FIX
     bfs_px <- pxR::read.px(file.path(tempfile_path), na.strings = c('"."', '".."', '"..."', '"...."', '"....."', '"......"', '":"'))
