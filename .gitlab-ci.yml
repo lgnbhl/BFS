@@ -2,5 +2,5 @@ image: rocker/tidyverse
 
 test:
    script:
-    - R -e 'install.packages(c("janitor", "progress", "pxR", "pins"))'
+    - R -e 'install.packages(c("janitor", "progress", "pxR", "pins", "tidyRSS"))'
     - R -e 'devtools::check()'
