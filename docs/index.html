@@ -142,9 +142,9 @@
 <span id="cb5-12"><a href="#cb5-12"></a><span class="co">##  9 Retail Trad~ 1.1.2000-31.1.2021  01.03.2021 Federa~ https://www.~ https://ww~</span></span>
 <span id="cb5-13"><a href="#cb5-13"></a><span class="co">## 10 Retail Trad~ 1.1.2000-31.1.2021  01.03.2021 Federa~ https://www.~ https://ww~</span></span>
 <span id="cb5-14"><a href="#cb5-14"></a><span class="co">## # ... with 151 more rows</span></span></code></pre></div>
-<p>You can also get the catalog data by language. The new function <code><a href="reference/bfs_get_catalog.html">bfs_get_catalog()</a></code> get the metadata based on the new RSS feed provided by the Swiss Federal Statistical Office. Note that the number of datasets available may differ from the output of the <code><a href="reference/bfs_get_metadata.html">bfs_get_metadata()</a></code>.</p>
+<p>You can also get the catalog data by language. The new function <code>bfs_get_catalog()</code> get the metadata based on the new RSS feed provided by the Swiss Federal Statistical Office. Note that the number of datasets available may differ from the output of the <code><a href="reference/bfs_get_metadata.html">bfs_get_metadata()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">catalog_en</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_catalog.html">bfs_get_catalog</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
+<span class="va">catalog_en</span> <span class="op">&lt;-</span> <span class="fu">bfs_get_catalog</span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
 
 <span class="va">catalog_en</span></pre></div>
 <div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">## # A tibble: 161 x 5</span></span>
