@@ -39,7 +39,7 @@ during the day, the existing dataset is loaded into R from the pins caching
 folder instead of downloading again the metadata from the BFS website.
 }
 \examples{
-\donttest{meta_en <- bfs_get_metadata(language = "en")}
+\dontrun{meta_en <- bfs_get_metadata(language = "en")}
 
 }
 \seealso{
