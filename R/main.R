@@ -114,7 +114,7 @@ get_bfs_metadata_all <- function(i) {
 #' @seealso \code{\link{bfs_get_dataset}}
 #'
 #' @examples
-#' \dontrun{meta_en <- bfs_get_metadata(language = "en")}
+#' \donttest{meta_en <- bfs_get_metadata(language = "en")}
 #'
 #' @export
 
@@ -201,8 +201,8 @@ bfs_get_metadata <- function(language = "de", path = pins::board_cache_path(), f
 #' @seealso \code{\link{bfs_get_metadata}}
 #'
 #' @examples
-#' \dontrun{meta_en <- bfs_get_metadata(language = "en")}
-#' \dontrun{bfs_search(data = meta_en, pattern = "university students")}
+#' \donttest{meta_en <- bfs_get_metadata(language = "en")}
+#' \donttest{bfs_search(data = meta_en, pattern = "university students")}
 #'
 #' @export
 
@@ -233,11 +233,6 @@ bfs_search <- function(data = bfs_get_metadata(), pattern, ignore.case = TRUE, f
 #' @param clean_names Clean column names using \code{janitor::clean_names()}
 #'
 #' @seealso \code{\link{bfs_get_metadata}}
-#'
-#' @examples
-#' \dontrun{meta_en <- bfs_get_metadata(language = "en")}
-#' \dontrun{bfs_meta_edu <- bfs_search(data = meta_en, pattern = "university students")}
-#' \dontrun{bfs_get_dataset(bfs_meta_edu$url_px[1], language = "en")}
 #'
 #' @export
 
@@ -506,7 +501,7 @@ bfs_get_dataset <- function(url_px, language = "de", path = pins::board_cache_pa
 #' @seealso \code{\link{bfs_get_dataset}}
 #'
 #' @examples
-#' \dontrun{bfs_open_dir()}
+#' \donttest{bfs_open_dir()}
 #'
 #' @export
 
