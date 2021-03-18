@@ -117,7 +117,7 @@ If a data set has already been downloaded during the day, the functions `bfs_get
 
 ## Other information
 
-A [blog article](https://felixluginbuhl.com/blog/2019/11/07/swiss-data) showing a concret example about how to use the BFS package.
+A [blog article](https://felixluginbuhl.com/blog/posts/2019-11-07-swiss-data/) showing a concret example about how to use the BFS package.
 
 Alternative R package: [pxweb](https://github.com/rOpenGov/pxweb){target="_blank"}.
 

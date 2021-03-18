@@ -136,7 +136,14 @@ argument.
 
 ``` r
 df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[1], language = "en")
+```
 
+    ## Failed to translate name. 
+    ## Failed to translate name. 
+    ## Failed to translate name. 
+    ## Failed to translate name.
+
+``` r
 df_uni
 ```
 
@@ -166,7 +173,7 @@ attributes(df_uni) %>%
     ## List of 14
     ##  $ names        : chr [1:5] "level_of_study" "gender" "isced_field" "year" ...
     ##  $ row.names    : int [1:16800] 1 2 3 4 5 6 7 8 9 10 ...
-    ##  $ download_date: Date[1:1], format: "2021-03-16"
+    ##  $ download_date: Date[1:1], format: "2021-03-18"
     ##  $ contact      : chr "Section Educational Processes, email: sius@bfs.admin.ch"
     ##  $ description  : chr "University students by year, ISCED field, gender and level of study"
     ##  $ last_update  : chr "20200325 08:30"
@@ -210,7 +217,8 @@ the download using the `force` argument.
 
 ## Other information
 
-A [blog article](https://felixluginbuhl.com/blog/2019/11/07/swiss-data)
+A [blog
+article](https://felixluginbuhl.com/blog/posts/2019-11-07-swiss-data/)
 showing a concret example about how to use the BFS package.
 
 Alternative R package: [pxweb](https://github.com/rOpenGov/pxweb).
