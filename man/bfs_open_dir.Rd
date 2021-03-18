@@ -16,7 +16,7 @@ no path argument is provided, the downloaded BFS datasets will be
 saved in the default cache folder of the {pins} package.
 }
 \examples{
-\dontrun{bfs_open_dir()}
+\donttest{bfs_open_dir()}
 
 }
 \seealso{

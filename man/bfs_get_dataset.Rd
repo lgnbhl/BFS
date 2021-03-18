@@ -39,12 +39,6 @@ has alread been downloaded during the day, the existing dataset is loaded
 into R from the pins caching folder instead of downloading again the 
 data from the BFS website.
 }
-\examples{
-\dontrun{meta_en <- bfs_get_metadata(language = "en")}
-\dontrun{bfs_meta_edu <- bfs_search(data = meta_en, pattern = "university students")}
-\dontrun{bfs_get_dataset(bfs_meta_edu$url_px[1], language = "en")}
-
-}
 \seealso{
 \code{\link{bfs_get_metadata}}
 }

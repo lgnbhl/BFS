@@ -35,8 +35,8 @@ but calls the data argument first to allow the use of the pipe operator from
 magrittr.
 }
 \examples{
-\dontrun{meta_en <- bfs_get_metadata(language = "en")}
-\dontrun{bfs_search(data = meta_en, pattern = "university students")}
+\donttest{meta_en <- bfs_get_metadata(language = "en")}
+\donttest{bfs_search(data = meta_en, pattern = "university students")}
 
 }
 \seealso{
