@@ -341,10 +341,28 @@ bfs_get_dataset <-
       bfs_data <- bfs_px %>%
         pluck("DATA") %>%
         tibble::as_tibble()
+      # exceptions
+      attr(bfs_data, "last_update") <- pluck(bfs_px, "LAST.UPDATED")
+      attr(bfs_data, "download_date") <- Sys.Date()
+      lang_suffix <- "" # default: no language definition
+      languages_availables <- pluck(bfs_px, "LANGUAGES")
+      if (grepl(language, languages_availables, fixed = TRUE)) {
+        if(language %in% c("fr", "it", "en")) {
+          lang_suffix <- "." %+% language %+% "."  
+        }
+        # TODO translation : use JSON
+        # https://www.pxweb.bfs.admin.ch/api/v1/{language}/
+      } else {
+        cat(
+          'Language "' %+%
+          language %+%
+          '" not available. Dataset downloaded in the default language.' %+%
+          ' Try with another language.'
+        )
+      }
       attr_names <-  c(
         "contact",
         "description",
-        "last.updated",
         "link",
         "note",
         "subject.area",
@@ -355,24 +373,14 @@ bfs_get_dataset <-
       )
       for (k in attr_names) {
         K <- toupper(k)
+        K_lang_suffix <- K %+% lang_suffix
         k_snake <- snake_case(k)
-        attr(bfs_data, k_snake) <- pluck(bfs_px, toupper(K))
+        attr(bfs_data, k_snake) <- pluck(bfs_px, K_lang_suffix)
       }
-      attr(bfs_data, "download_date") <- Sys.Date() # exception
-      languages_availables <- pluck(bfs_px, "LANGUAGES")
-      if (!grepl(language, languages_availables, fixed = TRUE)) {
-        cat(
-          'Language "' %+%
-            language %+%
-            '" not available. Dataset downloaded in the default language.' %+%
-            ' Try with another language.'
-        )
-      }
-      # TODO: translate names!
+        
       if (clean_names) {
         bfs_data <- janitor::clean_names(bfs_data)
       }
-      
       pins::pin(bfs_data,
                 name = paste0(dataset_name),
                 board = "local")
