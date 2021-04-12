@@ -210,11 +210,13 @@ bfs_get_metadata <-
         cat("Please select between the following languages: de, fr, it, en")
       }
       
-      env$pb <- progress::progress_bar$new(format = "  downloading [:bar] :percent in :elapsed",
-                                           total = length(url_all),
-                                           clear = FALSE)
+      env$pb <-
+        progress::progress_bar$new(format = "  downloading [:bar] :percent in :elapsed",
+                                   total = length(url_all),
+                                   clear = FALSE)
       
-      bfs_metadata <- purrr::map_dfr(url_all, get_bfs_metadata_all) %>%
+      bfs_metadata <-
+        purrr::map_dfr(url_all, get_bfs_metadata_all) %>%
         tibble::as_tibble()
       
       attr(bfs_metadata, "download_date") <- Sys.Date()
@@ -304,38 +306,28 @@ bfs_get_dataset <-
            clean_names = TRUE,
            force = FALSE) {
     pins::board_register_local(cache = path) # temp folder of the spins package
-    dataset_name <-
-      paste0("bfs_data_", gsub("[^0-9]", "", url_px), "_", language)
-    tempfile_path <-
-      paste0(tempdir(), "\\", dataset_name, ".px") # normal temp folder
-    
+    dataset_name <- "bfs_data_" %+%
+      gsub("[^0-9]", "", url_px)  %+%
+      "_"  %+%
+      language
+    tempfile_path <- tempdir() %>%
+      file.path(dataset_name %+% ".px")
     # Do NOT download data again if data already downloaded today
-    bfs_data <-
-      tryCatch(
-        pins::pin_get(dataset_name, board = "local"),
-        error = function(e)
-          "Data not downloaded today"
-      )
+    bfs_data <- tryCatch(
+      pins::pin_get(dataset_name, board = "local"),
+      error = function(e)
+        "Data not downloaded today"
+    )
     bfs_data_today <- attr(bfs_data, "download_date") == Sys.Date()
     
-    if (!isTRUE(bfs_data_today) &
-        language == "de" | force == TRUE & language == "de") {
-      download.file(url_px, destfile = file.path(tempfile_path))
-      # ADD FIX. see: https://github.com/cjgb/pxR/issues/1#issuecomment-800023341
-      x <-
-        iconv(
-          readLines(file.path(tempfile_path), encoding = "CP1252"),
-          from = "CP1252",
-          to = "Latin1",
-          sub = ""
-        )
-      x <- gsub('\"......\"', '\"....\"', x, fixed = TRUE)
-      x <- gsub('\".....\"', '\"....\"', x, fixed = TRUE)
-      writeLines(x, con = file.path(tempfile_path), useBytes = TRUE)
-      # END FIX
+    if (!isTRUE(bfs_data_today) | force == TRUE) {
+      download.file(url_px, destfile = tempfile_path)
+      if (.Platform['OS.type'] == "windows") {
+        patch_pxR(tempfile_path)
+      }
       bfs_px <-
         pxR::read.px(
-          file.path(tempfile_path),
+          tempfile_path,
           na.strings = c(
             '"."',
             '".."',
@@ -346,341 +338,46 @@ bfs_get_dataset <-
             '":"'
           )
         )
-      bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
-      
+      bfs_data <- bfs_px %>%
+        pluck("DATA") %>%
+        tibble::as_tibble()
+      attr_names <-  c(
+        "contact",
+        "description",
+        "last.updated",
+        "link",
+        "note",
+        "subject.area",
+        "survey",
+        "title",
+        "source",
+        "units"
+      )
+      for (k in attr_names) {
+        K <- toupper(k)
+        k_snake <- snake_case(k)
+        attr(bfs_data, k_snake) <- pluck(bfs_px, toupper(K))
+      }
+      attr(bfs_data, "download_date") <- Sys.Date() # exception
+      languages_availables <- pluck(bfs_px, "LANGUAGES")
+      if (!grepl(language, languages_availables, fixed = TRUE)) {
+        cat(
+          'Language "' %+%
+            language %+%
+            '" not available. Dataset downloaded in the default language.' %+%
+            ' Try with another language.'
+        )
+      }
+      # TODO: translate names!
       if (clean_names) {
         bfs_data <- janitor::clean_names(bfs_data)
       }
       
-      attr(bfs_data, "download_date") <- Sys.Date()
-      attr(bfs_data, "contact") <- bfs_px$CONTACT[[1]]
-      attr(bfs_data, "description") <- bfs_px$DESCRIPTION[[1]]
-      attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
-      attr(bfs_data, "link") <- bfs_px$LINK[[1]]
-      attr(bfs_data, "note") <- bfs_px$NOTE[[1]]
-      attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA[[1]]
-      attr(bfs_data, "survey") <- bfs_px$SURVEY[[1]]
-      attr(bfs_data, "title") <- bfs_px$TITLE[[1]]
-      attr(bfs_data, "source") <- bfs_px$SOURCE[[1]]
-      attr(bfs_data, "units") <- bfs_px$UNITS[[1]]
-      
-      languages_availables <-
-        strsplit(bfs_px$LANGUAGES[[1]], '\",\"', "\n")[[1]]
-      if (!is.element(language, languages_availables))
-        cat(
-          paste0(
-            'Language "',
-            language,
-            '" not available. Dataset downloaded in the default language. Try with another language.'
-          )
-        )
-      
-      attr(bfs_data, "download_date") <- Sys.Date()
-      attr(bfs_data, "contact") <- bfs_px$CONTACT[[1]]
-      attr(bfs_data, "description") <- bfs_px$DESCRIPTION[[1]]
-      attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
-      attr(bfs_data, "link") <- bfs_px$LINK[[1]]
-      attr(bfs_data, "note") <- bfs_px$NOTE[[1]]
-      attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA[[1]]
-      attr(bfs_data, "survey") <- bfs_px$SURVEY[[1]]
-      attr(bfs_data, "title") <- bfs_px$TITLE[[1]]
-      attr(bfs_data, "source") <- bfs_px$SOURCE[[1]]
-      attr(bfs_data, "units") <- bfs_px$UNITS[[1]]
-      
-      pins::pin(bfs_data,
-                name = paste0(dataset_name),
-                board = "local")
-    } else if (!isTRUE(bfs_data_today) &
-               language == "fr" | force == TRUE & language == "fr") {
-      download.file(url_px, destfile = file.path(tempfile_path))
-      # ADD FIX. see: https://github.com/cjgb/pxR/issues/1#issuecomment-800023341
-      x <-
-        iconv(
-          readLines(file.path(tempfile_path), encoding = "CP1252"),
-          from = "CP1252",
-          to = "Latin1",
-          sub = ""
-        )
-      x <- gsub('\"......\"', '\"....\"', x, fixed = TRUE)
-      x <- gsub('\".....\"', '\"....\"', x, fixed = TRUE)
-      writeLines(x, con = file.path(tempfile_path), useBytes = TRUE)
-      # END FIX
-      bfs_px <-
-        pxR::read.px(
-          file.path(tempfile_path),
-          na.strings = c(
-            '"."',
-            '".."',
-            '"..."',
-            '"...."',
-            '"....."',
-            '"......"',
-            '":"'
-          )
-        )
-      bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
-      
-      attr(bfs_data, "download_date") <- Sys.Date()
-      attr(bfs_data, "contact") <- bfs_px$CONTACT[[1]]
-      attr(bfs_data, "description") <- bfs_px$DESCRIPTION[[1]]
-      attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
-      attr(bfs_data, "link") <- bfs_px$LINK[[1]]
-      attr(bfs_data, "note") <- bfs_px$NOTE[[1]]
-      attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA[[1]]
-      attr(bfs_data, "survey") <- bfs_px$SURVEY[[1]]
-      attr(bfs_data, "title") <- bfs_px$TITLE[[1]]
-      attr(bfs_data, "source") <- bfs_px$SOURCE[[1]]
-      attr(bfs_data, "units") <- bfs_px$UNITS[[1]]
-      
-      languages_availables <-
-        strsplit(bfs_px$LANGUAGES[[1]], '\",\"', "\n")[[1]]
-      if (!is.element(language, languages_availables))
-        cat(
-          paste0(
-            'Language "',
-            language,
-            '" not available. Dataset downloaded in the default language. Try with another language.'
-          )
-        )
-      
-      if (is.element(language, languages_availables)) {
-        default_names <- names(bfs_px$VALUES)
-        new_names <- names(bfs_px$VALUES.fr.)
-        n_names <- length(default_names)
-        
-        # ! possible bugs in new_categories
-        new_categories <- gsub('\", \"', "\n", bfs_px$VALUES.fr.)
-        new_categories <- gsub('\",\"', "\n", new_categories)
-        new_categories <- gsub(' \"', "", new_categories)
-        new_categories <- strsplit(new_categories, "\n")
-        
-        for (i in 1:n_names) {
-          tryCatch({
-            names(bfs_data)[names(bfs_data) == default_names[[i]]] <-
-              new_names[i]
-            l <- as.name(new_names[[i]])
-            levels(bfs_data[[l]]) <- new_categories[[i]]
-            replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
-          }, error = function(e) {
-            cat("Failed to translate name.", "\n")
-          })
-        }
-        
-        if (clean_names) {
-          bfs_data <- janitor::clean_names(bfs_data)
-        }
-        
-        attr(bfs_data, "download_date") <- Sys.Date()
-        attr(bfs_data, "contact") <- bfs_px$CONTACT.fr.[[1]]
-        attr(bfs_data, "description") <- bfs_px$DESCRIPTION.fr.[[1]]
-        attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
-        attr(bfs_data, "link") <- bfs_px$LINK.fr.[[1]]
-        attr(bfs_data, "note") <- bfs_px$NOTE.fr.[[1]]
-        attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA.fr.[[1]]
-        attr(bfs_data, "survey") <- bfs_px$SURVEY.fr.[[1]]
-        attr(bfs_data, "title") <- bfs_px$TITLE.fr.[[1]]
-        attr(bfs_data, "source") <- bfs_px$SOURCE.fr.[[1]]
-        attr(bfs_data, "units") <- bfs_px$UNITS.fr.[[1]]
-      }
-      pins::pin(bfs_data,
-                name = paste0(dataset_name),
-                board = "local")
-      
-    } else if (!isTRUE(bfs_data_today) &
-               language == "it" | force == TRUE & language == "it") {
-      download.file(url_px, destfile = file.path(tempfile_path))
-      # ADD FIX. see: https://github.com/cjgb/pxR/issues/1#issuecomment-800023341
-      x <-
-        iconv(
-          readLines(file.path(tempfile_path), encoding = "CP1252"),
-          from = "CP1252",
-          to = "Latin1",
-          sub = ""
-        )
-      x <- gsub('\"......\"', '\"....\"', x, fixed = TRUE)
-      x <- gsub('\".....\"', '\"....\"', x, fixed = TRUE)
-      writeLines(x, con = file.path(tempfile_path), useBytes = TRUE)
-      # END FIX
-      bfs_px <-
-        pxR::read.px(
-          file.path(tempfile_path),
-          na.strings = c(
-            '"."',
-            '".."',
-            '"..."',
-            '"...."',
-            '"....."',
-            '"......"',
-            '":"'
-          )
-        )
-      bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
-      
-      attr(bfs_data, "download_date") <- Sys.Date()
-      attr(bfs_data, "contact") <- bfs_px$CONTACT[[1]]
-      attr(bfs_data, "description") <- bfs_px$DESCRIPTION[[1]]
-      attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
-      attr(bfs_data, "link") <- bfs_px$LINK[[1]]
-      attr(bfs_data, "note") <- bfs_px$NOTE[[1]]
-      attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA[[1]]
-      attr(bfs_data, "survey") <- bfs_px$SURVEY[[1]]
-      attr(bfs_data, "title") <- bfs_px$TITLE[[1]]
-      attr(bfs_data, "source") <- bfs_px$SOURCE[[1]]
-      attr(bfs_data, "units") <- bfs_px$UNITS[[1]]
-      
-      languages_availables <-
-        strsplit(bfs_px$LANGUAGES[[1]], '\",\"', "\n")[[1]]
-      if (!is.element(language, languages_availables))
-        cat(
-          paste0(
-            'Language "',
-            language,
-            '" not available. Dataset downloaded in the default language. Try with another language.'
-          )
-        )
-      
-      if (is.element(language, languages_availables)) {
-        default_names <- names(bfs_px$VALUES)
-        new_names <- names(bfs_px$VALUES.it.)
-        n_names <- length(default_names)
-        
-        # ! possible bugs in new_categories
-        new_categories <- gsub('\", \"', "\n", bfs_px$VALUES.it.)
-        new_categories <- gsub('\",\"', "\n", new_categories)
-        new_categories <- gsub(' \"', "", new_categories)
-        new_categories <- strsplit(new_categories, "\n")
-        
-        for (i in 1:n_names) {
-          tryCatch({
-            names(bfs_data)[names(bfs_data) == default_names[[i]]] <-
-              new_names[i]
-            l <- as.name(new_names[[i]])
-            levels(bfs_data[[l]]) <- new_categories[[i]]
-            replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
-          }, error = function(e) {
-            cat("Failed to translate name.", "\n")
-          })
-        }
-        
-        if (clean_names) {
-          bfs_data <- janitor::clean_names(bfs_data)
-        }
-        
-        attr(bfs_data, "download_date") <- Sys.Date()
-        attr(bfs_data, "contact") <- bfs_px$CONTACT.it.[[1]]
-        attr(bfs_data, "description") <- bfs_px$DESCRIPTION.it.[[1]]
-        attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
-        attr(bfs_data, "link") <- bfs_px$LINK.it.[[1]]
-        attr(bfs_data, "note") <- bfs_px$NOTE.it.[[1]]
-        attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA.it.[[1]]
-        attr(bfs_data, "survey") <- bfs_px$SURVEY.it.[[1]]
-        attr(bfs_data, "title") <- bfs_px$TITLE.it.[[1]]
-        attr(bfs_data, "source") <- bfs_px$SOURCE.it.[[1]]
-        attr(bfs_data, "units") <- bfs_px$UNITS.it.[[1]]
-      }
-      pins::pin(bfs_data,
-                name = paste0(dataset_name),
-                board = "local")
-      
-    } else if (!isTRUE(bfs_data_today) &
-               language == "en" | force == TRUE & language == "en") {
-      download.file(url_px, destfile = file.path(tempfile_path))
-      # ADD FIX. see: https://github.com/cjgb/pxR/issues/1#issuecomment-800023341
-      x <-
-        iconv(
-          readLines(file.path(tempfile_path), encoding = "CP1252"),
-          from = "CP1252",
-          to = "Latin1",
-          sub = ""
-        )
-      x <- gsub('\"......\"', '\"....\"', x, fixed = TRUE)
-      x <- gsub('\".....\"', '\"....\"', x, fixed = TRUE)
-      writeLines(x, con = file.path(tempfile_path), useBytes = TRUE)
-      # END FIX
-      bfs_px <-
-        pxR::read.px(
-          file.path(tempfile_path),
-          na.strings = c(
-            '"."',
-            '".."',
-            '"..."',
-            '"...."',
-            '"....."',
-            '"......"',
-            '":"'
-          )
-        )
-      bfs_data <- tibble::as_tibble(as.data.frame(bfs_px))
-      
-      attr(bfs_data, "download_date") <- Sys.Date()
-      attr(bfs_data, "contact") <- bfs_px$CONTACT[[1]]
-      attr(bfs_data, "description") <- bfs_px$DESCRIPTION[[1]]
-      attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
-      attr(bfs_data, "link") <- bfs_px$LINK[[1]]
-      attr(bfs_data, "note") <- bfs_px$NOTE[[1]]
-      attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA[[1]]
-      attr(bfs_data, "survey") <- bfs_px$SURVEY[[1]]
-      attr(bfs_data, "title") <- bfs_px$TITLE[[1]]
-      attr(bfs_data, "source") <- bfs_px$SOURCE[[1]]
-      attr(bfs_data, "units") <- bfs_px$UNITS[[1]]
-      
-      languages_availables <-
-        strsplit(bfs_px$LANGUAGES[[1]], '\",\"', "\n")[[1]]
-      if (!is.element(language, languages_availables))
-        cat(
-          paste0(
-            'Language "',
-            language,
-            '" not available. Dataset downloaded in the default language. Try with another language.'
-          )
-        )
-      
-      if (is.element(language, languages_availables)) {
-        default_names <- names(bfs_px$VALUES)
-        new_names <- names(bfs_px$VALUES.en.)
-        n_names <- length(default_names)
-        
-        # ! possible bugs in new_categories
-        new_categories <- gsub('\", \"', "\n", bfs_px$VALUES.en.)
-        new_categories <- gsub('\",\"', "\n", new_categories)
-        new_categories <- gsub(' \"', "", new_categories)
-        new_categories <- strsplit(new_categories, "\n")
-        
-        for (i in 1:n_names) {
-          tryCatch({
-            names(bfs_data)[names(bfs_data) == default_names[[i]]] <-
-              new_names[i]
-            l <- as.name(new_names[[i]])
-            levels(bfs_data[[l]]) <- new_categories[[i]]
-            replace(bfs_data[[l]], unique(bfs_data[[l]]), new_categories[[i]])
-          }, error = function(e) {
-            cat("Failed to translate name.", "\n")
-          })
-        }
-        
-        if (clean_names) {
-          bfs_data <- janitor::clean_names(bfs_data)
-        }
-        
-        attr(bfs_data, "download_date") <- Sys.Date()
-        attr(bfs_data, "contact") <- bfs_px$CONTACT.en.[[1]]
-        attr(bfs_data, "description") <- bfs_px$DESCRIPTION.en.[[1]]
-        attr(bfs_data, "last_update") <- bfs_px$LAST.UPDATED[[1]]
-        attr(bfs_data, "link") <- bfs_px$LINK.en.[[1]]
-        attr(bfs_data, "note") <- bfs_px$NOTE.en.[[1]]
-        attr(bfs_data, "subject_area") <- bfs_px$SUBJECT.AREA.en.[[1]]
-        attr(bfs_data, "survey") <- bfs_px$SURVEY.en.[[1]]
-        attr(bfs_data, "title") <- bfs_px$TITLE.en.[[1]]
-        attr(bfs_data, "source") <- bfs_px$SOURCE.en.[[1]]
-        attr(bfs_data, "units") <- bfs_px$UNITS.en.[[1]]
-      }
       pins::pin(bfs_data,
                 name = paste0(dataset_name),
                 board = "local")
     }
-    
     bfs_data <- pins::pin_get(dataset_name, board = "local")
-    
     return(bfs_data)
   }
 
