@@ -63,20 +63,20 @@ meta_en <- bfs_get_metadata(language = "en")
 meta_en
 ```
 
-    ## # A tibble: 161 x 6
+    ## # A tibble: 162 x 6
     ##    title        observation_period  published  source  url_bfs       url_px     
     ##    <chr>        <chr>               <chr>      <chr>   <chr>         <chr>      
-    ##  1 New registr~ 1.1.2020-29.2.2020~ 15.03.2021 Federa~ https://www.~ https://ww~
-    ##  2 Hotel accom~ 1.1.2005-31.1.2021  08.03.2021 Federa~ https://www.~ https://ww~
-    ##  3 Hotel accom~ 1.1.2005-31.1.2021  08.03.2021 Federa~ https://www.~ https://ww~
-    ##  4 Hotel accom~ 1.1.2013-31.1.2021  08.03.2021 Federa~ https://www.~ https://ww~
-    ##  5 Hotel secto~ 1.1.2005-31.1.2021  08.03.2021 Federa~ https://www.~ https://ww~
-    ##  6 Hotel secto~ 1.1.2005-31.1.2021  08.03.2021 Federa~ https://www.~ https://ww~
-    ##  7 Hotel secto~ 1.1.2013-31.1.2021  08.03.2021 Federa~ https://www.~ https://ww~
-    ##  8 Retail Trad~ 1.1.2000-31.1.2021  01.03.2021 Federa~ https://www.~ https://ww~
-    ##  9 Retail Trad~ 1.1.2000-31.1.2021  01.03.2021 Federa~ https://www.~ https://ww~
-    ## 10 Retail Trad~ 1.1.2000-31.1.2021  01.03.2021 Federa~ https://www.~ https://ww~
-    ## # ... with 151 more rows
+    ##  1 Foreign cro~ 1.1.1999-31.3.2021  04.05.2021 Federa~ https://www.~ https://ww~
+    ##  2 Retail Trad~ 1.1.2000-31.3.2021  30.04.2021 Federa~ https://www.~ https://ww~
+    ##  3 Retail Trad~ 1.1.2000-31.3.2021  30.04.2021 Federa~ https://www.~ https://ww~
+    ##  4 Retail Trad~ 2000-2020           30.04.2021 Federa~ https://www.~ https://ww~
+    ##  5 New registr~ 1.1.2020-31.3.2020~ 13.04.2021 Federa~ https://www.~ https://ww~
+    ##  6 Deaths per ~ 1803-2019           06.04.2021 Federa~ https://www.~ https://ww~
+    ##  7 Hotel accom~ 1.1.2005-28.2.2021  06.04.2021 Federa~ https://www.~ https://ww~
+    ##  8 Hotel accom~ 1.1.2005-28.2.2021  06.04.2021 Federa~ https://www.~ https://ww~
+    ##  9 Hotel accom~ 1.1.2013-28.2.2021  06.04.2021 Federa~ https://www.~ https://ww~
+    ## 10 Hotel secto~ 1.1.2005-28.2.2021  06.04.2021 Federa~ https://www.~ https://ww~
+    ## # ... with 152 more rows
 
 You can also get the catalog data by language based on the new RSS feed
 provided by the Swiss Federal Statistical Office. Note that the number
@@ -89,20 +89,20 @@ catalog_en <- bfs_get_catalog(language = "en")
 catalog_en
 ```
 
-    ## # A tibble: 161 x 5
+    ## # A tibble: 162 x 5
     ##    title            language published           url_bfs           url_px       
     ##    <chr>            <chr>    <dttm>              <chr>             <chr>        
-    ##  1 New registratio~ en       2021-03-15 08:30:00 https://www.bfs.~ https://www.~
-    ##  2 Hotel accommoda~ en       2021-03-08 08:30:00 https://www.bfs.~ https://www.~
-    ##  3 Hotel accommoda~ en       2021-03-08 08:30:00 https://www.bfs.~ https://www.~
-    ##  4 Hotel accommoda~ en       2021-03-08 08:30:00 https://www.bfs.~ https://www.~
-    ##  5 Hotel sector: S~ en       2021-03-08 08:30:00 https://www.bfs.~ https://www.~
-    ##  6 Hotel sector: S~ en       2021-03-08 08:30:00 https://www.bfs.~ https://www.~
-    ##  7 Hotel sector: s~ en       2021-03-08 08:30:00 https://www.bfs.~ https://www.~
-    ##  8 Retail Trade Tu~ en       2021-03-01 08:30:00 https://www.bfs.~ https://www.~
-    ##  9 Retail Trade Tu~ en       2021-03-01 08:30:00 https://www.bfs.~ https://www.~
-    ## 10 Retail Trade Tu~ en       2021-03-01 08:30:00 https://www.bfs.~ https://www.~
-    ## # ... with 151 more rows
+    ##  1 Foreign cross-b~ en       2021-05-04 08:30:00 https://www.bfs.~ https://www.~
+    ##  2 Retail Trade Tu~ en       2021-04-30 08:30:00 https://www.bfs.~ https://www.~
+    ##  3 Retail Trade Tu~ en       2021-04-30 08:30:00 https://www.bfs.~ https://www.~
+    ##  4 Retail Trade Tu~ en       2021-04-30 08:30:00 https://www.bfs.~ https://www.~
+    ##  5 New registratio~ en       2021-04-13 08:30:00 https://www.bfs.~ https://www.~
+    ##  6 Deaths per mont~ en       2021-04-06 08:30:00 https://www.bfs.~ https://www.~
+    ##  7 Hotel accommoda~ en       2021-04-06 08:30:00 https://www.bfs.~ https://www.~
+    ##  8 Hotel accommoda~ en       2021-04-06 08:30:00 https://www.bfs.~ https://www.~
+    ##  9 Hotel accommoda~ en       2021-04-06 08:30:00 https://www.bfs.~ https://www.~
+    ## 10 Hotel sector: S~ en       2021-04-06 08:30:00 https://www.bfs.~ https://www.~
+    ## # ... with 152 more rows
 
 ### Search for data
 
@@ -123,44 +123,35 @@ meta_en_uni
     ## # A tibble: 2 x 6
     ##   title         observation_peri~ published  source   url_bfs        url_px     
     ##   <chr>         <chr>             <chr>      <chr>    <chr>          <chr>      
-    ## 1 University s~ 1980-2019         25.03.2020 Federal~ https://www.b~ https://ww~
-    ## 2 University s~ 1990-2019         25.03.2020 Federal~ https://www.b~ https://ww~
+    ## 1 University s~ 1990-2020         26.03.2021 Federal~ https://www.b~ https://ww~
+    ## 2 University s~ 1980-2020         26.03.2021 Federal~ https://www.b~ https://ww~
 
 ### Download data set
 
 To download a BFS data set, add the related URL link from the `url_px`
 column of the downloaded metadata as an argument to the `bfs_get_data
-set()` function. You can choose the language (German, French, Italian or
-English if any) in which the data set is downloaded with the `language`
-argument.
+set()` function. For now, the data can be downloaded only in German.
 
 ``` r
-df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[1], language = "en")
-```
+df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[2])
 
-    ## Failed to translate name. 
-    ## Failed to translate name. 
-    ## Failed to translate name. 
-    ## Failed to translate name.
-
-``` r
 df_uni
 ```
 
-    ## # A tibble: 16,800 x 5
-    ##    level_of_study                      gender isced_field           year   value
-    ##    <fct>                               <fct>  <fct>                 <fct>  <dbl>
-    ##  1 Lizenziat/Diplom                    Mann   Erziehungswissenscha~ 2019/~    46
-    ##  2 Bachelor                            Mann   Erziehungswissenscha~ 2019/~   149
-    ##  3 Master                              Mann   Erziehungswissenscha~ 2019/~   131
-    ##  4 Doktorat                            Mann   Erziehungswissenscha~ 2019/~   120
-    ##  5 Weiterbildung, Vertiefung und Ande~ Mann   Erziehungswissenscha~ 2019/~    14
-    ##  6 Lizenziat/Diplom                    Frau   Erziehungswissenscha~ 2019/~    62
-    ##  7 Bachelor                            Frau   Erziehungswissenscha~ 2019/~   696
-    ##  8 Master                              Frau   Erziehungswissenscha~ 2019/~   540
-    ##  9 Doktorat                            Frau   Erziehungswissenscha~ 2019/~   313
-    ## 10 Weiterbildung, Vertiefung und Ande~ Frau   Erziehungswissenscha~ 2019/~    24
-    ## # ... with 16,790 more rows
+    ## # A tibble: 17,220 x 5
+    ##    studienstufe                     geschlecht isced_fach           jahr   value
+    ##    <fct>                            <fct>      <fct>                <fct>  <dbl>
+    ##  1 Lizenziat/Diplom                 Mann       Erziehungswissensch~ 1980/~   545
+    ##  2 Bachelor                         Mann       Erziehungswissensch~ 1980/~     0
+    ##  3 Master                           Mann       Erziehungswissensch~ 1980/~     0
+    ##  4 Doktorat                         Mann       Erziehungswissensch~ 1980/~    93
+    ##  5 Weiterbildung, Vertiefung und A~ Mann       Erziehungswissensch~ 1980/~    13
+    ##  6 Lizenziat/Diplom                 Frau       Erziehungswissensch~ 1980/~   946
+    ##  7 Bachelor                         Frau       Erziehungswissensch~ 1980/~     0
+    ##  8 Master                           Frau       Erziehungswissensch~ 1980/~     0
+    ##  9 Doktorat                         Frau       Erziehungswissensch~ 1980/~    70
+    ## 10 Weiterbildung, Vertiefung und A~ Frau       Erziehungswissensch~ 1980/~    52
+    ## # ... with 17,210 more rows
 
 You can access additional information about the downloaded data set
 using the R base `attributes()` function.
@@ -171,19 +162,19 @@ attributes(df_uni) %>%
 ```
 
     ## List of 14
-    ##  $ names        : chr [1:5] "level_of_study" "gender" "isced_field" "year" ...
-    ##  $ row.names    : int [1:16800] 1 2 3 4 5 6 7 8 9 10 ...
-    ##  $ download_date: Date[1:1], format: "2021-03-18"
-    ##  $ contact      : chr "Section Educational Processes, email: sius@bfs.admin.ch"
-    ##  $ description  : chr "University students by year, ISCED field, gender and level of study"
-    ##  $ last_update  : chr "20200325 08:30"
-    ##  $ link         : chr "https://www.bfs.admin.ch/asset/en/px-x-1502040100_131"
-    ##  $ note         : chr "<B>Meta information</B>#Data as of: 25.03.2020#Survey: Students and graduates in higher education institutions "| __truncated__
-    ##  $ subject_area : chr "15 - Education and science"
-    ##  $ survey       : chr "Students and degrees of higher education institutions (SHIS-studex)"
-    ##  $ title        : chr "University students by Year, ISCED field, Gender and Level of study"
-    ##  $ source       : chr "FSO - Students and degrees of higher education institutions - © FSO"
-    ##  $ units        : chr "Person"
+    ##  $ names        : chr [1:5] "studienstufe" "geschlecht" "isced_fach" "jahr" ...
+    ##  $ row.names    : int [1:17220] 1 2 3 4 5 6 7 8 9 10 ...
+    ##  $ last_update  : chr "20210326 08:30"
+    ##  $ download_date: Date[1:1], format: "2021-05-04"
+    ##  $ contact      : chr "Sektion Bildungsprozesse, E-Mail: sius@bfs.admin.ch"
+    ##  $ description  : chr "Studierende an den universitären Hochschulen nach Jahr, ISCED Fach, Geschlecht und Studienstufe"
+    ##  $ link         : chr "https://www.bfs.admin.ch/asset/de/px-x-1502040100_131"
+    ##  $ note         : chr "<B>Metainformation:</B>#Letzte Änderungen: Neuer Datensatz (Jahr 2020)#Stand der Datenbank: 26.03.2021#Erhebung"| __truncated__
+    ##  $ subject_area : chr "15 - Bildung, Wissenschaft"
+    ##  $ survey       : chr "Studierende und Abschlüsse der Hochschulen (SHIS-studex)"
+    ##  $ title        : chr "Studierende an den universitären Hochschulen nach Jahr, ISCED Fach, Geschlecht und Studienstufe"
+    ##  $ source       : chr "BFS - Studierende und Abschlüsse der Hochschulen - © BFS"
+    ##  $ units        : chr "Student"
     ##  $ class        : chr [1:3] "tbl_df" "tbl" "data.frame"
 
 In case the function fails to download the data set, you can have a look

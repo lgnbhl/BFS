@@ -82,10 +82,10 @@ meta_en_uni
 
 ### Download data set
 
-To download a BFS data set, add the related URL link from the `url_px` column of the downloaded metadata as an argument to the `bfs_get_data set()` function. You can choose the language (German, French, Italian or English if any) in which the data set is downloaded with the `language` argument.
+To download a BFS data set, add the related URL link from the `url_px` column of the downloaded metadata as an argument to the `bfs_get_data set()` function. For now, the data can be downloaded only in German.
 
 ```{r bfs_get_dataset}
-df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[1], language = "en")
+df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[2])
 
 df_uni
 ```
