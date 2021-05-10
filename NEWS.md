@@ -1,3 +1,7 @@
+# BFS 0.3.1
+
+* fix issue #3 with pull request #1
+
 # BFS 0.3.0
 
 * fix critical bug in `bfs_get_dataset()`

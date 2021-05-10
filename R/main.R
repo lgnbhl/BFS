@@ -9,7 +9,9 @@ utils::globalVariables(
     "title",
     "title_2",
     "url_bfs",
-    "url_p"
+    "url_p",
+    "throw",
+    "new_error"
   )
 )
 env <- new.env(parent = emptyenv())
