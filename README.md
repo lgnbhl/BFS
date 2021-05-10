@@ -7,8 +7,6 @@
 status](https://www.r-pkg.org/badges/version/BFS)](https://CRAN.R-project.org/package=BFS)
 [![Grand
 total](https://cranlogs.r-pkg.org/badges/grand-total/BFS)](https://cran.r-project.org/package=BFS)
-[![pipeline
-status](https://gitlab.com/lgnbhl/BFS/badges/master/pipeline.svg)](https://gitlab.com/lgnbhl/BFS/pipelines)
 [![R build
 status](https://github.com/lgnbhl/BFS/workflows/R-CMD-check/badge.svg)](https://github.com/lgnbhl/BFS/actions)
 <!-- badges: end -->
@@ -64,18 +62,18 @@ meta_en
 ```
 
     ## # A tibble: 162 x 6
-    ##    title        observation_period  published  source  url_bfs       url_px     
-    ##    <chr>        <chr>               <chr>      <chr>   <chr>         <chr>      
-    ##  1 Foreign cro~ 1.1.1999-31.3.2021  04.05.2021 Federa~ https://www.~ https://ww~
-    ##  2 Retail Trad~ 1.1.2000-31.3.2021  30.04.2021 Federa~ https://www.~ https://ww~
-    ##  3 Retail Trad~ 1.1.2000-31.3.2021  30.04.2021 Federa~ https://www.~ https://ww~
-    ##  4 Retail Trad~ 2000-2020           30.04.2021 Federa~ https://www.~ https://ww~
-    ##  5 New registr~ 1.1.2020-31.3.2020~ 13.04.2021 Federa~ https://www.~ https://ww~
-    ##  6 Deaths per ~ 1803-2019           06.04.2021 Federa~ https://www.~ https://ww~
-    ##  7 Hotel accom~ 1.1.2005-28.2.2021  06.04.2021 Federa~ https://www.~ https://ww~
-    ##  8 Hotel accom~ 1.1.2005-28.2.2021  06.04.2021 Federa~ https://www.~ https://ww~
-    ##  9 Hotel accom~ 1.1.2013-28.2.2021  06.04.2021 Federa~ https://www.~ https://ww~
-    ## 10 Hotel secto~ 1.1.2005-28.2.2021  06.04.2021 Federa~ https://www.~ https://ww~
+    ##    title         observation_peri~ published source   url_bfs        url_px     
+    ##    <chr>         <chr>             <chr>     <chr>    <chr>          <chr>      
+    ##  1 Hotel accomm~ 1.1.2005-31.3.20~ 07.05.20~ Federal~ https://www.b~ https://ww~
+    ##  2 Hotel accomm~ 1.1.2005-31.3.20~ 07.05.20~ Federal~ https://www.b~ https://ww~
+    ##  3 Hotel accomm~ 1.1.2013-31.3.20~ 07.05.20~ Federal~ https://www.b~ https://ww~
+    ##  4 Hotel sector~ 1.1.2005-31.3.20~ 07.05.20~ Federal~ https://www.b~ https://ww~
+    ##  5 Hotel sector~ 1.1.2005-31.3.20~ 07.05.20~ Federal~ https://www.b~ https://ww~
+    ##  6 Hotel sector~ 1.1.2013-31.3.20~ 07.05.20~ Federal~ https://www.b~ https://ww~
+    ##  7 Foreign cros~ 1.1.1999-31.3.20~ 04.05.20~ Federal~ https://www.b~ https://ww~
+    ##  8 Retail Trade~ 1.1.2000-31.3.20~ 30.04.20~ Federal~ https://www.b~ https://ww~
+    ##  9 Retail Trade~ 1.1.2000-31.3.20~ 30.04.20~ Federal~ https://www.b~ https://ww~
+    ## 10 Retail Trade~ 2000-2020         30.04.20~ Federal~ https://www.b~ https://ww~
     ## # ... with 152 more rows
 
 You can also get the catalog data by language based on the new RSS feed
@@ -92,16 +90,16 @@ catalog_en
     ## # A tibble: 162 x 5
     ##    title            language published           url_bfs           url_px       
     ##    <chr>            <chr>    <dttm>              <chr>             <chr>        
-    ##  1 Foreign cross-b~ en       2021-05-04 08:30:00 https://www.bfs.~ https://www.~
-    ##  2 Retail Trade Tu~ en       2021-04-30 08:30:00 https://www.bfs.~ https://www.~
-    ##  3 Retail Trade Tu~ en       2021-04-30 08:30:00 https://www.bfs.~ https://www.~
-    ##  4 Retail Trade Tu~ en       2021-04-30 08:30:00 https://www.bfs.~ https://www.~
-    ##  5 New registratio~ en       2021-04-13 08:30:00 https://www.bfs.~ https://www.~
-    ##  6 Deaths per mont~ en       2021-04-06 08:30:00 https://www.bfs.~ https://www.~
-    ##  7 Hotel accommoda~ en       2021-04-06 08:30:00 https://www.bfs.~ https://www.~
-    ##  8 Hotel accommoda~ en       2021-04-06 08:30:00 https://www.bfs.~ https://www.~
-    ##  9 Hotel accommoda~ en       2021-04-06 08:30:00 https://www.bfs.~ https://www.~
-    ## 10 Hotel sector: S~ en       2021-04-06 08:30:00 https://www.bfs.~ https://www.~
+    ##  1 Hotel accommoda~ en       2021-05-07 08:30:00 https://www.bfs.~ https://www.~
+    ##  2 Hotel accommoda~ en       2021-05-07 08:30:00 https://www.bfs.~ https://www.~
+    ##  3 Hotel accommoda~ en       2021-05-07 08:30:00 https://www.bfs.~ https://www.~
+    ##  4 Hotel sector: S~ en       2021-05-07 08:30:00 https://www.bfs.~ https://www.~
+    ##  5 Hotel sector: S~ en       2021-05-07 08:30:00 https://www.bfs.~ https://www.~
+    ##  6 Hotel sector: s~ en       2021-05-07 08:30:00 https://www.bfs.~ https://www.~
+    ##  7 Foreign cross-b~ en       2021-05-04 08:30:00 https://www.bfs.~ https://www.~
+    ##  8 Retail Trade Tu~ en       2021-04-30 08:30:00 https://www.bfs.~ https://www.~
+    ##  9 Retail Trade Tu~ en       2021-04-30 08:30:00 https://www.bfs.~ https://www.~
+    ## 10 Retail Trade Tu~ en       2021-04-30 08:30:00 https://www.bfs.~ https://www.~
     ## # ... with 152 more rows
 
 ### Search for data
@@ -165,7 +163,7 @@ attributes(df_uni) %>%
     ##  $ names        : chr [1:5] "studienstufe" "geschlecht" "isced_fach" "jahr" ...
     ##  $ row.names    : int [1:17220] 1 2 3 4 5 6 7 8 9 10 ...
     ##  $ last_update  : chr "20210326 08:30"
-    ##  $ download_date: Date[1:1], format: "2021-05-04"
+    ##  $ download_date: Date[1:1], format: "2021-05-10"
     ##  $ contact      : chr "Sektion Bildungsprozesse, E-Mail: sius@bfs.admin.ch"
     ##  $ description  : chr "Studierende an den universitären Hochschulen nach Jahr, ISCED Fach, Geschlecht und Studienstufe"
     ##  $ link         : chr "https://www.bfs.admin.ch/asset/de/px-x-1502040100_131"
