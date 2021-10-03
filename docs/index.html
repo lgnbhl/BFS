@@ -127,7 +127,7 @@
 <h3 class="hasAnchor">
 <a href="#get-the-data-catalog" class="anchor"></a>Get the data catalog</h3>
 <p>To search and download data from the Swiss Federal Statistical Office, you first need to retrieve information about the available public datasets.</p>
-<p>You can get the catalog of the datasets by language based on the <a href="https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml">RSS feed</a> provided by the Swiss Federal Statistical Office. Note that Italian and English give access to less datasets.</p>
+<p>You can get the data catalog by language based on their official <a href="https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml">RSS feed</a>. Unfortunately, it seems that not all data is listed inside the RSS feed. Note also that Italian and English give access to less datasets.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">catalog_en</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_catalog.html">bfs_get_catalog</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
 
@@ -173,18 +173,18 @@
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_uni</span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 17,220 x 5</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    Year   `ISCED Field`   Sex   `Level of study`              `University stude~</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt;                                      &lt;dbl&gt;</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 1980/~ Education scie~ Man   First university degree or d~                545</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 1980/~ Education scie~ Man   Bachelor                                       0</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 1980/~ Education scie~ Man   Master                                         0</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 1980/~ Education scie~ Man   Doctorate                                     93</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 1980/~ Education scie~ Man   Further education, advanced ~                 13</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 1980/~ Education scie~ Woman First university degree or d~                946</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 1980/~ Education scie~ Woman Bachelor                                       0</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 1980/~ Education scie~ Woman Master                                         0</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 1980/~ Education scie~ Woman Doctorate                                     70</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 1980/~ Education scie~ Woman Further education, advanced ~                 52</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    Year    `ISCED Field`     Sex   `Level of study`            `University stud~</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;   &lt;chr&gt;             &lt;chr&gt; &lt;chr&gt;                                   &lt;dbl&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 1980/81 Education science Man   First university degree or~               545</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 1980/81 Education science Man   Bachelor                                    0</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 1980/81 Education science Man   Master                                      0</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 1980/81 Education science Man   Doctorate                                  93</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 1980/81 Education science Man   Further education, advance~                13</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 1980/81 Education science Woman First university degree or~               946</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 1980/81 Education science Woman Bachelor                                    0</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 1980/81 Education science Woman Master                                      0</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 1980/81 Education science Woman Doctorate                                  70</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 1980/81 Education science Woman Further education, advance~                52</span></span>
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 17,210 more rows</span></span></code></pre></div>
 <p>You can access additional information about the downloaded data set using the <code><a href="reference/bfs_get_dataset_comments.html">bfs_get_dataset_comments()</a></code> function.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -196,15 +196,32 @@
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   row_no col_no comment_type   comment                                          </span></span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;int&gt;  &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;                                            </span></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     NA      4 column_comment "To ensure that the presentations from cubes con~</span></span></code></pre></div>
-<p>In case the function fails to download the data set, you can add manually the BFS number in the <code><a href="reference/bfs_get_dataset.html">bfs_get_dataset()</a></code> function using the <code>number_bfs</code> argument.</p>
+<p>In case the data is not present in the data catalog, you can add manually the BFS number in the <code><a href="reference/bfs_get_dataset.html">bfs_get_dataset()</a></code> function using the <code>number_bfs</code> argument. For example, if the data used until now as an example is not accessible using <code><a href="reference/bfs_get_catalog.html">bfs_get_catalog()</a></code>, you could try to find the BFS number manually:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/browseURL.html">browseURL</a></span><span class="op">(</span><span class="va">catalog_uni</span><span class="op">$</span><span class="va">url_bfs</span><span class="op">)</span> <span class="co"># open webpage</span></code></pre></div>
+<code class="sourceCode R"><span class="co"># open webpage</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/browseURL.html">browseURL</a></span><span class="op">(</span><span class="st">"https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-datenbanken/daten.assetdetail.16324907.html"</span><span class="op">)</span></code></pre></div>
 <p><img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/screenshot.png" align="center"></p>
 <p><br></p>
-<p>You can try again running <code><a href="reference/bfs_get_dataset.html">bfs_get_dataset()</a></code>, but this time using the <code>number_bfs</code> argument.</p>
+<p>You can use again <code><a href="reference/bfs_get_dataset.html">bfs_get_dataset()</a></code> but this time with the <code>number_bfs</code> argument.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/bfs_get_dataset.html">bfs_get_dataset</a></span><span class="op">(</span>number_bfs <span class="op">=</span> <span class="st">"px-x-1502040100_131"</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
-<p>Sometimes the the data set doesn’t exist in the API. It can be because the data exists only as an Excel file (an example <a href="https://www.bfs.admin.ch/bfs/fr/home/statistiques/catalogues-banques-donnees/tableaux.assetdetail.18184062.html" target="_blank">here</a>)</p>
+<p>A lot of data is not accessible through the API, but is still present in the official BFS website. You can access the RSS tables catalog of the Excel files using the <code><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables()</a></code>. Note that only a part of the tables are accessible using the RSS feed.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 350 x 5</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    title           language published           url_bfs          url_table      </span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;               &lt;chr&gt;            &lt;chr&gt;          </span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Admissions to ~ en       Admissions to univ~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Admissions to ~ en       Admissions to univ~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Air emission a~ en       Air emission accou~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Air emission a~ en       Air emission accou~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Average age at~ en       Average age at tim~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Average age of~ en       Average age of the~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Energy flow ac~ en       Energy flow accoun~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Energy flow ac~ en       Energy flow accoun~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Environmentall~ en       Environmentally re~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Environmentall~ en       Environmentally re~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 340 more rows</span></span></code></pre></div>
 </div>
 </div>
 <div id="other-information" class="section level2">

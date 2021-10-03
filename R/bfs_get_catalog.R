@@ -1,4 +1,4 @@
-#' Get the Swiss Federal Statistical Office data catalog in a given language
+#' Get the BFS data catalog
 #'
 #' This function scraps the RSS Feed of the Swiss Federal Statistical Office data catalog.
 #'
@@ -19,7 +19,7 @@ bfs_get_catalog <- function(language = c("de", "fr", "it", "en")) {
   
   if (missing(language)) stop("must choose a language, either 'de', 'fr', 'it' or 'en'", call. = FALSE)
   language <- match.arg(arg = language, choices = c("de", "fr", "it", "en"))
-  feed <- paste0("https://www.bfs.admin.ch/bfs/", language, "/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true")
+  feed <- paste0("https://www.bfs.admin.ch/bfs/", language, "/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true&prodima=&institution=&geography=&inquiry=&publishingyearstart=&publishingyearend=&title=&orderNr=")
   df_feed <- tidyRSS::tidyfeed(feed = feed)
   colnames(df_feed) <- gsub('feed_', '', colnames(df_feed)) # cleaning
   colnames(df_feed) <- gsub('item_', '', colnames(df_feed)) # cleaning

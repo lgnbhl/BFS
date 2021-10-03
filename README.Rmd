@@ -50,7 +50,7 @@ library(BFS)
 
 To search and download data from the Swiss Federal Statistical Office, you first need to retrieve information about the available public datasets.
 
-You can get the catalog of the datasets by language based on the [RSS feed](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml) provided by the Swiss Federal Statistical Office. Note that Italian and English give access to less datasets.
+You can get the data catalog by language based on their official [RSS feed](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml). Unfortunately, it seems that not all data is listed inside the RSS feed. Note also that Italian and English give access to less datasets.
 
 ```{r}
 catalog_en <- bfs_get_catalog(language = "en")
@@ -85,23 +85,28 @@ You can access additional information about the downloaded data set using the `b
 bfs_get_dataset_comments(url_bfs = catalog_uni$url_bfs, language = "en")
 ```
 
-In case the function fails to download the data set, you can add manually the BFS number in the `bfs_get_dataset()` function using the `number_bfs` argument.
+In case the data is not present in the data catalog, you can add manually the BFS number in the `bfs_get_dataset()` function using the `number_bfs` argument. For example, if the data used until now as an example is not accessible using `bfs_get_catalog()`, you could try to find the BFS number manually:
 
 ```{r browseURL, eval=FALSE}
-browseURL(catalog_uni$url_bfs) # open webpage
+# open webpage
+browseURL("https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-datenbanken/daten.assetdetail.16324907.html")
 ```
 
 <img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/screenshot.png" align="center" />
 
 <br/>
 
-You can try again running `bfs_get_dataset()`, but this time using the `number_bfs` argument.
+You can use again `bfs_get_dataset()` but this time with the `number_bfs` argument.
 
 ```{r, eval=FALSE}
 bfs_get_dataset(number_bfs = "px-x-1502040100_131", language = "en")
 ```
 
-Sometimes the the data set doesn't exist in the API. It can be because the data exists only as an Excel file (an example [here](https://www.bfs.admin.ch/bfs/fr/home/statistiques/catalogues-banques-donnees/tableaux.assetdetail.18184062.html){target="_blank"})
+A lot of data is not accessible through the API, but is still present in the official BFS website. You can access the RSS tables catalog of the Excel files using the `bfs_get_catalog_tables()`. Note that only a part of the tables are accessible using the RSS feed.
+
+```{r}
+bfs_get_catalog_tables(language = "en")
+```
 
 ## Other information
 

@@ -45,10 +45,10 @@ To search and download data from the Swiss Federal Statistical Office,
 you first need to retrieve information about the available public
 datasets.
 
-You can get the catalog of the datasets by language based on the [RSS
-feed](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml)
-provided by the Swiss Federal Statistical Office. Note that Italian and
-English give access to less datasets.
+You can get the data catalog by language based on their official [RSS
+feed](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml).
+Unfortunately, it seems that not all data is listed inside the RSS feed.
+Note also that Italian and English give access to less datasets.
 
 ``` r
 catalog_en <- bfs_get_catalog(language = "en")
@@ -105,18 +105,18 @@ df_uni
 ```
 
     ## # A tibble: 17,220 x 5
-    ##    Year   `ISCED Field`   Sex   `Level of study`              `University stude~
-    ##    <chr>  <chr>           <chr> <chr>                                      <dbl>
-    ##  1 1980/~ Education scie~ Man   First university degree or d~                545
-    ##  2 1980/~ Education scie~ Man   Bachelor                                       0
-    ##  3 1980/~ Education scie~ Man   Master                                         0
-    ##  4 1980/~ Education scie~ Man   Doctorate                                     93
-    ##  5 1980/~ Education scie~ Man   Further education, advanced ~                 13
-    ##  6 1980/~ Education scie~ Woman First university degree or d~                946
-    ##  7 1980/~ Education scie~ Woman Bachelor                                       0
-    ##  8 1980/~ Education scie~ Woman Master                                         0
-    ##  9 1980/~ Education scie~ Woman Doctorate                                     70
-    ## 10 1980/~ Education scie~ Woman Further education, advanced ~                 52
+    ##    Year    `ISCED Field`     Sex   `Level of study`            `University stud~
+    ##    <chr>   <chr>             <chr> <chr>                                   <dbl>
+    ##  1 1980/81 Education science Man   First university degree or~               545
+    ##  2 1980/81 Education science Man   Bachelor                                    0
+    ##  3 1980/81 Education science Man   Master                                      0
+    ##  4 1980/81 Education science Man   Doctorate                                  93
+    ##  5 1980/81 Education science Man   Further education, advance~                13
+    ##  6 1980/81 Education science Woman First university degree or~               946
+    ##  7 1980/81 Education science Woman Bachelor                                    0
+    ##  8 1980/81 Education science Woman Master                                      0
+    ##  9 1980/81 Education science Woman Doctorate                                  70
+    ## 10 1980/81 Education science Woman Further education, advance~                52
     ## # ... with 17,210 more rows
 
 You can access additional information about the downloaded data set
@@ -134,28 +134,51 @@ bfs_get_dataset_comments(url_bfs = catalog_uni$url_bfs, language = "en")
     ##    <int>  <int> <chr>          <chr>                                            
     ## 1     NA      4 column_comment "To ensure that the presentations from cubes con~
 
-In case the function fails to download the data set, you can add
+In case the data is not present in the data catalog, you can add
 manually the BFS number in the `bfs_get_dataset()` function using the
-`number_bfs` argument.
+`number_bfs` argument. For example, if the data used until now as an
+example is not accessible using `bfs_get_catalog()`, you could try to
+find the BFS number manually:
 
 ``` r
-browseURL(catalog_uni$url_bfs) # open webpage
+# open webpage
+browseURL("https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-datenbanken/daten.assetdetail.16324907.html")
 ```
 
 <img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/screenshot.png" align="center" />
 
 <br/>
 
-You can try again running `bfs_get_dataset()`, but this time using the
+You can use again `bfs_get_dataset()` but this time with the
 `number_bfs` argument.
 
 ``` r
 bfs_get_dataset(number_bfs = "px-x-1502040100_131", language = "en")
 ```
 
-Sometimes the the data set doesn’t exist in the API. It can be because
-the data exists only as an Excel file (an example
-<a href="https://www.bfs.admin.ch/bfs/fr/home/statistiques/catalogues-banques-donnees/tableaux.assetdetail.18184062.html" target="_blank">here</a>)
+A lot of data is not accessible through the API, but is still present in
+the official BFS website. You can access the RSS tables catalog of the
+Excel files using the `bfs_get_catalog_tables()`. Note that only a part
+of the tables are accessible using the RSS feed.
+
+``` r
+bfs_get_catalog_tables(language = "en")
+```
+
+    ## # A tibble: 350 x 5
+    ##    title           language published           url_bfs          url_table      
+    ##    <chr>           <chr>    <chr>               <chr>            <chr>          
+    ##  1 Admissions to ~ en       Admissions to univ~ https://www.bfs~ https://www.bf~
+    ##  2 Admissions to ~ en       Admissions to univ~ https://www.bfs~ https://www.bf~
+    ##  3 Air emission a~ en       Air emission accou~ https://www.bfs~ https://www.bf~
+    ##  4 Air emission a~ en       Air emission accou~ https://www.bfs~ https://www.bf~
+    ##  5 Average age at~ en       Average age at tim~ https://www.bfs~ https://www.bf~
+    ##  6 Average age of~ en       Average age of the~ https://www.bfs~ https://www.bf~
+    ##  7 Energy flow ac~ en       Energy flow accoun~ https://www.bfs~ https://www.bf~
+    ##  8 Energy flow ac~ en       Energy flow accoun~ https://www.bfs~ https://www.bf~
+    ##  9 Environmentall~ en       Environmentally re~ https://www.bfs~ https://www.bf~
+    ## 10 Environmentall~ en       Environmentally re~ https://www.bfs~ https://www.bf~
+    ## # ... with 340 more rows
 
 ## Other information
 

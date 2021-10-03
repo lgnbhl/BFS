@@ -2,6 +2,7 @@
 
 * `bfs_get_dataset()` uses BFS API v1. `clean_names` is now FALSE by default. 
 * `bfs_get_metadata()` removed because not working. Use only `bfs_get_catalog()` for now.
+* add `bfs_get_catalog_tables()`.
 * pxweb and jsonlite dependency added. dbplyr dependency removed.
 
 # BFS 0.3.1

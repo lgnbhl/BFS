@@ -2,6 +2,7 @@
 
 export("%>%")
 export(bfs_get_catalog)
+export(bfs_get_catalog_tables)
 export(bfs_get_dataset)
 export(bfs_get_dataset_comments)
 export(bfs_get_metadata)

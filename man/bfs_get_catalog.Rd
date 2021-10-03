@@ -2,7 +2,7 @@
 % Please edit documentation in R/bfs_get_catalog.R
 \name{bfs_get_catalog}
 \alias{bfs_get_catalog}
-\title{Get the Swiss Federal Statistical Office data catalog in a given language}
+\title{Get the BFS data catalog}
 \usage{
 bfs_get_catalog(language = c("de", "fr", "it", "en"))
 }

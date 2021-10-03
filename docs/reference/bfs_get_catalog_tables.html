@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • BFS</title>
+<title>Get the BFS tables catalog — bfs_get_catalog_tables • BFS</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,9 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Get the BFS tables catalog — bfs_get_catalog_tables" />
+<meta property="og:description" content="This function scraps the RSS Feed of the Swiss Federal Statistical Office tables catalog.
+The tables are mostly datasets that are accessible as Excel files." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -76,7 +78,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -141,54 +143,54 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Get the BFS tables catalog</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lgnbhl/BFS/blob/master/R/bfs_get_catalog_tables.R'><code>R/bfs_get_catalog_tables.R</code></a></small>
+    <div class="hidden name"><code>bfs_get_catalog_tables.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>This function scraps the RSS Feed of the Swiss Federal Statistical Office tables catalog.
+The tables are mostly datasets that are accessible as Excel files.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>bfs_get_catalog_tables</span><span class='op'>(</span>language <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"de"</span>, <span class='st'>"fr"</span>, <span class='st'>"it"</span>, <span class='st'>"en"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-functions" class="hasAnchor"><a href="#section-functions" class="anchor"></a>Functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="bfs_get_catalog.html">bfs_get_catalog()</a></code> </p>
-        </td>
-        <td><p>Get the BFS data catalog</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bfs_get_catalog_tables.html">bfs_get_catalog_tables()</a></code> </p>
-        </td>
-        <td><p>Get the BFS tables catalog</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bfs_get_dataset.html">bfs_get_dataset()</a></code> </p>
-        </td>
-        <td><p>Download a BFS dataset in a given language</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>language</th>
+      <td><p>character The language of a BFS catalog.</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A data frame</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='bfs_get_dataset.html'>bfs_get_dataset</a></code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>bfs_get_catalog_tables</span><span class='op'>(</span>language <span class='op'>=</span> <span class='st'>"de"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>GET request successful. Parsing...</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 350 x 5</span>
+#&gt;    title           language published           url_bfs          url_table      
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          
+#&gt; <span style='color: #BCBCBC;'> 1</span> Endverbrauch e~ de       Endverbrauch erneu~ https://www.bfs~ https://www.bf~
+#&gt; <span style='color: #BCBCBC;'> 2</span> Neue erneuerba~ de       Neue erneuerbare E~ https://www.bfs~ https://www.bf~
+#&gt; <span style='color: #BCBCBC;'> 3</span> Statistik der ~ de       Statistik der Wass~ https://www.bfs~ https://www.bf~
+#&gt; <span style='color: #BCBCBC;'> 4</span> Abschlussquote~ de       Abschlussquoten an~ https://www.bfs~ https://www.bf~
+#&gt; <span style='color: #BCBCBC;'> 5</span> Altersmasszahl~ de       Altersmasszahlen d~ https://www.bfs~ https://www.bf~
+#&gt; <span style='color: #BCBCBC;'> 6</span> Anteil der Nic~ de       Anteil der Nichtle~ https://www.bfs~ https://www.bf~
+#&gt; <span style='color: #BCBCBC;'> 7</span> Anteil der ges~ de       Anteil der geschie~ https://www.bfs~ https://www.bf~
+#&gt; <span style='color: #BCBCBC;'> 8</span> Anteil der nic~ de       Anteil der nicht e~ https://www.bfs~ https://www.bf~
+#&gt; <span style='color: #BCBCBC;'> 9</span> Aufkommens- un~ de       Aufkommens- und Ve~ https://www.bfs~ https://www.bf~
+#&gt; <span style='color: #BCBCBC;'>10</span> Berufliche Gru~ de       Berufliche Grundbi~ https://www.bfs~ https://www.bf~
+#&gt; <span style='color: #949494;'># ... with 340 more rows</span></div><div class='input'>
+</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
