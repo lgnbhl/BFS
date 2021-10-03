@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">BFS</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -106,143 +106,112 @@
 <blockquote>
 <p>Search and download data from the Swiss Federal Statistical Office</p>
 </blockquote>
-<p>The <code>BFS</code> package allows to search and download public data from the <a href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html">Swiss Federal Statistical Office (BFS)</a> in a dynamic and reproducible way.</p>
+<p>The <code>BFS</code> package allows to search and download public data from the <a href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html" target="_blank">Swiss Federal Statistical Office (BFS is for Bundesamt für Statistik in German)</a> in a dynamic and reproducible way.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co"># Install the released version from CRAN</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BFS"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Install the released version from CRAN</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BFS"</span><span class="op">)</span></code></pre></div>
 <p>To get a bug fix, or use a feature from the development version, you can install BFS from GitHub.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="co"># install from Github</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"lgnbhl/BFS"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install from Github</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"lgnbhl/BFS"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://felixluginbuhl.com/BFS/">BFS</a></span><span class="op">)</span></pre></div>
-<div id="download-metadata" class="section level3">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://felixluginbuhl.com/BFS/">BFS</a></span><span class="op">)</span></code></pre></div>
+<div id="get-the-data-catalog" class="section level3">
 <h3 class="hasAnchor">
-<a href="#download-metadata" class="anchor"></a>Download metadata</h3>
-<p>To search and download data from the Swiss Federal Statistical Office, you first need to retrieve information about the available public data sets.</p>
-<p>The function <code><a href="reference/bfs_get_metadata.html">bfs_get_metadata()</a></code> returns a data frame/tibble containing the titles, publication dates, observation periods, data sources, website URLs and download URLs of all the <a href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html">BFS data sets available</a> in a given language. You can get the metadata in German (“de”, by default), French (“fr”), Italian (“it”) or English (“en”). Note that Italian and English metadata give access to less data sets.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">meta_en</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_metadata.html">bfs_get_metadata</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
+<a href="#get-the-data-catalog" class="anchor"></a>Get the data catalog</h3>
+<p>To search and download data from the Swiss Federal Statistical Office, you first need to retrieve information about the available public datasets.</p>
+<p>You can get the catalog of the datasets by language based on the <a href="https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml">RSS feed</a> provided by the Swiss Federal Statistical Office. Note that Italian and English give access to less datasets.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">catalog_en</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_catalog.html">bfs_get_catalog</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
 
-<span class="va">meta_en</span></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">## # A tibble: 162 x 6</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co">##    title        observation_period  published  source  url_bfs       url_px     </span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="co">##    &lt;chr&gt;        &lt;chr&gt;               &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;      </span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co">##  1 Foreign cro~ 1.1.1999-31.3.2021  04.05.2021 Federa~ https://www.~ https://ww~</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="co">##  2 Retail Trad~ 1.1.2000-31.3.2021  30.04.2021 Federa~ https://www.~ https://ww~</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="co">##  3 Retail Trad~ 1.1.2000-31.3.2021  30.04.2021 Federa~ https://www.~ https://ww~</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="co">##  4 Retail Trad~ 2000-2020           30.04.2021 Federa~ https://www.~ https://ww~</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="co">##  5 New registr~ 1.1.2020-31.3.2020~ 13.04.2021 Federa~ https://www.~ https://ww~</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="co">##  6 Deaths per ~ 1803-2019           06.04.2021 Federa~ https://www.~ https://ww~</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="co">##  7 Hotel accom~ 1.1.2005-28.2.2021  06.04.2021 Federa~ https://www.~ https://ww~</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="co">##  8 Hotel accom~ 1.1.2005-28.2.2021  06.04.2021 Federa~ https://www.~ https://ww~</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="co">##  9 Hotel accom~ 1.1.2013-28.2.2021  06.04.2021 Federa~ https://www.~ https://ww~</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="co">## 10 Hotel secto~ 1.1.2005-28.2.2021  06.04.2021 Federa~ https://www.~ https://ww~</span></span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="co">## # ... with 152 more rows</span></span></code></pre></div>
-<p>You can also get the catalog data by language based on the new RSS feed provided by the Swiss Federal Statistical Office. Note that the number of datasets available with <code><a href="reference/bfs_get_catalog.html">bfs_get_catalog()</a></code> may differ from the output of the <code><a href="reference/bfs_get_metadata.html">bfs_get_metadata()</a></code>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">catalog_en</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_catalog.html">bfs_get_catalog</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
-
-<span class="va">catalog_en</span></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">## # A tibble: 162 x 5</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="co">##    title            language published           url_bfs           url_px       </span></span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="co">##    &lt;chr&gt;            &lt;chr&gt;    &lt;dttm&gt;              &lt;chr&gt;             &lt;chr&gt;        </span></span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="co">##  1 Foreign cross-b~ en       2021-05-04 08:30:00 https://www.bfs.~ https://www.~</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="co">##  2 Retail Trade Tu~ en       2021-04-30 08:30:00 https://www.bfs.~ https://www.~</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="co">##  3 Retail Trade Tu~ en       2021-04-30 08:30:00 https://www.bfs.~ https://www.~</span></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="co">##  4 Retail Trade Tu~ en       2021-04-30 08:30:00 https://www.bfs.~ https://www.~</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="co">##  5 New registratio~ en       2021-04-13 08:30:00 https://www.bfs.~ https://www.~</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a><span class="co">##  6 Deaths per mont~ en       2021-04-06 08:30:00 https://www.bfs.~ https://www.~</span></span>
-<span id="cb7-10"><a href="#cb7-10"></a><span class="co">##  7 Hotel accommoda~ en       2021-04-06 08:30:00 https://www.bfs.~ https://www.~</span></span>
-<span id="cb7-11"><a href="#cb7-11"></a><span class="co">##  8 Hotel accommoda~ en       2021-04-06 08:30:00 https://www.bfs.~ https://www.~</span></span>
-<span id="cb7-12"><a href="#cb7-12"></a><span class="co">##  9 Hotel accommoda~ en       2021-04-06 08:30:00 https://www.bfs.~ https://www.~</span></span>
-<span id="cb7-13"><a href="#cb7-13"></a><span class="co">## 10 Hotel sector: S~ en       2021-04-06 08:30:00 https://www.bfs.~ https://www.~</span></span>
-<span id="cb7-14"><a href="#cb7-14"></a><span class="co">## # ... with 152 more rows</span></span></code></pre></div>
+<span class="va">catalog_en</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 170 x 5</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    title            language published           url_bfs           url_px       </span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;            &lt;chr&gt;    &lt;chr&gt;               &lt;chr&gt;             &lt;chr&gt;        </span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Air emissions a~ en       Air emissions acco~ https://www.bfs.~ https://www.~</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Deaths per mont~ en       Deaths per month a~ https://www.bfs.~ https://www.~</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Divorces and di~ en       Divorces and divor~ https://www.bfs.~ https://www.~</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Energy accounts~ en       Energy accounts of~ https://www.bfs.~ https://www.~</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Environmentally~ en       Environmentally re~ https://www.bfs.~ https://www.~</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Live births per~ en       Live births per mo~ https://www.bfs.~ https://www.~</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Marriages and n~ en       Marriages and nupt~ https://www.bfs.~ https://www.~</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Permanent resid~ en       Permanent resident~ https://www.bfs.~ https://www.~</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 New registratio~ en       New registrations ~ https://www.bfs.~ https://www.~</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Hotel accommoda~ en       Hotel accommodatio~ https://www.bfs.~ https://www.~</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 160 more rows</span></span></code></pre></div>
 </div>
-<div id="search-for-data" class="section level3">
+<div id="search-for-a-specific-dataset" class="section level3">
 <h3 class="hasAnchor">
-<a href="#search-for-data" class="anchor"></a>Search for data</h3>
-<p>To search for a specific data set title in the BFS metadata, you can use the <code><a href="reference/bfs_search.html">bfs_search()</a></code> function. This function leverages the R base function <code><a href="https://rdrr.io/r/base/grep.html">grepl()</a></code> but calls the <code>data</code> argument first to allow the use of the pipe operator <code><a href="reference/%&gt;%.html">%&gt;%</a></code>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
+<a href="#search-for-a-specific-dataset" class="anchor"></a>Search for a specific dataset</h3>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 
-<span class="va">meta_en_uni</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_metadata.html">bfs_get_metadata</a></span><span class="op">(</span><span class="st">"en"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/bfs_search.html">bfs_search</a></span><span class="op">(</span><span class="st">"university students"</span><span class="op">)</span>
+<span class="va">catalog_uni</span> <span class="op">&lt;-</span> <span class="va">catalog_en</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">title</span> <span class="op">==</span> <span class="st">"University students by year, ISCED field, sex and level of study"</span><span class="op">)</span>
 
-<span class="va">meta_en_uni</span></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">## # A tibble: 2 x 6</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="co">##   title         observation_peri~ published  source   url_bfs        url_px     </span></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="co">##   &lt;chr&gt;         &lt;chr&gt;             &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;          &lt;chr&gt;      </span></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="co">## 1 University s~ 1990-2020         26.03.2021 Federal~ https://www.b~ https://ww~</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="co">## 2 University s~ 1980-2020         26.03.2021 Federal~ https://www.b~ https://ww~</span></span></code></pre></div>
+<span class="va">catalog_uni</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 x 5</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   title           language published          url_bfs             url_px        </span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;              &lt;chr&gt;               &lt;chr&gt;         </span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 University stu~ en       University studen~ https://www.bfs.ad~ https://www.b~</span></span></code></pre></div>
 </div>
-<div id="download-data-set" class="section level3">
+<div id="download-a-dataset-in-any-language" class="section level3">
 <h3 class="hasAnchor">
-<a href="#download-data-set" class="anchor"></a>Download data set</h3>
-<p>To download a BFS data set, add the related URL link from the <code>url_px</code> column of the downloaded metadata as an argument to the <code>bfs_get_data set()</code> function. For now, the data can be downloaded only in German.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="va">df_uni</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_dataset.html">bfs_get_dataset</a></span><span class="op">(</span>url_px <span class="op">=</span> <span class="va">meta_en_uni</span><span class="op">$</span><span class="va">url_px</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>
-
-<span class="va">df_uni</span></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co">## # A tibble: 17,220 x 5</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="co">##    studienstufe                     geschlecht isced_fach           jahr   value</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a><span class="co">##    &lt;fct&gt;                            &lt;fct&gt;      &lt;fct&gt;                &lt;fct&gt;  &lt;dbl&gt;</span></span>
-<span id="cb11-4"><a href="#cb11-4"></a><span class="co">##  1 Lizenziat/Diplom                 Mann       Erziehungswissensch~ 1980/~   545</span></span>
-<span id="cb11-5"><a href="#cb11-5"></a><span class="co">##  2 Bachelor                         Mann       Erziehungswissensch~ 1980/~     0</span></span>
-<span id="cb11-6"><a href="#cb11-6"></a><span class="co">##  3 Master                           Mann       Erziehungswissensch~ 1980/~     0</span></span>
-<span id="cb11-7"><a href="#cb11-7"></a><span class="co">##  4 Doktorat                         Mann       Erziehungswissensch~ 1980/~    93</span></span>
-<span id="cb11-8"><a href="#cb11-8"></a><span class="co">##  5 Weiterbildung, Vertiefung und A~ Mann       Erziehungswissensch~ 1980/~    13</span></span>
-<span id="cb11-9"><a href="#cb11-9"></a><span class="co">##  6 Lizenziat/Diplom                 Frau       Erziehungswissensch~ 1980/~   946</span></span>
-<span id="cb11-10"><a href="#cb11-10"></a><span class="co">##  7 Bachelor                         Frau       Erziehungswissensch~ 1980/~     0</span></span>
-<span id="cb11-11"><a href="#cb11-11"></a><span class="co">##  8 Master                           Frau       Erziehungswissensch~ 1980/~     0</span></span>
-<span id="cb11-12"><a href="#cb11-12"></a><span class="co">##  9 Doktorat                         Frau       Erziehungswissensch~ 1980/~    70</span></span>
-<span id="cb11-13"><a href="#cb11-13"></a><span class="co">## 10 Weiterbildung, Vertiefung und A~ Frau       Erziehungswissensch~ 1980/~    52</span></span>
-<span id="cb11-14"><a href="#cb11-14"></a><span class="co">## # ... with 17,210 more rows</span></span></code></pre></div>
-<p>You can access additional information about the downloaded data set using the R base <code><a href="https://rdrr.io/r/base/attributes.html">attributes()</a></code> function.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/attributes.html">attributes</a></span><span class="op">(</span><span class="va">df_uni</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co">## List of 14</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="co">##  $ names        : chr [1:5] "studienstufe" "geschlecht" "isced_fach" "jahr" ...</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="co">##  $ row.names    : int [1:17220] 1 2 3 4 5 6 7 8 9 10 ...</span></span>
-<span id="cb13-4"><a href="#cb13-4"></a><span class="co">##  $ last_update  : chr "20210326 08:30"</span></span>
-<span id="cb13-5"><a href="#cb13-5"></a><span class="co">##  $ download_date: Date[1:1], format: "2021-05-04"</span></span>
-<span id="cb13-6"><a href="#cb13-6"></a><span class="co">##  $ contact      : chr "Sektion Bildungsprozesse, E-Mail: sius@bfs.admin.ch"</span></span>
-<span id="cb13-7"><a href="#cb13-7"></a><span class="co">##  $ description  : chr "Studierende an den universitären Hochschulen nach Jahr, ISCED Fach, Geschlecht und Studienstufe"</span></span>
-<span id="cb13-8"><a href="#cb13-8"></a><span class="co">##  $ link         : chr "https://www.bfs.admin.ch/asset/de/px-x-1502040100_131"</span></span>
-<span id="cb13-9"><a href="#cb13-9"></a><span class="co">##  $ note         : chr "&lt;B&gt;Metainformation:&lt;/B&gt;#Letzte Änderungen: Neuer Datensatz (Jahr 2020)#Stand der Datenbank: 26.03.2021#Erhebung"| __truncated__</span></span>
-<span id="cb13-10"><a href="#cb13-10"></a><span class="co">##  $ subject_area : chr "15 - Bildung, Wissenschaft"</span></span>
-<span id="cb13-11"><a href="#cb13-11"></a><span class="co">##  $ survey       : chr "Studierende und Abschlüsse der Hochschulen (SHIS-studex)"</span></span>
-<span id="cb13-12"><a href="#cb13-12"></a><span class="co">##  $ title        : chr "Studierende an den universitären Hochschulen nach Jahr, ISCED Fach, Geschlecht und Studienstufe"</span></span>
-<span id="cb13-13"><a href="#cb13-13"></a><span class="co">##  $ source       : chr "BFS - Studierende und Abschlüsse der Hochschulen - © BFS"</span></span>
-<span id="cb13-14"><a href="#cb13-14"></a><span class="co">##  $ units        : chr "Student"</span></span>
-<span id="cb13-15"><a href="#cb13-15"></a><span class="co">##  $ class        : chr [1:3] "tbl_df" "tbl" "data.frame"</span></span></code></pre></div>
-<p>In case the function fails to download the data set, you can have a look at its related BFS webpage using the <code>url_bfs</code> link.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/browseURL.html">browseURL</a></span><span class="op">(</span><span class="va">meta_en_uni</span><span class="op">$</span><span class="va">url_bfs</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="co"># open webpage</span></pre></div>
-<p>Sometimes the PC-Axis file of the data set doesn’t exist. You should then use the “STAT-TAB - interactive table” service provided by BFS to download manually the data set.</p>
-</div>
-<div id="data-caching" class="section level3">
-<h3 class="hasAnchor">
-<a href="#data-caching" class="anchor"></a>Data caching</h3>
-<p>Data caching is handled using the <a href="https://pins.rstudio.com/">pins</a> R package. To open the folder containing all the BFS data sets you already downloaded, you can use the <code><a href="reference/bfs_open_dir.html">bfs_open_dir()</a></code> function.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="fu"><a href="reference/bfs_open_dir.html">bfs_open_dir</a></span><span class="op">(</span><span class="op">)</span></pre></div>
-<p>If a data set has already been downloaded during the day, the functions <code><a href="reference/bfs_get_metadata.html">bfs_get_metadata()</a></code> and <code>bfs_get_data set()</code> retrieve the already downloaded data sets from your local pins caching folder. Caching speeds up code and reduces BFS server requests. However, if a given data set has not been downloaded during the day, the functions download it again to be sure that you have the lastest data available. You can also force the download using the <code>force</code> argument.</p>
+<a href="#download-a-dataset-in-any-language" class="anchor"></a>Download a dataset in any language</h3>
+<p>To download a BFS dataset, add the related URL link from the <code>url_bfs</code> column of the downloaded metadata as an argument to the <code><a href="reference/bfs_get_dataset.html">bfs_get_dataset()</a></code> function.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df_uni</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_dataset.html">bfs_get_dataset</a></span><span class="op">(</span>url_bfs <span class="op">=</span> <span class="va">catalog_uni</span><span class="op">$</span><span class="va">url_bfs</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">##   Downloading large query (in 4 batches):</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df_uni</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 17,220 x 5</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    Year   `ISCED Field`   Sex   `Level of study`              `University stude~</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt;                                      &lt;dbl&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 1980/~ Education scie~ Man   First university degree or d~                545</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 1980/~ Education scie~ Man   Bachelor                                       0</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 1980/~ Education scie~ Man   Master                                         0</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 1980/~ Education scie~ Man   Doctorate                                     93</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 1980/~ Education scie~ Man   Further education, advanced ~                 13</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 1980/~ Education scie~ Woman First university degree or d~                946</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 1980/~ Education scie~ Woman Bachelor                                       0</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 1980/~ Education scie~ Woman Master                                         0</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 1980/~ Education scie~ Woman Doctorate                                     70</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 1980/~ Education scie~ Woman Further education, advanced ~                 52</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 17,210 more rows</span></span></code></pre></div>
+<p>You can access additional information about the downloaded data set using the <code><a href="reference/bfs_get_dataset_comments.html">bfs_get_dataset_comments()</a></code> function.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/bfs_get_dataset_comments.html">bfs_get_dataset_comments</a></span><span class="op">(</span>url_bfs <span class="op">=</span> <span class="va">catalog_uni</span><span class="op">$</span><span class="va">url_bfs</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">##   Downloading large query (in 4 batches):</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 x 4</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   row_no col_no comment_type   comment                                          </span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;int&gt;  &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;                                            </span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     NA      4 column_comment "To ensure that the presentations from cubes con~</span></span></code></pre></div>
+<p>In case the function fails to download the data set, you can add manually the BFS number in the <code><a href="reference/bfs_get_dataset.html">bfs_get_dataset()</a></code> function using the <code>number_bfs</code> argument.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/browseURL.html">browseURL</a></span><span class="op">(</span><span class="va">catalog_uni</span><span class="op">$</span><span class="va">url_bfs</span><span class="op">)</span> <span class="co"># open webpage</span></code></pre></div>
+<p><img style="border:1px solid black;" src="reference/figures/screenshot.png" align="center"></p>
+<p><br></p>
+<p>You can try again running <code><a href="reference/bfs_get_dataset.html">bfs_get_dataset()</a></code>, but this time using the <code>number_bfs</code> argument.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/bfs_get_dataset.html">bfs_get_dataset</a></span><span class="op">(</span>number_bfs <span class="op">=</span> <span class="st">"px-x-1502040100_131"</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
+<p>Sometimes the the data set doesn’t exist in the API. It can be because the data exists only as an Excel file (an example <a href="https://www.bfs.admin.ch/bfs/fr/home/statistiques/catalogues-banques-donnees/tableaux.assetdetail.18184062.html" target="_blank">here</a>)</p>
 </div>
 </div>
 <div id="other-information" class="section level2">
 <h2 class="hasAnchor">
 <a href="#other-information" class="anchor"></a>Other information</h2>
-<p>A <a href="https://felixluginbuhl.com/blog/posts/2019-11-07-swiss-data/">blog article</a> showing a concret example about how to use the BFS package.</p>
-<p>Alternative R package: <a href="https://github.com/rOpenGov/pxweb">pxweb</a>.</p>
+<p>A <a href="https://felixluginbuhl.com/blog/posts/2019-11-07-swiss-data/">blog article</a> showing a concrete example about how to use the BFS package and to visualize the data in a Swiss map.</p>
+<p>The BFS package is using the <a href="https://github.com/rOpenGov/pxweb" target="_blank">pxweb</a> R package under the hood to access the Swiss Federal Statistical Office pxweb API.</p>
 <p>This package is in no way officially related to or endorsed by the Swiss Federal Statistical Office (BFS).</p>
 </div>
 </div>
@@ -270,7 +239,7 @@
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Félix Luginbuhl <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Felix Luginbuhl <br><small class="roles"> Author, maintainer </small>  </li>
 </ul>
 </div>
 
@@ -279,7 +248,6 @@
 <ul class="list-unstyled">
 <li><a href="https://CRAN.R-project.org/package=BFS"><img src="https://www.r-pkg.org/badges/version/BFS" alt="CRAN status"></a></li>
 <li><a href="https://cran.r-project.org/package=BFS"><img src="https://cranlogs.r-pkg.org/badges/grand-total/BFS" alt="Grand total"></a></li>
-<li><a href="https://gitlab.com/lgnbhl/BFS/pipelines"><img src="https://gitlab.com/lgnbhl/BFS/badges/master/pipeline.svg" alt="pipeline status"></a></li>
 <li><a href="https://github.com/lgnbhl/BFS/actions"><img src="https://github.com/lgnbhl/BFS/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 </ul>
 </div>
@@ -288,7 +256,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Félix Luginbuhl.</p>
+  <p>Developed by Felix Luginbuhl.</p>
 </div>
 
 <div class="pkgdown">

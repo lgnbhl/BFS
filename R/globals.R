@@ -1,0 +1,11 @@
+utils::globalVariables(
+  c(
+    "url_px",
+    "link_2",
+    "pubDate_2",
+    "published",
+    "title",
+    "title_2",
+    "url_bfs"
+  )
+)

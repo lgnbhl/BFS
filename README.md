@@ -1,6 +1,5 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
 <!-- badges: start -->
 
 [![CRAN
@@ -16,8 +15,7 @@ status](https://github.com/lgnbhl/BFS/workflows/R-CMD-check/badge.svg)](https://
 > Search and download data from the Swiss Federal Statistical Office
 
 The `BFS` package allows to search and download public data from the
-[Swiss Federal Statistical Office
-(BFS)](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html)
+<a href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html" target="_blank">Swiss Federal Statistical Office (BFS is for Bundesamt für Statistik in German)</a>
 in a dynamic and reproducible way.
 
 ## Installation
@@ -41,45 +39,16 @@ devtools::install_github("lgnbhl/BFS")
 library(BFS)
 ```
 
-### Download metadata
+### Get the data catalog
 
 To search and download data from the Swiss Federal Statistical Office,
-you first need to retrieve information about the available public data
-sets.
+you first need to retrieve information about the available public
+datasets.
 
-The function `bfs_get_metadata()` returns a data frame/tibble containing
-the titles, publication dates, observation periods, data sources,
-website URLs and download URLs of all the [BFS data sets
-available](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html)
-in a given language. You can get the metadata in German (“de”, by
-default), French (“fr”), Italian (“it”) or English (“en”). Note that
-Italian and English metadata give access to less data sets.
-
-``` r
-meta_en <- bfs_get_metadata(language = "en")
-
-meta_en
-```
-
-    ## # A tibble: 162 x 6
-    ##    title         observation_peri~ published source   url_bfs        url_px     
-    ##    <chr>         <chr>             <chr>     <chr>    <chr>          <chr>      
-    ##  1 Hotel accomm~ 1.1.2005-31.3.20~ 07.05.20~ Federal~ https://www.b~ https://ww~
-    ##  2 Hotel accomm~ 1.1.2005-31.3.20~ 07.05.20~ Federal~ https://www.b~ https://ww~
-    ##  3 Hotel accomm~ 1.1.2013-31.3.20~ 07.05.20~ Federal~ https://www.b~ https://ww~
-    ##  4 Hotel sector~ 1.1.2005-31.3.20~ 07.05.20~ Federal~ https://www.b~ https://ww~
-    ##  5 Hotel sector~ 1.1.2005-31.3.20~ 07.05.20~ Federal~ https://www.b~ https://ww~
-    ##  6 Hotel sector~ 1.1.2013-31.3.20~ 07.05.20~ Federal~ https://www.b~ https://ww~
-    ##  7 Foreign cros~ 1.1.1999-31.3.20~ 04.05.20~ Federal~ https://www.b~ https://ww~
-    ##  8 Retail Trade~ 1.1.2000-31.3.20~ 30.04.20~ Federal~ https://www.b~ https://ww~
-    ##  9 Retail Trade~ 1.1.2000-31.3.20~ 30.04.20~ Federal~ https://www.b~ https://ww~
-    ## 10 Retail Trade~ 2000-2020         30.04.20~ Federal~ https://www.b~ https://ww~
-    ## # ... with 152 more rows
-
-You can also get the catalog data by language based on the new RSS feed
-provided by the Swiss Federal Statistical Office. Note that the number
-of datasets available with `bfs_get_catalog()` may differ from the
-output of the `bfs_get_metadata()`.
+You can get the catalog of the datasets by language based on the [RSS
+feed](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml)
+provided by the Swiss Federal Statistical Office. Note that Italian and
+English give access to less datasets.
 
 ``` r
 catalog_en <- bfs_get_catalog(language = "en")
@@ -87,130 +56,118 @@ catalog_en <- bfs_get_catalog(language = "en")
 catalog_en
 ```
 
-    ## # A tibble: 162 x 5
+    ## # A tibble: 170 x 5
     ##    title            language published           url_bfs           url_px       
-    ##    <chr>            <chr>    <dttm>              <chr>             <chr>        
-    ##  1 Hotel accommoda~ en       2021-05-07 08:30:00 https://www.bfs.~ https://www.~
-    ##  2 Hotel accommoda~ en       2021-05-07 08:30:00 https://www.bfs.~ https://www.~
-    ##  3 Hotel accommoda~ en       2021-05-07 08:30:00 https://www.bfs.~ https://www.~
-    ##  4 Hotel sector: S~ en       2021-05-07 08:30:00 https://www.bfs.~ https://www.~
-    ##  5 Hotel sector: S~ en       2021-05-07 08:30:00 https://www.bfs.~ https://www.~
-    ##  6 Hotel sector: s~ en       2021-05-07 08:30:00 https://www.bfs.~ https://www.~
-    ##  7 Foreign cross-b~ en       2021-05-04 08:30:00 https://www.bfs.~ https://www.~
-    ##  8 Retail Trade Tu~ en       2021-04-30 08:30:00 https://www.bfs.~ https://www.~
-    ##  9 Retail Trade Tu~ en       2021-04-30 08:30:00 https://www.bfs.~ https://www.~
-    ## 10 Retail Trade Tu~ en       2021-04-30 08:30:00 https://www.bfs.~ https://www.~
-    ## # ... with 152 more rows
+    ##    <chr>            <chr>    <chr>               <chr>             <chr>        
+    ##  1 Air emissions a~ en       Air emissions acco~ https://www.bfs.~ https://www.~
+    ##  2 Deaths per mont~ en       Deaths per month a~ https://www.bfs.~ https://www.~
+    ##  3 Divorces and di~ en       Divorces and divor~ https://www.bfs.~ https://www.~
+    ##  4 Energy accounts~ en       Energy accounts of~ https://www.bfs.~ https://www.~
+    ##  5 Environmentally~ en       Environmentally re~ https://www.bfs.~ https://www.~
+    ##  6 Live births per~ en       Live births per mo~ https://www.bfs.~ https://www.~
+    ##  7 Marriages and n~ en       Marriages and nupt~ https://www.bfs.~ https://www.~
+    ##  8 Permanent resid~ en       Permanent resident~ https://www.bfs.~ https://www.~
+    ##  9 New registratio~ en       New registrations ~ https://www.bfs.~ https://www.~
+    ## 10 Hotel accommoda~ en       Hotel accommodatio~ https://www.bfs.~ https://www.~
+    ## # ... with 160 more rows
 
-### Search for data
-
-To search for a specific data set title in the BFS metadata, you can use
-the `bfs_search()` function. This function leverages the R base function
-`grepl()` but calls the `data` argument first to allow the use of the
-pipe operator `%>%`.
+### Search for a specific dataset
 
 ``` r
-library(magrittr)
+library(dplyr)
 
-meta_en_uni <- bfs_get_metadata("en") %>%
-  bfs_search("university students")
+catalog_uni <- catalog_en %>%
+  filter(title == "University students by year, ISCED field, sex and level of study")
 
-meta_en_uni
+catalog_uni
 ```
 
-    ## # A tibble: 2 x 6
-    ##   title         observation_peri~ published  source   url_bfs        url_px     
-    ##   <chr>         <chr>             <chr>      <chr>    <chr>          <chr>      
-    ## 1 University s~ 1990-2020         26.03.2021 Federal~ https://www.b~ https://ww~
-    ## 2 University s~ 1980-2020         26.03.2021 Federal~ https://www.b~ https://ww~
+    ## # A tibble: 1 x 5
+    ##   title           language published          url_bfs             url_px        
+    ##   <chr>           <chr>    <chr>              <chr>               <chr>         
+    ## 1 University stu~ en       University studen~ https://www.bfs.ad~ https://www.b~
 
-### Download data set
+### Download a dataset in any language
 
-To download a BFS data set, add the related URL link from the `url_px`
-column of the downloaded metadata as an argument to the `bfs_get_data
-set()` function. For now, the data can be downloaded only in German.
+To download a BFS dataset, add the related URL link from the `url_bfs`
+column of the downloaded metadata as an argument to the
+`bfs_get_dataset()` function.
 
 ``` r
-df_uni <- bfs_get_dataset(url_px = meta_en_uni$url_px[2])
+df_uni <- bfs_get_dataset(url_bfs = catalog_uni$url_bfs, language = "en")
+```
 
+    ##   Downloading large query (in 4 batches):
+    ##   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%
+
+``` r
 df_uni
 ```
 
     ## # A tibble: 17,220 x 5
-    ##    studienstufe                     geschlecht isced_fach           jahr   value
-    ##    <fct>                            <fct>      <fct>                <fct>  <dbl>
-    ##  1 Lizenziat/Diplom                 Mann       Erziehungswissensch~ 1980/~   545
-    ##  2 Bachelor                         Mann       Erziehungswissensch~ 1980/~     0
-    ##  3 Master                           Mann       Erziehungswissensch~ 1980/~     0
-    ##  4 Doktorat                         Mann       Erziehungswissensch~ 1980/~    93
-    ##  5 Weiterbildung, Vertiefung und A~ Mann       Erziehungswissensch~ 1980/~    13
-    ##  6 Lizenziat/Diplom                 Frau       Erziehungswissensch~ 1980/~   946
-    ##  7 Bachelor                         Frau       Erziehungswissensch~ 1980/~     0
-    ##  8 Master                           Frau       Erziehungswissensch~ 1980/~     0
-    ##  9 Doktorat                         Frau       Erziehungswissensch~ 1980/~    70
-    ## 10 Weiterbildung, Vertiefung und A~ Frau       Erziehungswissensch~ 1980/~    52
+    ##    Year   `ISCED Field`   Sex   `Level of study`              `University stude~
+    ##    <chr>  <chr>           <chr> <chr>                                      <dbl>
+    ##  1 1980/~ Education scie~ Man   First university degree or d~                545
+    ##  2 1980/~ Education scie~ Man   Bachelor                                       0
+    ##  3 1980/~ Education scie~ Man   Master                                         0
+    ##  4 1980/~ Education scie~ Man   Doctorate                                     93
+    ##  5 1980/~ Education scie~ Man   Further education, advanced ~                 13
+    ##  6 1980/~ Education scie~ Woman First university degree or d~                946
+    ##  7 1980/~ Education scie~ Woman Bachelor                                       0
+    ##  8 1980/~ Education scie~ Woman Master                                         0
+    ##  9 1980/~ Education scie~ Woman Doctorate                                     70
+    ## 10 1980/~ Education scie~ Woman Further education, advanced ~                 52
     ## # ... with 17,210 more rows
 
 You can access additional information about the downloaded data set
-using the R base `attributes()` function.
+using the `bfs_get_dataset_comments()` function.
 
 ``` r
-attributes(df_uni) %>%
-  str()
+bfs_get_dataset_comments(url_bfs = catalog_uni$url_bfs, language = "en")
 ```
 
-    ## List of 14
-    ##  $ names        : chr [1:5] "studienstufe" "geschlecht" "isced_fach" "jahr" ...
-    ##  $ row.names    : int [1:17220] 1 2 3 4 5 6 7 8 9 10 ...
-    ##  $ last_update  : chr "20210326 08:30"
-    ##  $ download_date: Date[1:1], format: "2021-05-10"
-    ##  $ contact      : chr "Sektion Bildungsprozesse, E-Mail: sius@bfs.admin.ch"
-    ##  $ description  : chr "Studierende an den universitären Hochschulen nach Jahr, ISCED Fach, Geschlecht und Studienstufe"
-    ##  $ link         : chr "https://www.bfs.admin.ch/asset/de/px-x-1502040100_131"
-    ##  $ note         : chr "<B>Metainformation:</B>#Letzte Änderungen: Neuer Datensatz (Jahr 2020)#Stand der Datenbank: 26.03.2021#Erhebung"| __truncated__
-    ##  $ subject_area : chr "15 - Bildung, Wissenschaft"
-    ##  $ survey       : chr "Studierende und Abschlüsse der Hochschulen (SHIS-studex)"
-    ##  $ title        : chr "Studierende an den universitären Hochschulen nach Jahr, ISCED Fach, Geschlecht und Studienstufe"
-    ##  $ source       : chr "BFS - Studierende und Abschlüsse der Hochschulen - © BFS"
-    ##  $ units        : chr "Student"
-    ##  $ class        : chr [1:3] "tbl_df" "tbl" "data.frame"
+    ##   Downloading large query (in 4 batches):
+    ##   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%
 
-In case the function fails to download the data set, you can have a look
-at its related BFS webpage using the `url_bfs` link.
+    ## # A tibble: 1 x 4
+    ##   row_no col_no comment_type   comment                                          
+    ##    <int>  <int> <chr>          <chr>                                            
+    ## 1     NA      4 column_comment "To ensure that the presentations from cubes con~
+
+In case the function fails to download the data set, you can add
+manually the BFS number in the `bfs_get_dataset()` function using the
+`number_bfs` argument.
 
 ``` r
-browseURL(meta_en_uni$url_bfs[1]) # open webpage
+browseURL(catalog_uni$url_bfs) # open webpage
 ```
 
-Sometimes the PC-Axis file of the data set doesn’t exist. You should
-then use the “STAT-TAB - interactive table” service provided by BFS to
-download manually the data set.
+<img style="border:1px solid black;" src="man/figures/screenshot.png" align="center" />
 
-### Data caching
+<br/>
 
-Data caching is handled using the [pins](https://pins.rstudio.com/) R
-package. To open the folder containing all the BFS data sets you already
-downloaded, you can use the `bfs_open_dir()` function.
+You can try again running `bfs_get_dataset()`, but this time using the
+`number_bfs` argument.
 
 ``` r
-bfs_open_dir()
+bfs_get_dataset(number_bfs = "px-x-1502040100_131", language = "en")
 ```
 
-If a data set has already been downloaded during the day, the functions
-`bfs_get_metadata()` and `bfs_get_data set()` retrieve the already
-downloaded data sets from your local pins caching folder. Caching speeds
-up code and reduces BFS server requests. However, if a given data set
-has not been downloaded during the day, the functions download it again
-to be sure that you have the lastest data available. You can also force
-the download using the `force` argument.
+Sometimes the the data set doesn’t exist in the API. It can be because
+the data exists only as an Excel file (an example
+<a href="https://www.bfs.admin.ch/bfs/fr/home/statistiques/catalogues-banques-donnees/tableaux.assetdetail.18184062.html" target="_blank">here</a>)
 
 ## Other information
 
 A [blog
 article](https://felixluginbuhl.com/blog/posts/2019-11-07-swiss-data/)
-showing a concret example about how to use the BFS package.
+showing a concrete example about how to use the BFS package and to
+visualize the data in a Swiss map.
 
-Alternative R package: [pxweb](https://github.com/rOpenGov/pxweb).
+The BFS package is using the
+<a href="https://github.com/rOpenGov/pxweb" target="_blank">pxweb</a> R
+package under the hood to access the Swiss Federal Statistical Office
+pxweb API.
 
 This package is in no way officially related to or endorsed by the Swiss
 Federal Statistical Office (BFS).

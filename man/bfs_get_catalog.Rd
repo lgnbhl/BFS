@@ -20,5 +20,5 @@ This function scraps the RSS Feed of the Swiss Federal Statistical Office data c
 
 }
 \seealso{
-\code{\link{bfs_get_metadata}}
+\code{\link{bfs_get_dataset}}
 }
