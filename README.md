@@ -142,7 +142,7 @@ manually the BFS number in the `bfs_get_dataset()` function using the
 browseURL(catalog_uni$url_bfs) # open webpage
 ```
 
-<img style="border:1px solid black;" src="man/figures/screenshot.png" align="center" />
+<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/screenshot.png" align="center" />
 
 <br/>
 

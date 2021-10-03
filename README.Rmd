@@ -91,7 +91,7 @@ In case the function fails to download the data set, you can add manually the BF
 browseURL(catalog_uni$url_bfs) # open webpage
 ```
 
-<img style="border:1px solid black;" src="man/figures/screenshot.png" align="center" />
+<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/screenshot.png" align="center" />
 
 <br/>
 
