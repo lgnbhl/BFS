@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download a BFS dataset in a given language — bfs_get_dataset • BFS</title>
+<title>Get the BFS data catalog — bfs_get_catalog_data • BFS</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,9 +46,8 @@
 
 
 
-<meta property="og:title" content="Download a BFS dataset in a given language — bfs_get_dataset" />
-<meta property="og:description" content="Download a dataset using the BFS offical API v1. You should choose either the bfs number of the bfs offical url
-of a given dataset. You can query particulary variables using the `query` argument." />
+<meta property="og:title" content="Get the BFS data catalog — bfs_get_catalog_data" />
+<meta property="og:description" content="This function scraps the RSS Feed of the Swiss Federal Statistical Office data catalog." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -145,63 +144,50 @@ of a given dataset. You can query particulary variables using the `query` argume
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download a BFS dataset in a given language</h1>
-    <small class="dont-index">Source: <a href='https://github.com/lgnbhl/BFS/blob/master/R/bfs_get_dataset.R'><code>R/bfs_get_dataset.R</code></a></small>
-    <div class="hidden name"><code>bfs_get_dataset.Rd</code></div>
+    <h1>Get the BFS data catalog</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lgnbhl/BFS/blob/master/R/bfs_get_catalog_data.R'><code>R/bfs_get_catalog_data.R</code></a></small>
+    <div class="hidden name"><code>bfs_get_catalog_data.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Download a dataset using the BFS offical API v1. You should choose either the bfs number of the bfs offical url
-of a given dataset. You can query particulary variables using the `query` argument.</p>
+    <p>This function scraps the RSS Feed of the Swiss Federal Statistical Office data catalog.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bfs_get_dataset</span><span class='op'>(</span>
-  url_bfs <span class='op'>=</span> <span class='cn'>NULL</span>,
-  language <span class='op'>=</span> <span class='st'>"de"</span>,
-  number_bfs <span class='op'>=</span> <span class='cn'>NULL</span>,
-  query <span class='op'>=</span> <span class='st'>"all"</span>,
-  column_name_type <span class='op'>=</span> <span class='st'>"text"</span>,
-  variable_value_type <span class='op'>=</span> <span class='st'>"text"</span>,
-  clean_names <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>bfs_get_catalog_data</span><span class='op'>(</span>language <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"de"</span>, <span class='st'>"fr"</span>, <span class='st'>"it"</span>, <span class='st'>"en"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>url_bfs</th>
-      <td><p>The URL page of a dataset.</p></td>
-    </tr>
-    <tr>
       <th>language</th>
-      <td><p>Language of the dataset to be translated if exists.</p></td>
-    </tr>
-    <tr>
-      <th>number_bfs</th>
-      <td><p>The BFS number of a dataset.</p></td>
-    </tr>
-    <tr>
-      <th>query</th>
-      <td><p>a list with named values, a json query file or json query string using <code><a href='https://rdrr.io/pkg/pxweb/man/pxweb_query.html'>pxweb::pxweb_query()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>column_name_type</th>
-      <td><p>column name type as "text" or as "code".</p></td>
-    </tr>
-    <tr>
-      <th>variable_value_type</th>
-      <td><p>variable value type as "text" or as "code".</p></td>
-    </tr>
-    <tr>
-      <th>clean_names</th>
-      <td><p>Clean column names using <code><a href='https://rdrr.io/pkg/janitor/man/clean_names.html'>janitor::clean_names()</a></code>.</p></td>
+      <td><p>character The language of a BFS catalog.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A data frame</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='bfs_get_catalog.html'>bfs_get_catalog</a></code></p></div>
+    <div class='dont-index'><p><code><a href='bfs_get_data.html'>bfs_get_data</a></code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>bfs_get_catalog_data</span><span class='op'>(</span>language <span class='op'>=</span> <span class='st'>"de"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>GET request successful. Parsing...</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 350 x 5</span>
+#&gt;    title           language published          url_bfs            url_px        
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         
+#&gt; <span style='color: #BCBCBC;'> 1</span> Detailhandelsu~ de       Detailhandelsumsa~ https://www.bfs.a~ https://www.b~
+#&gt; <span style='color: #BCBCBC;'> 2</span> Detailhandelsu~ de       Detailhandelsumsa~ https://www.bfs.a~ https://www.b~
+#&gt; <span style='color: #BCBCBC;'> 3</span> Energieeinsatz~ de       Energieeinsatzkon~ https://www.bfs.a~ https://www.b~
+#&gt; <span style='color: #BCBCBC;'> 4</span> Heiraten und H~ de       Heiraten und Heir~ https://www.bfs.a~ https://www.b~
+#&gt; <span style='color: #BCBCBC;'> 5</span> Konten der umw~ de       Konten der umwelt~ https://www.bfs.a~ https://www.b~
+#&gt; <span style='color: #BCBCBC;'> 6</span> Lebendgeburten~ de       Lebendgeburten na~ https://www.bfs.a~ https://www.b~
+#&gt; <span style='color: #BCBCBC;'> 7</span> Luftemissionsk~ de       Luftemissionskont~ https://www.bfs.a~ https://www.b~
+#&gt; <span style='color: #BCBCBC;'> 8</span> Scheidungen un~ de       Scheidungen und S~ https://www.bfs.a~ https://www.b~
+#&gt; <span style='color: #BCBCBC;'> 9</span> Ständige Wohnb~ de       Ständige Wohnbevö~ https://www.bfs.a~ https://www.b~
+#&gt; <span style='color: #BCBCBC;'>10</span> Todesfälle nac~ de       Todesfälle nach M~ https://www.bfs.a~ https://www.b~
+#&gt; <span style='color: #949494;'># ... with 340 more rows</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

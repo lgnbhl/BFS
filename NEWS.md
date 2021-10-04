@@ -1,9 +1,11 @@
 # BFS 0.4.0
 
-* `bfs_get_dataset()` uses BFS API v1. `clean_names` is now FALSE by default. 
-* `bfs_get_metadata()` removed because not working. Use only `bfs_get_catalog()` for now.
+* BREAKING CHANGE: `clean_names` of `bfs_get_dataset()` is now FALSE by default.
+* `bfs_get_dataset()` uses BFS API v1.
+* `bfs_get_metadata()` removed because not working. Use only `bfs_get_catalog_data()` for now.
 * add `bfs_get_catalog_tables()`.
-* pxweb and jsonlite dependency added. dbplyr dependency removed.
+* add `bfs_get_catalog()`.
+* pxweb and jsonlite dependency added. dplyr dependency removed.
 
 # BFS 0.3.1
 

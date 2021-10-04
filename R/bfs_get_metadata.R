@@ -10,11 +10,11 @@
 #'
 #' @seealso \code{\link{bfs_get_dataset}}
 #'
-#' @examples
-#' \donttest{meta_en <- bfs_get_metadata(language = "en")}
-#'
 #' @export
 bfs_get_metadata <- function(language = "de") {
+  
+  if (missing(language)) stop("must choose a language, either 'de', 'fr', 'it' or 'en'", call. = FALSE)
+  language <- match.arg(arg = language, choices = c("de", "fr", "it", "en"))
   
   lifecycle::deprecate_warn("0.4.0", "bfs_get_metadata()", "bfs_get_catalog()")
   BFS::bfs_get_catalog(language = language)

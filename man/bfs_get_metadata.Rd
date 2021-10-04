@@ -17,10 +17,6 @@ Returns a tibble containing the titles, publication dates,
 observation periods, data source, metadata webpage urls and download link urls
 in a given language of the current public BFS datasets available.
 }
-\examples{
-\donttest{meta_en <- bfs_get_metadata(language = "en")}
-
-}
 \seealso{
 \code{\link{bfs_get_dataset}}
 }

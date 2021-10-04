@@ -20,6 +20,3 @@ The tables are mostly datasets that are accessible as Excel files.
 \donttest{bfs_get_catalog_tables(language = "de")}
 
 }
-\seealso{
-\code{\link{bfs_get_dataset}}
-}

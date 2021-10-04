@@ -10,8 +10,6 @@
 #' @importFrom tidyRSS tidyfeed
 #' @importFrom janitor clean_names
 #'
-#' @seealso \code{\link{bfs_get_dataset}}
-#'
 #' @examples
 #' \donttest{bfs_get_catalog_tables(language = "de")}
 #'
@@ -20,6 +18,7 @@ bfs_get_catalog_tables <- function(language = c("de", "fr", "it", "en")) {
   
   if (missing(language)) stop("must choose a language, either 'de', 'fr', 'it' or 'en'", call. = FALSE)
   language <- match.arg(arg = language, choices = c("de", "fr", "it", "en"))
+  
   feed <- paste0("https://www.bfs.admin.ch/bfs/", language, "/home/statistiken/kataloge-datenbanken/tabellen/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true&prodima=&institution=&geography=&inquiry=&publishingyearstart=&publishingyearend=&title=&orderNr=")
   df_feed <- tidyRSS::tidyfeed(feed = feed)
   colnames(df_feed) <- gsub('feed_', '', colnames(df_feed)) # cleaning

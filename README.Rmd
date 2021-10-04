@@ -50,12 +50,12 @@ library(BFS)
 
 To search and download data from the Swiss Federal Statistical Office, you first need to retrieve information about the available public datasets.
 
-You can get the data catalog by language based on their official [RSS feed](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml). Unfortunately, it seems that not all data is listed inside the RSS feed. Note also that Italian and English give access to less datasets.
+You can get the data catalog by language based on their official [RSS feed](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml). Unfortunately, it seems that not all public data is listed inside the RSS feed. Note also that Italian and English give access to less datasets.
 
 ```{r}
-catalog_en <- bfs_get_catalog(language = "en")
+catalog_data_en <- bfs_get_catalog_data(language = "en")
 
-catalog_en
+catalog_data_en
 ```
 
 ### Search for a specific dataset
@@ -63,10 +63,10 @@ catalog_en
 ```{r bfs_search}
 library(dplyr)
 
-catalog_uni <- catalog_en %>%
+catalog_data_uni <- catalog_data_en %>%
   filter(title == "University students by year, ISCED field, sex and level of study")
 
-catalog_uni
+catalog_data_uni
 ```
 
 ### Download a dataset in any language
@@ -74,7 +74,7 @@ catalog_uni
 To download a BFS dataset, add the related URL link from the `url_bfs` column of the downloaded metadata as an argument to the `bfs_get_dataset()` function.
 
 ```{r bfs_get_dataset}
-df_uni <- bfs_get_dataset(url_bfs = catalog_uni$url_bfs, language = "en")
+df_uni <- bfs_get_data(url_bfs = catalog_data_uni$url_bfs, language = "en")
 
 df_uni
 ```
@@ -82,7 +82,7 @@ df_uni
 You can access additional information about the downloaded data set using the `bfs_get_dataset_comments()` function.
 
 ```{r attributes}
-bfs_get_dataset_comments(url_bfs = catalog_uni$url_bfs, language = "en")
+bfs_get_data_comments(url_bfs = catalog_data_uni$url_bfs, language = "en")
 ```
 
 In case the data is not present in the data catalog, you can add manually the BFS number in the `bfs_get_dataset()` function using the `number_bfs` argument. For example, if the data used until now as an example is not accessible using `bfs_get_catalog()`, you could try to find the BFS number manually:
@@ -99,13 +99,26 @@ browseURL("https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-dat
 You can use again `bfs_get_dataset()` but this time with the `number_bfs` argument.
 
 ```{r, eval=FALSE}
-bfs_get_dataset(number_bfs = "px-x-1502040100_131", language = "en")
+bfs_get_data(number_bfs = "px-x-1502040100_131", language = "en")
 ```
 
-A lot of data is not accessible through the API, but is still present in the official BFS website. You can access the RSS tables catalog of the Excel files using the `bfs_get_catalog_tables()`. Note that only a part of the tables are accessible using the RSS feed.
+A lot of data is not accessible through the API, but is still present in the official BFS website. You can access the RSS feed tables catalog using the `bfs_get_catalog_tables()`. Most of them are Excel files. Note that only a part of all the public tables seem accessible using the RSS feed.
 
 ```{r}
-bfs_get_catalog_tables(language = "en")
+catalog_tables_en <- bfs_get_catalog_tables(language = "en")
+
+catalog_tables_en
+```
+
+```{r}
+library(dplyr)
+library(openxlsx)
+
+catalog_tables_en %>%
+  filter(title == "Admissions to universities of applied sciences at diploma and bachelor level by fields of specialisation") %>%
+  pull(url_table) %>%
+  openxlsx::read.xlsx(startRow = 2) %>%
+  as_tibble()
 ```
 
 ## Other information

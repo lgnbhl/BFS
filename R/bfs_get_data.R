@@ -1,15 +1,23 @@
-#' Get the comments/footnote of a BFS dataset in a given language
+#' Download BFS data in a given language
+#'
+#' Download a dataset using the BFS offical API v1. You should choose either the bfs number of the bfs offical url
+#' of a given dataset. You can query particulary variables using the `query` argument.
 #'
 #' @param url_bfs The URL page of a dataset.
 #' @param number_bfs The BFS number of a dataset.
 #' @param language Language of the dataset to be translated if exists.
-#' @param query a list object of the variables to query
-#' @param clean_names Clean column names using \code{janitor::clean_names()}
+#' @param query a list with named values, a json query file or json query string using \code{pxweb::pxweb_query()}.
+#' @param column_name_type column name type as "text" or as "code".
+#' @param variable_value_type variable value type as "text" or as "code".
+#' @param clean_names Clean column names using \code{janitor::clean_names()}.
 #'
-#' @seealso \code{\link{bfs_get_dataset}}
+#' @seealso \code{\link{bfs_get_data_comments}}
 #'
 #' @export
-bfs_get_dataset_comments <- function(url_bfs = NULL, language = "de", number_bfs = NULL, query = "all", clean_names = FALSE) {
+bfs_get_data <- function(url_bfs = NULL, language = "de", number_bfs = NULL, query = "all", column_name_type = "text", variable_value_type = "text", clean_names = FALSE) {
+  
+  if (missing(language)) stop("must choose a language, either 'de', 'fr', 'it' or 'en'", call. = FALSE)
+  language <- match.arg(arg = language, choices = c("de", "fr", "it", "en"))
   
   if(is.null(number_bfs) & is.null(url_bfs)) { stop("Please fill bfs_number or url_bfs", call. = FALSE) }
   if(!is.null(number_bfs) & !is.null(url_bfs)) { stop("Please fill only bfs_number or url_bfs", call. = FALSE) }
@@ -19,7 +27,7 @@ bfs_get_dataset_comments <- function(url_bfs = NULL, language = "de", number_bfs
     html_table <- rvest::html_node(html_raw, ".table")
     df_table <- rvest::html_table(html_table)
     number_bfs <- df_table$X2[grepl("px", df_table$X2)]
-    if(!startsWith(number_bfs, "px")) { stop("Failed to get the bfs number from: ", url_bfs, "\nPlease add manually the bfs number withs bfs_number.", call. = FALSE) }
+    if(!startsWith(number_bfs, "px")) { stop("The bfs number extracted do not start with 'px' from URL: ", url_bfs, "\nPlease add manually the bfs number with bfs_number.", call. = FALSE) }
     number_bfs  
   }
   
@@ -42,10 +50,8 @@ bfs_get_dataset_comments <- function(url_bfs = NULL, language = "de", number_bfs
     pxq <- pxweb::pxweb_query(dims)
   }
   
-  df_pxweb <- pxweb::pxweb_get(url = pxweb_api_url, query = pxq)
-  comments <- pxweb::pxweb_data_comments(df_pxweb)
-  df_comments <- as.data.frame(comments)
-  tbl <- tibble::as_tibble(df_comments)
+  df_pxweb <- pxweb::pxweb_get_data(url = pxweb_api_url, query = pxq, column.name.type = column_name_type, variable.value.type = variable_value_type)
+  tbl <- tibble::as_tibble(df_pxweb)
   
   if(clean_names) { tbl <- janitor::clean_names(tbl) }
   

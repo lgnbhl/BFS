@@ -4,21 +4,26 @@
 \alias{bfs_get_catalog}
 \title{Get the BFS data catalog}
 \usage{
-bfs_get_catalog(language = c("de", "fr", "it", "en"))
+bfs_get_catalog(
+  language = c("de", "fr", "it", "en"),
+  type = c("data", "tables")
+)
 }
 \arguments{
 \item{language}{character The language of a BFS catalog.}
+
+\item{type}{character A BFS catalog}
 }
 \value{
 A data frame
 }
 \description{
-This function scraps the RSS Feed of the Swiss Federal Statistical Office data catalog.
+This function scraps a given RSS Feed of the Swiss Federal Statistical Office.
 }
 \examples{
-\donttest{bfs_get_catalog(language = "de")}
+\donttest{bfs_get_catalog(language = "de", type = "data")}
 
 }
 \seealso{
-\code{\link{bfs_get_dataset}}
+\code{\link{bfs_get_data}}
 }
