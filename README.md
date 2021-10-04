@@ -92,8 +92,8 @@ catalog_data_uni
 ### Download a dataset in any language
 
 To download a BFS dataset, add the related URL link from the `url_bfs`
-column of the downloaded metadata as an argument to the
-`bfs_get_dataset()` function.
+column of the downloaded metadata as an argument to the `bfs_get_data()`
+function.
 
 ``` r
 df_uni <- bfs_get_data(url_bfs = catalog_data_uni$url_bfs, language = "en")
@@ -122,7 +122,7 @@ df_uni
     ## # ... with 17,210 more rows
 
 You can access additional information about the downloaded data set
-using the `bfs_get_dataset_comments()` function.
+using the `bfs_get_data_comments()` function.
 
 ``` r
 bfs_get_data_comments(url_bfs = catalog_data_uni$url_bfs, language = "en")
@@ -137,7 +137,7 @@ bfs_get_data_comments(url_bfs = catalog_data_uni$url_bfs, language = "en")
     ## 1     NA      4 column_comment "To ensure that the presentations from cubes con~
 
 In case the data is not present in the data catalog, you can add
-manually the BFS number in the `bfs_get_dataset()` function using the
+manually the BFS number in the `bfs_get_data()` function using the
 `number_bfs` argument. For example, if the data used until now as an
 example is not accessible using `bfs_get_catalog()`, you could try to
 find the BFS number manually:
@@ -161,11 +161,11 @@ bfs_get_data(number_bfs = "px-x-1502040100_131", language = "en")
 ### Catalog of tables
 
 A lot of file are not accessible through the API, but is still present
-in the official BFS website. You can access the [RSS feed
-tables](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/tabellen/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true)
-catalog using the `bfs_get_catalog_tables()`. Most of them are Excel
-files. Note that only a part of all the public tables seem accessible
-using the RSS feed.
+in the official BFS website. You can access the [RSS feed tables
+catalog](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/tabellen/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true)
+using the `bfs_get_catalog_tables()`. Most of them are Excel files. Note
+that only a part of all the public tables seem accessible using the RSS
+feed.
 
 ``` r
 catalog_tables_en <- bfs_get_catalog_tables(language = "en")

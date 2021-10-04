@@ -165,7 +165,7 @@
 <div id="download-a-dataset-in-any-language" class="section level3">
 <h3 class="hasAnchor">
 <a href="#download-a-dataset-in-any-language" class="anchor"></a>Download a dataset in any language</h3>
-<p>To download a BFS dataset, add the related URL link from the <code>url_bfs</code> column of the downloaded metadata as an argument to the <code><a href="reference/bfs_get_dataset.html">bfs_get_dataset()</a></code> function.</p>
+<p>To download a BFS dataset, add the related URL link from the <code>url_bfs</code> column of the downloaded metadata as an argument to the <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code> function.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_uni</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_data.html">bfs_get_data</a></span><span class="op">(</span>url_bfs <span class="op">=</span> <span class="va">catalog_data_uni</span><span class="op">$</span><span class="va">url_bfs</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">##   Downloading large query (in 4 batches):</span></span>
@@ -186,7 +186,7 @@
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 1980/81 Education science Woman Doctorate                                  70</span></span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 1980/81 Education science Woman Further education, advance~                52</span></span>
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 17,210 more rows</span></span></code></pre></div>
-<p>You can access additional information about the downloaded data set using the <code>bfs_get_dataset_comments()</code> function.</p>
+<p>You can access additional information about the downloaded data set using the <code><a href="reference/bfs_get_data_comments.html">bfs_get_data_comments()</a></code> function.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/bfs_get_data_comments.html">bfs_get_data_comments</a></span><span class="op">(</span>url_bfs <span class="op">=</span> <span class="va">catalog_data_uni</span><span class="op">$</span><span class="va">url_bfs</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">##   Downloading large query (in 4 batches):</span></span>
@@ -196,7 +196,7 @@
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   row_no col_no comment_type   comment                                          </span></span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;int&gt;  &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;                                            </span></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     NA      4 column_comment "To ensure that the presentations from cubes con~</span></span></code></pre></div>
-<p>In case the data is not present in the data catalog, you can add manually the BFS number in the <code><a href="reference/bfs_get_dataset.html">bfs_get_dataset()</a></code> function using the <code>number_bfs</code> argument. For example, if the data used until now as an example is not accessible using <code><a href="reference/bfs_get_catalog.html">bfs_get_catalog()</a></code>, you could try to find the BFS number manually:</p>
+<p>In case the data is not present in the data catalog, you can add manually the BFS number in the <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code> function using the <code>number_bfs</code> argument. For example, if the data used until now as an example is not accessible using <code><a href="reference/bfs_get_catalog.html">bfs_get_catalog()</a></code>, you could try to find the BFS number manually:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># open webpage</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/browseURL.html">browseURL</a></span><span class="op">(</span><span class="st">"https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-datenbanken/daten.assetdetail.16324907.html"</span><span class="op">)</span></code></pre></div>
@@ -209,7 +209,7 @@
 <div id="catalog-of-tables" class="section level3">
 <h3 class="hasAnchor">
 <a href="#catalog-of-tables" class="anchor"></a>Catalog of tables</h3>
-<p>A lot of file are not accessible through the API, but is still present in the official BFS website. You can access the <a href="https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/tabellen/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true">RSS feed tables</a> catalog using the <code><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables()</a></code>. Most of them are Excel files. Note that only a part of all the public tables seem accessible using the RSS feed.</p>
+<p>A lot of file are not accessible through the API, but is still present in the official BFS website. You can access the <a href="https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/tabellen/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true">RSS feed tables catalog</a> using the <code><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables()</a></code>. Most of them are Excel files. Note that only a part of all the public tables seem accessible using the RSS feed.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">catalog_tables_en</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
 
