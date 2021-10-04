@@ -3,7 +3,7 @@
 #' @param url_bfs The URL page of a dataset.
 #' @param number_bfs The BFS number of a dataset.
 #' @param language Language of the dataset to be translated if exists.
-#' @param query a list object of the variables to query
+#' @param query a list with named values, a json query file or json query string using \code{pxweb::pxweb_query()}.
 #' @param clean_names Clean column names using \code{janitor::clean_names()}
 #'
 #' @seealso \code{\link{bfs_get_data}}

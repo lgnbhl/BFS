@@ -106,7 +106,7 @@
 <blockquote>
 <p>Search and download data from the Swiss Federal Statistical Office</p>
 </blockquote>
-<p>The <code>BFS</code> package allows to search and download public data from the <a href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html" target="_blank">Swiss Federal Statistical Office (BFS is for Bundesamt für Statistik in German)</a> in a dynamic and reproducible way.</p>
+<p>The <code>BFS</code> package allows to search and download public data from the <a href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html" target="_blank">Swiss Federal Statistical Office</a> (BFS is for <em>Bundesamt für Statistik</em> in German) in a dynamic and reproducible way.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -127,7 +127,7 @@
 <h3 class="hasAnchor">
 <a href="#get-the-data-catalog" class="anchor"></a>Get the data catalog</h3>
 <p>To search and download data from the Swiss Federal Statistical Office, you first need to retrieve information about the available public datasets.</p>
-<p>You can get the data catalog by language based on their official <a href="https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml">RSS feed</a>. Unfortunately, it seems that not all public data is listed inside the RSS feed. Note also that Italian and English give access to less datasets.</p>
+<p>You can get the data catalog by language based on their official <a href="https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true">RSS feed</a>. Unfortunately, it seems that not all public data is listed inside the RSS feed. Note also that Italian and English give access to less datasets.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">catalog_data_en</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_catalog_data.html">bfs_get_catalog_data</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
 
@@ -202,10 +202,14 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/browseURL.html">browseURL</a></span><span class="op">(</span><span class="st">"https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-datenbanken/daten.assetdetail.16324907.html"</span><span class="op">)</span></code></pre></div>
 <p><img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/screenshot.png" align="center"></p>
 <p><br></p>
-<p>You can use again <code><a href="reference/bfs_get_dataset.html">bfs_get_dataset()</a></code> but this time with the <code>number_bfs</code> argument.</p>
+<p>You can use again <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code> but this time with the <code>number_bfs</code> argument.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/bfs_get_data.html">bfs_get_data</a></span><span class="op">(</span>number_bfs <span class="op">=</span> <span class="st">"px-x-1502040100_131"</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
-<p>A lot of data is not accessible through the API, but is still present in the official BFS website. You can access the RSS feed tables catalog using the <code><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables()</a></code>. Most of them are Excel files. Note that only a part of all the public tables seem accessible using the RSS feed.</p>
+</div>
+<div id="catalog-of-tables" class="section level3">
+<h3 class="hasAnchor">
+<a href="#catalog-of-tables" class="anchor"></a>Catalog of tables</h3>
+<p>A lot of file are not accessible through the API, but is still present in the official BFS website. You can access the <a href="https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/tabellen/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true">RSS feed tables</a> catalog using the <code><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables()</a></code>. Most of them are Excel files. Note that only a part of all the public tables seem accessible using the RSS feed.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">catalog_tables_en</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
 

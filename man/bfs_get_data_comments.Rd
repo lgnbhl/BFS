@@ -19,7 +19,7 @@ bfs_get_data_comments(
 
 \item{number_bfs}{The BFS number of a dataset.}
 
-\item{query}{a list object of the variables to query}
+\item{query}{a list with named values, a json query file or json query string using \code{pxweb::pxweb_query()}.}
 
 \item{clean_names}{Clean column names using \code{janitor::clean_names()}}
 }

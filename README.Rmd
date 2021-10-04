@@ -23,8 +23,7 @@ knitr::opts_chunk$set(
 > Search and download data from the Swiss Federal Statistical Office
 
 The `BFS` package allows to search and download public data from the 
-[Swiss Federal Statistical Office (BFS is for Bundesamt für Statistik in German)](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html){target="_blank"}
-in a dynamic and reproducible way.
+[Swiss Federal Statistical Office](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html){target="_blank"} (BFS is for *Bundesamt für Statistik* in German) in a dynamic and reproducible way.
 
 ## Installation
 
@@ -50,7 +49,7 @@ library(BFS)
 
 To search and download data from the Swiss Federal Statistical Office, you first need to retrieve information about the available public datasets.
 
-You can get the data catalog by language based on their official [RSS feed](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml). Unfortunately, it seems that not all public data is listed inside the RSS feed. Note also that Italian and English give access to less datasets.
+You can get the data catalog by language based on their official [RSS feed](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true). Unfortunately, it seems that not all public data is listed inside the RSS feed. Note also that Italian and English give access to less datasets.
 
 ```{r}
 catalog_data_en <- bfs_get_catalog_data(language = "en")
@@ -96,13 +95,15 @@ browseURL("https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-dat
 
 <br/>
 
-You can use again `bfs_get_dataset()` but this time with the `number_bfs` argument.
+You can use again `bfs_get_data()` but this time with the `number_bfs` argument.
 
 ```{r, eval=FALSE}
 bfs_get_data(number_bfs = "px-x-1502040100_131", language = "en")
 ```
 
-A lot of data is not accessible through the API, but is still present in the official BFS website. You can access the RSS feed tables catalog using the `bfs_get_catalog_tables()`. Most of them are Excel files. Note that only a part of all the public tables seem accessible using the RSS feed.
+### Catalog of tables
+
+A lot of file are not accessible through the API, but is still present in the official BFS website. You can access the [RSS feed tables](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/tabellen/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true) catalog using the `bfs_get_catalog_tables()`. Most of them are Excel files. Note that only a part of all the public tables seem accessible using the RSS feed.
 
 ```{r}
 catalog_tables_en <- bfs_get_catalog_tables(language = "en")
