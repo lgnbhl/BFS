@@ -19,8 +19,8 @@ bfs_get_data <- function(url_bfs = NULL, language = "de", number_bfs = NULL, que
   if (missing(language)) stop("must choose a language, either 'de', 'fr', 'it' or 'en'", call. = FALSE)
   language <- match.arg(arg = language, choices = c("de", "fr", "it", "en"))
   
-  if(is.null(number_bfs) & is.null(url_bfs)) { stop("Please fill bfs_number or url_bfs", call. = FALSE) }
-  if(!is.null(number_bfs) & !is.null(url_bfs)) { stop("Please fill only bfs_number or url_bfs", call. = FALSE) }
+  if(is.null(number_bfs) & is.null(url_bfs)) { stop("Please fill url_bfs or number_bfs", call. = FALSE) }
+  if(!is.null(number_bfs) & !is.null(url_bfs)) { stop("Please fill only url_bfs or number_bfs", call. = FALSE) }
   
   if(!is.null(url_bfs) & is.null(number_bfs)) {
     html_raw <- xml2::read_html(url_bfs)
@@ -37,7 +37,7 @@ bfs_get_data <- function(url_bfs = NULL, language = "de", number_bfs = NULL, que
   if(query == "all") {
     variables <- df_json$variables$code
     values <- df_json$variables$values
-    df <- rbind(c("*", "*","*","*"))
+    df <- rbind(rep("*", length(values)))
     names(df) <- variables
     dims <- as.list(df)
     pxq <- pxweb::pxweb_query(dims)

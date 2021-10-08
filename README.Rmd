@@ -72,7 +72,7 @@ catalog_data_uni
 
 To download a BFS dataset, add the related URL link from the `url_bfs` column of the downloaded metadata as an argument to the `bfs_get_data()` function.
 
-```{r bfs_get_dataset}
+```{r bfs_get_data}
 df_uni <- bfs_get_data(url_bfs = catalog_data_uni$url_bfs, language = "en")
 
 df_uni
@@ -129,3 +129,7 @@ A [blog article](https://felixluginbuhl.com/blog/posts/2019-11-07-swiss-data/) s
 The BFS package is using the [pxweb](https://github.com/rOpenGov/pxweb){target="_blank"} R package under the hood to access the Swiss Federal Statistical Office pxweb API.
 
 This package is in no way officially related to or endorsed by the Swiss Federal Statistical Office (BFS).
+
+## Code of Conduct
+  
+Please note that the BFS project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.

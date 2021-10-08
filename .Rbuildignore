@@ -9,3 +9,5 @@
 ^\.gitlab-ci\.yml$
 man/figures/logo.svg
 ^\.github$
+^LICENSE\.md$
+^CODE_OF_CONDUCT\.md$

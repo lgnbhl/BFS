@@ -16,7 +16,7 @@
 #' \donttest{bfs_get_catalog(language = "de", type = "data")}
 #'
 #' @export
-bfs_get_catalog <- function(language = c("de", "fr", "it", "en"), type = c("data", "tables")) {
+bfs_get_catalog <- function(language = "de", type = "data") {
   
   if (missing(language)) stop("must choose a language, either 'de', 'fr', 'it' or 'en'", call. = FALSE)
   language <- match.arg(arg = language, choices = c("de", "fr", "it", "en"))
