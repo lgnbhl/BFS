@@ -73,7 +73,12 @@ catalog_data_en
     ## 10 Retail Trade Tu~ en       Retail Trade Turno~ https://www.bfs.~ https://www.~
     ## # ... with 160 more rows
 
+To find older datasets, you can use the search bar in the [official BFS
+website](https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/daten.html).
+
 ### Search for a specific dataset
+
+You could use for example `dplyr` to search for a given dataset.
 
 ``` r
 library(dplyr)
@@ -91,11 +96,13 @@ catalog_data_uni
 
 ### Download a dataset in any language
 
-To download a BFS dataset, add the related URL link from the `url_bfs`
-column of the downloaded metadata as an argument to the `bfs_get_data()`
-function.
+To download a BFS dataset, you have two options. You can use add the
+official BFS URL webpage to the `url_bfs` argument to the
+`bfs_get_data()`. For example, you can use the URL of a given dataset
+you found using `bfs_get_catalog_data()` function (see example above).
 
 ``` r
+# https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-datenbanken/daten.assetdetail.16324907.html
 df_uni <- bfs_get_data(url_bfs = catalog_data_uni$url_bfs, language = "en")
 ```
 
@@ -121,26 +128,11 @@ df_uni
     ## 10 1980/81 Education science Woman Further education, advance~                52
     ## # ... with 17,210 more rows
 
-You can access additional information about the downloaded data set
-using the `bfs_get_data_comments()` function.
+Note that some datasets are only accessible in German and French.
 
-``` r
-bfs_get_data_comments(url_bfs = catalog_data_uni$url_bfs, language = "en")
-```
-
-    ##   Downloading large query (in 4 batches):
-    ##   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%
-
-    ## # A tibble: 1 x 4
-    ##   row_no col_no comment_type   comment                                          
-    ##    <int>  <int> <chr>          <chr>                                            
-    ## 1     NA      4 column_comment "To ensure that the presentations from cubes con~
-
-In case the data is not present in the data catalog, you can add
-manually the BFS number in the `bfs_get_data()` function using the
-`number_bfs` argument. For example, if the data used until now as an
-example is not accessible using `bfs_get_catalog()`, you could try to
-find the BFS number manually:
+In case the data is not accessible using `bfs_get_catalog_data()`
+function, you can add manually the BFS number in the `bfs_get_data()`
+function using the `number_bfs` argument.
 
 ``` r
 # open webpage
@@ -158,14 +150,32 @@ argument.
 bfs_get_data(number_bfs = "px-x-1502040100_131", language = "en")
 ```
 
+Please privilege the `number_bfs` argument of the `bfs_get_data()` if
+you want more stable and reproducible code.
+
+You can access additional information about the downloaded data set
+using the `bfs_get_data_comments()` function.
+
+``` r
+bfs_get_data_comments(number_bfs = "px-x-1502040100_131", language = "en")
+```
+
+    ##   Downloading large query (in 4 batches):
+    ##   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%
+
+    ## # A tibble: 1 x 4
+    ##   row_no col_no comment_type   comment                                          
+    ##    <int>  <int> <chr>          <chr>                                            
+    ## 1     NA      4 column_comment "To ensure that the presentations from cubes con~
+
 ### Catalog of tables
 
-A lot of file are not accessible through the API, but is still present
+A lot of tables are not accessible through the API, but is still present
 in the official BFS website. You can access the [RSS feed tables
 catalog](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/tabellen/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true)
 using the `bfs_get_catalog_tables()`. Most of them are Excel files. Note
-that only a part of all the public tables seem accessible using the RSS
-feed.
+again that only a part of all the public tables seem accessible using
+the RSS feed.
 
 ``` r
 catalog_tables_en <- bfs_get_catalog_tables(language = "en")
