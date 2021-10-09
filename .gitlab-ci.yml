@@ -2,5 +2,5 @@ image: rocker/tidyverse
 
 test:
    script:
-    - R -e 'install.packages(c("janitor", "progress", "pxR", "pins", "tidyRSS"))'
+    - R -e 'install.packages(c("pxweb,", "jsonlite", "xml2", "rvest", "janitor", "tidyRSS", "lifecycle"))'
     - R -e 'devtools::check()'
