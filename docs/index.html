@@ -127,7 +127,7 @@
 <h3 class="hasAnchor">
 <a href="#get-the-data-catalog" class="anchor"></a>Get the data catalog</h3>
 <p>To search and download data from the Swiss Federal Statistical Office, you first need to retrieve information about the available public datasets.</p>
-<p>You can get the data catalog by language based on their official <a href="https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true">RSS feed</a>. Unfortunately, it seems that not all public data is listed inside the RSS feed. Note also that Italian and English give access to less datasets.</p>
+<p>You can get the data catalog by language based on their official <a href="https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true">RSS feed</a>. Unfortunately, it seems that not the all public datasets are in the RSS feed. Note also that Italian and English give access to less datasets.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">catalog_data_en</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_catalog_data.html">bfs_get_catalog_data</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
 
@@ -167,7 +167,7 @@
 <div id="download-a-dataset-in-any-language" class="section level3">
 <h3 class="hasAnchor">
 <a href="#download-a-dataset-in-any-language" class="anchor"></a>Download a dataset in any language</h3>
-<p>To download a BFS dataset, you have two options. You can use add the official BFS URL webpage to the <code>url_bfs</code> argument to the <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code>. For example, you can use the URL of a given dataset you found using <code><a href="reference/bfs_get_catalog_data.html">bfs_get_catalog_data()</a></code> function (see example above).</p>
+<p>To download a BFS dataset, you have two options. You can add the official BFS URL webpage to the <code>url_bfs</code> argument to the <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code>. For example, you can use the URL of a given dataset you found using <code><a href="reference/bfs_get_catalog_data.html">bfs_get_catalog_data()</a></code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-datenbanken/daten.assetdetail.16324907.html</span>
 <span class="va">df_uni</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_data.html">bfs_get_data</a></span><span class="op">(</span>url_bfs <span class="op">=</span> <span class="va">catalog_data_uni</span><span class="op">$</span><span class="va">url_bfs</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
@@ -190,17 +190,17 @@
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 1980/81 Education science Woman Further education, advance~                52</span></span>
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 17,210 more rows</span></span></code></pre></div>
 <p>Note that some datasets are only accessible in German and French.</p>
-<p>In case the data is not accessible using <code><a href="reference/bfs_get_catalog_data.html">bfs_get_catalog_data()</a></code> function, you can add manually the BFS number in the <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code> function using the <code>number_bfs</code> argument.</p>
+<p>In case the data is not accessible using <code><a href="reference/bfs_get_catalog_data.html">bfs_get_catalog_data()</a></code>, you can manually add the BFS number in the <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code> function using the <code>number_bfs</code> argument.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># open webpage</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/browseURL.html">browseURL</a></span><span class="op">(</span><span class="st">"https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-datenbanken/daten.assetdetail.16324907.html"</span><span class="op">)</span></code></pre></div>
 <p><img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/screenshot.png" align="center"></p>
 <p><br></p>
-<p>You can use again <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code> but this time with the <code>number_bfs</code> argument.</p>
+<p>Use again <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code> but this time with the <code>number_bfs</code> argument.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/bfs_get_data.html">bfs_get_data</a></span><span class="op">(</span>number_bfs <span class="op">=</span> <span class="st">"px-x-1502040100_131"</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
 <p>Please privilege the <code>number_bfs</code> argument of the <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code> if you want more stable and reproducible code.</p>
-<p>You can access additional information about the downloaded data set using the <code><a href="reference/bfs_get_data_comments.html">bfs_get_data_comments()</a></code> function.</p>
+<p>You can access additional information about the dataset by running <code><a href="reference/bfs_get_data_comments.html">bfs_get_data_comments()</a></code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/bfs_get_data_comments.html">bfs_get_data_comments</a></span><span class="op">(</span>number_bfs <span class="op">=</span> <span class="st">"px-x-1502040100_131"</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">##   Downloading large query (in 4 batches):</span></span>
@@ -214,7 +214,7 @@
 <div id="catalog-of-tables" class="section level3">
 <h3 class="hasAnchor">
 <a href="#catalog-of-tables" class="anchor"></a>Catalog of tables</h3>
-<p>A lot of tables are not accessible through the API, but is still present in the official BFS website. You can access the <a href="https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/tabellen/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true">RSS feed tables catalog</a> using the <code><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables()</a></code>. Most of them are Excel files. Note again that only a part of all the public tables seem accessible using the RSS feed.</p>
+<p>A lot of tables are not accessible through the official API, but they are still present in the official BFS website. You can access the <a href="https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/tabellen/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true">RSS feed tables catalog</a> using <code><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables()</a></code>. Most of these tables are Excel files. Note again that only a part of all the public tables accessible are in the RSS feed.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">catalog_tables_en</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
 

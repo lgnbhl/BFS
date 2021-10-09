@@ -48,9 +48,8 @@ datasets.
 
 You can get the data catalog by language based on their official [RSS
 feed](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true).
-Unfortunately, it seems that not all public data is listed inside the
-RSS feed. Note also that Italian and English give access to less
-datasets.
+Unfortunately, it seems that not the all public datasets are in the RSS
+feed. Note also that Italian and English give access to less datasets.
 
 ``` r
 catalog_data_en <- bfs_get_catalog_data(language = "en")
@@ -96,10 +95,10 @@ catalog_data_uni
 
 ### Download a dataset in any language
 
-To download a BFS dataset, you have two options. You can use add the
+To download a BFS dataset, you have two options. You can add the
 official BFS URL webpage to the `url_bfs` argument to the
 `bfs_get_data()`. For example, you can use the URL of a given dataset
-you found using `bfs_get_catalog_data()` function (see example above).
+you found using `bfs_get_catalog_data()`.
 
 ``` r
 # https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-datenbanken/daten.assetdetail.16324907.html
@@ -130,9 +129,9 @@ df_uni
 
 Note that some datasets are only accessible in German and French.
 
-In case the data is not accessible using `bfs_get_catalog_data()`
-function, you can add manually the BFS number in the `bfs_get_data()`
-function using the `number_bfs` argument.
+In case the data is not accessible using `bfs_get_catalog_data()`, you
+can manually add the BFS number in the `bfs_get_data()` function using
+the `number_bfs` argument.
 
 ``` r
 # open webpage
@@ -143,8 +142,7 @@ browseURL("https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-dat
 
 <br/>
 
-You can use again `bfs_get_data()` but this time with the `number_bfs`
-argument.
+Use again `bfs_get_data()` but this time with the `number_bfs` argument.
 
 ``` r
 bfs_get_data(number_bfs = "px-x-1502040100_131", language = "en")
@@ -153,8 +151,8 @@ bfs_get_data(number_bfs = "px-x-1502040100_131", language = "en")
 Please privilege the `number_bfs` argument of the `bfs_get_data()` if
 you want more stable and reproducible code.
 
-You can access additional information about the downloaded data set
-using the `bfs_get_data_comments()` function.
+You can access additional information about the dataset by running
+`bfs_get_data_comments()`.
 
 ``` r
 bfs_get_data_comments(number_bfs = "px-x-1502040100_131", language = "en")
@@ -170,11 +168,12 @@ bfs_get_data_comments(number_bfs = "px-x-1502040100_131", language = "en")
 
 ### Catalog of tables
 
-A lot of tables are not accessible through the API, but is still present
-in the official BFS website. You can access the [RSS feed tables
+A lot of tables are not accessible through the official API, but they
+are still present in the official BFS website. You can access the [RSS
+feed tables
 catalog](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/tabellen/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true)
-using the `bfs_get_catalog_tables()`. Most of them are Excel files. Note
-again that only a part of all the public tables seem accessible using
+using `bfs_get_catalog_tables()`. Most of these tables are Excel files.
+Note again that only a part of all the public tables accessible are in
 the RSS feed.
 
 ``` r
