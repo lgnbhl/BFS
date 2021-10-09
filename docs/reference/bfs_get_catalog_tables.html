@@ -91,7 +91,7 @@ The tables are mostly datasets that are accessible as Excel files." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BFS</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -155,7 +155,7 @@ The tables are mostly datasets that are accessible as Excel files." />
 The tables are mostly datasets that are accessible as Excel files.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bfs_get_catalog_tables</span><span class='op'>(</span>language <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"de"</span>, <span class='st'>"fr"</span>, <span class='st'>"it"</span>, <span class='st'>"en"</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>bfs_get_catalog_tables</span><span class='op'>(</span>language <span class='op'>=</span> <span class='st'>"de"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,16 +175,16 @@ The tables are mostly datasets that are accessible as Excel files.</p>
 </div><div class='output co'>#&gt; <span class='message'>GET request successful. Parsing...</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 350 x 5</span>
 #&gt;    title           language published           url_bfs          url_table      
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          
-#&gt; <span style='color: #BCBCBC;'> 1</span> HVPI (2015=100~ de       HVPI (2015=100), T~ https://www.bfs~ https://www.bf~
-#&gt; <span style='color: #BCBCBC;'> 2</span> HVPI Schweiz (~ de       HVPI Schweiz (2015~ https://www.bfs~ https://www.bf~
-#&gt; <span style='color: #BCBCBC;'> 3</span> Indizes und Ve~ de       Indizes und Veränd~ https://www.bfs~ https://www.bf~
-#&gt; <span style='color: #BCBCBC;'> 4</span> Indizes und Ve~ de       Indizes und Veränd~ https://www.bfs~ https://www.bf~
-#&gt; <span style='color: #BCBCBC;'> 5</span> Indizes und Ve~ de       Indizes und Veränd~ https://www.bfs~ https://www.bf~
-#&gt; <span style='color: #BCBCBC;'> 6</span> LIK (Dezember ~ de       LIK (Dezember 2020~ https://www.bfs~ https://www.bf~
-#&gt; <span style='color: #BCBCBC;'> 7</span> LIK (Dezember ~ de       LIK (Dezember 2020~ https://www.bfs~ https://www.bf~
-#&gt; <span style='color: #BCBCBC;'> 8</span> LIK, Durchschn~ de       LIK, Durchschnitts~ https://www.bfs~ https://www.bf~
-#&gt; <span style='color: #BCBCBC;'> 9</span> LIK, Durchschn~ de       LIK, Durchschnitts~ https://www.bfs~ https://www.bf~
-#&gt; <span style='color: #BCBCBC;'>10</span> LIK, Mietpreis~ de       LIK, Mietpreisinde~ https://www.bfs~ https://www.bf~
+#&gt; <span style='color: #BCBCBC;'> 1</span> <span style='color: #949494;'>"</span>Allgemeine Üb~ de       <span style='color: #949494;'>"</span>Allgemeine Übersi~ https://www.bfs~ https://www.bf~
+#&gt; <span style='color: #BCBCBC;'> 2</span> <span style='color: #949494;'>"</span>Allgemeine Üb~ de       <span style='color: #949494;'>"</span>Allgemeine Übersi~ https://www.bfs~ https://www.bf~
+#&gt; <span style='color: #BCBCBC;'> 3</span> <span style='color: #949494;'>"</span>Arbeitslosenq~ de       <span style='color: #949494;'>"</span>Arbeitslosenquote~ https://www.bfs~ https://www.bf~
+#&gt; <span style='color: #BCBCBC;'> 4</span> <span style='color: #949494;'>"</span>Arbeitslosenq~ de       <span style='color: #949494;'>"</span>Arbeitslosenquote~ https://www.bfs~ https://www.bf~
+#&gt; <span style='color: #BCBCBC;'> 5</span> <span style='color: #949494;'>"</span>Belegungsdich~ de       <span style='color: #949494;'>"</span>Belegungsdichte n~ https://www.bfs~ https://www.bf~
+#&gt; <span style='color: #BCBCBC;'> 6</span> <span style='color: #949494;'>"</span>Belegungsdich~ de       <span style='color: #949494;'>"</span>Belegungsdichte n~ https://www.bfs~ https://www.bf~
+#&gt; <span style='color: #BCBCBC;'> 7</span> <span style='color: #949494;'>"</span>Belegungsdich~ de       <span style='color: #949494;'>"</span>Belegungsdichte n~ https://www.bfs~ https://www.bf~
+#&gt; <span style='color: #BCBCBC;'> 8</span> <span style='color: #949494;'>"</span>Belegungsdich~ de       <span style='color: #949494;'>"</span>Belegungsdichte n~ https://www.bfs~ https://www.bf~
+#&gt; <span style='color: #BCBCBC;'> 9</span> <span style='color: #949494;'>"</span>Bewohnte Wohn~ de       <span style='color: #949494;'>"</span>Bewohnte Wohnunge~ https://www.bfs~ https://www.bf~
+#&gt; <span style='color: #BCBCBC;'>10</span> <span style='color: #949494;'>"</span>Bewohnte Wohn~ de       <span style='color: #949494;'>"</span>Bewohnte Wohnunge~ https://www.bfs~ https://www.bf~
 #&gt; <span style='color: #949494;'># ... with 340 more rows</span></div><div class='input'>
 </div></pre>
   </div>

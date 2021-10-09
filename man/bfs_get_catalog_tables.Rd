@@ -4,7 +4,7 @@
 \alias{bfs_get_catalog_tables}
 \title{Get the BFS tables catalog}
 \usage{
-bfs_get_catalog_tables(language = c("de", "fr", "it", "en"))
+bfs_get_catalog_tables(language = "de")
 }
 \arguments{
 \item{language}{character The language of a BFS catalog.}
