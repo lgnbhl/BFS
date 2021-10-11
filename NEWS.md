@@ -1,6 +1,6 @@
 # BFS (development version)
 
-# BFS 0.4.0
+# BFS 0.4.1
 
 * BREAKING CHANGE: `clean_names` of `bfs_get_data()` is now FALSE by default.
 * `bfs_get_data()` uses BFS API v1.
