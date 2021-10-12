@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 > Search and download data from the Swiss Federal Statistical Office
 
 The `BFS` package allows to search and download public data from the 
-[Swiss Federal Statistical Office](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html){target="_blank"} (BFS is for *Bundesamt für Statistik* in German) in a dynamic and reproducible way.
+[Swiss Federal Statistical Office](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html){target="_blank"} (BFS stands for *Bundesamt für Statistik* in German) in a dynamic and reproducible way.
 
 ## Installation
 

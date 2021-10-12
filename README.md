@@ -16,7 +16,7 @@ status](https://github.com/lgnbhl/BFS/workflows/R-CMD-check/badge.svg)](https://
 
 The `BFS` package allows to search and download public data from the
 <a href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html" target="_blank">Swiss Federal Statistical Office</a>
-(BFS is for *Bundesamt für Statistik* in German) in a dynamic and
+(BFS stands for *Bundesamt für Statistik* in German) in a dynamic and
 reproducible way.
 
 ## Installation
@@ -185,13 +185,13 @@ catalog_tables_en
     ## # A tibble: 350 x 5
     ##    title           language published           url_bfs          url_table      
     ##    <chr>           <chr>    <chr>               <chr>            <chr>          
-    ##  1 Permanent resi~ en       Permanent resident~ https://www.bfs~ https://www.bf~
-    ##  2 Permanent resi~ en       Permanent resident~ https://www.bfs~ https://www.bf~
-    ##  3 Private househ~ en       Private households~ https://www.bfs~ https://www.bf~
-    ##  4 Private househ~ en       Private households~ https://www.bfs~ https://www.bf~
-    ##  5 Deaths per wee~ en       Deaths per week by~ https://www.bfs~ https://www.bf~
-    ##  6 Deaths per wee~ en       Deaths per week by~ https://www.bfs~ https://www.bf~
-    ##  7 Weekly number ~ en       Weekly number of d~ https://www.bfs~ https://www.bf~
+    ##  1 Deaths per wee~ en       Deaths per week by~ https://www.bfs~ https://www.bf~
+    ##  2 Deaths per wee~ en       Deaths per week by~ https://www.bfs~ https://www.bf~
+    ##  3 Weekly number ~ en       Weekly number of d~ https://www.bfs~ https://www.bf~
+    ##  4 Permanent resi~ en       Permanent resident~ https://www.bfs~ https://www.bf~
+    ##  5 Permanent resi~ en       Permanent resident~ https://www.bfs~ https://www.bf~
+    ##  6 Private househ~ en       Private households~ https://www.bfs~ https://www.bf~
+    ##  7 Private househ~ en       Private households~ https://www.bfs~ https://www.bf~
     ##  8 CPI (december ~ en       CPI (december 2020~ https://www.bfs~ https://www.bf~
     ##  9 CPI (december ~ en       CPI (december 2020~ https://www.bfs~ https://www.bf~
     ## 10 CPI, Global in~ en       CPI, Global index ~ https://www.bfs~ https://www.bf~
