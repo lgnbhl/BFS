@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">BFS</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.9000</span>
       </span>
     </div>
 
@@ -106,7 +106,7 @@
 <blockquote>
 <p>Search and download data from the Swiss Federal Statistical Office</p>
 </blockquote>
-<p>The <code>BFS</code> package allows to search and download public data from the <a href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html" target="_blank">Swiss Federal Statistical Office</a> (BFS is for <em>Bundesamt für Statistik</em> in German) in a dynamic and reproducible way.</p>
+<p>The <code>BFS</code> package allows to search and download public data from the <a href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html" target="_blank">Swiss Federal Statistical Office</a> (BFS stands for <em>Bundesamt für Statistik</em> in German) in a dynamic and reproducible way.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -132,20 +132,20 @@
 <code class="sourceCode R"><span class="va">catalog_data_en</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_catalog_data.html">bfs_get_catalog_data</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
 
 <span class="va">catalog_data_en</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 170 x 5</span></span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 177 x 5</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    title            language published           url_bfs           url_px       </span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;            &lt;chr&gt;    &lt;chr&gt;               &lt;chr&gt;             &lt;chr&gt;        </span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Permanent resid~ en       Permanent resident~ https://www.bfs.~ https://www.~</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Private househo~ en       Private households~ https://www.bfs.~ https://www.~</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Hotel accommoda~ en       Hotel accommodatio~ https://www.bfs.~ https://www.~</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Hotel accommoda~ en       Hotel accommodatio~ https://www.bfs.~ https://www.~</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Hotel accommoda~ en       Hotel accommodatio~ https://www.bfs.~ https://www.~</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Hotel sector: S~ en       Hotel sector: Supp~ https://www.bfs.~ https://www.~</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Hotel sector: S~ en       Hotel sector: Supp~ https://www.bfs.~ https://www.~</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Hotel sector: s~ en       Hotel sector: supp~ https://www.bfs.~ https://www.~</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Retail Trade Tu~ en       Retail Trade Turno~ https://www.bfs.~ https://www.~</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Retail Trade Tu~ en       Retail Trade Turno~ https://www.bfs.~ https://www.~</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 160 more rows</span></span></code></pre></div>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Hotel accommoda~ en       Hotel accommodatio~ https://www.bfs.~ https://www.~</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Hotel accommoda~ en       Hotel accommodatio~ https://www.bfs.~ https://www.~</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 167 more rows</span></span></code></pre></div>
 <p>To find older datasets, you can use the search bar in the <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/daten.html">official BFS website</a>.</p>
 </div>
 <div id="search-for-a-specific-dataset" class="section level3">
@@ -222,16 +222,16 @@
 <div class="sourceCode" id="cb17"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 350 x 5</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    title           language published           url_bfs          url_table      </span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;               &lt;chr&gt;            &lt;chr&gt;          </span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Permanent resi~ en       Permanent resident~ https://www.bfs~ https://www.bf~</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Permanent resi~ en       Permanent resident~ https://www.bfs~ https://www.bf~</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Private househ~ en       Private households~ https://www.bfs~ https://www.bf~</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Private househ~ en       Private households~ https://www.bfs~ https://www.bf~</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Deaths per wee~ en       Deaths per week by~ https://www.bfs~ https://www.bf~</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Deaths per wee~ en       Deaths per week by~ https://www.bfs~ https://www.bf~</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Weekly number ~ en       Weekly number of d~ https://www.bfs~ https://www.bf~</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 CPI (december ~ en       CPI (december 2020~ https://www.bfs~ https://www.bf~</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 CPI (december ~ en       CPI (december 2020~ https://www.bfs~ https://www.bf~</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 CPI, Global in~ en       CPI, Global index ~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Cantonal gross~ en       Cantonal gross dom~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Decomposition ~ en       Decomposition of t~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Decomposition ~ en       Decomposition of t~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Gross domestic~ en       Gross domestic pro~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Gross value ad~ en       Gross value added ~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Labor producti~ en       Labor productivity~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Labour product~ en       Labour productivit~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Labour product~ en       Labour productivit~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Labour product~ en       Labour productivit~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Labour product~ en       Labour productivit~ https://www.bfs~ https://www.bf~</span></span>
 <span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 340 more rows</span></span></code></pre></div>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>

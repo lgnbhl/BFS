@@ -57,20 +57,20 @@ catalog_data_en <- bfs_get_catalog_data(language = "en")
 catalog_data_en
 ```
 
-    ## # A tibble: 170 x 5
+    ## # A tibble: 177 x 5
     ##    title            language published           url_bfs           url_px       
     ##    <chr>            <chr>    <chr>               <chr>             <chr>        
-    ##  1 Permanent resid~ en       Permanent resident~ https://www.bfs.~ https://www.~
-    ##  2 Private househo~ en       Private households~ https://www.bfs.~ https://www.~
-    ##  3 Hotel accommoda~ en       Hotel accommodatio~ https://www.bfs.~ https://www.~
-    ##  4 Hotel accommoda~ en       Hotel accommodatio~ https://www.bfs.~ https://www.~
-    ##  5 Hotel accommoda~ en       Hotel accommodatio~ https://www.bfs.~ https://www.~
-    ##  6 Hotel sector: S~ en       Hotel sector: Supp~ https://www.bfs.~ https://www.~
-    ##  7 Hotel sector: S~ en       Hotel sector: Supp~ https://www.bfs.~ https://www.~
-    ##  8 Hotel sector: s~ en       Hotel sector: supp~ https://www.bfs.~ https://www.~
-    ##  9 Retail Trade Tu~ en       Retail Trade Turno~ https://www.bfs.~ https://www.~
-    ## 10 Retail Trade Tu~ en       Retail Trade Turno~ https://www.bfs.~ https://www.~
-    ## # ... with 160 more rows
+    ##  1 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~
+    ##  2 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~
+    ##  3 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~
+    ##  4 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~
+    ##  5 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~
+    ##  6 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~
+    ##  7 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~
+    ##  8 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~
+    ##  9 Hotel accommoda~ en       Hotel accommodatio~ https://www.bfs.~ https://www.~
+    ## 10 Hotel accommoda~ en       Hotel accommodatio~ https://www.bfs.~ https://www.~
+    ## # ... with 167 more rows
 
 To find older datasets, you can use the search bar in the [official BFS
 website](https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/daten.html).
@@ -185,16 +185,16 @@ catalog_tables_en
     ## # A tibble: 350 x 5
     ##    title           language published           url_bfs          url_table      
     ##    <chr>           <chr>    <chr>               <chr>            <chr>          
-    ##  1 Deaths per wee~ en       Deaths per week by~ https://www.bfs~ https://www.bf~
-    ##  2 Deaths per wee~ en       Deaths per week by~ https://www.bfs~ https://www.bf~
-    ##  3 Weekly number ~ en       Weekly number of d~ https://www.bfs~ https://www.bf~
-    ##  4 Permanent resi~ en       Permanent resident~ https://www.bfs~ https://www.bf~
-    ##  5 Permanent resi~ en       Permanent resident~ https://www.bfs~ https://www.bf~
-    ##  6 Private househ~ en       Private households~ https://www.bfs~ https://www.bf~
-    ##  7 Private househ~ en       Private households~ https://www.bfs~ https://www.bf~
-    ##  8 CPI (december ~ en       CPI (december 2020~ https://www.bfs~ https://www.bf~
-    ##  9 CPI (december ~ en       CPI (december 2020~ https://www.bfs~ https://www.bf~
-    ## 10 CPI, Global in~ en       CPI, Global index ~ https://www.bfs~ https://www.bf~
+    ##  1 Cantonal gross~ en       Cantonal gross dom~ https://www.bfs~ https://www.bf~
+    ##  2 Decomposition ~ en       Decomposition of t~ https://www.bfs~ https://www.bf~
+    ##  3 Decomposition ~ en       Decomposition of t~ https://www.bfs~ https://www.bf~
+    ##  4 Gross domestic~ en       Gross domestic pro~ https://www.bfs~ https://www.bf~
+    ##  5 Gross value ad~ en       Gross value added ~ https://www.bfs~ https://www.bf~
+    ##  6 Labor producti~ en       Labor productivity~ https://www.bfs~ https://www.bf~
+    ##  7 Labour product~ en       Labour productivit~ https://www.bfs~ https://www.bf~
+    ##  8 Labour product~ en       Labour productivit~ https://www.bfs~ https://www.bf~
+    ##  9 Labour product~ en       Labour productivit~ https://www.bfs~ https://www.bf~
+    ## 10 Labour product~ en       Labour productivit~ https://www.bfs~ https://www.bf~
     ## # ... with 340 more rows
 
 ``` r
