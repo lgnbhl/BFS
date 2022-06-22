@@ -19,6 +19,31 @@ href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.
 target="_blank">Swiss Federal Statistical Office</a> (BFS stands for
 *Bundesamt für Statistik* in German) in a dynamic and reproducible way.
 
+⚠️⚠️⚠️⚠️⚠️⚠️
+
+Due to a bug in the last version of `tidyRSS`, be sure to use only
+`tidyRSS` version 2.0.4. If you use the last version of `tidyRSS`, you
+will see this message.
+
+``` r
+library(BFS)
+```
+
+``` md
+Error: package or namespace load failed for ‘BFS’ in loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]):
+ namespace ‘tidyRSS’ 2.0.5 is already loaded, but == 2.0.4 is required
+```
+
+To fix this error message, uninstall `tidyRSS` and install the version
+2.0.4.
+
+``` r
+remove.packages("tidyRSS")
+remotes::install_version("tidyRSS", version = "2.0.4")
+```
+
+⚠️⚠️⚠️⚠️⚠️⚠️
+
 ## Installation
 
 ``` r
