@@ -21,9 +21,16 @@ target="_blank">Swiss Federal Statistical Office</a> (BFS stands for
 
 ⚠️⚠️⚠️⚠️⚠️⚠️
 
-Due to a bug in the last version of `tidyRSS`, be sure to use only
-`tidyRSS` version 2.0.4. If you use the last version of `tidyRSS`, you
-will see this message.
+Due to a bug in the last version of `tidyRSS`, you should install `BFS`
+only from GitHub.
+
+``` r
+# install from Github
+devtools::install_github("lgnbhl/BFS")
+```
+
+Until the bug is fixed, you should only use `tidyRSS` version 2.0.4. If
+you use the last version of `tidyRSS`, you will see this message.
 
 ``` r
 library(BFS)

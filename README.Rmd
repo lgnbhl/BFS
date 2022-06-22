@@ -27,7 +27,14 @@ The `BFS` package allows to search and download public data from the
 
 ⚠️⚠️⚠️⚠️⚠️⚠️
 
-Due to a bug in the last version of `tidyRSS`, be sure to use only `tidyRSS` version 2.0.4. If you use the last version of `tidyRSS`, you will see this message.
+Due to a bug in the last version of `tidyRSS`, you should install `BFS` only from GitHub.
+
+```{r eval=FALSE}
+# install from Github
+devtools::install_github("lgnbhl/BFS")
+```
+
+Until the bug is fixed, you should only use `tidyRSS` version 2.0.4. If you use the last version of `tidyRSS`, you will see this message.
 
 ```{r eval=FALSE}
 library(BFS)

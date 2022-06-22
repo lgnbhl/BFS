@@ -113,35 +113,40 @@ data from the <a href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue
 <em>Bundesamt für Statistik</em> in German) in a dynamic and
 reproducible way.</p>
 <p>⚠️⚠️⚠️⚠️⚠️⚠️</p>
-<p>Due to a bug in the last version of <code>tidyRSS</code>, be sure to
-use only <code>tidyRSS</code> version 2.0.4. If you use the last version
-of <code>tidyRSS</code>, you will see this message.</p>
+<p>Due to a bug in the last version of <code>tidyRSS</code>, you should
+install <code>BFS</code> only from GitHub.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install from Github</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"lgnbhl/BFS"</span><span class="op">)</span></code></pre></div>
+<p>Until the bug is fixed, you should only use <code>tidyRSS</code>
+version 2.0.4. If you use the last version of <code>tidyRSS</code>, you
+will see this message.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://felixluginbuhl.com/BFS/" class="external-link">BFS</a></span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="an">Error:</span><span class="co"> package or namespace load failed for ‘BFS’ in loadNamespace(j &lt;- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]):</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a> namespace ‘tidyRSS’ 2.0.5 is already loaded, but == 2.0.4 is required</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="an">Error:</span><span class="co"> package or namespace load failed for ‘BFS’ in loadNamespace(j &lt;- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]):</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a> namespace ‘tidyRSS’ 2.0.5 is already loaded, but == 2.0.4 is required</span></code></pre></div>
 <p>To fix this error message, uninstall <code>tidyRSS</code> and install
 the version 2.0.4.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/remove.packages.html" class="external-link">remove.packages</a></span><span class="op">(</span><span class="st">"tidyRSS"</span><span class="op">)</span>
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_version.html" class="external-link">install_version</a></span><span class="op">(</span><span class="st">"tidyRSS"</span>, version <span class="op">=</span> <span class="st">"2.0.4"</span><span class="op">)</span></code></pre></div>
 <p>⚠️⚠️⚠️⚠️⚠️⚠️</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Install the released version from CRAN</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BFS"</span><span class="op">)</span></code></pre></div>
 <p>To get a bug fix, or use a feature from the development version, you
 can install BFS from GitHub.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install from Github</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"lgnbhl/BFS"</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://felixluginbuhl.com/BFS/" class="external-link">BFS</a></span><span class="op">)</span></code></pre></div>
 <div class="section level3">
 <h3 id="get-the-data-catalog">Get the data catalog<a class="anchor" aria-label="anchor" href="#get-the-data-catalog"></a>
@@ -153,24 +158,24 @@ public datasets.</p>
 feed</a>. Unfortunately, it seems that not the all public datasets are
 in the RSS feed, but only the most recently udpated. Note also that
 Italian and English give access to less datasets.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">catalog_data_en</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_catalog_data.html">bfs_get_catalog_data</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
 
 <span class="va">catalog_data_en</span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 176 x 5</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    title                                       language published url_bfs url_px</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                       &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; </span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 New registrations of road vehicles by mont~ en       New regi~ https:~ https~</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Hotel sector: arrivals and overnight stays~ en       Hotel se~ https:~ https~</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Hotel sector: arrivals and overnight stays~ en       Hotel se~ https:~ https~</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Hotel sector: arrivals and overnight stays~ en       Hotel se~ https:~ https~</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Hotel sector: supply and demand of open es~ en       Hotel se~ https:~ https~</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Hotel sector: supply and demand of open es~ en       Hotel se~ https:~ https~</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Hotel sector: supply and demand of open es~ en       Hotel se~ https:~ https~</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Retail Trade Turnover Statistics - monthly~ en       Retail T~ https:~ https~</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Retail Trade Turnover Statistics - quarter~ en       Retail T~ https:~ https~</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Retail Trade Turnover Statistics - yearly ~ en       Retail T~ https:~ https~</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 166 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 176 x 5</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    title                                       language published url_bfs url_px</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                       &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; </span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 New registrations of road vehicles by mont~ en       New regi~ https:~ https~</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Hotel sector: arrivals and overnight stays~ en       Hotel se~ https:~ https~</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Hotel sector: arrivals and overnight stays~ en       Hotel se~ https:~ https~</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Hotel sector: arrivals and overnight stays~ en       Hotel se~ https:~ https~</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Hotel sector: supply and demand of open es~ en       Hotel se~ https:~ https~</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Hotel sector: supply and demand of open es~ en       Hotel se~ https:~ https~</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Hotel sector: supply and demand of open es~ en       Hotel se~ https:~ https~</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Retail Trade Turnover Statistics - monthly~ en       Retail T~ https:~ https~</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Retail Trade Turnover Statistics - quarter~ en       Retail T~ https:~ https~</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Retail Trade Turnover Statistics - yearly ~ en       Retail T~ https:~ https~</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 166 more rows</span></span></code></pre></div>
 <p>To find older datasets, you can use the search bar in the <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/daten.html" class="external-link">official
 BFS website</a>.</p>
 </div>
@@ -179,17 +184,17 @@ BFS website</a>.</p>
 </h3>
 <p>You could use for example <code>dplyr</code> to search for a given
 dataset.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
 
 <span class="va">catalog_data_uni</span> <span class="op">&lt;-</span> <span class="va">catalog_data_en</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">title</span> <span class="op">==</span> <span class="st">"University students by year, ISCED field, sex and level of study"</span><span class="op">)</span>
 
 <span class="va">catalog_data_uni</span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 x 5</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   title                                        language published url_bfs url_px</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;                                        &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; </span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 University students by year, ISCED field, s~ en       Universi~ https:~ https~</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 x 5</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   title                                        language published url_bfs url_px</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;                                        &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; </span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 University students by year, ISCED field, s~ en       Universi~ https:~ https~</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="download-a-dataset-in-any-language">Download a dataset in any language<a class="anchor" aria-label="anchor" href="#download-a-dataset-in-any-language"></a>
@@ -198,55 +203,55 @@ dataset.</p>
 official BFS URL webpage to the <code>url_bfs</code> argument to the
 <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code>. For example, you can use the URL of a given
 dataset you found using <code><a href="reference/bfs_get_catalog_data.html">bfs_get_catalog_data()</a></code>.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-datenbanken/daten.assetdetail.16324907.html</span>
 <span class="va">df_uni</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_data.html">bfs_get_data</a></span><span class="op">(</span>url_bfs <span class="op">=</span> <span class="va">catalog_data_uni</span><span class="op">$</span><span class="va">url_bfs</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">##   Downloading large query (in 4 batches):</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%</span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">##   Downloading large query (in 4 batches):</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_uni</span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 17,640 x 5</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    Year    `ISCED Field`     Sex    `Level of study`            `University st~`</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;   &lt;chr&gt;             &lt;chr&gt;  &lt;chr&gt;                                  &lt;dbl&gt;</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 1980/81 Education science Male   First university degree or~              545</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 1980/81 Education science Male   Bachelor                                   0</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 1980/81 Education science Male   Master                                     0</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 1980/81 Education science Male   Doctorate                                 93</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 1980/81 Education science Male   Further education, advance~               13</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 1980/81 Education science Female First university degree or~              946</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 1980/81 Education science Female Bachelor                                   0</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 1980/81 Education science Female Master                                     0</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 1980/81 Education science Female Doctorate                                 70</span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 1980/81 Education science Female Further education, advance~               52</span></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 17,630 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 17,640 x 5</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    Year    `ISCED Field`     Sex    `Level of study`            `University st~`</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;   &lt;chr&gt;             &lt;chr&gt;  &lt;chr&gt;                                  &lt;dbl&gt;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 1980/81 Education science Male   First university degree or~              545</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 1980/81 Education science Male   Bachelor                                   0</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 1980/81 Education science Male   Master                                     0</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 1980/81 Education science Male   Doctorate                                 93</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 1980/81 Education science Male   Further education, advance~               13</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 1980/81 Education science Female First university degree or~              946</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 1980/81 Education science Female Bachelor                                   0</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 1980/81 Education science Female Master                                     0</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 1980/81 Education science Female Doctorate                                 70</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 1980/81 Education science Female Further education, advance~               52</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 17,630 more rows</span></span></code></pre></div>
 <p>Note that some datasets are only accessible in German and French.</p>
 <p>In case the data is not accessible using
 <code><a href="reference/bfs_get_catalog_data.html">bfs_get_catalog_data()</a></code>, you can manually add the BFS number
 in the <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code> function using the
 <code>number_bfs</code> argument.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># open webpage</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/browseURL.html" class="external-link">browseURL</a></span><span class="op">(</span><span class="st">"https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-datenbanken/daten.assetdetail.16324907.html"</span><span class="op">)</span></code></pre></div>
 <p><img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/screenshot.png" align="center"></p>
 <p><br></p>
 <p>Use again <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code> but this time with the
 <code>number_bfs</code> argument.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/bfs_get_data.html">bfs_get_data</a></span><span class="op">(</span>number_bfs <span class="op">=</span> <span class="st">"px-x-1502040100_131"</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
 <p>Please privilege the <code>number_bfs</code> argument of the
 <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code> if you want more stable and reproducible
 code.</p>
 <p>You can access additional information about the dataset by running
 <code><a href="reference/bfs_get_data_comments.html">bfs_get_data_comments()</a></code>.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/bfs_get_data_comments.html">bfs_get_data_comments</a></span><span class="op">(</span>number_bfs <span class="op">=</span> <span class="st">"px-x-1502040100_131"</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="do">##   Downloading large query (in 4 batches):</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 x 4</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   row_no col_no comment_type   comment                                          </span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;int&gt;  &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;                                            </span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     NA      4 column_comment "To ensure that the presentations from cubes con~</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="do">##   Downloading large query (in 4 batches):</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 x 4</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   row_no col_no comment_type   comment                                          </span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;int&gt;  &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;                                            </span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     NA      4 column_comment "To ensure that the presentations from cubes con~</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="catalog-of-tables">Catalog of tables<a class="anchor" aria-label="anchor" href="#catalog-of-tables"></a>
@@ -257,25 +262,25 @@ feed tables catalog</a> using <code><a href="reference/bfs_get_catalog_tables.ht
 Most of these tables are Excel or CSV files. Note again that only a part
 of all the public tables accessible are in the RSS feed (the most
 recently updated datasets).</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">catalog_tables_en</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
 
 <span class="va">catalog_tables_en</span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 350 x 5</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    title                                    language published url_bfs url_table</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                    &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;    </span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Deaths per week by 5-year age group, se~ en       Deaths p~ https:~ https://~</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Deaths per week by 5-year age group, se~ en       Deaths p~ https:~ https://~</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Weekly number of deaths, 2010-2022       en       Weekly n~ https:~ https://~</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 1st certification rate at upper seconda~ en       1st cert~ https:~ https://~</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Corruption perceptions index - Switzerl~ en       Corrupti~ https:~ https://~</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Digital skills - Share of total populat~ en       Digital ~ https:~ https://~</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Direct investments in developing countr~ en       Direct i~ https:~ https://~</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Domestic violence - Number of victims o~ en       Domestic~ https:~ https://~</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Domestic violence by sex - Number of vi~ en       Domestic~ https:~ https://~</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Drinking water use - Consumption of hou~ en       Drinking~ https:~ https://~</span></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 340 more rows</span></span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 350 x 5</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    title                                    language published url_bfs url_table</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                    &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;    </span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Deaths per week by 5-year age group, se~ en       Deaths p~ https:~ https://~</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Deaths per week by 5-year age group, se~ en       Deaths p~ https:~ https://~</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Weekly number of deaths, 2010-2022       en       Weekly n~ https:~ https://~</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 1st certification rate at upper seconda~ en       1st cert~ https:~ https://~</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Corruption perceptions index - Switzerl~ en       Corrupti~ https:~ https://~</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Digital skills - Share of total populat~ en       Digital ~ https:~ https://~</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Direct investments in developing countr~ en       Direct i~ https:~ https://~</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Domestic violence - Number of victims o~ en       Domestic~ https:~ https://~</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Domestic violence by sex - Number of vi~ en       Domestic~ https:~ https://~</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Drinking water use - Consumption of hou~ en       Drinking~ https:~ https://~</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 340 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ycphs.github.io/openxlsx/index.html" class="external-link">openxlsx</a></span><span class="op">)</span>
 
@@ -288,23 +293,23 @@ recently updated datasets).</p>
     error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="st">"Failed reading table"</span><span class="op">)</span>
 
 <span class="va">df</span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="do">##                                              T.21.02.30.1605.01.01   X2</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 1                                     Corruption perceptions index &lt;NA&gt;</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  Switzerland’s ranking in the Global Corruption Perception Index &lt;NA&gt;</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 3                                                             &lt;NA&gt; Data</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 4                                                             2012    6</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 5                                                             2013    7</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 6                                                             2014    5</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 7                                                             2015    6</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 8                                                             2016    5</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 9                                                             2017    3</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 10                                                            2018    3</span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 11                                                            2019    4</span></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 12                                                            2020    3</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 13                                                            2021    7</span></span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 14                                        Last update:  24.02.2022 &lt;NA&gt;</span></span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 15                              Source: Transparency International &lt;NA&gt;</span></span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 16                                                      © FSO 2022 &lt;NA&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="do">##                                              T.21.02.30.1605.01.01   X2</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 1                                     Corruption perceptions index &lt;NA&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  Switzerland’s ranking in the Global Corruption Perception Index &lt;NA&gt;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 3                                                             &lt;NA&gt; Data</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 4                                                             2012    6</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 5                                                             2013    7</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 6                                                             2014    5</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 7                                                             2015    6</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 8                                                             2016    5</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 9                                                             2017    3</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 10                                                            2018    3</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 11                                                            2019    4</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 12                                                            2020    3</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 13                                                            2021    7</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 14                                        Last update:  24.02.2022 &lt;NA&gt;</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 15                              Source: Transparency International &lt;NA&gt;</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 16                                                      © FSO 2022 &lt;NA&gt;</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
