@@ -32,6 +32,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -44,7 +46,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">BFS</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.2</span>
       </span>
     </div>
 
@@ -62,25 +64,25 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://www.linkedin.com/in/felixluginbuhl">
+  <a href="https://www.linkedin.com/in/felixluginbuhl" class="external-link">
     <span class="fa fa-linkedin"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://twitter.com/FelixLuginbuhl">
+  <a href="https://twitter.com/FelixLuginbuhl" class="external-link">
     <span class="fa fa-twitter"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/lgnbhl/BFS">
+  <a href="https://github.com/lgnbhl/BFS" class="external-link">
     <span class="fa fa-github"></span>
      
   </a>
 </li>
 <li>
-  <a href="http://felixluginbuhl.com">
+  <a href="http://felixluginbuhl.com" class="external-link">
     <span class="fa fa-home"></span>
      
   </a>
@@ -99,75 +101,89 @@
   <div class="contents col-md-9">
 
 
-<div id="bfs-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#bfs-" class="anchor"></a>BFS <img src="reference/figures/logo.png" align="right">
+<div class="section level1">
+<div class="page-header"><h1 id="bfs-">BFS <img src="reference/figures/logo.png" align="right"><a class="anchor" aria-label="anchor" href="#bfs-"></a>
 </h1></div>
 <blockquote>
-<p>Search and download data from the Swiss Federal Statistical Office</p>
+<p>Search and download data from the Swiss Federal Statistical
+Office</p>
 </blockquote>
-<p>The <code>BFS</code> package allows to search and download public data from the <a href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html" target="_blank">Swiss Federal Statistical Office</a> (BFS stands for <em>Bundesamt für Statistik</em> in German) in a dynamic and reproducible way.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<p>The <code>BFS</code> package allows to search and download public
+data from the <a href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html" target="_blank" class="external-link">Swiss Federal Statistical Office</a> (BFS stands for
+<em>Bundesamt für Statistik</em> in German) in a dynamic and
+reproducible way.</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Install the released version from CRAN</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BFS"</span><span class="op">)</span></code></pre></div>
-<p>To get a bug fix, or use a feature from the development version, you can install BFS from GitHub.</p>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BFS"</span><span class="op">)</span></code></pre></div>
+<p>To get a bug fix, or use a feature from the development version, you
+can install BFS from GitHub.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install from Github</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"lgnbhl/BFS"</span><span class="op">)</span></code></pre></div>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"lgnbhl/BFS"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://felixluginbuhl.com/BFS/">BFS</a></span><span class="op">)</span></code></pre></div>
-<div id="get-the-data-catalog" class="section level3">
-<h3 class="hasAnchor">
-<a href="#get-the-data-catalog" class="anchor"></a>Get the data catalog</h3>
-<p>To search and download data from the Swiss Federal Statistical Office, you first need to retrieve information about the available public datasets.</p>
-<p>You can get the data catalog by language based on their official <a href="https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true">RSS feed</a>. Unfortunately, it seems that not the all public datasets are in the RSS feed. Note also that Italian and English give access to less datasets.</p>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://felixluginbuhl.com/BFS/" class="external-link">BFS</a></span><span class="op">)</span></code></pre></div>
+<div class="section level3">
+<h3 id="get-the-data-catalog">Get the data catalog<a class="anchor" aria-label="anchor" href="#get-the-data-catalog"></a>
+</h3>
+<p>To search and download data from the Swiss Federal Statistical
+Office, you first need to retrieve information about the available
+public datasets.</p>
+<p>You can get the data catalog by language based on the official <a href="https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true" class="external-link">RSS
+feed</a>. Unfortunately, it seems that not the all public datasets are
+in the RSS feed, but only the most recently udpated. Note also that
+Italian and English give access to less datasets.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">catalog_data_en</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_catalog_data.html">bfs_get_catalog_data</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
 
 <span class="va">catalog_data_en</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 177 x 5</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    title            language published           url_bfs           url_px       </span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;            &lt;chr&gt;    &lt;chr&gt;               &lt;chr&gt;             &lt;chr&gt;        </span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Hotel accommoda~ en       Hotel accommodatio~ https://www.bfs.~ https://www.~</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Hotel accommoda~ en       Hotel accommodatio~ https://www.bfs.~ https://www.~</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 167 more rows</span></span></code></pre></div>
-<p>To find older datasets, you can use the search bar in the <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/daten.html">official BFS website</a>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 176 x 5</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    title                                       language published url_bfs url_px</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                       &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; </span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 New registrations of road vehicles by mont~ en       New regi~ https:~ https~</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Hotel sector: arrivals and overnight stays~ en       Hotel se~ https:~ https~</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Hotel sector: arrivals and overnight stays~ en       Hotel se~ https:~ https~</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Hotel sector: arrivals and overnight stays~ en       Hotel se~ https:~ https~</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Hotel sector: supply and demand of open es~ en       Hotel se~ https:~ https~</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Hotel sector: supply and demand of open es~ en       Hotel se~ https:~ https~</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Hotel sector: supply and demand of open es~ en       Hotel se~ https:~ https~</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Retail Trade Turnover Statistics - monthly~ en       Retail T~ https:~ https~</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Retail Trade Turnover Statistics - quarter~ en       Retail T~ https:~ https~</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Retail Trade Turnover Statistics - yearly ~ en       Retail T~ https:~ https~</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 166 more rows</span></span></code></pre></div>
+<p>To find older datasets, you can use the search bar in the <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/daten.html" class="external-link">official
+BFS website</a>.</p>
 </div>
-<div id="search-for-a-specific-dataset" class="section level3">
-<h3 class="hasAnchor">
-<a href="#search-for-a-specific-dataset" class="anchor"></a>Search for a specific dataset</h3>
-<p>You could use for example <code>dplyr</code> to search for a given dataset.</p>
+<div class="section level3">
+<h3 id="search-for-a-specific-dataset">Search for a specific dataset<a class="anchor" aria-label="anchor" href="#search-for-a-specific-dataset"></a>
+</h3>
+<p>You could use for example <code>dplyr</code> to search for a given
+dataset.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
 
-<span class="va">catalog_data_uni</span> <span class="op">&lt;-</span> <span class="va">catalog_data_en</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">title</span> <span class="op">==</span> <span class="st">"University students by year, ISCED field, sex and level of study"</span><span class="op">)</span>
+<span class="va">catalog_data_uni</span> <span class="op">&lt;-</span> <span class="va">catalog_data_en</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">title</span> <span class="op">==</span> <span class="st">"University students by year, ISCED field, sex and level of study"</span><span class="op">)</span>
 
 <span class="va">catalog_data_uni</span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 x 5</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   title           language published          url_bfs             url_px        </span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;              &lt;chr&gt;               &lt;chr&gt;         </span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 University stu~ en       University studen~ https://www.bfs.ad~ https://www.b~</span></span></code></pre></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   title                                        language published url_bfs url_px</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;                                        &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; </span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 University students by year, ISCED field, s~ en       Universi~ https:~ https~</span></span></code></pre></div>
 </div>
-<div id="download-a-dataset-in-any-language" class="section level3">
-<h3 class="hasAnchor">
-<a href="#download-a-dataset-in-any-language" class="anchor"></a>Download a dataset in any language</h3>
-<p>To download a BFS dataset, you have two options. You can add the official BFS URL webpage to the <code>url_bfs</code> argument to the <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code>. For example, you can use the URL of a given dataset you found using <code><a href="reference/bfs_get_catalog_data.html">bfs_get_catalog_data()</a></code>.</p>
+<div class="section level3">
+<h3 id="download-a-dataset-in-any-language">Download a dataset in any language<a class="anchor" aria-label="anchor" href="#download-a-dataset-in-any-language"></a>
+</h3>
+<p>To download a BFS dataset, you have two options. You can add the
+official BFS URL webpage to the <code>url_bfs</code> argument to the
+<code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code>. For example, you can use the URL of a given
+dataset you found using <code><a href="reference/bfs_get_catalog_data.html">bfs_get_catalog_data()</a></code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-datenbanken/daten.assetdetail.16324907.html</span>
 <span class="va">df_uni</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_data.html">bfs_get_data</a></span><span class="op">(</span>url_bfs <span class="op">=</span> <span class="va">catalog_data_uni</span><span class="op">$</span><span class="va">url_bfs</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
@@ -175,32 +191,39 @@
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_uni</span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 17,220 x 5</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    Year    `ISCED Field`     Sex   `Level of study`            `University stud~</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;   &lt;chr&gt;             &lt;chr&gt; &lt;chr&gt;                                   &lt;dbl&gt;</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 1980/81 Education science Man   First university degree or~               545</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 1980/81 Education science Man   Bachelor                                    0</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 1980/81 Education science Man   Master                                      0</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 1980/81 Education science Man   Doctorate                                  93</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 1980/81 Education science Man   Further education, advance~                13</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 1980/81 Education science Woman First university degree or~               946</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 1980/81 Education science Woman Bachelor                                    0</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 1980/81 Education science Woman Master                                      0</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 1980/81 Education science Woman Doctorate                                  70</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 1980/81 Education science Woman Further education, advance~                52</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 17,210 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 17,640 x 5</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    Year    `ISCED Field`     Sex    `Level of study`            `University st~`</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;   &lt;chr&gt;             &lt;chr&gt;  &lt;chr&gt;                                  &lt;dbl&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 1980/81 Education science Male   First university degree or~              545</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 1980/81 Education science Male   Bachelor                                   0</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 1980/81 Education science Male   Master                                     0</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 1980/81 Education science Male   Doctorate                                 93</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 1980/81 Education science Male   Further education, advance~               13</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 1980/81 Education science Female First university degree or~              946</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 1980/81 Education science Female Bachelor                                   0</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 1980/81 Education science Female Master                                     0</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 1980/81 Education science Female Doctorate                                 70</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 1980/81 Education science Female Further education, advance~               52</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 17,630 more rows</span></span></code></pre></div>
 <p>Note that some datasets are only accessible in German and French.</p>
-<p>In case the data is not accessible using <code><a href="reference/bfs_get_catalog_data.html">bfs_get_catalog_data()</a></code>, you can manually add the BFS number in the <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code> function using the <code>number_bfs</code> argument.</p>
+<p>In case the data is not accessible using
+<code><a href="reference/bfs_get_catalog_data.html">bfs_get_catalog_data()</a></code>, you can manually add the BFS number
+in the <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code> function using the
+<code>number_bfs</code> argument.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># open webpage</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/browseURL.html">browseURL</a></span><span class="op">(</span><span class="st">"https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-datenbanken/daten.assetdetail.16324907.html"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/browseURL.html" class="external-link">browseURL</a></span><span class="op">(</span><span class="st">"https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-datenbanken/daten.assetdetail.16324907.html"</span><span class="op">)</span></code></pre></div>
 <p><img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/screenshot.png" align="center"></p>
 <p><br></p>
-<p>Use again <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code> but this time with the <code>number_bfs</code> argument.</p>
+<p>Use again <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code> but this time with the
+<code>number_bfs</code> argument.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/bfs_get_data.html">bfs_get_data</a></span><span class="op">(</span>number_bfs <span class="op">=</span> <span class="st">"px-x-1502040100_131"</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
-<p>Please privilege the <code>number_bfs</code> argument of the <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code> if you want more stable and reproducible code.</p>
-<p>You can access additional information about the dataset by running <code><a href="reference/bfs_get_data_comments.html">bfs_get_data_comments()</a></code>.</p>
+<p>Please privilege the <code>number_bfs</code> argument of the
+<code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code> if you want more stable and reproducible
+code.</p>
+<p>You can access additional information about the dataset by running
+<code><a href="reference/bfs_get_data_comments.html">bfs_get_data_comments()</a></code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/bfs_get_data_comments.html">bfs_get_data_comments</a></span><span class="op">(</span>number_bfs <span class="op">=</span> <span class="st">"px-x-1502040100_131"</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">##   Downloading large query (in 4 batches):</span></span>
@@ -211,80 +234,83 @@
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;int&gt;  &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;                                            </span></span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     NA      4 column_comment "To ensure that the presentations from cubes con~</span></span></code></pre></div>
 </div>
-<div id="catalog-of-tables" class="section level3">
-<h3 class="hasAnchor">
-<a href="#catalog-of-tables" class="anchor"></a>Catalog of tables</h3>
-<p>A lot of tables are not accessible through the official API, but they are still present in the official BFS website. You can access the <a href="https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/tabellen/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true">RSS feed tables catalog</a> using <code><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables()</a></code>. Most of these tables are Excel files. Note again that only a part of all the public tables accessible are in the RSS feed.</p>
+<div class="section level3">
+<h3 id="catalog-of-tables">Catalog of tables<a class="anchor" aria-label="anchor" href="#catalog-of-tables"></a>
+</h3>
+<p>A lot of tables are not accessible through the official API, but they
+are still present in the official BFS website. You can access the <a href="https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/tabellen/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true" class="external-link">RSS
+feed tables catalog</a> using <code><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables()</a></code>.
+Most of these tables are Excel or CSV files. Note again that only a part
+of all the public tables accessible are in the RSS feed (the most
+recently updated datasets).</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">catalog_tables_en</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
 
 <span class="va">catalog_tables_en</span></code></pre></div>
 <div class="sourceCode" id="cb17"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 350 x 5</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    title           language published           url_bfs          url_table      </span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;               &lt;chr&gt;            &lt;chr&gt;          </span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Cantonal gross~ en       Cantonal gross dom~ https://www.bfs~ https://www.bf~</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Decomposition ~ en       Decomposition of t~ https://www.bfs~ https://www.bf~</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Decomposition ~ en       Decomposition of t~ https://www.bfs~ https://www.bf~</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Gross domestic~ en       Gross domestic pro~ https://www.bfs~ https://www.bf~</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Gross value ad~ en       Gross value added ~ https://www.bfs~ https://www.bf~</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Labor producti~ en       Labor productivity~ https://www.bfs~ https://www.bf~</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Labour product~ en       Labour productivit~ https://www.bfs~ https://www.bf~</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Labour product~ en       Labour productivit~ https://www.bfs~ https://www.bf~</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Labour product~ en       Labour productivit~ https://www.bfs~ https://www.bf~</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Labour product~ en       Labour productivit~ https://www.bfs~ https://www.bf~</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    title                                    language published url_bfs url_table</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                    &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;    </span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Deaths per week by 5-year age group, se~ en       Deaths p~ https:~ https://~</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Deaths per week by 5-year age group, se~ en       Deaths p~ https:~ https://~</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Weekly number of deaths, 2010-2022       en       Weekly n~ https:~ https://~</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 1st certification rate at upper seconda~ en       1st cert~ https:~ https://~</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Corruption perceptions index - Switzerl~ en       Corrupti~ https:~ https://~</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Digital skills - Share of total populat~ en       Digital ~ https:~ https://~</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Direct investments in developing countr~ en       Direct i~ https:~ https://~</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Domestic violence - Number of victims o~ en       Domestic~ https:~ https://~</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Domestic violence by sex - Number of vi~ en       Domestic~ https:~ https://~</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Drinking water use - Consumption of hou~ en       Drinking~ https:~ https://~</span></span>
 <span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 340 more rows</span></span></code></pre></div>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ycphs.github.io/openxlsx/index.html">openxlsx</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ycphs.github.io/openxlsx/index.html" class="external-link">openxlsx</a></span><span class="op">)</span>
 
-<span class="va">catalog_tables_en</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">title</span> <span class="op">==</span> <span class="st">"Admissions to universities of applied sciences at diploma and bachelor level by fields of specialisation"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">url_table</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">openxlsx</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html">read.xlsx</a></span><span class="op">(</span>startRow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 20 x 73</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    X1      `1997` X3    X4    `1998` X6    X7    `1999` X9    X10   `2000` X12  </span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Field ~ Women  Men   "Pro~ Women  Men   "Pro~ Women  Men   "Pro~ Women  Men  </span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Total   866    4010  "17.~ 1635   4857  "25.~ 1927   5267  "26.~ 2707   5772 </span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Archit~ 99     606   "14.~ 90     590   "13.~ 91     532   "14.~ 112    578  </span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Engine~ 45     1969  "2.2~ 64     2095  "2.9~ 90     2188  "3.9~ 86     2351 </span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Chemis~ 43     184   "18.~ 71     248   "22.~ 67     193   "25.~ 68     172  </span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Agricu~ 19     72    "20.~ 19     66    "22.~ 27     76    "26.~ 21     88   </span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Econom~ 451    1046  "30.~ 544    1350  "28.~ 710    1566  "31.~ 838    1506 </span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Design  148    101   "59.~ 221    137   "61.~ 226    189   "54.~ 277    196  </span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Sports  0      0     "*"   0      0     "*"   7      28    "20"  0      0    </span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Music,~ 0      0     "*"   276    178   "60.~ 269    298   "47.~ 804    675  </span></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 11 Applie~ 0      0     "*"   0      0     "*"   58     X     "X"   69     12   </span></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 12 Social~ 61     32    "65.~ 285    171   "62.~ 313    168   "65.~ 390    185  </span></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 13 Applie~ 0      0     "*"   39     21    "65"  39     16    "70.~ 42     9    </span></span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 14 Health  0      0     "*"   26     X     "X"   30     9     "76.~ 0      0    </span></span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 15 Teache~ 0      0     "*"   0      0     "*"   0      0     "*"   0      0    </span></span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 16 * Not ~ &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt; &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt; &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt; &lt;NA&gt;   &lt;NA&gt; </span></span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 17 X Not ~ &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt; &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt; &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt; &lt;NA&gt;   &lt;NA&gt; </span></span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 18 Source~ &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt; &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt; &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt; &lt;NA&gt;   &lt;NA&gt; </span></span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 19 © FSO  &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt; &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt; &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt; &lt;NA&gt;   &lt;NA&gt; </span></span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 20 Inform~ &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt; &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt; &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt; &lt;NA&gt;   &lt;NA&gt; </span></span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 61 more variables: X13 &lt;chr&gt;, 2001 &lt;chr&gt;, X15 &lt;chr&gt;, X16 &lt;chr&gt;,</span></span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="do">## #   2002 &lt;chr&gt;, X18 &lt;chr&gt;, X19 &lt;chr&gt;, 2003 &lt;chr&gt;, X21 &lt;chr&gt;, X22 &lt;chr&gt;,</span></span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a><span class="do">## #   2004 &lt;chr&gt;, X24 &lt;chr&gt;, X25 &lt;chr&gt;, 2005 &lt;chr&gt;, X27 &lt;chr&gt;, X28 &lt;chr&gt;,</span></span>
-<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a><span class="do">## #   2006 &lt;chr&gt;, X30 &lt;chr&gt;, X31 &lt;chr&gt;, 2007 &lt;chr&gt;, X33 &lt;chr&gt;, X34 &lt;chr&gt;,</span></span>
-<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a><span class="do">## #   2008 &lt;chr&gt;, X36 &lt;chr&gt;, X37 &lt;chr&gt;, 2009 &lt;chr&gt;, X39 &lt;chr&gt;, X40 &lt;chr&gt;,</span></span>
-<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a><span class="do">## #   2010 &lt;chr&gt;, X42 &lt;chr&gt;, X43 &lt;chr&gt;, 2011 &lt;chr&gt;, X45 &lt;chr&gt;, X46 &lt;chr&gt;,</span></span>
-<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a><span class="do">## #   2012 &lt;chr&gt;, X48 &lt;chr&gt;, X49 &lt;chr&gt;, 2013 &lt;chr&gt;, X51 &lt;chr&gt;, X52 &lt;chr&gt;, ...</span></span></code></pre></div>
+<span class="va">index_table_url</span> <span class="op">&lt;-</span> <span class="va">catalog_tables_en</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"index"</span>, <span class="va">title</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="co"># search table</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">url_table</span><span class="op">)</span>
+
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span>expr <span class="op">=</span> <span class="fu">openxlsx</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html" class="external-link">read.xlsx</a></span><span class="op">(</span><span class="va">index_table_url</span>, startRow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
+    error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="st">"Failed reading table"</span><span class="op">)</span>
+
+<span class="va">df</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="do">##                                              T.21.02.30.1605.01.01   X2</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 1                                     Corruption perceptions index &lt;NA&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  Switzerland’s ranking in the Global Corruption Perception Index &lt;NA&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 3                                                             &lt;NA&gt; Data</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 4                                                             2012    6</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 5                                                             2013    7</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 6                                                             2014    5</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 7                                                             2015    6</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 8                                                             2016    5</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 9                                                             2017    3</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 10                                                            2018    3</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 11                                                            2019    4</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 12                                                            2020    3</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 13                                                            2021    7</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 14                                        Last update:  24.02.2022 &lt;NA&gt;</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 15                              Source: Transparency International &lt;NA&gt;</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 16                                                      © FSO 2022 &lt;NA&gt;</span></span></code></pre></div>
 </div>
 </div>
-<div id="other-information" class="section level2">
-<h2 class="hasAnchor">
-<a href="#other-information" class="anchor"></a>Other information</h2>
-<p>A <a href="https://felixluginbuhl.com/blog/posts/2019-11-07-swiss-data/">blog article</a> showing a concrete example about how to use the BFS package and to visualize the data in a Swiss map.</p>
-<p>The BFS package is using the <a href="https://github.com/rOpenGov/pxweb" target="_blank">pxweb</a> R package under the hood to access the Swiss Federal Statistical Office pxweb API.</p>
-<p>This package is in no way officially related to or endorsed by the Swiss Federal Statistical Office (BFS).</p>
+<div class="section level2">
+<h2 id="other-information">Other information<a class="anchor" aria-label="anchor" href="#other-information"></a>
+</h2>
+<p>A <a href="https://felixluginbuhl.com/blog/posts/2019-11-07-swiss-data/" class="external-link">blog
+article</a> showing a concrete example about how to use the BFS package
+and to visualize the data in a Swiss map.</p>
+<p>The BFS package is using the
+<a href="https://github.com/rOpenGov/pxweb" target="_blank" class="external-link">pxweb</a> R
+package under the hood to access the Swiss Federal Statistical Office
+pxweb API and <a href="https://github.com/RobertMyles/tidyRSS" target="_blank" class="external-link">tidyRSS</a> to scrap the official BFS RSS feeds.</p>
+<p>This package is in no way officially related to or endorsed by the
+Swiss Federal Statistical Office (BFS).</p>
 </div>
-<div id="contribute" class="section level2">
-<h2 class="hasAnchor">
-<a href="#contribute" class="anchor"></a>Contribute</h2>
-<p>Any contribution is strongly appreciated. Feel free to report a bug, ask any question or make a pull request for any remaining <a href="https://github.com/lgnbhl/BFS/issues">issue</a>.</p>
+<div class="section level2">
+<h2 id="contribute">Contribute<a class="anchor" aria-label="anchor" href="#contribute"></a>
+</h2>
+<p>Any contribution is strongly appreciated. Feel free to report a bug,
+ask any question or make a pull request for any remaining <a href="https://github.com/lgnbhl/BFS/issues" class="external-link">issue</a>.</p>
 </div>
 </div>
 
@@ -292,54 +318,65 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=BFS">https://​cloud.r-project.org/​package=BFS</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/lgnbhl/BFS/">https://​github.com/​lgnbhl/​BFS/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/lgnbhl/BFS/issues">https://​github.com/​lgnbhl/​BFS/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=BFS" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/lgnbhl/BFS/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/lgnbhl/BFS/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing BFS</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Felix Luginbuhl <br><small class="roles"> Author, maintainer </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://CRAN.R-project.org/package=BFS"><img src="https://www.r-pkg.org/badges/version/BFS" alt="CRAN status"></a></li>
-<li><a href="https://cran.r-project.org/package=BFS"><img src="https://cranlogs.r-pkg.org/badges/grand-total/BFS" alt="Grand total"></a></li>
-<li><a href="https://github.com/lgnbhl/BFS/actions"><img src="https://github.com/lgnbhl/BFS/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://CRAN.R-project.org/package=BFS" class="external-link"><img src="https://www.r-pkg.org/badges/version/BFS" alt="CRAN status"></a></li>
+<li><a href="https://cran.r-project.org/package=BFS" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/BFS" alt="Grand total"></a></li>
+<li><a href="https://github.com/lgnbhl/BFS/actions" class="external-link"><img src="https://github.com/lgnbhl/BFS/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Felix Luginbuhl.</p>
+  <p></p>
+<p>Developed by Felix Luginbuhl.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer>
@@ -347,6 +384,8 @@
 
   
 
+
+  
 
   </body>
 </html>

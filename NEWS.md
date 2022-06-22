@@ -1,4 +1,7 @@
-# BFS (development version)
+# BFS 0.4.2
+* Fixed `bfs_get_catalog_data()` and `bfs_get_catalog_tables()` bug #6.
+* tidyRSS dependency version is 2.0.4.
+* Improved README.
 
 # BFS 0.4.1
 

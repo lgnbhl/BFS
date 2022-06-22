@@ -49,7 +49,7 @@ library(BFS)
 
 To search and download data from the Swiss Federal Statistical Office, you first need to retrieve information about the available public datasets.
 
-You can get the data catalog by language based on their official [RSS feed](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true). Unfortunately, it seems that not the all public datasets are in the RSS feed. Note also that Italian and English give access to less datasets.
+You can get the data catalog by language based on the official [RSS feed](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true). Unfortunately, it seems that not the all public datasets are in the RSS feed, but only the most recently udpated. Note also that Italian and English give access to less datasets.
 
 ```{r}
 catalog_data_en <- bfs_get_catalog_data(language = "en")
@@ -111,7 +111,7 @@ bfs_get_data_comments(number_bfs = "px-x-1502040100_131", language = "en")
 
 ### Catalog of tables
 
-A lot of tables are not accessible through the official API, but they are still present in the official BFS website. You can access the [RSS feed tables catalog](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/tabellen/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true) using `bfs_get_catalog_tables()`. Most of these tables are Excel files. Note again that only a part of all the public tables accessible are in the RSS feed.
+A lot of tables are not accessible through the official API, but they are still present in the official BFS website. You can access the [RSS feed tables catalog](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/tabellen/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true) using `bfs_get_catalog_tables()`. Most of these tables are Excel or CSV files. Note again that only a part of all the public tables accessible are in the RSS feed (the most recently updated datasets).
 
 ```{r}
 catalog_tables_en <- bfs_get_catalog_tables(language = "en")
@@ -123,18 +123,22 @@ catalog_tables_en
 library(dplyr)
 library(openxlsx)
 
-catalog_tables_en %>%
-  filter(title == "Admissions to universities of applied sciences at diploma and bachelor level by fields of specialisation") %>%
-  pull(url_table) %>%
-  openxlsx::read.xlsx(startRow = 2) %>%
-  as_tibble()
+index_table_url <- catalog_tables_en %>%
+  filter(grepl("index", title)) %>% # search table
+  slice(1) %>%
+  pull(url_table)
+
+df <- tryCatch(expr = openxlsx::read.xlsx(index_table_url, startRow = 1),
+	error = function(e) "Failed reading table")
+
+df
 ```
 
 ## Other information
 
 A [blog article](https://felixluginbuhl.com/blog/posts/2019-11-07-swiss-data/) showing a concrete example about how to use the BFS package and to visualize the data in a Swiss map.
 
-The BFS package is using the [pxweb](https://github.com/rOpenGov/pxweb){target="_blank"} R package under the hood to access the Swiss Federal Statistical Office pxweb API.
+The BFS package is using the [pxweb](https://github.com/rOpenGov/pxweb){target="_blank"} R package under the hood to access the Swiss Federal Statistical Office pxweb API and [tidyRSS](https://github.com/RobertMyles/tidyRSS){target="_blank"} to scrap the official BFS RSS feeds.
 
 This package is in no way officially related to or endorsed by the Swiss Federal Statistical Office (BFS).
 

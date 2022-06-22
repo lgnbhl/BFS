@@ -14,10 +14,10 @@ status](https://github.com/lgnbhl/BFS/workflows/R-CMD-check/badge.svg)](https://
 
 > Search and download data from the Swiss Federal Statistical Office
 
-The `BFS` package allows to search and download public data from the
-<a href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html" target="_blank">Swiss Federal Statistical Office</a>
-(BFS stands for *Bundesamt für Statistik* in German) in a dynamic and
-reproducible way.
+The `BFS` package allows to search and download public data from the <a
+href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html"
+target="_blank">Swiss Federal Statistical Office</a> (BFS stands for
+*Bundesamt für Statistik* in German) in a dynamic and reproducible way.
 
 ## Installation
 
@@ -46,10 +46,11 @@ To search and download data from the Swiss Federal Statistical Office,
 you first need to retrieve information about the available public
 datasets.
 
-You can get the data catalog by language based on their official [RSS
+You can get the data catalog by language based on the official [RSS
 feed](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true).
 Unfortunately, it seems that not the all public datasets are in the RSS
-feed. Note also that Italian and English give access to less datasets.
+feed, but only the most recently udpated. Note also that Italian and
+English give access to less datasets.
 
 ``` r
 catalog_data_en <- bfs_get_catalog_data(language = "en")
@@ -57,20 +58,20 @@ catalog_data_en <- bfs_get_catalog_data(language = "en")
 catalog_data_en
 ```
 
-    ## # A tibble: 177 x 5
-    ##    title            language published           url_bfs           url_px       
-    ##    <chr>            <chr>    <chr>               <chr>             <chr>        
-    ##  1 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~
-    ##  2 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~
-    ##  3 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~
-    ##  4 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~
-    ##  5 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~
-    ##  6 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~
-    ##  7 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~
-    ##  8 Foreign cross-b~ en       Foreign cross-bord~ https://www.bfs.~ https://www.~
-    ##  9 Hotel accommoda~ en       Hotel accommodatio~ https://www.bfs.~ https://www.~
-    ## 10 Hotel accommoda~ en       Hotel accommodatio~ https://www.bfs.~ https://www.~
-    ## # ... with 167 more rows
+    ## # A tibble: 176 x 5
+    ##    title                                       language published url_bfs url_px
+    ##    <chr>                                       <chr>    <chr>     <chr>   <chr> 
+    ##  1 New registrations of road vehicles by mont~ en       New regi~ https:~ https~
+    ##  2 Hotel sector: arrivals and overnight stays~ en       Hotel se~ https:~ https~
+    ##  3 Hotel sector: arrivals and overnight stays~ en       Hotel se~ https:~ https~
+    ##  4 Hotel sector: arrivals and overnight stays~ en       Hotel se~ https:~ https~
+    ##  5 Hotel sector: supply and demand of open es~ en       Hotel se~ https:~ https~
+    ##  6 Hotel sector: supply and demand of open es~ en       Hotel se~ https:~ https~
+    ##  7 Hotel sector: supply and demand of open es~ en       Hotel se~ https:~ https~
+    ##  8 Retail Trade Turnover Statistics - monthly~ en       Retail T~ https:~ https~
+    ##  9 Retail Trade Turnover Statistics - quarter~ en       Retail T~ https:~ https~
+    ## 10 Retail Trade Turnover Statistics - yearly ~ en       Retail T~ https:~ https~
+    ## # ... with 166 more rows
 
 To find older datasets, you can use the search bar in the [official BFS
 website](https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/daten.html).
@@ -89,9 +90,9 @@ catalog_data_uni
 ```
 
     ## # A tibble: 1 x 5
-    ##   title           language published          url_bfs             url_px        
-    ##   <chr>           <chr>    <chr>              <chr>               <chr>         
-    ## 1 University stu~ en       University studen~ https://www.bfs.ad~ https://www.b~
+    ##   title                                        language published url_bfs url_px
+    ##   <chr>                                        <chr>    <chr>     <chr>   <chr> 
+    ## 1 University students by year, ISCED field, s~ en       Universi~ https:~ https~
 
 ### Download a dataset in any language
 
@@ -112,20 +113,20 @@ df_uni <- bfs_get_data(url_bfs = catalog_data_uni$url_bfs, language = "en")
 df_uni
 ```
 
-    ## # A tibble: 17,220 x 5
-    ##    Year    `ISCED Field`     Sex   `Level of study`            `University stud~
-    ##    <chr>   <chr>             <chr> <chr>                                   <dbl>
-    ##  1 1980/81 Education science Man   First university degree or~               545
-    ##  2 1980/81 Education science Man   Bachelor                                    0
-    ##  3 1980/81 Education science Man   Master                                      0
-    ##  4 1980/81 Education science Man   Doctorate                                  93
-    ##  5 1980/81 Education science Man   Further education, advance~                13
-    ##  6 1980/81 Education science Woman First university degree or~               946
-    ##  7 1980/81 Education science Woman Bachelor                                    0
-    ##  8 1980/81 Education science Woman Master                                      0
-    ##  9 1980/81 Education science Woman Doctorate                                  70
-    ## 10 1980/81 Education science Woman Further education, advance~                52
-    ## # ... with 17,210 more rows
+    ## # A tibble: 17,640 x 5
+    ##    Year    `ISCED Field`     Sex    `Level of study`            `University st~`
+    ##    <chr>   <chr>             <chr>  <chr>                                  <dbl>
+    ##  1 1980/81 Education science Male   First university degree or~              545
+    ##  2 1980/81 Education science Male   Bachelor                                   0
+    ##  3 1980/81 Education science Male   Master                                     0
+    ##  4 1980/81 Education science Male   Doctorate                                 93
+    ##  5 1980/81 Education science Male   Further education, advance~               13
+    ##  6 1980/81 Education science Female First university degree or~              946
+    ##  7 1980/81 Education science Female Bachelor                                   0
+    ##  8 1980/81 Education science Female Master                                     0
+    ##  9 1980/81 Education science Female Doctorate                                 70
+    ## 10 1980/81 Education science Female Further education, advance~               52
+    ## # ... with 17,630 more rows
 
 Note that some datasets are only accessible in German and French.
 
@@ -172,9 +173,9 @@ A lot of tables are not accessible through the official API, but they
 are still present in the official BFS website. You can access the [RSS
 feed tables
 catalog](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/tabellen/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true)
-using `bfs_get_catalog_tables()`. Most of these tables are Excel files.
-Note again that only a part of all the public tables accessible are in
-the RSS feed.
+using `bfs_get_catalog_tables()`. Most of these tables are Excel or CSV
+files. Note again that only a part of all the public tables accessible
+are in the RSS feed (the most recently updated datasets).
 
 ``` r
 catalog_tables_en <- bfs_get_catalog_tables(language = "en")
@@ -183,61 +184,52 @@ catalog_tables_en
 ```
 
     ## # A tibble: 350 x 5
-    ##    title           language published           url_bfs          url_table      
-    ##    <chr>           <chr>    <chr>               <chr>            <chr>          
-    ##  1 Cantonal gross~ en       Cantonal gross dom~ https://www.bfs~ https://www.bf~
-    ##  2 Decomposition ~ en       Decomposition of t~ https://www.bfs~ https://www.bf~
-    ##  3 Decomposition ~ en       Decomposition of t~ https://www.bfs~ https://www.bf~
-    ##  4 Gross domestic~ en       Gross domestic pro~ https://www.bfs~ https://www.bf~
-    ##  5 Gross value ad~ en       Gross value added ~ https://www.bfs~ https://www.bf~
-    ##  6 Labor producti~ en       Labor productivity~ https://www.bfs~ https://www.bf~
-    ##  7 Labour product~ en       Labour productivit~ https://www.bfs~ https://www.bf~
-    ##  8 Labour product~ en       Labour productivit~ https://www.bfs~ https://www.bf~
-    ##  9 Labour product~ en       Labour productivit~ https://www.bfs~ https://www.bf~
-    ## 10 Labour product~ en       Labour productivit~ https://www.bfs~ https://www.bf~
+    ##    title                                    language published url_bfs url_table
+    ##    <chr>                                    <chr>    <chr>     <chr>   <chr>    
+    ##  1 Deaths per week by 5-year age group, se~ en       Deaths p~ https:~ https://~
+    ##  2 Deaths per week by 5-year age group, se~ en       Deaths p~ https:~ https://~
+    ##  3 Weekly number of deaths, 2010-2022       en       Weekly n~ https:~ https://~
+    ##  4 1st certification rate at upper seconda~ en       1st cert~ https:~ https://~
+    ##  5 Corruption perceptions index - Switzerl~ en       Corrupti~ https:~ https://~
+    ##  6 Digital skills - Share of total populat~ en       Digital ~ https:~ https://~
+    ##  7 Direct investments in developing countr~ en       Direct i~ https:~ https://~
+    ##  8 Domestic violence - Number of victims o~ en       Domestic~ https:~ https://~
+    ##  9 Domestic violence by sex - Number of vi~ en       Domestic~ https:~ https://~
+    ## 10 Drinking water use - Consumption of hou~ en       Drinking~ https:~ https://~
     ## # ... with 340 more rows
 
 ``` r
 library(dplyr)
 library(openxlsx)
 
-catalog_tables_en %>%
-  filter(title == "Admissions to universities of applied sciences at diploma and bachelor level by fields of specialisation") %>%
-  pull(url_table) %>%
-  openxlsx::read.xlsx(startRow = 2) %>%
-  as_tibble()
+index_table_url <- catalog_tables_en %>%
+  filter(grepl("index", title)) %>% # search table
+  slice(1) %>%
+  pull(url_table)
+
+df <- tryCatch(expr = openxlsx::read.xlsx(index_table_url, startRow = 1),
+    error = function(e) "Failed reading table")
+
+df
 ```
 
-    ## # A tibble: 20 x 73
-    ##    X1      `1997` X3    X4    `1998` X6    X7    `1999` X9    X10   `2000` X12  
-    ##    <chr>   <chr>  <chr> <chr> <chr>  <chr> <chr> <chr>  <chr> <chr> <chr>  <chr>
-    ##  1 Field ~ Women  Men   "Pro~ Women  Men   "Pro~ Women  Men   "Pro~ Women  Men  
-    ##  2 Total   866    4010  "17.~ 1635   4857  "25.~ 1927   5267  "26.~ 2707   5772 
-    ##  3 Archit~ 99     606   "14.~ 90     590   "13.~ 91     532   "14.~ 112    578  
-    ##  4 Engine~ 45     1969  "2.2~ 64     2095  "2.9~ 90     2188  "3.9~ 86     2351 
-    ##  5 Chemis~ 43     184   "18.~ 71     248   "22.~ 67     193   "25.~ 68     172  
-    ##  6 Agricu~ 19     72    "20.~ 19     66    "22.~ 27     76    "26.~ 21     88   
-    ##  7 Econom~ 451    1046  "30.~ 544    1350  "28.~ 710    1566  "31.~ 838    1506 
-    ##  8 Design  148    101   "59.~ 221    137   "61.~ 226    189   "54.~ 277    196  
-    ##  9 Sports  0      0     "*"   0      0     "*"   7      28    "20"  0      0    
-    ## 10 Music,~ 0      0     "*"   276    178   "60.~ 269    298   "47.~ 804    675  
-    ## 11 Applie~ 0      0     "*"   0      0     "*"   58     X     "X"   69     12   
-    ## 12 Social~ 61     32    "65.~ 285    171   "62.~ 313    168   "65.~ 390    185  
-    ## 13 Applie~ 0      0     "*"   39     21    "65"  39     16    "70.~ 42     9    
-    ## 14 Health  0      0     "*"   26     X     "X"   30     9     "76.~ 0      0    
-    ## 15 Teache~ 0      0     "*"   0      0     "*"   0      0     "*"   0      0    
-    ## 16 * Not ~ <NA>   <NA>   <NA> <NA>   <NA>   <NA> <NA>   <NA>   <NA> <NA>   <NA> 
-    ## 17 X Not ~ <NA>   <NA>   <NA> <NA>   <NA>   <NA> <NA>   <NA>   <NA> <NA>   <NA> 
-    ## 18 Source~ <NA>   <NA>   <NA> <NA>   <NA>   <NA> <NA>   <NA>   <NA> <NA>   <NA> 
-    ## 19 © FSO  <NA>   <NA>   <NA> <NA>   <NA>   <NA> <NA>   <NA>   <NA> <NA>   <NA> 
-    ## 20 Inform~ <NA>   <NA>   <NA> <NA>   <NA>   <NA> <NA>   <NA>   <NA> <NA>   <NA> 
-    ## # ... with 61 more variables: X13 <chr>, 2001 <chr>, X15 <chr>, X16 <chr>,
-    ## #   2002 <chr>, X18 <chr>, X19 <chr>, 2003 <chr>, X21 <chr>, X22 <chr>,
-    ## #   2004 <chr>, X24 <chr>, X25 <chr>, 2005 <chr>, X27 <chr>, X28 <chr>,
-    ## #   2006 <chr>, X30 <chr>, X31 <chr>, 2007 <chr>, X33 <chr>, X34 <chr>,
-    ## #   2008 <chr>, X36 <chr>, X37 <chr>, 2009 <chr>, X39 <chr>, X40 <chr>,
-    ## #   2010 <chr>, X42 <chr>, X43 <chr>, 2011 <chr>, X45 <chr>, X46 <chr>,
-    ## #   2012 <chr>, X48 <chr>, X49 <chr>, 2013 <chr>, X51 <chr>, X52 <chr>, ...
+    ##                                              T.21.02.30.1605.01.01   X2
+    ## 1                                     Corruption perceptions index <NA>
+    ## 2  Switzerland’s ranking in the Global Corruption Perception Index <NA>
+    ## 3                                                             <NA> Data
+    ## 4                                                             2012    6
+    ## 5                                                             2013    7
+    ## 6                                                             2014    5
+    ## 7                                                             2015    6
+    ## 8                                                             2016    5
+    ## 9                                                             2017    3
+    ## 10                                                            2018    3
+    ## 11                                                            2019    4
+    ## 12                                                            2020    3
+    ## 13                                                            2021    7
+    ## 14                                        Last update:  24.02.2022 <NA>
+    ## 15                              Source: Transparency International <NA>
+    ## 16                                                      © FSO 2022 <NA>
 
 ## Other information
 
@@ -249,7 +241,8 @@ visualize the data in a Swiss map.
 The BFS package is using the
 <a href="https://github.com/rOpenGov/pxweb" target="_blank">pxweb</a> R
 package under the hood to access the Swiss Federal Statistical Office
-pxweb API.
+pxweb API and <a href="https://github.com/RobertMyles/tidyRSS"
+target="_blank">tidyRSS</a> to scrap the official BFS RSS feeds.
 
 This package is in no way officially related to or endorsed by the Swiss
 Federal Statistical Office (BFS).
