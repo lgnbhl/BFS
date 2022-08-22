@@ -24,8 +24,11 @@ target="_blank">Swiss Federal Statistical Office</a> (BFS stands for
 Due to a bug of a dependency of the package (i.e. `tidyRSS`), `BFS` is
 currently only available from GitHub.
 
+You should first install `tidyRSS` before installing `BFS`.
+
 ``` r
 # install from Github
+devtools::install_github("RobertMyles/tidyRSS")
 devtools::install_github("lgnbhl/BFS")
 ```
 
