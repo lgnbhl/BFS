@@ -25,42 +25,9 @@ knitr::opts_chunk$set(
 The `BFS` package allows to search and download public data from the 
 [Swiss Federal Statistical Office](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html){target="_blank"} (BFS stands for *Bundesamt für Statistik* in German) in a dynamic and reproducible way.
 
-⚠️⚠️⚠️⚠️⚠️⚠️
-
-Due to a bug in the last version of `tidyRSS`, you should install `BFS` only from GitHub.
-
-```{r eval=FALSE}
-# install from Github
-devtools::install_github("lgnbhl/BFS")
-```
-
-Until the bug is fixed, you should only use `tidyRSS` version 2.0.4. If you use the last version of `tidyRSS`, you will see this message.
-
-```{r eval=FALSE}
-library(BFS)
-```
-
-```md
-Error: package or namespace load failed for ‘BFS’ in loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]):
- namespace ‘tidyRSS’ 2.0.5 is already loaded, but == 2.0.4 is required
-```
-
-To fix this error message, uninstall `tidyRSS` and install the version 2.0.4.
-
-```{r eval=FALSE}
-remove.packages("tidyRSS")
-remotes::install_version("tidyRSS", version = "2.0.4")
-```
-⚠️⚠️⚠️⚠️⚠️⚠️
-
 ## Installation
 
-```{r eval=FALSE}
-# Install the released version from CRAN
-install.packages("BFS")
-```
-
-To get a bug fix, or use a feature from the development version, you can install BFS from GitHub.
+Due to a bug of a dependency of the package (i.e. `tidyRSS`), `BFS` is currently only available from GitHub.
 
 ```{r eval=FALSE}
 # install from Github

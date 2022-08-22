@@ -1,3 +1,8 @@
+# BFS 0.4.3
+* Fixed `bfs_get_catalog_data()` and `bfs_get_catalog_tables()` bug #6.
+* tidyRSS GitHub dependency version is 2.0.5.
+* Add tests for `bfs_get_catalog_*` functions.
+
 # BFS 0.4.2
 * Fixed `bfs_get_catalog_data()` and `bfs_get_catalog_tables()` bug #6.
 * tidyRSS dependency version is 2.0.4.
