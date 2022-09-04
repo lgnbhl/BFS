@@ -15,8 +15,8 @@ Imports:
     tibble,
     magrittr,
     janitor,
-    lifecycle
-Remotes: robertmyles/tidyrss
+    lifecycle,
+    tidyRSS
 Encoding: UTF-8
 RoxygenNote: 7.1.2
 URL: https://felixluginbuhl.com/BFS/, https://github.com/lgnbhl/BFS/

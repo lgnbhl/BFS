@@ -27,13 +27,13 @@ The `BFS` package allows to search and download public data from the
 
 ## Installation
 
-Due to a bug of a dependency of the package (i.e. `tidyRSS`), `BFS` is currently only available from GitHub.
+```{r eval=FALSE}
+install.packages("BFS")
+```
 
-You should first install `tidyRSS` before installing `BFS`.
+You can also install the development version from Github.
 
 ```{r eval=FALSE}
-# install from Github
-devtools::install_github("RobertMyles/tidyRSS")
 devtools::install_github("lgnbhl/BFS")
 ```
 
@@ -127,7 +127,8 @@ index_table_url <- catalog_tables_en %>%
   pull(url_table)
 
 df <- tryCatch(expr = openxlsx::read.xlsx(index_table_url, startRow = 1),
-	error = function(e) "Failed reading table")
+	error = function(e) "Failed reading table") %>%
+  as_tibble()
 
 df
 ```
