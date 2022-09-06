@@ -23,6 +23,10 @@ bfs_get_data_comments(
 
 \item{clean_names}{Clean column names using \code{janitor::clean_names()}}
 }
+\value{
+A tbl_df (a type of data frame; see tibble or
+dplyr packages).
+}
 \description{
 Get the comments/footnotes of a BFS dataset in a given language
 }

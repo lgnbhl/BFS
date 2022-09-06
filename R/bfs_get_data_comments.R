@@ -8,6 +8,9 @@
 #'
 #' @seealso \code{\link{bfs_get_data}}
 #'
+#' @return A tbl_df (a type of data frame; see tibble or
+#' dplyr packages).
+#'
 #' @export
 bfs_get_data_comments <- function(url_bfs = NULL, language = "de", number_bfs = NULL, query = "all", clean_names = FALSE) {
   

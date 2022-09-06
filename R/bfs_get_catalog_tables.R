@@ -13,6 +13,19 @@
 #' @examples
 #' \donttest{bfs_get_catalog_tables(language = "de")}
 #'
+#' @return A tbl_df (a type of data frame; see tibble or
+#' dplyr packages).
+#'
+#' \describe{
+#'   \item{title}{A character column with the title of the BFS dataset}
+#'   \item{language}{A character column with the language of the BFS dataset}
+#'   \item{published}{A character column with a number for the text from each
+#'   Wikisource page downloaded}
+#'   \item{url_bfs}{A character column with the URL of the related BFS 
+#'   webpage}
+#'   \item{url_table}{A character column with the URL of the file}
+#' }
+#'
 #' @export
 bfs_get_catalog_tables <- function(language = "de") {
   

@@ -13,6 +13,9 @@
 #'
 #' @seealso \code{\link{bfs_get_data_comments}}
 #'
+#' @return A tbl_df (a type of data frame; see tibble or
+#' dplyr packages).
+#'
 #' @export
 bfs_get_data <- function(url_bfs = NULL, language = "de", number_bfs = NULL, query = "all", column_name_type = "text", variable_value_type = "text", clean_names = FALSE) {
   

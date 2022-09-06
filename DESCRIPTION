@@ -4,7 +4,7 @@ Title: Search and Download Data from the Swiss Federal Statistical Office (BFS)
 Version: 0.4.3
 Authors@R: person("Felix", "Luginbuhl", email = "felix.luginbuhl@protonmail.ch", role = c("aut", "cre"))
 Maintainer: Felix Luginbuhl <felix.luginbuhl@protonmail.ch>
-Description: Search and download data from the Swiss Federal Statistical Office <https://www.bfs.admin.ch/>.
+Description: Search and download data from the Swiss Federal Statistical Office (BFS) <https://www.bfs.admin.ch/>.
 License: MIT + file LICENSE
 Depends: R (>= 3.0.1)
 Imports: 

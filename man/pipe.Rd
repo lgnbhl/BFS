@@ -6,6 +6,12 @@
 \usage{
 lhs \%>\% rhs
 }
+\arguments{
+\item{No}{parameter}
+}
+\value{
+No return value, called as an utility for user
+}
 \description{
 See \code{magrittr::\link[magrittr:pipe]{\%>\%}} for details.
 }

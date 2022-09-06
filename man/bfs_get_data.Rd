@@ -29,6 +29,10 @@ bfs_get_data(
 
 \item{clean_names}{Clean column names using \code{janitor::clean_names()}.}
 }
+\value{
+A tbl_df (a type of data frame; see tibble or
+dplyr packages).
+}
 \description{
 Download a dataset using the BFS offical API v1. You should choose either the bfs number of the bfs offical url
 of a given dataset. You can query particulary variables using the `query` argument.
