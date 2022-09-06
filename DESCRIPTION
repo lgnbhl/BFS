@@ -1,6 +1,6 @@
 Package: BFS
 Type: Package
-Title: Search and Download Data from BFS
+Title: Get Data from the Swiss Statistical Office
 Version: 0.4.3
 Authors@R: person("Felix", "Luginbuhl", email = "felix.luginbuhl@protonmail.ch", role = c("aut", "cre"))
 Maintainer: Felix Luginbuhl <felix.luginbuhl@protonmail.ch>
