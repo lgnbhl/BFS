@@ -1,7 +1,7 @@
 Package: BFS
 Type: Package
 Title: Get Data from the Swiss Statistical Office
-Version: 0.4.3
+Version: 0.4.4
 Authors@R: person("Felix", "Luginbuhl", email = "felix.luginbuhl@protonmail.ch", role = c("aut", "cre"))
 Maintainer: Felix Luginbuhl <felix.luginbuhl@protonmail.ch>
 Description: Search and download data from the Swiss Federal Statistical Office (BFS) <https://www.bfs.admin.ch/>.
@@ -15,10 +15,9 @@ Imports:
     tibble,
     magrittr,
     janitor,
-    lifecycle,
     tidyRSS
 Encoding: UTF-8
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.2
 URL: https://felixluginbuhl.com/BFS/, https://github.com/lgnbhl/BFS/
 BugReports: https://github.com/lgnbhl/BFS/issues
 Suggests: 

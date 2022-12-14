@@ -6,8 +6,7 @@
 status](https://www.r-pkg.org/badges/version/BFS)](https://CRAN.R-project.org/package=BFS)
 [![Grand
 total](https://cranlogs.r-pkg.org/badges/grand-total/BFS)](https://cran.r-project.org/package=BFS)
-[![R build
-status](https://github.com/lgnbhl/BFS/workflows/R-CMD-check/badge.svg)](https://github.com/lgnbhl/BFS/actions)
+[![R-CMD-check](https://github.com/lgnbhl/BFS/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lgnbhl/BFS/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 # BFS <img src="man/figures/logo.png" align="right" />
@@ -55,21 +54,20 @@ catalog_data_en <- bfs_get_catalog_data(language = "en")
 catalog_data_en
 ```
 
-    ## # A tibble: 180 x 5
-    ##    title                                          langu~1 publi~2 url_bfs url_px
+    ## # A tibble: 179 × 5
+    ##    title                                          langu…¹ publi…² url_bfs url_px
     ##    <chr>                                          <chr>   <chr>   <chr>   <chr> 
-    ##  1 Businesses by difficulties in recruiting staf~ en      Busine~ https:~ https~
-    ##  2 Businesses by difficulties in recruiting staf~ en      Busine~ https:~ https~
-    ##  3 Businesses by employment prospects and econom~ en      Busine~ https:~ https~
-    ##  4 Businesses by employment prospects and major ~ en      Busine~ https:~ https~
-    ##  5 Job vacancies by economic divisions (selectio~ en      Job va~ https:~ https~
-    ##  6 Job vacancies by major region                  en      Job va~ https:~ https~
-    ##  7 Jobs by economic division, employment rate an~ en      Jobs b~ https:~ https~
-    ##  8 Jobs by major region, economic sector, employ~ en      Jobs b~ https:~ https~
-    ##  9 Retail Trade Turnover Statistics - monthly se~ en      Retail~ https:~ https~
-    ## 10 Retail Trade Turnover Statistics - quarterly ~ en      Retail~ https:~ https~
-    ## # ... with 170 more rows, and abbreviated variable names 1: language,
-    ## #   2: published
+    ##  1 New registrations of road vehicles by month (… en      New re… https:… https…
+    ##  2 Environmental goods and services sector accou… en      Enviro… https:… https…
+    ##  3 Hotel accommodation: arrivals and overnight s… en      Hotel … https:… https…
+    ##  4 Hotel accommodation: arrivals and overnight s… en      Hotel … https:… https…
+    ##  5 Hotel accommodation: arrivals and overnight s… en      Hotel … https:… https…
+    ##  6 Hotel sector: Supply and demand of open estab… en      Hotel … https:… https…
+    ##  7 Hotel sector: Supply and demand of open estab… en      Hotel … https:… https…
+    ##  8 Hotel sector: supply and demand of open estab… en      Hotel … https:… https…
+    ##  9 Retail Trade Turnover Statistics - monthly se… en      Retail… https:… https…
+    ## 10 Retail Trade Turnover Statistics - quarterly … en      Retail… https:… https…
+    ## # … with 169 more rows, and abbreviated variable names ¹​language, ²​published
 
 To find older datasets, you can use the search bar in the [official BFS
 website](https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/daten.html).
@@ -87,11 +85,11 @@ catalog_data_uni <- catalog_data_en %>%
 catalog_data_uni
 ```
 
-    ## # A tibble: 1 x 5
-    ##   title                                           langu~1 publi~2 url_bfs url_px
+    ## # A tibble: 1 × 5
+    ##   title                                           langu…¹ publi…² url_bfs url_px
     ##   <chr>                                           <chr>   <chr>   <chr>   <chr> 
-    ## 1 University students by year, ISCED field, sex ~ en      Univer~ https:~ https~
-    ## # ... with abbreviated variable names 1: language, 2: published
+    ## 1 University students by year, ISCED field, sex … en      Univer… https:… https…
+    ## # … with abbreviated variable names ¹​language, ²​published
 
 ### Download a dataset in any language
 
@@ -112,21 +110,20 @@ df_uni <- bfs_get_data(url_bfs = catalog_data_uni$url_bfs, language = "en")
 df_uni
 ```
 
-    ## # A tibble: 17,640 x 5
-    ##    Year    `ISCED Field`     Sex    `Level of study`                     Unive~1
+    ## # A tibble: 17,640 × 5
+    ##    Year    `ISCED Field`     Sex    `Level of study`                     Unive…¹
     ##    <chr>   <chr>             <chr>  <chr>                                  <dbl>
     ##  1 1980/81 Education science Male   First university degree or diploma       545
     ##  2 1980/81 Education science Male   Bachelor                                   0
     ##  3 1980/81 Education science Male   Master                                     0
     ##  4 1980/81 Education science Male   Doctorate                                 93
-    ##  5 1980/81 Education science Male   Further education, advanced studies~      13
+    ##  5 1980/81 Education science Male   Further education, advanced studies…      13
     ##  6 1980/81 Education science Female First university degree or diploma       946
     ##  7 1980/81 Education science Female Bachelor                                   0
     ##  8 1980/81 Education science Female Master                                     0
     ##  9 1980/81 Education science Female Doctorate                                 70
-    ## 10 1980/81 Education science Female Further education, advanced studies~      52
-    ## # ... with 17,630 more rows, and abbreviated variable name
-    ## #   1: `University students`
+    ## 10 1980/81 Education science Female Further education, advanced studies…      52
+    ## # … with 17,630 more rows, and abbreviated variable name ¹​`University students`
 
 Note that some datasets are only accessible in German and French.
 
@@ -162,10 +159,100 @@ bfs_get_data_comments(number_bfs = "px-x-1502040100_131", language = "en")
     ##   Downloading large query (in 4 batches):
     ##   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%
 
-    ## # A tibble: 1 x 4
+    ## # A tibble: 1 × 4
     ##   row_no col_no comment_type   comment                                          
     ##    <int>  <int> <chr>          <chr>                                            
-    ## 1     NA      4 column_comment "To ensure that the presentations from cubes con~
+    ## 1     NA      4 column_comment "To ensure that the presentations from cubes con…
+
+#### Query specific elements
+
+You may get an error message if the dataset is too big.
+
+    Error in pxweb_advanced_get(url = url, query = query, verbose = verbose) : 
+      Too Many Requests (RFC 6585) (HTTP 429).
+
+One solution is too query only specific elements of the dataset to
+download less data. Here an example.
+
+First you want to get the variable names, i.e. `code`, and categories,
+i.e. `values`, of your dataset.
+
+``` r
+# choose a BFS number and language
+number_bfs <- "px-x-1502040100_131" 
+language <- "en"
+# create the BFS api url
+pxweb_api_url <- paste0("https://www.pxweb.bfs.admin.ch/api/v1/", 
+                        language, "/", number_bfs, "/", number_bfs, ".px")
+# Get BFS table metadata using {pxweb}
+px_meta <- pxweb::pxweb_get(pxweb_api_url)
+# Get BFS table metadata using {pxweb}
+px_meta <- pxweb::pxweb_get(pxweb_api_url)
+# list variables items
+str(px_meta$variables)
+```
+
+    ## List of 4
+    ##  $ :List of 6
+    ##   ..$ code       : chr "Jahr"
+    ##   ..$ text       : chr "Year"
+    ##   ..$ values     : chr [1:42] "0" "1" "2" "3" ...
+    ##   ..$ valueTexts : chr [1:42] "1980/81" "1981/82" "1982/83" "1983/84" ...
+    ##   ..$ time       : logi TRUE
+    ##   ..$ elimination: logi FALSE
+    ##  $ :List of 6
+    ##   ..$ code       : chr "ISCED Fach"
+    ##   ..$ text       : chr "ISCED Field"
+    ##   ..$ values     : chr [1:42] "0" "1" "2" "3" ...
+    ##   ..$ valueTexts : chr [1:42] "Education science" "Teacher training without subject specialisation" "Teacher training with subject specialisation" "Fine arts" ...
+    ##   ..$ elimination: logi TRUE
+    ##   ..$ time       : logi FALSE
+    ##  $ :List of 6
+    ##   ..$ code       : chr "Geschlecht"
+    ##   ..$ text       : chr "Sex"
+    ##   ..$ values     : chr [1:2] "0" "1"
+    ##   ..$ valueTexts : chr [1:2] "Male" "Female"
+    ##   ..$ elimination: logi TRUE
+    ##   ..$ time       : logi FALSE
+    ##  $ :List of 6
+    ##   ..$ code       : chr "Studienstufe"
+    ##   ..$ text       : chr "Level of study"
+    ##   ..$ values     : chr [1:5] "0" "1" "2" "3" ...
+    ##   ..$ valueTexts : chr [1:5] "First university degree or diploma" "Bachelor" "Master" "Doctorate" ...
+    ##   ..$ elimination: logi TRUE
+    ##   ..$ time       : logi FALSE
+
+Then you can manually select the dimensions of the dataset you want to
+query.
+
+``` r
+# Manually create BFS query dimensions
+# Use `code` and `values` elements in `px_meta$variables`
+# Use "*" to select all
+dimensions <- list(
+  "Jahr" = c("40", "41"),
+  "ISCED Fach" = c("0"),
+  "Geschlecht" = c("0", "1"),
+  "Studienstufe" = c("2", "3"))
+# Query BFS data with specific dimensions
+BFS::bfs_get_data(
+  number_bfs = number_bfs,
+  language = language,
+  query = dimensions
+  )
+```
+
+    ## # A tibble: 8 × 5
+    ##   Year    `ISCED Field`     Sex    `Level of study` `University students`
+    ##   <chr>   <chr>             <chr>  <chr>                            <dbl>
+    ## 1 2020/21 Education science Male   Master                             151
+    ## 2 2020/21 Education science Male   Doctorate                          121
+    ## 3 2020/21 Education science Female Master                             555
+    ## 4 2020/21 Education science Female Doctorate                          306
+    ## 5 2021/22 Education science Male   Master                             143
+    ## 6 2021/22 Education science Male   Doctorate                          115
+    ## 7 2021/22 Education science Female Master                             599
+    ## 8 2021/22 Education science Female Doctorate                          318
 
 ### Catalog of tables
 
@@ -183,21 +270,21 @@ catalog_tables_en <- bfs_get_catalog_tables(language = "en")
 catalog_tables_en
 ```
 
-    ## # A tibble: 350 x 5
-    ##    title                                         langu~1 publi~2 url_bfs url_t~3
+    ## # A tibble: 350 × 5
+    ##    title                                         langu…¹ publi…² url_bfs url_t…³
     ##    <chr>                                         <chr>   <chr>   <chr>   <chr>  
-    ##  1 "Difficulties in recruiting staff with educa~ en      "Diffi~ https:~ https:~
-    ##  2 "Difficulties in recruiting staff with educa~ en      "Diffi~ https:~ https:~
-    ##  3 "Difficulties in recruiting staff with highe~ en      "Diffi~ https:~ https:~
-    ##  4 "Difficulties in recruiting staff with unive~ en      "Diffi~ https:~ https:~
-    ##  5 "Full-time job equivalent per sector"         en      "Full-~ https:~ https:~
-    ##  6 "Full-time job per sector and gender"         en      "Full-~ https:~ https:~
-    ##  7 "Index of employment evolution prospects per~ en      "Index~ https:~ https:~
-    ##  8 "Job vacancy per branch of economic activity~ en      "Job v~ https:~ https:~
-    ##  9 "Jobs per sector and gender, gross and seaso~ en      "Jobs ~ https:~ https:~
-    ## 10 "Jobs per sector and main region"             en      "Jobs ~ https:~ https:~
-    ## # ... with 340 more rows, and abbreviated variable names 1: language,
-    ## #   2: published, 3: url_table
+    ##  1 All cancers                                   en      All ca… https:… https:…
+    ##  2 Breast cancer                                 en      Breast… https:… https:…
+    ##  3 Cancer in children: new cases and deaths      en      Cancer… https:… https:…
+    ##  4 Cancer, new cases and deaths: numbers and ra… en      Cancer… https:… https:…
+    ##  5 Cancer, new cases and deaths: numbers, rates… en      Cancer… https:… https:…
+    ##  6 Cancer, new cases and deaths: numbers, rates… en      Cancer… https:… https:…
+    ##  7 Cancer, new cases and deaths: numbers, rates… en      Cancer… https:… https:…
+    ##  8 Colorectal cancer                             en      Colore… https:… https:…
+    ##  9 Lung cancer                                   en      Lung c… https:… https:…
+    ## 10 Melanoma                                      en      Melano… https:… https:…
+    ## # … with 340 more rows, and abbreviated variable names ¹​language, ²​published,
+    ## #   ³​url_table
 
 ``` r
 library(dplyr)
@@ -215,26 +302,25 @@ df <- tryCatch(expr = openxlsx::read.xlsx(index_table_url, startRow = 1),
 df
 ```
 
-    ## # A tibble: 466 x 19
-    ##    Landesind~1 X2    X3    X4    X5    ©.Bun~2 X7    Indic~3 X9    Indic~4 X11  
+    ## # A tibble: 466 × 19
+    ##    Landesind…¹ X2    X3    X4    X5    ©.Bun…² X7    Indic…³ X9    Indic…⁴ X11  
     ##    <chr>       <chr> <chr> <chr> <chr> <chr>   <chr> <chr>   <chr> <chr>   <chr>
-    ##  1 Warenkorbs~ <NA>  <NA>  <NA>  <NA>  "Ausku~ <NA>  "Panie~ <NA>  "Panie~ <NA> 
-    ##  2 Basis Deze~ <NA>  <NA>  <NA>  <NA>  "http:~ <NA>  "Base ~ <NA>  "Base ~ <NA> 
-    ##  3 Code        PosNo PosT~ Level COIC~ "Posit~ PosT~ "Posit~ PosT~ "Posiz~ PosT~
-    ##  4 100_100     100   1     1     <NA>  "Total" Total "Total" Total "Total~ Tota~
-    ##  5 100_1       1     2     2     '01   "    N~ Nahr~ "    A~ Alim~ "    P~ Prod~
-    ##  6 100_1001    1001  3     3     '01.1 "     ~ Nahr~ "     ~ Alim~ "     ~ Prod~
-    ##  7 100_1002    1002  3     4     '01.~ "     ~ Brot~ "     ~ Pain~ "     ~ Pane~
-    ##  8 100_1003    1003  4     5     '01.~ "     ~ Reis  "     ~ Riz   "     ~ Riso 
-    ##  9 100_1008    1008  4     5     '01.~ "     ~ Mehl~ "     ~ Fari~ "     ~ Fari~
-    ## 10 100_1014    1014  3     5     <NA>  "     ~ Brot~ "     ~ Pain~ "     ~ Pane~
-    ## # ... with 456 more rows, 8 more variables: Swiss.Consumer.Price.Index <chr>,
+    ##  1 Warenkorbs… <NA>  <NA>  <NA>  <NA>  "Ausku… <NA>  "Panie… <NA>  "Panie… <NA> 
+    ##  2 Basis Deze… <NA>  <NA>  <NA>  <NA>  "http:… <NA>  "Base … <NA>  "Base … <NA> 
+    ##  3 Code        PosNo PosT… Level COIC… "Posit… PosT… "Posit… PosT… "Posiz… PosT…
+    ##  4 100_100     100   1     1     <NA>  "Total" Total "Total" Total "Total… Tota…
+    ##  5 100_1       1     2     2     '01   "    N… Nahr… "    A… Alim… "    P… Prod…
+    ##  6 100_1001    1001  3     3     '01.1 "     … Nahr… "     … Alim… "     … Prod…
+    ##  7 100_1002    1002  3     4     '01.… "     … Brot… "     … Pain… "     … Pane…
+    ##  8 100_1003    1003  4     5     '01.… "     … Reis  "     … Riz   "     … Riso 
+    ##  9 100_1008    1008  4     5     '01.… "     … Mehl… "     … Fari… "     … Fari…
+    ## 10 100_1014    1014  3     5     <NA>  "     … Brot… "     … Pain… "     … Pane…
+    ## # … with 456 more rows, 8 more variables: Swiss.Consumer.Price.Index <chr>,
     ## #   X13 <chr>, Gewicht <chr>, X15 <chr>, X16 <chr>, X17 <chr>, X18 <chr>,
     ## #   X19 <chr>, and abbreviated variable names
-    ## #   1: Landesindex.der.Konsumentenpreise,
-    ## #   2: `©.Bundesamt.für.Statistik,.Espace.de.l'Europe.10,.CH-2010.Neuchâtel`,
-    ## #   3: Indice.des.prix.à.la.consommation,
-    ## #   4: Indice.nazionale.dei.prezzi.al.consumo
+    ## #   ¹​Landesindex.der.Konsumentenpreise,
+    ## #   ²​`©.Bundesamt.für.Statistik,.Espace.de.l'Europe.10,.CH-2010.Neuchâtel`,
+    ## #   ³​Indice.des.prix.à.la.consommation, ⁴​Indice.nazionale.dei.prezzi.al.consumo
 
 ## Other information
 

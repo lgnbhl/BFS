@@ -7,7 +7,7 @@ output: github_document
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/BFS)](https://CRAN.R-project.org/package=BFS)
 [![Grand total](https://cranlogs.r-pkg.org/badges/grand-total/BFS)](https://cran.r-project.org/package=BFS)
-[![R build status](https://github.com/lgnbhl/BFS/workflows/R-CMD-check/badge.svg)](https://github.com/lgnbhl/BFS/actions)
+[![R-CMD-check](https://github.com/lgnbhl/BFS/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lgnbhl/BFS/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 # BFS <img src="man/figures/logo.png" align="right" />
@@ -99,12 +99,60 @@ Use again `bfs_get_data()` but this time with the `number_bfs` argument.
 ```{r, eval=FALSE}
 bfs_get_data(number_bfs = "px-x-1502040100_131", language = "en")
 ```
+
 Please privilege the `number_bfs` argument of the `bfs_get_data()` if you want more stable and reproducible code.
 
 You can access additional information about the dataset by running `bfs_get_data_comments()`.
 
 ```{r attributes}
 bfs_get_data_comments(number_bfs = "px-x-1502040100_131", language = "en")
+```
+
+#### Query specific elements
+
+You may get an error message if the dataset is too big.
+
+```
+Error in pxweb_advanced_get(url = url, query = query, verbose = verbose) : 
+  Too Many Requests (RFC 6585) (HTTP 429).
+```
+
+One solution is too query only specific elements of the dataset to download less data. Here an example.
+
+First you want to get the variable names, i.e. `code`, and categories, i.e. `values`, of your dataset.
+
+```{r}
+# choose a BFS number and language
+number_bfs <- "px-x-1502040100_131" 
+language <- "en"
+# create the BFS api url
+pxweb_api_url <- paste0("https://www.pxweb.bfs.admin.ch/api/v1/", 
+                        language, "/", number_bfs, "/", number_bfs, ".px")
+# Get BFS table metadata using {pxweb}
+px_meta <- pxweb::pxweb_get(pxweb_api_url)
+# Get BFS table metadata using {pxweb}
+px_meta <- pxweb::pxweb_get(pxweb_api_url)
+# list variables items
+str(px_meta$variables)
+```
+
+Then you can manually select the dimensions of the dataset you want to query.
+
+```{r}
+# Manually create BFS query dimensions
+# Use `code` and `values` elements in `px_meta$variables`
+# Use "*" to select all
+dimensions <- list(
+  "Jahr" = c("40", "41"),
+  "ISCED Fach" = c("0"),
+  "Geschlecht" = c("0", "1"),
+  "Studienstufe" = c("2", "3"))
+# Query BFS data with specific dimensions
+BFS::bfs_get_data(
+  number_bfs = number_bfs,
+  language = language,
+  query = dimensions
+  )
 ```
 
 ### Catalog of tables
