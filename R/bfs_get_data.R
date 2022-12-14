@@ -37,7 +37,7 @@ bfs_get_data <- function(url_bfs = NULL, language = "de", number_bfs = NULL, que
   pxweb_api_url <- paste0("https://www.pxweb.bfs.admin.ch/api/v1/", language, "/", number_bfs, "/", number_bfs, ".px")
   df_json <- jsonlite::fromJSON(txt = pxweb_api_url)
   
-  if(query == "all") {
+  if(any(query == "all")) {
     variables <- df_json$variables$code
     values <- df_json$variables$values
     df <- rbind(rep("*", length(values)))
