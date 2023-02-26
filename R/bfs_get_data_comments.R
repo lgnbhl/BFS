@@ -32,7 +32,7 @@ bfs_get_data_comments <- function(url_bfs = NULL, language = "de", number_bfs = 
   if(query == "all") {
     variables <- df_json$variables$code
     values <- df_json$variables$values
-    df <- rbind(c("*", "*","*","*"))
+    df <- rbind(rep("*", length(values)))
     names(df) <- variables
     dims <- as.list(df)
     pxq <- pxweb::pxweb_query(dims)
