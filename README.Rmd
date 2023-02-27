@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 > Search and download data from the Swiss Federal Statistical Office
 
 The `BFS` package allows to search and download public data from the 
-[Swiss Federal Statistical Office](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html){target="_blank"} (BFS stands for *Bundesamt für Statistik* in German) in a dynamic and reproducible way.
+[Swiss Federal Statistical Office](https://www.pxweb.bfs.admin.ch/pxweb/en/){target="_blank"} (BFS stands for *Bundesamt für Statistik* in German) API in a dynamic and reproducible way.
 
 ## Installation
 
@@ -130,8 +130,6 @@ pxweb_api_url <- paste0("https://www.pxweb.bfs.admin.ch/api/v1/",
                         language, "/", number_bfs, "/", number_bfs, ".px")
 # Get BFS table metadata using {pxweb}
 px_meta <- pxweb::pxweb_get(pxweb_api_url)
-# Get BFS table metadata using {pxweb}
-px_meta <- pxweb::pxweb_get(pxweb_api_url)
 # list variables items
 str(px_meta$variables)
 ```
@@ -181,11 +179,17 @@ df <- tryCatch(expr = openxlsx::read.xlsx(index_table_url, startRow = 1),
 df
 ```
 
+## Main dependencies of the package
+
+Under the hood, this package is using extensively the [pxweb](https://ropengov.github.io/pxweb/index.html){target="_blank"} R package to query the Swiss Federal Statistical Office PXWEB API. PXWEB is an API structure developed by Statistics Sweden and other national statistical institutions (NSI) to disseminate public statistics in a structured way.
+
+The list of available datasets is accessed using the [tidyRSS](https://github.com/RobertMyles/tidyRSS){target="_blank"} R package to scrap the official [BFS RSS feed](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true). 
+
+You can clean the column names of the datasets automatically using `janitor::clean_names()` by adding the argument `clean_names = TRUE` in the `bfs_get_data()` function. 
+
 ## Other information
 
 A [blog article](https://felixluginbuhl.com/blog/posts/2019-11-07-swiss-data/) showing a concrete example about how to use the BFS package and to visualize the data in a Swiss map.
-
-The BFS package is using the [pxweb](https://github.com/rOpenGov/pxweb){target="_blank"} R package under the hood to access the Swiss Federal Statistical Office pxweb API and [tidyRSS](https://github.com/RobertMyles/tidyRSS){target="_blank"} to scrap the official BFS RSS feeds.
 
 This package is in no way officially related to or endorsed by the Swiss Federal Statistical Office (BFS).
 
