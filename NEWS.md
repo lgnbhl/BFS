@@ -1,3 +1,7 @@
+# BFS 0.4.5
+- Fix bug in `bfs_get_data_comments()` #8.
+- improve README by adding info about dependencies.
+
 # BFS 0.4.4
 - Fix bug using `query` argument in `bfs_get_data()`
 - remove depreciated function `bfs_get_metadata()` and `bfs_get_dataset()`

@@ -134,16 +134,16 @@
 <div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 179 × 5</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    title                                          langu…¹ publi…² url_bfs url_px</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                          &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; </span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 New registrations of road vehicles by month (… en      New re… https:… https…</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Environmental goods and services sector accou… en      Enviro… https:… https…</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Hotel accommodation: arrivals and overnight s… en      Hotel … https:… https…</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Hotel accommodation: arrivals and overnight s… en      Hotel … https:… https…</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Hotel accommodation: arrivals and overnight s… en      Hotel … https:… https…</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Hotel sector: Supply and demand of open estab… en      Hotel … https:… https…</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Hotel sector: Supply and demand of open estab… en      Hotel … https:… https…</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Hotel sector: supply and demand of open estab… en      Hotel … https:… https…</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Retail Trade Turnover Statistics - monthly se… en      Retail… https:… https…</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Retail Trade Turnover Statistics - quarterly … en      Retail… https:… https…</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Businesses by difficulties in recruiting staf… en      Busine… https:… https…</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Businesses by difficulties in recruiting staf… en      Busine… https:… https…</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Businesses by employment prospects and econom… en      Busine… https:… https…</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Businesses by employment prospects and major … en      Busine… https:… https…</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Job vacancies by economic divisions (selectio… en      Job va… https:… https…</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Job vacancies by major region                  en      Job va… https:… https…</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Jobs by economic division, employment rate an… en      Jobs b… https:… https…</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Jobs by major region, economic sector, employ… en      Jobs b… https:… https…</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Hotel accommodation: arrivals and overnight s… en      Hotel … https:… https…</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Hotel accommodation: arrivals and overnight s… en      Hotel … https:… https…</span></span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 169 more rows, and abbreviated variable names ¹​language, ²​published</span></span></code></pre></div>
 <p>To find older datasets, you can use the search bar in the <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/daten.html" class="external-link">official BFS website</a>.</p>
 </div>
@@ -227,8 +227,6 @@
 <span>                        <span class="va">language</span>, <span class="st">"/"</span>, <span class="va">number_bfs</span>, <span class="st">"/"</span>, <span class="va">number_bfs</span>, <span class="st">".px"</span><span class="op">)</span></span>
 <span><span class="co"># Get BFS table metadata using {pxweb}</span></span>
 <span><span class="va">px_meta</span> <span class="op">&lt;-</span> <span class="fu">pxweb</span><span class="fu">::</span><span class="fu"><a href="https://ropengov.github.io/pxweb/reference/pxweb_get.html" class="external-link">pxweb_get</a></span><span class="op">(</span><span class="va">pxweb_api_url</span><span class="op">)</span></span>
-<span><span class="co"># Get BFS table metadata using {pxweb}</span></span>
-<span><span class="va">px_meta</span> <span class="op">&lt;-</span> <span class="fu">pxweb</span><span class="fu">::</span><span class="fu"><a href="https://ropengov.github.io/pxweb/reference/pxweb_get.html" class="external-link">pxweb_get</a></span><span class="op">(</span><span class="va">pxweb_api_url</span><span class="op">)</span></span>
 <span><span class="co"># list variables items</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">px_meta</span><span class="op">$</span><span class="va">variables</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb18"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="do">## List of 4</span></span>
@@ -300,16 +298,16 @@
 <div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 350 × 5</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    title                                         langu…¹ publi…² url_bfs url_t…³</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                         &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  </span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 All cancers                                   en      All ca… https:… https:…</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Breast cancer                                 en      Breast… https:… https:…</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Cancer in children: new cases and deaths      en      Cancer… https:… https:…</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Cancer, new cases and deaths: numbers and ra… en      Cancer… https:… https:…</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Cancer, new cases and deaths: numbers, rates… en      Cancer… https:… https:…</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Cancer, new cases and deaths: numbers, rates… en      Cancer… https:… https:…</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Cancer, new cases and deaths: numbers, rates… en      Cancer… https:… https:…</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Colorectal cancer                             en      Colore… https:… https:…</span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Lung cancer                                   en      Lung c… https:… https:…</span></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Melanoma                                      en      Melano… https:… https:…</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 "Civil aviation – overview"                   en      "Civil… https:… https:…</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 "Difficulties in recruiting staff with educa… en      "Diffi… https:… https:…</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 "Difficulties in recruiting staff with educa… en      "Diffi… https:… https:…</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 "Difficulties in recruiting staff with highe… en      "Diffi… https:… https:…</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 "Difficulties in recruiting staff with unive… en      "Diffi… https:… https:…</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 "Full-time job equivalent per sector"         en      "Full-… https:… https:…</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 "Full-time job per sector and gender"         en      "Full-… https:… https:…</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 "Index of employment evolution prospects per… en      "Index… https:… https:…</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 "Job vacancy per branch of economic activity… en      "Job v… https:… https:…</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 "Jobs per sector and gender, gross and seaso… en      "Jobs … https:… https:…</span></span>
 <span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 340 more rows, and abbreviated variable names ¹​language, ²​published,</span></span>
 <span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="do">## #   ³​url_table</span></span></code></pre></div>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
@@ -326,32 +324,35 @@
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">df</span></span></code></pre></div>
-<div class="sourceCode" id="cb24"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 466 × 19</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    Landesind…¹ X2    X3    X4    X5    ©.Bun…² X7    Indic…³ X9    Indic…⁴ X11  </span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Warenkorbs… &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  "Ausku… &lt;NA&gt;  "Panie… &lt;NA&gt;  "Panie… &lt;NA&gt; </span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Basis Deze… &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  "http:… &lt;NA&gt;  "Base … &lt;NA&gt;  "Base … &lt;NA&gt; </span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Code        PosNo PosT… Level COIC… "Posit… PosT… "Posit… PosT… "Posiz… PosT…</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 100_100     100   1     1     &lt;NA&gt;  "Total" Total "Total" Total "Total… Tota…</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 100_1       1     2     2     '01   "    N… Nahr… "    A… Alim… "    P… Prod…</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 100_1001    1001  3     3     '01.1 "     … Nahr… "     … Alim… "     … Prod…</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 100_1002    1002  3     4     '01.… "     … Brot… "     … Pain… "     … Pane…</span></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 100_1003    1003  4     5     '01.… "     … Reis  "     … Riz   "     … Riso </span></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 100_1008    1008  4     5     '01.… "     … Mehl… "     … Fari… "     … Fari…</span></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 100_1014    1014  3     5     &lt;NA&gt;  "     … Brot… "     … Pain… "     … Pane…</span></span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 456 more rows, 8 more variables: Swiss.Consumer.Price.Index &lt;chr&gt;,</span></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="do">## #   X13 &lt;chr&gt;, Gewicht &lt;chr&gt;, X15 &lt;chr&gt;, X16 &lt;chr&gt;, X17 &lt;chr&gt;, X18 &lt;chr&gt;,</span></span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="do">## #   X19 &lt;chr&gt;, and abbreviated variable names</span></span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="do">## #   ¹​Landesindex.der.Konsumentenpreise,</span></span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="do">## #   ²​`©.Bundesamt.für.Statistik,.Espace.de.l'Europe.10,.CH-2010.Neuchâtel`,</span></span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="do">## #   ³​Indice.des.prix.à.la.consommation, ⁴​Indice.nazionale.dei.prezzi.al.consumo</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 33 × 17</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    Sprache./…¹ X2    X3    X4    X5    X6    X7    X8    X9    X10   X11   X12  </span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 "Indexwert… &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; </span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 "Schweizer… &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; </span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 "Totalinde… Q1 2… Q2 2… Q3 2… Q4 2… Q1 2… Q2 2… Q3 2… Q4 2… Q1 2… Q2 2… Q3 2…</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 "Total "    97.6… 98.1… 98.2… 100   99.2… 100.… 100.… 103.… 103.… 105.… 107.…</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 "GemeindeT… 95.5… 97.7… 96.9… 100   98.8… 100.… 101.… 102.… 103.… 105.… 108.…</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 "GemeindeT… 98.1… 98.7… 100.… 100   99.2… 100.… 101.… 103.… 103.… 104.… 106.…</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 "GemeindeT… 97.7… 99.1… 98.0… 100   98.3… 99.8… 100.… 102.… 103.… 106.… 107.…</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 "GemeindeT… 99.6… 98.3… 98.7… 100   100.… 100.… 99.9… 102.… 103.… 105.… 107.…</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 "GemeindeT… 97.7… 97.1… 97.5… 100   99.1… 99.8… 100.… 103.… 101.… 105.… 107.…</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 "EFH"       97.0… 98.2… 98.5… 100   99.4… 100.… 101.… 103.… 103.… 105.… 108.…</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 23 more rows, 5 more variables: X13 &lt;chr&gt;, X14 &lt;chr&gt;, X15 &lt;chr&gt;,</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="do">## #   X16 &lt;chr&gt;, X17 &lt;chr&gt;, and abbreviated variable name</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="do">## #   ¹​`Sprache./.Langue./.Lingua./.Language`</span></span></code></pre></div>
 </div>
+</div>
+<div class="section level2">
+<h2 id="main-dependencies-of-the-package">Main dependencies of the package<a class="anchor" aria-label="anchor" href="#main-dependencies-of-the-package"></a>
+</h2>
+<p>Under the hood, this package is using extensively the <a href="https://ropengov.github.io/pxweb/index.html" target="_blank" class="external-link">pxweb</a> R package to query the Swiss Federal Statistical Office PXWEB API. PXWEB is an API structure developed by Statistics Sweden and other national statistical institutions (NSI) to disseminate public statistics in a structured way.</p>
+<p>The list of available datasets is accessed using the <a href="https://github.com/RobertMyles/tidyRSS" target="_blank" class="external-link">tidyRSS</a> R package to scrap the official <a href="https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true" class="external-link">BFS RSS feed</a>.</p>
+<p>You can clean the column names of the datasets automatically using <code><a href="https://rdrr.io/pkg/janitor/man/clean_names.html" class="external-link">janitor::clean_names()</a></code> by adding the argument <code>clean_names = TRUE</code> in the <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code> function.</p>
 </div>
 <div class="section level2">
 <h2 id="other-information">Other information<a class="anchor" aria-label="anchor" href="#other-information"></a>
 </h2>
 <p>A <a href="https://felixluginbuhl.com/blog/posts/2019-11-07-swiss-data/" class="external-link">blog article</a> showing a concrete example about how to use the BFS package and to visualize the data in a Swiss map.</p>
-<p>The BFS package is using the <a href="https://github.com/rOpenGov/pxweb" target="_blank" class="external-link">pxweb</a> R package under the hood to access the Swiss Federal Statistical Office pxweb API and <a href="https://github.com/RobertMyles/tidyRSS" target="_blank" class="external-link">tidyRSS</a> to scrap the official BFS RSS feeds.</p>
 <p>This package is in no way officially related to or endorsed by the Swiss Federal Statistical Office (BFS).</p>
 </div>
 <div class="section level2">
