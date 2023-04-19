@@ -54,7 +54,7 @@ bfs_get_data <- function(url_bfs = NULL, language = "de", number_bfs = NULL, que
   }
   
   df_pxweb <- pxweb::pxweb_get_data(url = pxweb_api_url, query = pxq, column.name.type = column_name_type, variable.value.type = variable_value_type)
-  tbl <- tibble::as_tibble(df_pxweb)
+  tbl <- tibble::as_tibble(df_pxweb, .name_repair = "minimal")
   
   if(clean_names) { tbl <- janitor::clean_names(tbl) }
   
