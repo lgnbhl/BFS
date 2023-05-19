@@ -1,3 +1,7 @@
+# BFS 0.4.7
+- add new function `bfs_get_metadata()`
+- fix bug duplicated column names with `as_tibble(. .name_repair = "minimal")` 
+
 # BFS 0.4.5
 - Fix bug in `bfs_get_data_comments()` #8.
 - improve README by adding info about dependencies.

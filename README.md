@@ -13,10 +13,10 @@ total](https://cranlogs.r-pkg.org/badges/grand-total/BFS)](https://cran.r-projec
 
 > Search and download data from the Swiss Federal Statistical Office
 
-The `BFS` package allows to search and download public data from the <a
-href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html"
-target="_blank">Swiss Federal Statistical Office</a> (BFS stands for
-*Bundesamt für Statistik* in German) in a dynamic and reproducible way.
+The `BFS` package allows to search and download public data from the
+<a href="https://www.pxweb.bfs.admin.ch/pxweb/en/" target="_blank">Swiss
+Federal Statistical Office</a> (BFS stands for *Bundesamt für Statistik*
+in German) API in a dynamic and reproducible way.
 
 ## Installation
 
@@ -55,19 +55,19 @@ catalog_data_en
 ```
 
     ## # A tibble: 179 × 5
-    ##    title                                          langu…¹ publi…² url_bfs url_px
-    ##    <chr>                                          <chr>   <chr>   <chr>   <chr> 
-    ##  1 Businesses by difficulties in recruiting staf… en      Busine… https:… https…
-    ##  2 Businesses by difficulties in recruiting staf… en      Busine… https:… https…
-    ##  3 Businesses by employment prospects and econom… en      Busine… https:… https…
-    ##  4 Businesses by employment prospects and major … en      Busine… https:… https…
-    ##  5 Job vacancies by economic divisions (selectio… en      Job va… https:… https…
-    ##  6 Job vacancies by major region                  en      Job va… https:… https…
-    ##  7 Jobs by economic division, employment rate an… en      Jobs b… https:… https…
-    ##  8 Jobs by major region, economic sector, employ… en      Jobs b… https:… https…
-    ##  9 Hotel accommodation: arrivals and overnight s… en      Hotel … https:… https…
-    ## 10 Hotel accommodation: arrivals and overnight s… en      Hotel … https:… https…
-    ## # … with 169 more rows, and abbreviated variable names ¹​language, ²​published
+    ##    title                                       language published url_bfs url_px
+    ##    <chr>                                       <chr>    <chr>     <chr>   <chr> 
+    ##  1 New registrations of road vehicles by mont… en       New regi… https:… https…
+    ##  2 Hotel accommodation: arrivals and overnigh… en       Hotel ac… https:… https…
+    ##  3 Hotel accommodation: arrivals and overnigh… en       Hotel ac… https:… https…
+    ##  4 Hotel accommodation: arrivals and overnigh… en       Hotel ac… https:… https…
+    ##  5 Hotel sector: Supply and demand of open es… en       Hotel se… https:… https…
+    ##  6 Hotel sector: Supply and demand of open es… en       Hotel se… https:… https…
+    ##  7 Hotel sector: supply and demand of open es… en       Hotel se… https:… https…
+    ##  8 Employees, farmholdings, utilized agricult… en       Employee… https:… https…
+    ##  9 Foreign cross-border commuter by canton of… en       Foreign … https:… https…
+    ## 10 Foreign cross-border commuters by canton o… en       Foreign … https:… https…
+    ## # ℹ 169 more rows
 
 To find older datasets, you can use the search bar in the [official BFS
 website](https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/daten.html).
@@ -86,10 +86,9 @@ catalog_data_uni
 ```
 
     ## # A tibble: 1 × 5
-    ##   title                                           langu…¹ publi…² url_bfs url_px
-    ##   <chr>                                           <chr>   <chr>   <chr>   <chr> 
-    ## 1 University students by year, ISCED field, sex … en      Univer… https:… https…
-    ## # … with abbreviated variable names ¹​language, ²​published
+    ##   title                                        language published url_bfs url_px
+    ##   <chr>                                        <chr>    <chr>     <chr>   <chr> 
+    ## 1 University students by year, ISCED field, s… en       Universi… https:… https…
 
 ### Download a dataset in any language
 
@@ -110,20 +109,20 @@ df_uni <- bfs_get_data(url_bfs = catalog_data_uni$url_bfs, language = "en")
 df_uni
 ```
 
-    ## # A tibble: 17,640 × 5
-    ##    Year    `ISCED Field`     Sex    `Level of study`                     Unive…¹
+    ## # A tibble: 18,060 × 5
+    ##    Year    `ISCED Field`     Sex    `Level of study`       `University students`
     ##    <chr>   <chr>             <chr>  <chr>                                  <dbl>
-    ##  1 1980/81 Education science Male   First university degree or diploma       545
+    ##  1 1980/81 Education science Male   First university degr…                   545
     ##  2 1980/81 Education science Male   Bachelor                                   0
     ##  3 1980/81 Education science Male   Master                                     0
     ##  4 1980/81 Education science Male   Doctorate                                 93
-    ##  5 1980/81 Education science Male   Further education, advanced studies…      13
-    ##  6 1980/81 Education science Female First university degree or diploma       946
+    ##  5 1980/81 Education science Male   Further education, ad…                    13
+    ##  6 1980/81 Education science Female First university degr…                   946
     ##  7 1980/81 Education science Female Bachelor                                   0
     ##  8 1980/81 Education science Female Master                                     0
     ##  9 1980/81 Education science Female Doctorate                                 70
-    ## 10 1980/81 Education science Female Further education, advanced studies…      52
-    ## # … with 17,630 more rows, and abbreviated variable name ¹​`University students`
+    ## 10 1980/81 Education science Female Further education, ad…                    52
+    ## # ℹ 18,050 more rows
 
 Note that some datasets are only accessible in German and French.
 
@@ -166,7 +165,14 @@ bfs_get_data_comments(number_bfs = "px-x-1502040100_131", language = "en")
 
 #### Query specific elements
 
-You may get an error message if the dataset is too big.
+You may get an error message if the query is too large.
+
+    Error: 
+    Too large query. 
+    The smallest batch size is 24030 and the maximum number of values 
+    that can be downloaded through the API is 5000.
+
+You may also have an error the API calls too many requests.
 
     Error in pxweb_advanced_get(url = url, query = query, verbose = verbose) : 
       Too Many Requests (RFC 6585) (HTTP 429).
@@ -179,46 +185,16 @@ i.e. `values`, of your dataset.
 
 ``` r
 # choose a BFS number and language
-number_bfs <- "px-x-1502040100_131" 
-language <- "en"
-# create the BFS api url
-pxweb_api_url <- paste0("https://www.pxweb.bfs.admin.ch/api/v1/", 
-                        language, "/", number_bfs, "/", number_bfs, ".px")
-# Get BFS table metadata using {pxweb}
-px_meta <- pxweb::pxweb_get(pxweb_api_url)
-# list variables items
-str(px_meta$variables)
+bfs_get_metadata(number_bfs = "px-x-1502040100_131", language = "en")
 ```
 
-    ## List of 4
-    ##  $ :List of 6
-    ##   ..$ code       : chr "Jahr"
-    ##   ..$ text       : chr "Year"
-    ##   ..$ values     : chr [1:42] "0" "1" "2" "3" ...
-    ##   ..$ valueTexts : chr [1:42] "1980/81" "1981/82" "1982/83" "1983/84" ...
-    ##   ..$ time       : logi TRUE
-    ##   ..$ elimination: logi FALSE
-    ##  $ :List of 6
-    ##   ..$ code       : chr "ISCED Fach"
-    ##   ..$ text       : chr "ISCED Field"
-    ##   ..$ values     : chr [1:42] "0" "1" "2" "3" ...
-    ##   ..$ valueTexts : chr [1:42] "Education science" "Teacher training without subject specialisation" "Teacher training with subject specialisation" "Fine arts" ...
-    ##   ..$ elimination: logi TRUE
-    ##   ..$ time       : logi FALSE
-    ##  $ :List of 6
-    ##   ..$ code       : chr "Geschlecht"
-    ##   ..$ text       : chr "Sex"
-    ##   ..$ values     : chr [1:2] "0" "1"
-    ##   ..$ valueTexts : chr [1:2] "Male" "Female"
-    ##   ..$ elimination: logi TRUE
-    ##   ..$ time       : logi FALSE
-    ##  $ :List of 6
-    ##   ..$ code       : chr "Studienstufe"
-    ##   ..$ text       : chr "Level of study"
-    ##   ..$ values     : chr [1:5] "0" "1" "2" "3" ...
-    ##   ..$ valueTexts : chr [1:5] "First university degree or diploma" "Bachelor" "Master" "Doctorate" ...
-    ##   ..$ elimination: logi TRUE
-    ##   ..$ time       : logi FALSE
+    ## # A tibble: 4 × 6
+    ##   code         text           values     valueTexts time  elimination
+    ##   <chr>        <chr>          <list>     <list>     <lgl> <lgl>      
+    ## 1 Jahr         Year           <chr [43]> <chr [43]> TRUE  NA         
+    ## 2 ISCED Fach   ISCED Field    <chr [42]> <chr [42]> NA    TRUE       
+    ## 3 Geschlecht   Sex            <chr [2]>  <chr [2]>  NA    TRUE       
+    ## 4 Studienstufe Level of study <chr [5]>  <chr [5]>  NA    TRUE
 
 Then you can manually select the dimensions of the dataset you want to
 query.
@@ -232,10 +208,11 @@ dimensions <- list(
   "ISCED Fach" = c("0"),
   "Geschlecht" = c("0", "1"),
   "Studienstufe" = c("2", "3"))
+
 # Query BFS data with specific dimensions
 BFS::bfs_get_data(
-  number_bfs = number_bfs,
-  language = language,
+  number_bfs = "px-x-1502040100_131",
+  language = "en",
   query = dimensions
   )
 ```
@@ -269,20 +246,19 @@ catalog_tables_en
 ```
 
     ## # A tibble: 350 × 5
-    ##    title                                         langu…¹ publi…² url_bfs url_t…³
-    ##    <chr>                                         <chr>   <chr>   <chr>   <chr>  
-    ##  1 "Civil aviation – overview"                   en      "Civil… https:… https:…
-    ##  2 "Difficulties in recruiting staff with educa… en      "Diffi… https:… https:…
-    ##  3 "Difficulties in recruiting staff with educa… en      "Diffi… https:… https:…
-    ##  4 "Difficulties in recruiting staff with highe… en      "Diffi… https:… https:…
-    ##  5 "Difficulties in recruiting staff with unive… en      "Diffi… https:… https:…
-    ##  6 "Full-time job equivalent per sector"         en      "Full-… https:… https:…
-    ##  7 "Full-time job per sector and gender"         en      "Full-… https:… https:…
-    ##  8 "Index of employment evolution prospects per… en      "Index… https:… https:…
-    ##  9 "Job vacancy per branch of economic activity… en      "Job v… https:… https:…
-    ## 10 "Jobs per sector and gender, gross and seaso… en      "Jobs … https:… https:…
-    ## # … with 340 more rows, and abbreviated variable names ¹​language, ²​published,
-    ## #   ³​url_table
+    ##    title                                    language published url_bfs url_table
+    ##    <chr>                                    <chr>    <chr>     <chr>   <chr>    
+    ##  1 Deaths per week by 5-year age group, se… en       Deaths p… https:… https://…
+    ##  2 Deaths per week by 5-year age group, se… en       Deaths p… https:… https://…
+    ##  3 Weekly number of deaths, 2010-2023       en       Weekly n… https:… https://…
+    ##  4 Employed persons (domestic concept) tot… en       Employed… https:… https://…
+    ##  5 Employed persons working in Switzerland  en       Employed… https:… https://…
+    ##  6 Index values, 1st quarter 2019 - 1st qu… en       Index va… https:… https://…
+    ##  7 Rates of change compared with the previ… en       Rates of… https:… https://…
+    ##  8 Rates of change compared with the same … en       Rates of… https:… https://…
+    ##  9 Statistical key figure, 1st quarter 202… en       Statisti… https:… https://…
+    ## 10 The weights of the subindices: Weights … en       The weig… https:… https://…
+    ## # ℹ 340 more rows
 
 ``` r
 library(dplyr)
@@ -300,36 +276,51 @@ df <- tryCatch(expr = openxlsx::read.xlsx(index_table_url, startRow = 1),
 df
 ```
 
-    ## # A tibble: 33 × 17
-    ##    Sprache./…¹ X2    X3    X4    X5    X6    X7    X8    X9    X10   X11   X12  
-    ##    <chr>       <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr>
-    ##  1 "Indexwert… <NA>  <NA>  <NA>  <NA>  <NA>  <NA>  <NA>  <NA>  <NA>  <NA>  <NA> 
-    ##  2 "Schweizer… <NA>  <NA>  <NA>  <NA>  <NA>  <NA>  <NA>  <NA>  <NA>  <NA>  <NA> 
-    ##  3 "Totalinde… Q1 2… Q2 2… Q3 2… Q4 2… Q1 2… Q2 2… Q3 2… Q4 2… Q1 2… Q2 2… Q3 2…
-    ##  4 "Total "    97.6… 98.1… 98.2… 100   99.2… 100.… 100.… 103.… 103.… 105.… 107.…
-    ##  5 "GemeindeT… 95.5… 97.7… 96.9… 100   98.8… 100.… 101.… 102.… 103.… 105.… 108.…
-    ##  6 "GemeindeT… 98.1… 98.7… 100.… 100   99.2… 100.… 101.… 103.… 103.… 104.… 106.…
-    ##  7 "GemeindeT… 97.7… 99.1… 98.0… 100   98.3… 99.8… 100.… 102.… 103.… 106.… 107.…
-    ##  8 "GemeindeT… 99.6… 98.3… 98.7… 100   100.… 100.… 99.9… 102.… 103.… 105.… 107.…
-    ##  9 "GemeindeT… 97.7… 97.1… 97.5… 100   99.1… 99.8… 100.… 103.… 101.… 105.… 107.…
-    ## 10 "EFH"       97.0… 98.2… 98.5… 100   99.4… 100.… 101.… 103.… 103.… 105.… 108.…
-    ## # … with 23 more rows, 5 more variables: X13 <chr>, X14 <chr>, X15 <chr>,
-    ## #   X16 <chr>, X17 <chr>, and abbreviated variable name
-    ## #   ¹​`Sprache./.Langue./.Lingua./.Language`
+    ## # A tibble: 33 × 19
+    ##    Sprache./.Langue./.Li…¹ X2    X3    X4    X5    X6    X7    X8    X9    X10  
+    ##    <chr>                   <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr>
+    ##  1 "Indexwerte, 1. Quarta…  <NA> <NA>  <NA>  <NA>  <NA>  <NA>  <NA>  <NA>  <NA> 
+    ##  2 "Schweizerischer Wohni…  <NA> <NA>  <NA>  <NA>  <NA>  <NA>  <NA>  <NA>  <NA> 
+    ##  3  <NA>                   "Woh… <NA>  <NA>  <NA>  <NA>  <NA>  Einf… <NA>  <NA> 
+    ##  4 "Totalindex und Subind… "Tot… Geme… Geme… Geme… Geme… Geme… EFH   Geme… Geme…
+    ##  5 "Q1 2019"               "97.… 95.5… 98.1… 97.7… 99.6… 97.7… 97.0… 95.2… 97.1…
+    ##  6 "Q2 2019"               "98.… 97.7… 98.7… 99.1… 98.3… 97.1… 98.2… 98.1… 98.2…
+    ##  7 "Q3 2019"               "98.… 96.9… 100.… 98.0… 98.7… 97.5… 98.5… 97.4… 100.…
+    ##  8 "Q4 2019"               "100" 100   100   100   100   100   100   100   100  
+    ##  9 "Q1 2020"               "99.… 98.8… 99.2… 98.3… 100.… 99.1… 99.4… 100.… 99.1…
+    ## 10 "Q2 2020"               "100… 100.… 100.… 99.8… 100.… 99.8… 100.… 100.… 100.…
+    ## # ℹ 23 more rows
+    ## # ℹ abbreviated name: ¹​`Sprache./.Langue./.Lingua./.Language`
+    ## # ℹ 9 more variables: X11 <chr>, X12 <chr>, X13 <chr>, X14 <chr>, X15 <chr>,
+    ## #   X16 <chr>, X17 <chr>, X18 <chr>, X19 <chr>
 
 ## Main dependencies of the package
 
-Under the hood, this package is using extensively the [pxweb](https://ropengov.github.io/pxweb/index.html){target="_blank"} R package to query the Swiss Federal Statistical Office PXWEB API. PXWEB is an API structure developed by Statistics Sweden and other national statistical institutions (NSI) to disseminate public statistics in a structured way.
+Under the hood, this package is using extensively the
+<a href="https://ropengov.github.io/pxweb/index.html"
+target="_blank">pxweb</a> R package to query the Swiss Federal
+Statistical Office PXWEB API. PXWEB is an API structure developed by
+Statistics Sweden and other national statistical institutions (NSI) to
+disseminate public statistics in a structured way.
 
-The list of available datasets is accessed using the [tidyRSS](https://github.com/RobertMyles/tidyRSS){target="_blank"} R package to scrap the official [BFS RSS feed](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true). 
+The list of available datasets is accessed using the
+<a href="https://github.com/RobertMyles/tidyRSS"
+target="_blank">tidyRSS</a> R package to scrap the official [BFS RSS
+feed](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true).
 
-You can clean the column names of the datasets automatically using `janitor::clean_names()` by adding the argument `clean_names = TRUE` in the `bfs_get_data()` function. 
+You can clean the column names of the datasets automatically using
+`janitor::clean_names()` by adding the argument `clean_names = TRUE` in
+the `bfs_get_data()` function.
 
 ## Other information
 
-A [blog article](https://felixluginbuhl.com/blog/posts/2019-11-07-swiss-data/) showing a concrete example about how to use the BFS package and to visualize the data in a Swiss map.
+A [blog
+article](https://felixluginbuhl.com/blog/posts/2019-11-07-swiss-data/)
+showing a concrete example about how to use the BFS package and to
+visualize the data in a Swiss map.
 
-This package is in no way officially related to or endorsed by the Swiss Federal Statistical Office (BFS).
+This package is in no way officially related to or endorsed by the Swiss
+Federal Statistical Office (BFS).
 
 ## Contribute
 

@@ -110,7 +110,16 @@ bfs_get_data_comments(number_bfs = "px-x-1502040100_131", language = "en")
 
 #### Query specific elements
 
-You may get an error message if the dataset is too big.
+You may get an error message if the query is too large.
+
+```
+Error: 
+Too large query. 
+The smallest batch size is 24030 and the maximum number of values 
+that can be downloaded through the API is 5000.
+```
+
+You may also have an error the API calls too many requests.
 
 ```
 Error in pxweb_advanced_get(url = url, query = query, verbose = verbose) : 
@@ -123,15 +132,7 @@ First you want to get the variable names, i.e. `code`, and categories, i.e. `val
 
 ```{r}
 # choose a BFS number and language
-number_bfs <- "px-x-1502040100_131" 
-language <- "en"
-# create the BFS api url
-pxweb_api_url <- paste0("https://www.pxweb.bfs.admin.ch/api/v1/", 
-                        language, "/", number_bfs, "/", number_bfs, ".px")
-# Get BFS table metadata using {pxweb}
-px_meta <- pxweb::pxweb_get(pxweb_api_url)
-# list variables items
-str(px_meta$variables)
+bfs_get_metadata(number_bfs = "px-x-1502040100_131", language = "en")
 ```
 
 Then you can manually select the dimensions of the dataset you want to query.
@@ -145,10 +146,11 @@ dimensions <- list(
   "ISCED Fach" = c("0"),
   "Geschlecht" = c("0", "1"),
   "Studienstufe" = c("2", "3"))
+
 # Query BFS data with specific dimensions
 BFS::bfs_get_data(
-  number_bfs = number_bfs,
-  language = language,
+  number_bfs = "px-x-1502040100_131",
+  language = "en",
   query = dimensions
   )
 ```

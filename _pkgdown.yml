@@ -29,3 +29,4 @@ reference:
       - bfs_get_catalog_tables
       - bfs_get_data
       - bfs_get_data_comments
+      - bfs_get_metadata
