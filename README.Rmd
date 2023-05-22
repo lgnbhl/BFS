@@ -119,7 +119,7 @@ The smallest batch size is 24030 and the maximum number of values
 that can be downloaded through the API is 5000.
 ```
 
-You may also have an error the API calls too many requests.
+You may also have an error if the API calls too many requests.
 
 ```
 Error in pxweb_advanced_get(url = url, query = query, verbose = verbose) : 
@@ -132,7 +132,9 @@ First you want to get the variable names, i.e. `code`, and categories, i.e. `val
 
 ```{r}
 # choose a BFS number and language
-bfs_get_metadata(number_bfs = "px-x-1502040100_131", language = "en")
+metadata <- bfs_get_metadata(number_bfs = "px-x-1502040100_131", language = "en")
+
+str(metadata)
 ```
 
 Then you can manually select the dimensions of the dataset you want to query.
@@ -144,7 +146,7 @@ Then you can manually select the dimensions of the dataset you want to query.
 dimensions <- list(
   "Jahr" = c("40", "41"),
   "ISCED Fach" = c("0"),
-  "Geschlecht" = c("0", "1"),
+  "Geschlecht" = c("*"),
   "Studienstufe" = c("2", "3"))
 
 # Query BFS data with specific dimensions

@@ -107,7 +107,7 @@
 <blockquote>
 <p>Search and download data from the Swiss Federal Statistical Office</p>
 </blockquote>
-<p>The <code>BFS</code> package allows to search and download public data from the <a href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html" target="_blank" class="external-link">Swiss Federal Statistical Office</a> (BFS stands for <em>Bundesamt für Statistik</em> in German) in a dynamic and reproducible way.</p>
+<p>The <code>BFS</code> package allows to search and download public data from the <a href="https://www.pxweb.bfs.admin.ch/pxweb/en/" target="_blank" class="external-link">Swiss Federal Statistical Office</a> (BFS stands for <em>Bundesamt für Statistik</em> in German) API in a dynamic and reproducible way.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -132,19 +132,19 @@
 <span></span>
 <span><span class="va">catalog_data_en</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 179 × 5</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    title                                          langu…¹ publi…² url_bfs url_px</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                          &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; </span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Businesses by difficulties in recruiting staf… en      Busine… https:… https…</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Businesses by difficulties in recruiting staf… en      Busine… https:… https…</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Businesses by employment prospects and econom… en      Busine… https:… https…</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Businesses by employment prospects and major … en      Busine… https:… https…</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Job vacancies by economic divisions (selectio… en      Job va… https:… https…</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Job vacancies by major region                  en      Job va… https:… https…</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Jobs by economic division, employment rate an… en      Jobs b… https:… https…</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Jobs by major region, economic sector, employ… en      Jobs b… https:… https…</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Hotel accommodation: arrivals and overnight s… en      Hotel … https:… https…</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Hotel accommodation: arrivals and overnight s… en      Hotel … https:… https…</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 169 more rows, and abbreviated variable names ¹​language, ²​published</span></span></code></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    title                                       language published url_bfs url_px</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                       &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; </span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Secondary Sector Production, Orders and Tu… en       Secondar… https:… https…</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Secondary Sector Production, Orders and Tu… en       Secondar… https:… https…</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Secondary Sector Production, Orders and Tu… en       Secondar… https:… https…</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 New registrations of road vehicles by mont… en       New regi… https:… https…</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Hotel accommodation: arrivals and overnigh… en       Hotel ac… https:… https…</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Hotel accommodation: arrivals and overnigh… en       Hotel ac… https:… https…</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Hotel accommodation: arrivals and overnigh… en       Hotel ac… https:… https…</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Hotel sector: Supply and demand of open es… en       Hotel se… https:… https…</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Hotel sector: Supply and demand of open es… en       Hotel se… https:… https…</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Hotel sector: supply and demand of open es… en       Hotel se… https:… https…</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ℹ 169 more rows</span></span></code></pre></div>
 <p>To find older datasets, you can use the search bar in the <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/daten.html" class="external-link">official BFS website</a>.</p>
 </div>
 <div class="section level3">
@@ -159,10 +159,9 @@
 <span></span>
 <span><span class="va">catalog_data_uni</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 1 × 5</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   title                                           langu…¹ publi…² url_bfs url_px</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;                                           &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; </span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 University students by year, ISCED field, sex … en      Univer… https:… https…</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with abbreviated variable names ¹​language, ²​published</span></span></code></pre></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   title                                        language published url_bfs url_px</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;                                        &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; </span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 University students by year, ISCED field, s… en       Universi… https:… https…</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="download-a-dataset-in-any-language">Download a dataset in any language<a class="anchor" aria-label="anchor" href="#download-a-dataset-in-any-language"></a>
@@ -175,20 +174,20 @@
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_uni</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 17,640 × 5</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    Year    `ISCED Field`     Sex    `Level of study`                     Unive…¹</span></span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 18,060 × 5</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    Year    `ISCED Field`     Sex    `Level of study`       `University students`</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;   &lt;chr&gt;             &lt;chr&gt;  &lt;chr&gt;                                  &lt;dbl&gt;</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 1980/81 Education science Male   First university degree or diploma       545</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 1980/81 Education science Male   First university degr…                   545</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 1980/81 Education science Male   Bachelor                                   0</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 1980/81 Education science Male   Master                                     0</span></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 1980/81 Education science Male   Doctorate                                 93</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 1980/81 Education science Male   Further education, advanced studies…      13</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 1980/81 Education science Female First university degree or diploma       946</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 1980/81 Education science Male   Further education, ad…                    13</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 1980/81 Education science Female First university degr…                   946</span></span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 1980/81 Education science Female Bachelor                                   0</span></span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 1980/81 Education science Female Master                                     0</span></span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 1980/81 Education science Female Doctorate                                 70</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 1980/81 Education science Female Further education, advanced studies…      52</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 17,630 more rows, and abbreviated variable name ¹​`University students`</span></span></code></pre></div>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 1980/81 Education science Female Further education, ad…                    52</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ℹ 18,050 more rows</span></span></code></pre></div>
 <p>Note that some datasets are only accessible in German and French.</p>
 <p>In case the data is not accessible using <code><a href="reference/bfs_get_catalog_data.html">bfs_get_catalog_data()</a></code>, you can manually add the BFS number in the <code><a href="reference/bfs_get_data.html">bfs_get_data()</a></code> function using the <code>number_bfs</code> argument.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -213,104 +212,89 @@
 <div class="section level4">
 <h4 id="query-specific-elements">Query specific elements<a class="anchor" aria-label="anchor" href="#query-specific-elements"></a>
 </h4>
-<p>You may get an error message if the dataset is too big.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">pxweb_advanced_get</span>(<span class="at">url =</span> url, <span class="at">query =</span> query, <span class="at">verbose =</span> verbose) <span class="sc">:</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  Too Many <span class="fu">Requests</span> (RFC <span class="dv">6585</span>) (HTTP <span class="dv">429</span>).</span></code></pre></div>
+<p>You may get an error message if the query is too large.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Error<span class="sc">:</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Too large query. </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>The smallest batch size is <span class="dv">24030</span> and the maximum number of values </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>that can be downloaded through the API is <span class="fl">5000.</span></span></code></pre></div>
+<p>You may also have an error if the API calls too many requests.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">pxweb_advanced_get</span>(<span class="at">url =</span> url, <span class="at">query =</span> query, <span class="at">verbose =</span> verbose) <span class="sc">:</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  Too Many <span class="fu">Requests</span> (RFC <span class="dv">6585</span>) (HTTP <span class="dv">429</span>).</span></code></pre></div>
 <p>One solution is too query only specific elements of the dataset to download less data. Here an example.</p>
 <p>First you want to get the variable names, i.e. <code>code</code>, and categories, i.e. <code>values</code>, of your dataset.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># choose a BFS number and language</span></span>
-<span><span class="va">number_bfs</span> <span class="op">&lt;-</span> <span class="st">"px-x-1502040100_131"</span> </span>
-<span><span class="va">language</span> <span class="op">&lt;-</span> <span class="st">"en"</span></span>
-<span><span class="co"># create the BFS api url</span></span>
-<span><span class="va">pxweb_api_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"https://www.pxweb.bfs.admin.ch/api/v1/"</span>, </span>
-<span>                        <span class="va">language</span>, <span class="st">"/"</span>, <span class="va">number_bfs</span>, <span class="st">"/"</span>, <span class="va">number_bfs</span>, <span class="st">".px"</span><span class="op">)</span></span>
-<span><span class="co"># Get BFS table metadata using {pxweb}</span></span>
-<span><span class="va">px_meta</span> <span class="op">&lt;-</span> <span class="fu">pxweb</span><span class="fu">::</span><span class="fu"><a href="https://ropengov.github.io/pxweb/reference/pxweb_get.html" class="external-link">pxweb_get</a></span><span class="op">(</span><span class="va">pxweb_api_url</span><span class="op">)</span></span>
-<span><span class="co"># list variables items</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">px_meta</span><span class="op">$</span><span class="va">variables</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="do">## List of 4</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ :List of 6</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ code       : chr "Jahr"</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ text       : chr "Year"</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ values     : chr [1:42] "0" "1" "2" "3" ...</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ valueTexts : chr [1:42] "1980/81" "1981/82" "1982/83" "1983/84" ...</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ time       : logi TRUE</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ elimination: logi FALSE</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ :List of 6</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ code       : chr "ISCED Fach"</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ text       : chr "ISCED Field"</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ values     : chr [1:42] "0" "1" "2" "3" ...</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ valueTexts : chr [1:42] "Education science" "Teacher training without subject specialisation" "Teacher training with subject specialisation" "Fine arts" ...</span></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ elimination: logi TRUE</span></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ time       : logi FALSE</span></span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ :List of 6</span></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ code       : chr "Geschlecht"</span></span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ text       : chr "Sex"</span></span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ values     : chr [1:2] "0" "1"</span></span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ valueTexts : chr [1:2] "Male" "Female"</span></span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ elimination: logi TRUE</span></span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ time       : logi FALSE</span></span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ :List of 6</span></span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ code       : chr "Studienstufe"</span></span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ text       : chr "Level of study"</span></span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ values     : chr [1:5] "0" "1" "2" "3" ...</span></span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ valueTexts : chr [1:5] "First university degree or diploma" "Bachelor" "Master" "Doctorate" ...</span></span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ elimination: logi TRUE</span></span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ time       : logi FALSE</span></span></code></pre></div>
+<span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_metadata.html">bfs_get_metadata</a></span><span class="op">(</span>number_bfs <span class="op">=</span> <span class="st">"px-x-1502040100_131"</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">metadata</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="do">## tibble [4 × 6] (S3: tbl_df/tbl/data.frame)</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ code       : chr [1:4] "Jahr" "ISCED Fach" "Geschlecht" "Studienstufe"</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ text       : chr [1:4] "Year" "ISCED Field" "Sex" "Level of study"</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ values     :List of 4</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ : chr [1:43] "0" "1" "2" "3" ...</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ : chr [1:42] "0" "1" "2" "3" ...</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ : chr [1:2] "0" "1"</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ : chr [1:5] "0" "1" "2" "3" ...</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ valueTexts :List of 4</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ : chr [1:43] "1980/81" "1981/82" "1982/83" "1983/84" ...</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ : chr [1:42] "Education science" "Teacher training without subject specialisation" "Teacher training with subject specialisation" "Fine arts" ...</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ : chr [1:2] "Male" "Female"</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="do">##   ..$ : chr [1:5] "First university degree or diploma" "Bachelor" "Master" "Doctorate" ...</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ time       : logi [1:4] TRUE NA NA NA</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  $ elimination: logi [1:4] NA TRUE TRUE TRUE</span></span></code></pre></div>
 <p>Then you can manually select the dimensions of the dataset you want to query.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Manually create BFS query dimensions</span></span>
 <span><span class="co"># Use `code` and `values` elements in `px_meta$variables`</span></span>
 <span><span class="co"># Use "*" to select all</span></span>
 <span><span class="va">dimensions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Jahr"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"40"</span>, <span class="st">"41"</span><span class="op">)</span>,</span>
 <span>  <span class="st">"ISCED Fach"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span><span class="op">)</span>,</span>
-<span>  <span class="st">"Geschlecht"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"1"</span><span class="op">)</span>,</span>
+<span>  <span class="st">"Geschlecht"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"*"</span><span class="op">)</span>,</span>
 <span>  <span class="st">"Studienstufe"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># Query BFS data with specific dimensions</span></span>
 <span><span class="fu">BFS</span><span class="fu">::</span><span class="fu"><a href="reference/bfs_get_data.html">bfs_get_data</a></span><span class="op">(</span></span>
-<span>  number_bfs <span class="op">=</span> <span class="va">number_bfs</span>,</span>
-<span>  language <span class="op">=</span> <span class="va">language</span>,</span>
+<span>  number_bfs <span class="op">=</span> <span class="st">"px-x-1502040100_131"</span>,</span>
+<span>  language <span class="op">=</span> <span class="st">"en"</span>,</span>
 <span>  query <span class="op">=</span> <span class="va">dimensions</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 8 × 5</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   Year    `ISCED Field`     Sex    `Level of study` `University students`</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;   &lt;chr&gt;             &lt;chr&gt;  &lt;chr&gt;                            &lt;dbl&gt;</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 2020/21 Education science Male   Master                             151</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 2020/21 Education science Male   Doctorate                          121</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 2020/21 Education science Female Master                             555</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 2020/21 Education science Female Doctorate                          306</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 2021/22 Education science Male   Master                             143</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 2021/22 Education science Male   Doctorate                          115</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 7 2021/22 Education science Female Master                             599</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 8 2021/22 Education science Female Doctorate                          318</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 8 × 5</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   Year    `ISCED Field`     Sex    `Level of study` `University students`</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;   &lt;chr&gt;             &lt;chr&gt;  &lt;chr&gt;                            &lt;dbl&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 2020/21 Education science Male   Master                             151</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 2020/21 Education science Male   Doctorate                          121</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 2020/21 Education science Female Master                             555</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 2020/21 Education science Female Doctorate                          306</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 2021/22 Education science Male   Master                             143</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 2021/22 Education science Male   Doctorate                          115</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 7 2021/22 Education science Female Master                             599</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 8 2021/22 Education science Female Doctorate                          318</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
 <h3 id="catalog-of-tables">Catalog of tables<a class="anchor" aria-label="anchor" href="#catalog-of-tables"></a>
 </h3>
 <p>A lot of tables are not accessible through the official API, but they are still present in the official BFS website. You can access the <a href="https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/tabellen/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true" class="external-link">RSS feed tables catalog</a> using <code><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables()</a></code>. Most of these tables are Excel or CSV files. Note again that only a part of all the public tables accessible are in the RSS feed (the most recently updated datasets).</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">catalog_tables_en</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">catalog_tables_en</span></span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 350 × 5</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    title                                         langu…¹ publi…² url_bfs url_t…³</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                         &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  </span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 "Civil aviation – overview"                   en      "Civil… https:… https:…</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 "Difficulties in recruiting staff with educa… en      "Diffi… https:… https:…</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 "Difficulties in recruiting staff with educa… en      "Diffi… https:… https:…</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 "Difficulties in recruiting staff with highe… en      "Diffi… https:… https:…</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 "Difficulties in recruiting staff with unive… en      "Diffi… https:… https:…</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 "Full-time job equivalent per sector"         en      "Full-… https:… https:…</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 "Full-time job per sector and gender"         en      "Full-… https:… https:…</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 "Index of employment evolution prospects per… en      "Index… https:… https:…</span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 "Job vacancy per branch of economic activity… en      "Job v… https:… https:…</span></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 "Jobs per sector and gender, gross and seaso… en      "Jobs … https:… https:…</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 340 more rows, and abbreviated variable names ¹​language, ²​published,</span></span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="do">## #   ³​url_table</span></span></code></pre></div>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 350 × 5</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    title                                    language published url_bfs url_table</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                                    &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;    </span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 Monthly industrial development - adjust… en       Monthly … https:… https://…</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 Monthly industrial development - non ad… en       Monthly … https:… https://…</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 Monthly industrial development - season… en       Monthly … https:… https://…</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 Quarterly development in secondary sect… en       Quarterl… https:… https://…</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 Quarterly development in secondary sect… en       Quarterl… https:… https://…</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 Quarterly development in secondary sect… en       Quarterl… https:… https://…</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 Deaths per week by 5-year age group, se… en       Deaths p… https:… https://…</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 Deaths per week by 5-year age group, se… en       Deaths p… https:… https://…</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 Weekly number of deaths, 2010-2023       en       Weekly n… https:… https://…</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 Employed persons (domestic concept) tot… en       Employed… https:… https://…</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ℹ 340 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ycphs.github.io/openxlsx/index.html" class="external-link">openxlsx</a></span><span class="op">)</span></span>
 <span></span>
@@ -324,22 +308,23 @@
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">df</span></span></code></pre></div>
-<div class="sourceCode" id="cb24"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 33 × 17</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    Sprache./…¹ X2    X3    X4    X5    X6    X7    X8    X9    X10   X11   X12  </span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 "Indexwert… &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; </span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 "Schweizer… &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; </span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3 "Totalinde… Q1 2… Q2 2… Q3 2… Q4 2… Q1 2… Q2 2… Q3 2… Q4 2… Q1 2… Q2 2… Q3 2…</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 "Total "    97.6… 98.1… 98.2… 100   99.2… 100.… 100.… 103.… 103.… 105.… 107.…</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 "GemeindeT… 95.5… 97.7… 96.9… 100   98.8… 100.… 101.… 102.… 103.… 105.… 108.…</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 "GemeindeT… 98.1… 98.7… 100.… 100   99.2… 100.… 101.… 103.… 103.… 104.… 106.…</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 "GemeindeT… 97.7… 99.1… 98.0… 100   98.3… 99.8… 100.… 102.… 103.… 106.… 107.…</span></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 "GemeindeT… 99.6… 98.3… 98.7… 100   100.… 100.… 99.9… 102.… 103.… 105.… 107.…</span></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 "GemeindeT… 97.7… 97.1… 97.5… 100   99.1… 99.8… 100.… 103.… 101.… 105.… 107.…</span></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 "EFH"       97.0… 98.2… 98.5… 100   99.4… 100.… 101.… 103.… 103.… 105.… 108.…</span></span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # … with 23 more rows, 5 more variables: X13 &lt;chr&gt;, X14 &lt;chr&gt;, X15 &lt;chr&gt;,</span></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="do">## #   X16 &lt;chr&gt;, X17 &lt;chr&gt;, and abbreviated variable name</span></span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="do">## #   ¹​`Sprache./.Langue./.Lingua./.Language`</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 33 × 19</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    Sprache./.Langue./.Li…¹ X2    X3    X4    X5    X6    X7    X8    X9    X10  </span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1 "Indexwerte, 1. Quarta…  &lt;NA&gt; &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; </span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  2 "Schweizerischer Wohni…  &lt;NA&gt; &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; </span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  3  &lt;NA&gt;                   "Woh… &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  Einf… &lt;NA&gt;  &lt;NA&gt; </span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  4 "Totalindex und Subind… "Tot… Geme… Geme… Geme… Geme… Geme… EFH   Geme… Geme…</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  5 "Q1 2019"               "97.… 95.5… 98.1… 97.7… 99.6… 97.7… 97.0… 95.2… 97.1…</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  6 "Q2 2019"               "98.… 97.7… 98.7… 99.1… 98.3… 97.1… 98.2… 98.1… 98.2…</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  7 "Q3 2019"               "98.… 96.9… 100.… 98.0… 98.7… 97.5… 98.5… 97.4… 100.…</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  8 "Q4 2019"               "100" 100   100   100   100   100   100   100   100  </span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  9 "Q1 2020"               "99.… 98.8… 99.2… 98.3… 100.… 99.1… 99.4… 100.… 99.1…</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 10 "Q2 2020"               "100… 100.… 100.… 99.8… 100.… 99.8… 100.… 100.… 100.…</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="do">## # ℹ 23 more rows</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="do">## # ℹ abbreviated name: ¹​`Sprache./.Langue./.Lingua./.Language`</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="do">## # ℹ 9 more variables: X11 &lt;chr&gt;, X12 &lt;chr&gt;, X13 &lt;chr&gt;, X14 &lt;chr&gt;, X15 &lt;chr&gt;,</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="do">## #   X16 &lt;chr&gt;, X17 &lt;chr&gt;, X18 &lt;chr&gt;, X19 &lt;chr&gt;</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
