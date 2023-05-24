@@ -16,8 +16,8 @@ hexSticker::sticker("man/figures/logo_icon.svg",
                     s_y = 1, 
                     s_width = 0.85,
                     url="felixluginbuhl.com/BFS",
-                    u_size = 2.1,
-                    u_color = "#D20D1D",
+                    u_size = 6.8,
+                    u_color = "black",
                     filename="man/figures/logo.png")
 
 # MOD with Gimp: removing red borders.
