@@ -56,7 +56,7 @@ dplyr packages).
 }
 }
 \description{
-This function extracting data from the official RSS Feed of the Swiss Federal Statistical Office data catalog.
+Get the list of the datasets available in the official RSS Feed of the Swiss Federal Statistical Office data catalog.
 }
 \examples{
 \donttest{bfs_get_catalog_data(language = "en", title = "students", prodima = c(900212))}

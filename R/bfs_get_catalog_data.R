@@ -1,6 +1,6 @@
 #' Get the BFS data catalog
 #'
-#' This function extracting data from the official RSS Feed of the Swiss Federal Statistical Office data catalog.
+#' Get the list of the datasets available in the official RSS Feed of the Swiss Federal Statistical Office data catalog.
 #'
 #' @param language character The language of a BFS catalog, i.e. "de", "fr", "it" or "en".
 #' @param title character String to search in title, subtitle and supertitle
