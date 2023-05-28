@@ -1,6 +1,6 @@
 #' Get the BFS data catalog
 #'
-#' Get the list of the datasets available in the official RSS Feed of the Swiss Federal Statistical Office data catalog.
+#' Get the list of the datasets available in the official \href{https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml}{RSS Feed} of the Swiss Federal Statistical Office data catalog.
 #'
 #' @param language character The language of a BFS catalog, i.e. "de", "fr", "it" or "en".
 #' @param title character String to search in title, subtitle and supertitle

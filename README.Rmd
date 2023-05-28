@@ -45,17 +45,15 @@ library(BFS)
 
 ### Get the data catalog
 
-To search and download data from the Swiss Federal Statistical Office, you first need to retrieve information about the available public datasets.
+To search and download data from the Swiss Federal Statistical Office, you first need to retrieve information about the available public datasets from the [data catalog](https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/daten.html).
 
-You can get the data catalog by language based on the official [RSS feed](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true). Unfortunately, it seems that not the all public datasets are in the RSS feed, but only the most recently udpated. Note also that Italian and English give access to less datasets.
+You can get the complete data catalog by language, i.e. "en" for English, "de" for German (default), "fr" for French and "it" for Italian.
 
 ```{r}
 catalog_data_en <- bfs_get_catalog_data(language = "en")
 
 catalog_data_en
 ```
-
-To find older datasets, you can use the search bar in the [official BFS website](https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/daten.html).
 
 ### Search for a specific dataset
 

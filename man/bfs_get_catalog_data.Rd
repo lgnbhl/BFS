@@ -56,7 +56,7 @@ dplyr packages).
 }
 }
 \description{
-Get the list of the datasets available in the official RSS Feed of the Swiss Federal Statistical Office data catalog.
+Get the list of the datasets available in the official \href{https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml}{RSS Feed} of the Swiss Federal Statistical Office data catalog.
 }
 \examples{
 \donttest{bfs_get_catalog_data(language = "en", title = "students", prodima = c(900212))}
