@@ -4,10 +4,39 @@
 \alias{bfs_get_catalog_data}
 \title{Get the BFS data catalog}
 \usage{
-bfs_get_catalog_data(language = "de")
+bfs_get_catalog_data(
+  language = "de",
+  title = NULL,
+  spatial_division = NULL,
+  prodima = NULL,
+  inquiry = NULL,
+  institution = NULL,
+  publishing_year_start = NULL,
+  publishing_year_end = NULL,
+  order_nr = NULL,
+  skip_limit = TRUE
+)
 }
 \arguments{
-\item{language}{character The language of a BFS catalog.}
+\item{language}{character The language of a BFS catalog, i.e. "de", "fr", "it" or "en".}
+
+\item{title}{character String to search in title, subtitle and supertitle}
+
+\item{spatial_division}{BFS datasets by spatial division, choose between "Switzerland", "Cantons", "Districts", "Communes", "Other spatial divisions" or "International"}
+
+\item{prodima}{numeric Get only specific BFS themes using one or multiple prodima numbers}
+
+\item{inquiry}{character BFS datasets for an inquiry}
+
+\item{institution}{character BFS datasets for an institution}
+
+\item{publishing_year_start}{character BFS datasets for a publishing year start}
+
+\item{publishing_year_end}{character BFS datasets for a publishing year end}
+
+\item{order_nr}{character BFS datasets by order nr}
+
+\item{skip_limit}{boolean skip limit}
 }
 \value{
 A data frame
@@ -18,18 +47,19 @@ dplyr packages).
 \describe{
   \item{title}{A character column with the title of the BFS dataset}
   \item{language}{A character column with the language of the BFS dataset}
-  \item{published}{A character column with a number for the text from each
-  Wikisource page downloaded}
+  \item{publication_date}{The published date of the BFS dataset in the data catalog}
   \item{url_bfs}{A character column with the URL of the related BFS 
   webpage}
   \item{url_px}{A character column with the URL of the PX file}
+  \item{guid}{Globally Unique Identifier from the item from the RSS document}
+  \item{catalog_date}{The released date of the current BFS data catalog}
 }
 }
 \description{
-This function scraps the RSS Feed of the Swiss Federal Statistical Office data catalog.
+This function extracting data from the official RSS Feed of the Swiss Federal Statistical Office data catalog.
 }
 \examples{
-\donttest{bfs_get_catalog_data(language = "de")}
+\donttest{bfs_get_catalog_data(language = "en", title = "students", prodima = c(900212))}
 
 }
 \seealso{
