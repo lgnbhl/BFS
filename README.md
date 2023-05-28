@@ -38,14 +38,10 @@ library(BFS)
 
 ### Get the data catalog
 
-To search and download data from the Swiss Federal Statistical Office,
-you first need to retrieve information about the available public
-datasets from the [data
-catalog](https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/daten.html).
-
-You can get the complete data catalog by language, i.e. “en” for
-English, “de” for German (default), “fr” for French and “it” for
-Italian.
+Retrieve the list of publicly available datasets from the [data
+catalog](https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/daten.html)
+in any language (“de”, “fr”, “it” or “en”) by calling
+`bfs_get_catalog_data()`.
 
 ``` r
 catalog_data_en <- bfs_get_catalog_data(language = "en")
@@ -68,34 +64,36 @@ catalog_data_en
     ## 10 Demogr… en       2022-08-25 08:30:00 https:… https… bfsR… 2023-04-04 08:30:00
     ## # ℹ 170 more rows
 
-### Search for a specific dataset
+Note that some datasets are only accessible in German and French.
 
-You could use for example `dplyr` to search for a given dataset.
+### Download a dataset in any language
+
+The function `bfs_get_data()` allows you to download any dataset for the
+data catalog.
+
+To download a specific dataset, you can either use the `url_bfs` or the
+`number_bfs`.
+
+The `url_bfs` argument refers to the offical webpage of a dataset. Find
+below an example.
 
 ``` r
 library(dplyr)
 
-catalog_data_uni <- catalog_data_en %>%
-  filter(title == "University students by year, ISCED field, sex and level of study")
+url_bfs_uni_students <- catalog_data_en %>%
+  dplyr::filter(title == "University students by year, ISCED field, sex and level of study") %>%
+  dplyr::pull(url_bfs)
 
-catalog_data_uni
+url_bfs_uni_students
 ```
 
-    ## # A tibble: 1 × 7
-    ##   title    language publication_date    url_bfs url_px guid  catalog_date       
-    ##   <chr>    <chr>    <dttm>              <chr>   <chr>  <chr> <dttm>             
-    ## 1 Univers… en       2023-03-28 08:30:00 https:… https… bfsR… 2023-03-28 08:30:00
+    ## [1] "https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-datenbanken/daten.assetdetail.24367729.html"
 
-### Download a dataset in any language
-
-To download a BFS dataset, you have two options. You can add the
-official BFS URL webpage to the `url_bfs` argument to the
-`bfs_get_data()`. For example, you can use the URL of a given dataset
-you found using `bfs_get_catalog_data()`.
+Then you can download the full dataset using `url_bfs`.
 
 ``` r
 # https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-datenbanken/daten.assetdetail.16324907.html
-df_uni <- bfs_get_data(url_bfs = catalog_data_uni$url_bfs, language = "en")
+df_uni <- bfs_get_data(url_bfs = url_bfs_uni_students, language = "en")
 ```
 
     ##   Downloading large query (in 4 batches):
@@ -120,31 +118,28 @@ df_uni
     ## 10 1980/81 Education science Female Further education, ad…                    52
     ## # ℹ 18,050 more rows
 
-Note that some datasets are only accessible in German and French.
+It is recommended to privilege the use of the `number_bfs` argument for
+stability and reproducibility.
 
-In case the data is not accessible using `bfs_get_catalog_data()`, you
-can manually add the BFS number in the `bfs_get_data()` function using
-the `number_bfs` argument.
+You can manually find the `number_bfs` by opening the official webpage
+and look for the “FSO number”.
 
 ``` r
-# open webpage
-browseURL("https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-datenbanken/daten.assetdetail.16324907.html")
+# open Uni students dataset webpage
+browseURL(url_bfs_uni_students)
 ```
 
 <img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/screenshot.png" align="center" />
 
 <br/>
 
-Use again `bfs_get_data()` but this time with the `number_bfs` argument.
+Then you can download the dataset using `number_bfs`.
 
 ``` r
 bfs_get_data(number_bfs = "px-x-1502040100_131", language = "en")
 ```
 
-Please privilege the `number_bfs` argument of the `bfs_get_data()` if
-you want more stable and reproducible code.
-
-You can access additional information about the dataset by running
+You can also access additional information about the dataset by running
 `bfs_get_data_comments()`.
 
 ``` r
