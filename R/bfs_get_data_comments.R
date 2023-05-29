@@ -1,8 +1,8 @@
 #' Get the comments/footnotes of a BFS dataset in a given language
 #'
-#' @param url_bfs The URL page of a dataset.
 #' @param number_bfs The BFS number of a dataset.
-#' @param language Language of the dataset to be translated if exists.
+#' @param language Language of the dataset to be translated if exists, i.e. "de", "fr", "it" or "en".
+#' @param url_bfs The URL page of a dataset.
 #' @param query a list with named values, a json query file or json query string using \code{pxweb::pxweb_query()}.
 #' @param clean_names Clean column names using \code{janitor::clean_names()}
 #'
@@ -12,7 +12,7 @@
 #' dplyr packages).
 #'
 #' @export
-bfs_get_data_comments <- function(url_bfs = NULL, language = "de", number_bfs = NULL, query = "all", clean_names = FALSE) {
+bfs_get_data_comments <- function(number_bfs = NULL, language = "de", url_bfs = NULL, query = NULL, clean_names = FALSE) {
   
   if(is.null(number_bfs) & is.null(url_bfs)) { stop("Please fill bfs_number or url_bfs", call. = FALSE) }
   if(!is.null(number_bfs) & !is.null(url_bfs)) { stop("Please fill only bfs_number or url_bfs", call. = FALSE) }
@@ -27,9 +27,15 @@ bfs_get_data_comments <- function(url_bfs = NULL, language = "de", number_bfs = 
   }
   
   pxweb_api_url <- paste0("https://www.pxweb.bfs.admin.ch/api/v1/", language, "/", number_bfs, "/", number_bfs, ".px")
-  df_json <- jsonlite::fromJSON(txt = pxweb_api_url)
+  # df_json <- jsonlite::fromJSON(txt = pxweb_api_url)
   
-  if(query == "all") {
+  # check if too many requests HTTP 429
+  df_json <- httr2::request("https://www.pxweb.bfs.admin.ch/api/v1") %>% 
+    httr2::req_url_path_append(paste0(language, "/", number_bfs, "/", number_bfs, ".px")) %>% 
+    httr2::req_perform() %>% 
+    httr2::resp_body_json(simplifyVector = TRUE)
+  
+  if(query == "all" || is.null(query)) {
     variables <- df_json$variables$code
     values <- df_json$variables$values
     df <- rbind(rep("*", length(values)))

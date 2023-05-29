@@ -168,7 +168,7 @@ You may also have an error if the API calls too many requests.
     Error in pxweb_advanced_get(url = url, query = query, verbose = verbose) : 
       Too Many Requests (RFC 6585) (HTTP 429).
 
-One solution is too query only specific elements of the dataset to
+One solution is to query only specific elements of the dataset to
 download less data. Here an example.
 
 First you want to get the variable names, i.e. `code`, and categories,
@@ -181,7 +181,7 @@ metadata <- bfs_get_metadata(number_bfs = "px-x-1502040100_131", language = "en"
 str(metadata)
 ```
 
-    ## tibble [4 × 6] (S3: tbl_df/tbl/data.frame)
+    ## tibble [4 × 7] (S3: tbl_df/tbl/data.frame)
     ##  $ code       : chr [1:4] "Jahr" "ISCED Fach" "Geschlecht" "Studienstufe"
     ##  $ text       : chr [1:4] "Year" "ISCED Field" "Sex" "Level of study"
     ##  $ values     :List of 4
@@ -196,6 +196,7 @@ str(metadata)
     ##   ..$ : chr [1:5] "First university degree or diploma" "Bachelor" "Master" "Doctorate" ...
     ##  $ time       : logi [1:4] TRUE NA NA NA
     ##  $ elimination: logi [1:4] NA TRUE TRUE TRUE
+    ##  $ title      : chr [1:4] "University students by Year, ISCED Field, Sex and Level of study" "University students by Year, ISCED Field, Sex and Level of study" "University students by Year, ISCED Field, Sex and Level of study" "University students by Year, ISCED Field, Sex and Level of study"
 
 Then you can manually select the dimensions of the dataset you want to
 query.

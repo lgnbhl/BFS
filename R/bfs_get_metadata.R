@@ -30,9 +30,17 @@ bfs_get_metadata <- function(url_bfs = NULL, language = "de", number_bfs = NULL)
     number_bfs  
   }
   
-  pxweb_api_url <- paste0("https://www.pxweb.bfs.admin.ch/api/v1/", language, "/", number_bfs, "/", number_bfs, ".px")
-  df_json <- jsonlite::fromJSON(txt = pxweb_api_url, simplifyDataFrame = TRUE)
-  df <- df_json$variables
+  # if too many requests HTTP 429
+  df <- httr2::request("https://www.pxweb.bfs.admin.ch/api/v1") %>% 
+    httr2::req_url_path_append(paste0(language, "/", number_bfs, "/", number_bfs, ".px")) %>% 
+    httr2::req_retry(max_tries = 2, max_seconds = 5) %>%
+    httr2::req_perform() %>% 
+    httr2::resp_body_json(simplifyVector = TRUE)
   
-  tibble::as_tibble(df)
+  df2 <- df$variables
+  
+  # add title to dataset
+  df2$title <- df$title
+  
+  tibble::as_tibble(df2)
 }

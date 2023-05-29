@@ -5,27 +5,27 @@
 \title{Download BFS data in a given language}
 \usage{
 bfs_get_data(
-  url_bfs = NULL,
-  language = "de",
   number_bfs = NULL,
-  query = "all",
+  language = "de",
+  url_bfs = NULL,
+  query = NULL,
   column_name_type = "text",
   variable_value_type = "text",
   clean_names = FALSE
 )
 }
 \arguments{
-\item{url_bfs}{The URL page of a dataset.}
-
-\item{language}{Language of the dataset to be translated if exists.}
-
 \item{number_bfs}{The BFS number of a dataset.}
 
-\item{query}{a list with named values, a json query file or json query string using \code{pxweb::pxweb_query()}.}
+\item{language}{Language of the dataset to be translated if exists, i.e. "de", "fr", "it" or "en".}
 
-\item{column_name_type}{column name type as "text" or as "code".}
+\item{url_bfs}{The URL page of a dataset.}
 
-\item{variable_value_type}{variable value type as "text" or as "code".}
+\item{query}{A list with named values, a json query file or json query string using \code{pxweb::pxweb_query()}.}
+
+\item{column_name_type}{Column name type as "text" or as "code".}
+
+\item{variable_value_type}{Variable value type as "text" or as "code".}
 
 \item{clean_names}{Clean column names using \code{janitor::clean_names()}.}
 }
