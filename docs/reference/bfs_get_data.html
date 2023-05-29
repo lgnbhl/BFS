@@ -24,7 +24,7 @@ of a given dataset. You can query particulary variables using the `query` argume
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BFS</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.8</span>
       </span>
     </div>
 
@@ -83,10 +83,10 @@ of a given dataset. You can query particulary variables using the `query` argume
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bfs_get_data</span><span class="op">(</span></span>
-<span>  url_bfs <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  language <span class="op">=</span> <span class="st">"de"</span>,</span>
 <span>  number_bfs <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  query <span class="op">=</span> <span class="st">"all"</span>,</span>
+<span>  language <span class="op">=</span> <span class="st">"de"</span>,</span>
+<span>  url_bfs <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  query <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  column_name_type <span class="op">=</span> <span class="st">"text"</span>,</span>
 <span>  variable_value_type <span class="op">=</span> <span class="st">"text"</span>,</span>
 <span>  clean_names <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -95,32 +95,32 @@ of a given dataset. You can query particulary variables using the `query` argume
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>url_bfs</dt>
-<dd><p>The URL page of a dataset.</p></dd>
-
-
-<dt>language</dt>
-<dd><p>Language of the dataset to be translated if exists.</p></dd>
-
-
-<dt>number_bfs</dt>
+    <dl><dt>number_bfs</dt>
 <dd><p>The BFS number of a dataset.</p></dd>
 
 
+<dt>language</dt>
+<dd><p>Language of the dataset to be translated if exists, i.e. "de", "fr", "it" or "en".</p></dd>
+
+
+<dt>url_bfs</dt>
+<dd><p>The URL page of a dataset.</p></dd>
+
+
 <dt>query</dt>
-<dd><p>a list with named values, a json query file or json query string using <code><a href="https://ropengov.github.io/pxweb/reference/pxweb_query.html" class="external-link">pxweb::pxweb_query()</a></code>.</p></dd>
+<dd><p>A list with named values, a json query file or json query string using <code><a href="https://ropengov.github.io/pxweb/reference/pxweb_query.html" class="external-link">pxweb::pxweb_query()</a></code>.</p></dd>
 
 
 <dt>column_name_type</dt>
-<dd><p>column name type as "text" or as "code".</p></dd>
+<dd><p>Column name type as "text" or as "code".</p></dd>
 
 
 <dt>variable_value_type</dt>
-<dd><p>variable value type as "text" or as "code".</p></dd>
+<dd><p>Variable value type as "text" or as "code".</p></dd>
 
 
 <dt>clean_names</dt>
-<dd><p>Clean column names using <code><a href="https://rdrr.io/pkg/janitor/man/clean_names.html" class="external-link">janitor::clean_names()</a></code>.</p></dd>
+<dd><p>Clean column names using <code><a href="https://sfirke.github.io/janitor/reference/clean_names.html" class="external-link">janitor::clean_names()</a></code>.</p></dd>
 
 </dl></div>
     <div id="value">
