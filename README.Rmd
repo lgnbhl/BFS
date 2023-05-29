@@ -53,7 +53,7 @@ catalog_data_en <- bfs_get_catalog_data(language = "en")
 catalog_data_en
 ```
 
-Note that some datasets are only accessible in German and French.
+English and Italian data catalogs offer a limited list of datasets. For the full list please get the French ("fr") or German ("de") data catalogs.
 
 ### Download a dataset in any language
 

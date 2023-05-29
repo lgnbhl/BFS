@@ -64,7 +64,9 @@ catalog_data_en
     ## 10 Demogr… en       2022-08-25 08:30:00 https:… https… bfsR… 2023-04-04 08:30:00
     ## # ℹ 170 more rows
 
-Note that some datasets are only accessible in German and French.
+English and Italian data catalogs offer a limited list of datasets. For
+the full list please get the French (“fr”) or German (“de”) data
+catalogs.
 
 ### Download a dataset in any language
 
