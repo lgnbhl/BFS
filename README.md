@@ -203,7 +203,7 @@ query.
 
 ``` r
 # Manually create BFS query dimensions
-# Use `code` and `values` elements in `px_meta$variables`
+# Use `code` and `values` elements
 # Use "*" to select all
 dimensions <- list(
   "Jahr" = c("40", "41"),
