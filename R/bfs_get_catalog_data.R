@@ -1,6 +1,6 @@
 #' Get the BFS data catalog
 #'
-#' Get the list of the datasets available in the official \href{https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml}{RSS Feed} of the Swiss Federal Statistical Office data catalog.
+#' Get the list of the data available in the official \href{https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml}{RSS Feed} of the Swiss Federal Statistical Office data catalog.
 #'
 #' @param language character The language of a BFS catalog, i.e. "de", "fr", "it" or "en".
 #' @param title character String to search in title, subtitle and supertitle
@@ -10,8 +10,8 @@
 #' @param institution character BFS datasets for an institution
 #' @param publishing_year_start character BFS datasets for a publishing year start
 #' @param publishing_year_end character BFS datasets for a publishing year end
-#' @param order_nr character BFS datasets by order nr
-#' @param skip_limit boolean skip limit
+#' @param order_nr character Filter by BFS Number (FSO number)
+#' @param skip_limit boolean skip limit, TRUE or FALSE
 #' 
 #' @return A data frame
 #'

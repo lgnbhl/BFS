@@ -77,7 +77,7 @@ To download a specific dataset, you can either use the `url_bfs` or the
 `number_bfs`.
 
 The `url_bfs` argument refers to the offical webpage of a dataset. Find
-below an example.
+below an example using “dplyr”.
 
 ``` r
 library(dplyr)
@@ -124,7 +124,7 @@ It is recommended to privilege the use of the `number_bfs` argument for
 stability and reproducibility.
 
 You can manually find the `number_bfs` by opening the official webpage
-and look for the “FSO number”.
+and looking for the “FSO number”.
 
 ``` r
 # open Uni students dataset webpage
@@ -238,65 +238,59 @@ BFS::bfs_get_data(
 A lot of tables are not accessible through the official API, but they
 are still present in the official BFS website. You can access the [RSS
 feed tables
-catalog](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/tabellen/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true)
-using `bfs_get_catalog_tables()`. Most of these tables are Excel or CSV
-files. Note again that only a part of all the public tables accessible
-are in the RSS feed (the most recently updated datasets).
+catalog](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/tables.html)
+using `bfs_get_catalog_tables()`.
 
 ``` r
-catalog_tables_en <- bfs_get_catalog_tables(language = "en")
+catalog_tables_en_students <- bfs_get_catalog_tables(language = "en", title = "students")
 
-catalog_tables_en
+catalog_tables_en_students
 ```
 
-    ## # A tibble: 350 × 5
-    ##    title                                    language published url_bfs url_table
-    ##    <chr>                                    <chr>    <chr>     <chr>   <chr>    
-    ##  1 "Swiss Wage Index: index and variation … en       "Swiss W… https:… https://…
-    ##  2 "Swiss Wage Index: index and variation … en       "Swiss W… https:… https://…
-    ##  3 "Difficulties in recruiting staff with … en       "Difficu… https:… https://…
-    ##  4 "Difficulties in recruiting staff with … en       "Difficu… https:… https://…
-    ##  5 "Difficulties in recruiting staff with … en       "Difficu… https:… https://…
-    ##  6 "Difficulties in recruiting staff with … en       "Difficu… https:… https://…
-    ##  7 "Full-time job equivalent per sector"    en       "Full-ti… https:… https://…
-    ##  8 "Full-time job per sector and gender"    en       "Full-ti… https:… https://…
-    ##  9 "Index of employment evolution prospect… en       "Index o… https:… https://…
-    ## 10 "Job vacancy per branch of economic act… en       "Job vac… https:… https://…
-    ## # ℹ 340 more rows
+    ## # A tibble: 5 × 7
+    ##   title language publication_date    url_bfs url_table guid  catalog_date       
+    ##   <chr> <chr>    <dttm>              <chr>   <chr>     <chr> <dttm>             
+    ## 1 Stud… en       2023-04-05 00:00:00 https:… https://… bfsR… 2023-04-05 00:00:00
+    ## 2 Stud… en       2023-04-05 00:00:00 https:… https://… bfsR… 2023-04-05 00:00:00
+    ## 3 Stud… en       2023-03-28 08:30:00 https:… https://… bfsR… 2023-04-05 00:00:00
+    ## 4 Stud… en       2023-03-28 08:30:00 https:… https://… bfsR… 2023-04-05 00:00:00
+    ## 5 Stud… en       2023-03-28 08:30:00 https:… https://… bfsR… 2023-04-05 00:00:00
+
+Note that due to RSS feed limitation, only a part of all the public
+tables are using `bfs_get_catalog_tables()`. You can access the full
+tables catalog in the [official BFS website
+page](https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/tabellen.html).
+
+Most of the BFS tables are Excel or CSV files. For example, you can use
+the “openxlsx” R package to read a specific Excel table using the
+`url_table` column.
 
 ``` r
 library(dplyr)
 library(openxlsx)
 
-index_table_url <- catalog_tables_en %>%
-  filter(grepl("index", title)) %>% # search table
-  slice(1) %>%
-  pull(url_table)
+tables_bfs_uni_students <- catalog_tables_en_students %>%
+  dplyr::slice(3) %>%
+  dplyr::pull(url_table)
 
-df <- tryCatch(expr = openxlsx::read.xlsx(index_table_url, startRow = 1),
+df_table <- tryCatch(expr = openxlsx::read.xlsx(tables_bfs_uni_students, startRow = 1),
     error = function(e) "Failed reading table") %>%
-  as_tibble()
+  dplyr::as_tibble()
 
-df
+df_table
 ```
 
-    ## # A tibble: 43 × 17
-    ##    Nominal.wage.index,.2…¹ X2    X3    X4    X5    X6    X7    X8    X9    X10  
-    ##    <chr>                   <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr>
-    ##  1  <NA>                    <NA>  <NA> " In… <NA>   <NA>  <NA> <NA>  <NA>  <NA> 
-    ##  2 " Economic branches (N…  <NA>  <NA> " 20… 2017  " 20… " 20… 2020  2021  2022 
-    ##  3 "  "                     <NA>  <NA>  <NA> <NA>   <NA>  <NA> <NA>  <NA>  <NA> 
-    ##  4 "B-S"                   "05 … "TOT… "100… 101.… "101… "102… 103.… 103.… 104.…
-    ##  5  <NA>                    <NA> " "    <NA> <NA>   <NA>  <NA> <NA>  <NA>  <NA> 
-    ##  6 "B-F"                   "05 … "SEC… "100… 100.… "101… "102… 102.… 102.… 102.…
-    ##  7 "B, D, E"               "05 … "Min… "100… 100.… "100… "101… 100.… 100.… 101.…
-    ##  8 "C"                     "10 … "Man… "100… 100.… "101… "102… 102.… 101.… 102.…
-    ##  9 "CA"                    "10 … "Man… "99.… 100.… "99.… "100… 101.… 101.… 101.…
-    ## 10 "CC"                    "16 … "Man… "99.… 100.… "100… "101… 101.… 101.… 102.…
-    ## # ℹ 33 more rows
-    ## # ℹ abbreviated name: ¹​`Nominal.wage.index,.2016-2022`
-    ## # ℹ 7 more variables: X11 <chr>, X12 <chr>, X13 <chr>, X14 <chr>, X15 <chr>,
-    ## #   X16 <chr>, T1.15 <chr>
+    ## # A tibble: 6 × 2
+    ##   Students.at.Universities.and.Institutes.of.Technology.(UIT).2022/23:.S…¹ X2   
+    ##   <chr>                                                                    <chr>
+    ## 1 "Definitions "                                                           Defi…
+    ## 2 "Tab 1"                                                                  Entr…
+    ## 3 "Tab 2"                                                                  Stud…
+    ## 4 "Tab 3"                                                                  Stud…
+    ## 5 "Tab 4"                                                                  Stud…
+    ## 6 "Tab 5"                                                                  Fore…
+    ## # ℹ abbreviated name:
+    ## #   ¹​`Students.at.Universities.and.Institutes.of.Technology.(UIT).2022/23:.Standard.Tables`
 
 ## Main dependencies of the package
 

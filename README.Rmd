@@ -61,7 +61,7 @@ The function `bfs_get_data()` allows you to download any dataset for the data ca
 
 To download a specific dataset, you can either use the `url_bfs` or the `number_bfs`.
 
-The `url_bfs` argument refers to the offical webpage of a dataset. Find below an example.
+The `url_bfs` argument refers to the offical webpage of a dataset. Find below an example using "dplyr".
 
 ```{r bfs_search}
 library(dplyr)
@@ -84,7 +84,7 @@ df_uni
 
 It is recommended to privilege the use of the `number_bfs` argument for stability and reproducibility.
 
-You can manually find the `number_bfs` by opening the official webpage and look for the "FSO number".
+You can manually find the `number_bfs` by opening the official webpage and looking for the "FSO number".
 
 ```{r browseURL, eval=FALSE}
 # open Uni students dataset webpage
@@ -158,28 +158,29 @@ BFS::bfs_get_data(
 
 ### Catalog of tables
 
-A lot of tables are not accessible through the official API, but they are still present in the official BFS website. You can access the [RSS feed tables catalog](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/tabellen/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true) using `bfs_get_catalog_tables()`. Most of these tables are Excel or CSV files. Note again that only a part of all the public tables accessible are in the RSS feed (the most recently updated datasets).
+A lot of tables are not accessible through the official API, but they are still present in the [official BFS website](https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/tabellen.html). You can search for specific tables using `bfs_get_catalog_tables()`.
 
 ```{r}
-catalog_tables_en <- bfs_get_catalog_tables(language = "en")
+catalog_tables_en_students <- bfs_get_catalog_tables(language = "en", title = "students")
 
-catalog_tables_en
+catalog_tables_en_students
 ```
+
+Most of the BFS tables are Excel or CSV files. For example, you can use the "openxlsx" R package to read a specific Excel table using the `url_table` column.
 
 ```{r}
 library(dplyr)
 library(openxlsx)
 
-index_table_url <- catalog_tables_en %>%
-  filter(grepl("index", title)) %>% # search table
-  slice(1) %>%
-  pull(url_table)
+tables_bfs_uni_students <- catalog_tables_en_students %>%
+  dplyr::slice(3) %>%
+  dplyr::pull(url_table)
 
-df <- tryCatch(expr = openxlsx::read.xlsx(index_table_url, startRow = 1),
+df_table <- tryCatch(expr = openxlsx::read.xlsx(tables_bfs_uni_students, startRow = 1),
 	error = function(e) "Failed reading table") %>%
-  as_tibble()
+  dplyr::as_tibble()
 
-df
+df_table
 ```
 
 ## Main dependencies of the package

@@ -34,9 +34,9 @@ bfs_get_catalog_data(
 
 \item{publishing_year_end}{character BFS datasets for a publishing year end}
 
-\item{order_nr}{character BFS datasets by order nr}
+\item{order_nr}{character Filter by BFS Number (FSO number)}
 
-\item{skip_limit}{boolean skip limit}
+\item{skip_limit}{boolean skip limit, TRUE or FALSE}
 }
 \value{
 A data frame
@@ -56,7 +56,7 @@ dplyr packages).
 }
 }
 \description{
-Get the list of the datasets available in the official \href{https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml}{RSS Feed} of the Swiss Federal Statistical Office data catalog.
+Get the list of the data available in the official \href{https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml}{RSS Feed} of the Swiss Federal Statistical Office data catalog.
 }
 \examples{
 \donttest{bfs_get_catalog_data(language = "en", title = "students", prodima = c(900212))}
