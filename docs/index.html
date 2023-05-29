@@ -270,7 +270,7 @@
 <div class="section level3">
 <h3 id="catalog-of-tables">Catalog of tables<a class="anchor" aria-label="anchor" href="#catalog-of-tables"></a>
 </h3>
-<p>A lot of tables are not accessible through the official API, but they are still present in the official BFS website. You can access the <a href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/tables.html" class="external-link">RSS feed tables catalog</a> using <code><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables()</a></code>.</p>
+<p>A lot of tables are not accessible through the official API, but they are still present in the <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/tabellen.html" class="external-link">official BFS website</a>. You can search for specific tables using <code><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables()</a></code>.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">catalog_tables_en_students</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span>, title <span class="op">=</span> <span class="st">"students"</span><span class="op">)</span></span>
 <span></span>
@@ -283,7 +283,6 @@
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Stud… en       2023-03-28 08:30:00 https:… https://… bfsR… 2023-04-05 00:00:00</span></span>
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 Stud… en       2023-03-28 08:30:00 https:… https://… bfsR… 2023-04-05 00:00:00</span></span>
 <span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 Stud… en       2023-03-28 08:30:00 https:… https://… bfsR… 2023-04-05 00:00:00</span></span></code></pre></div>
-<p>Note that due to RSS feed limitation, only a part of all the public tables are using <code><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables()</a></code>. You can access the full tables catalog in the <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/tabellen.html" class="external-link">official BFS website page</a>.</p>
 <p>Most of the BFS tables are Excel or CSV files. For example, you can use the “openxlsx” R package to read a specific Excel table using the <code>url_table</code> column.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>

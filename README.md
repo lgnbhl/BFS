@@ -236,10 +236,9 @@ BFS::bfs_get_data(
 ### Catalog of tables
 
 A lot of tables are not accessible through the official API, but they
-are still present in the official BFS website. You can access the [RSS
-feed tables
-catalog](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/tables.html)
-using `bfs_get_catalog_tables()`.
+are still present in the [official BFS
+website](https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/tabellen.html).
+You can search for specific tables using `bfs_get_catalog_tables()`.
 
 ``` r
 catalog_tables_en_students <- bfs_get_catalog_tables(language = "en", title = "students")
@@ -255,11 +254,6 @@ catalog_tables_en_students
     ## 3 Stud… en       2023-03-28 08:30:00 https:… https://… bfsR… 2023-04-05 00:00:00
     ## 4 Stud… en       2023-03-28 08:30:00 https:… https://… bfsR… 2023-04-05 00:00:00
     ## 5 Stud… en       2023-03-28 08:30:00 https:… https://… bfsR… 2023-04-05 00:00:00
-
-Note that due to RSS feed limitation, only a part of all the public
-tables are using `bfs_get_catalog_tables()`. You can access the full
-tables catalog in the [official BFS website
-page](https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/tabellen.html).
 
 Most of the BFS tables are Excel or CSV files. For example, you can use
 the “openxlsx” R package to read a specific Excel table using the
