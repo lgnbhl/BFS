@@ -75,9 +75,13 @@ bfs_get_catalog_data <- function(language = "de", title = NULL, spatial_division
   if(length(order_nr) != 1 & !is.null(order_nr)) stop("`order_nr` should be unique")
   if(is.null(order_nr)) order_nr <- ""
   
+  # Construct prodima query 
+  #themes_names <- c("Statistical basis and overviews 00", "Population 01", "Territory and environment 02", "Work and income 03", "National economy 04", "Prices 05", "Industry and services 06", "Agriculture and forestry 07", "Energy 08", "Construction and housing 09", "Tourism 10", "Mobility and transport 11", "Money, banks and insurance 12", "Social security 13", "Health 14", "Education and science 15", "Culture, media, information society, sports 16", "Politics 17", "General Government and finance 18", "Crime and criminal justice 19", "Economic and social situation of the population 20", "Sustainable development, regional and international disparities 21")
+  themes_prodima <- c(900001,900010,900035,900051,900075,900084,900092,900104,900127,900140,900160,900169,900191,900198,900210,900212,900214,900226,900239,900257,900269,900276)
+  
   # query by prodima (theme) because RSS feed limitation to 350 entities, see issue #5
   if(is.null(prodima)) {
-    prodima <- c(900001,900010,900035,900051,900075,900084,900092,900104,900127,900140,900160,900169,900191,900198,900210,900212,900214,900226,900239,900257,900269,900276)
+    prodima <- themes_prodima
   } else {
     prodima <- prodima 
     }
