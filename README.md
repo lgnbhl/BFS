@@ -77,13 +77,14 @@ To download a specific dataset, you can either use the `url_bfs` or the
 `number_bfs`.
 
 The `url_bfs` argument refers to the offical webpage of a dataset. Find
-below an example using “dplyr”.
+below an example getting the `url_bfs` for a specific dataset using the
+R package “dplyr”.
 
 ``` r
 library(dplyr)
 
-url_bfs_uni_students <- catalog_data_en %>%
-  dplyr::filter(title == "University students by year, ISCED field, sex and level of study") %>%
+url_bfs_uni_students <- catalog_data_en |>
+  dplyr::filter(title == "University students by year, ISCED field, sex and level of study") |>
   dplyr::pull(url_bfs)
 
 url_bfs_uni_students
@@ -124,7 +125,7 @@ It is recommended to privilege the use of the `number_bfs` argument for
 stability and reproducibility.
 
 You can manually find the `number_bfs` by opening the official webpage
-and looking for the “FSO number”.
+and looking for the “FSO number”, as showed below.
 
 ``` r
 # open Uni students dataset webpage
@@ -263,12 +264,12 @@ the “openxlsx” R package to read a specific Excel table using the
 library(dplyr)
 library(openxlsx)
 
-tables_bfs_uni_students <- catalog_tables_en_students %>%
-  dplyr::slice(3) %>%
+tables_bfs_uni_students <- catalog_tables_en_students |>
+  dplyr::slice(3) |>
   dplyr::pull(url_table)
 
 df_table <- tryCatch(expr = openxlsx::read.xlsx(tables_bfs_uni_students, startRow = 1),
-    error = function(e) "Failed reading table") %>%
+    error = function(e) "Failed reading table") |>
   dplyr::as_tibble()
 
 df_table
@@ -288,28 +289,18 @@ df_table
 
 ## Main dependencies of the package
 
-Under the hood, this package is using extensively the
+Under the hood, this package is using the
 <a href="https://ropengov.github.io/pxweb/index.html"
-target="_blank">pxweb</a> R package to query the Swiss Federal
-Statistical Office PXWEB API. PXWEB is an API structure developed by
-Statistics Sweden and other national statistical institutions (NSI) to
-disseminate public statistics in a structured way.
-
-The list of available datasets is accessed using the
-<a href="https://github.com/RobertMyles/tidyRSS"
-target="_blank">tidyRSS</a> R package to scrap the official [BFS RSS
-feed](https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml?skipLimit=true).
+target="_blank">pxweb</a> package to query the Swiss Federal Statistical
+Office PXWEB API. PXWEB is an API structure developed by Statistics
+Sweden and other national statistical institutions (NSI) to disseminate
+public statistics in a structured way.
 
 You can clean the column names of the datasets automatically using
 `janitor::clean_names()` by adding the argument `clean_names = TRUE` in
 the `bfs_get_data()` function.
 
 ## Other information
-
-A [blog
-article](https://felixluginbuhl.com/blog/posts/2019-11-07-swiss-data/)
-showing a concrete example about how to use the BFS package and to
-visualize the data in a Swiss map.
 
 This package is in no way officially related to or endorsed by the Swiss
 Federal Statistical Office (BFS).

@@ -1,7 +1,12 @@
+url: https://felixluginbuhl.com/BFS
 template:
-  params:
-    bootswatch: cosmo
-    ganalytics: UA-158089797-1
+  bootstrap: 5
+  bootswatch: litera
+  ganalytics: UA-158089797-1
+  bslib:
+    pkgdown-nav-height: 100px
+  navbar:
+    bg: primary
 
 navbar:
   left:

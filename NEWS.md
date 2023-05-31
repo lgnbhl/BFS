@@ -1,3 +1,10 @@
+# BFS 0.4.8
+- BREAKING CHANGE: reorder arguments in functions for consistency
+- `bfs_get_catalog_tables()` now gets full catalog, fixing #6
+- `bfs_get_catalog_tables()` has new functions to filter datasets directly
+- use "httr2" instead of "jsonlite" for better console messages
+- improve README, docs and sticker.
+
 # BFS 0.4.7
 - add new function `bfs_get_metadata()`
 - fix bug duplicated column names with `as_tibble(. .name_repair = "minimal")` 

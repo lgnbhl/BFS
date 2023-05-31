@@ -1,48 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://felixluginbuhl.com/BFS/404.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://felixluginbuhl.com/BFS/authors.html</loc>
   </url>
   <url>
-    <loc>/CODE_OF_CONDUCT.html</loc>
+    <loc>https://felixluginbuhl.com/BFS/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://felixluginbuhl.com/BFS/index.html</loc>
   </url>
   <url>
-    <loc>/LICENSE-text.html</loc>
+    <loc>https://felixluginbuhl.com/BFS/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
+    <loc>https://felixluginbuhl.com/BFS/LICENSE.html</loc>
   </url>
   <url>
-    <loc>/news/index.html</loc>
+    <loc>https://felixluginbuhl.com/BFS/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/bfs_get_catalog.html</loc>
+    <loc>https://felixluginbuhl.com/BFS/reference/bfs_download_geodata.html</loc>
   </url>
   <url>
-    <loc>/reference/bfs_get_catalog_data.html</loc>
+    <loc>https://felixluginbuhl.com/BFS/reference/bfs_get_catalog.html</loc>
   </url>
   <url>
-    <loc>/reference/bfs_get_catalog_tables.html</loc>
+    <loc>https://felixluginbuhl.com/BFS/reference/bfs_get_catalog_data.html</loc>
   </url>
   <url>
-    <loc>/reference/bfs_get_data.html</loc>
+    <loc>https://felixluginbuhl.com/BFS/reference/bfs_get_catalog_geodata.html</loc>
   </url>
   <url>
-    <loc>/reference/bfs_get_data_comments.html</loc>
+    <loc>https://felixluginbuhl.com/BFS/reference/bfs_get_catalog_tables.html</loc>
   </url>
   <url>
-    <loc>/reference/bfs_get_metadata.html</loc>
+    <loc>https://felixluginbuhl.com/BFS/reference/bfs_get_data.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://felixluginbuhl.com/BFS/reference/bfs_get_data_comments.html</loc>
   </url>
   <url>
-    <loc>/reference/pipe.html</loc>
+    <loc>https://felixluginbuhl.com/BFS/reference/bfs_get_metadata.html</loc>
+  </url>
+  <url>
+    <loc>https://felixluginbuhl.com/BFS/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://felixluginbuhl.com/BFS/reference/pipe.html</loc>
   </url>
 </urlset>
