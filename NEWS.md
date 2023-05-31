@@ -1,6 +1,6 @@
 # BFS 0.4.8
 - BREAKING CHANGE: reorder arguments in functions for consistency
-- `bfs_get_catalog_tables()` now gets full catalog, fixing #6
+- `bfs_get_catalog_tables()` now gets full catalog, fixing #5
 - `bfs_get_catalog_tables()` has new functions to filter datasets directly
 - use "httr2" instead of "jsonlite" for better console messages
 - improve README, docs and sticker.
