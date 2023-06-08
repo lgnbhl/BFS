@@ -43,7 +43,7 @@ bfs_get_data <- function(number_bfs = NULL, language = "de", url_bfs = NULL, que
     httr2::req_perform() %>% 
     httr2::resp_body_json(simplifyVector = TRUE)
   
-  if(any(query == "all" || is.null(query))) {
+  if(any(query == "all" | is.null(query))) {
     variables <- df_json$variables$code
     values <- df_json$variables$values
     df <- rbind(rep("*", length(values)))
