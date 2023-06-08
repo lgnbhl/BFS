@@ -1,3 +1,9 @@
+# BFS 0.5
+- fix bug #10
+- add `bfs_get_catalog_geodata()`
+- add `bfs_download_geodata()`
+- improve docs
+
 # BFS 0.4.8
 - BREAKING CHANGE: reorder arguments in functions for consistency
 - `bfs_get_catalog_tables()` now gets full catalog, fixing #5
