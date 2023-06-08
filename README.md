@@ -13,10 +13,11 @@ total](https://cranlogs.r-pkg.org/badges/grand-total/BFS)](https://cran.r-projec
 
 > Search and download data from the Swiss Federal Statistical Office
 
-The `BFS` package allows to search and download public data from the
-<a href="https://www.pxweb.bfs.admin.ch/pxweb/en/" target="_blank">Swiss
-Federal Statistical Office</a> (BFS stands for *Bundesamt für Statistik*
-in German) API in a dynamic and reproducible way.
+The `BFS` package allows to search and download public data from the <a
+href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html"
+target="_blank">Swiss Federal Statistical Office</a> (BFS stands for
+*Bundesamt für Statistik* in German) API in a dynamic and reproducible
+way.
 
 ## Installation
 
@@ -77,8 +78,7 @@ To download a specific dataset, you can either use the `url_bfs` or the
 `number_bfs`.
 
 The `url_bfs` argument refers to the offical webpage of a dataset. Find
-below an example getting the `url_bfs` for a specific dataset using the
-R package “dplyr”.
+below an example using “dplyr”.
 
 ``` r
 library(dplyr)
@@ -97,12 +97,7 @@ Then you can download the full dataset using `url_bfs`.
 ``` r
 # https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-datenbanken/daten.assetdetail.16324907.html
 df_uni <- bfs_get_data(url_bfs = url_bfs_uni_students, language = "en")
-```
 
-    ##   Downloading large query (in 4 batches):
-    ##   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%
-
-``` r
 df_uni
 ```
 
@@ -125,14 +120,14 @@ It is recommended to privilege the use of the `number_bfs` argument for
 stability and reproducibility.
 
 You can manually find the `number_bfs` by opening the official webpage
-and looking for the “FSO number”, as showed below.
+and looking for the “FSO number”.
 
 ``` r
 # open Uni students dataset webpage
 browseURL(url_bfs_uni_students)
 ```
 
-<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/screenshot.png" align="center" />
+<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/stat-tab.png" align="center" />
 
 <br/>
 
@@ -148,9 +143,6 @@ You can also access additional information about the dataset by running
 ``` r
 bfs_get_data_comments(number_bfs = "px-x-1502040100_131", language = "en")
 ```
-
-    ##   Downloading large query (in 4 batches):
-    ##   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%
 
     ## # A tibble: 1 × 4
     ##   row_no col_no comment_type   comment                                          
@@ -287,6 +279,91 @@ df_table
     ## # ℹ abbreviated name:
     ## #   ¹​`Students.at.Universities.and.Institutes.of.Technology.(UIT).2022/23:.Standard.Tables`
 
+## Get geodata catalog
+
+Display available geodata using `bfs_get_catalog_geodata()`.
+
+``` r
+catalog_geodata <- bfs_get_catalog_geodata(include_metadata = TRUE)
+
+catalog_geodata
+```
+
+    ## # A tibble: 281 × 12
+    ##    collection_id     type  href  title description created updated crs   license
+    ##    <chr>             <chr> <chr> <chr> <chr>       <chr>   <chr>   <chr> <chr>  
+    ##  1 ch.are.agglomera… API   http… Citi… "The list … 2021-1… 2023-0… http… propri…
+    ##  2 ch.are.alpenkonv… API   http… Alpi… "The perim… 2021-1… 2022-0… http… propri…
+    ##  3 ch.are.belastung… API   http… Load… "Passenger… 2021-1… 2022-0… http… propri…
+    ##  4 ch.are.belastung… API   http… Load… "Passenger… 2021-1… 2022-0… http… propri…
+    ##  5 ch.are.belastung… API   http… Load… "Vehicles … 2021-1… 2022-0… http… propri…
+    ##  6 ch.are.belastung… API   http… Load… "Vehicles … 2021-1… 2022-0… http… propri…
+    ##  7 ch.are.erreichba… API   http… Acce… "Accessibi… 2021-1… 2022-0… http… propri…
+    ##  8 ch.are.erreichba… API   http… Acce… "Accessibi… 2021-1… 2022-0… http… propri…
+    ##  9 ch.are.gemeindet… API   http… Typo… "The typol… 2021-1… 2022-0… http… propri…
+    ## 10 ch.are.gueteklas… API   http… Publ… "The publi… 2021-1… 2023-0… http… propri…
+    ## # ℹ 271 more rows
+    ## # ℹ 3 more variables: provider_name <chr>, bbox <list>, inverval <list>
+
+### Explore geodata catalog
+
+Get the geographic dataset “Generalised borders G1 and area with urban
+character”.
+
+``` r
+library(dplyr)
+
+catalog_geodata |>
+  filter(title == "Generalised borders G1 and area with urban character")
+```
+
+    ## # A tibble: 1 × 12
+    ##   collection_id      type  href  title description created updated crs   license
+    ##   <chr>              <chr> <chr> <chr> <chr>       <chr>   <chr>   <chr> <chr>  
+    ## 1 ch.bfs.generalisi… API   http… Gene… Administra… 2022-0… 2023-0… http… propri…
+    ## # ℹ 3 more variables: provider_name <chr>, bbox <list>, inverval <list>
+
+### Download geodata
+
+Download dataset and unzip file if needed.
+
+``` r
+# Access Generalised borders G1 and area with urban character
+geo_file_paths <- bfs_download_geodata(
+  collection_id = "ch.bfs.generalisierte-grenzen_agglomerationen_g1"
+  )
+
+# you may need to unzip the file
+unzip(geo_file_paths[4], exdir = "borders_G1")
+```
+
+By default, the files are downloaded in a temporary directory. You can
+specify the folder where saving the files using the `output_dir`
+argument.
+
+### Explore and visualize data
+
+You can then easily read and visualize geodata, for example using “sf”
+or “mapview”.
+
+``` r
+library(sf) # read sf data
+library(mapview) # create interactive maps
+
+# explore available layers
+sf::st_layers(dsn = "borders_G1")
+
+#swiss_cantons <- sf::st_read(dsn = "borders_G1", layer = "k3k23")
+#swiss_districts <- sf::st_read(dsn = "borders_G1", layer = "g1b23")
+
+swiss_communes <- sf::st_read(dsn = "borders_G1", layer = "g1g23")
+
+swiss_communes |> 
+  mapview::mapview(zcol = "AREA_HA", layer.name = "area ha", label = "GMDNAME")
+```
+
+<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/stat-tab.png" align="center" />
+
 ## Main dependencies of the package
 
 Under the hood, this package is using the
@@ -294,7 +371,11 @@ Under the hood, this package is using the
 target="_blank">pxweb</a> package to query the Swiss Federal Statistical
 Office PXWEB API. PXWEB is an API structure developed by Statistics
 Sweden and other national statistical institutions (NSI) to disseminate
-public statistics in a structured way.
+public statistics in a structured way. To query the Geo Admin STAC API,
+this package is using the
+[rstac](https://brazil-data-cube.github.io/rstac/) package. STAC is a
+specification of files and web services used to describe geospatial
+information assets.
 
 You can clean the column names of the datasets automatically using
 `janitor::clean_names()` by adding the argument `clean_names = TRUE` in
