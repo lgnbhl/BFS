@@ -362,7 +362,7 @@ swiss_communes |>
   mapview::mapview(zcol = "AREA_HA", layer.name = "area ha", label = "GMDNAME")
 ```
 
-<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/stat-tab.png" align="center" />
+<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/mapview.png" align="center" />
 
 ## Main dependencies of the package
 
