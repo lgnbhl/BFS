@@ -9,7 +9,7 @@ total](https://cranlogs.r-pkg.org/badges/grand-total/BFS)](https://cran.r-projec
 [![R-CMD-check](https://github.com/lgnbhl/BFS/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lgnbhl/BFS/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-# BFS <img src="man/figures/logo.png" align="right" />
+# BFS <img src="man/figures/logo.png" align="right" height="138" />
 
 > Search and download data from the Swiss Federal Statistical Office
 
