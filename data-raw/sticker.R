@@ -3,7 +3,7 @@ library(hexSticker)
 library(magick)
 library(magrittr)
 
-hexSticker::sticker("man/figures/logo_icon.svg",
+hexSticker::sticker("man/figures/logo_icon.png",
                     package = "BFS", 
                     p_x = 1,
                     #p_color = "black",
@@ -24,5 +24,5 @@ hexSticker::sticker("man/figures/logo_icon.svg",
 # MOD with Gimp: removing red borders.
 
 bfs <- magick::image_read("man/figures/logo.png")
-magick::image_scale(bfs, "130") %>%
+magick::image_scale(bfs, "400") %>%
   magick::image_write(path = "man/figures/logo.png", format = "png")
