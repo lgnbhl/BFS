@@ -48,10 +48,10 @@ dplyr packages).
   \item{title}{A character column with the title of the BFS dataset}
   \item{language}{A character column with the language of the BFS dataset}
   \item{publication_date}{The published date of the BFS dataset in the tables catalog}
+  \item{number_asset}{The BFS asset number}
   \item{url_bfs}{A character column with the URL of the related BFS 
   webpage}
   \item{url_table}{A character column with the URL of the PX file}
-  \item{guid}{Globally Unique Identifier from the item from the RSS document}
   \item{catalog_date}{The released date of the current BFS tables catalog}
 }
 }

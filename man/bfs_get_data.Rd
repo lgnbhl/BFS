@@ -2,7 +2,7 @@
 % Please edit documentation in R/bfs_get_data.R
 \name{bfs_get_data}
 \alias{bfs_get_data}
-\title{Download BFS data in a given language}
+\title{Get a BFS dataset in a given language}
 \usage{
 bfs_get_data(
   number_bfs = NULL,
@@ -15,7 +15,7 @@ bfs_get_data(
 )
 }
 \arguments{
-\item{number_bfs}{The BFS number of a dataset.}
+\item{number_bfs}{The BFS number (FSO number) of a dataset.}
 
 \item{language}{Language of the dataset to be translated if exists, i.e. "de", "fr", "it" or "en".}
 
@@ -34,7 +34,8 @@ A tbl_df (a type of data frame; see tibble or
 dplyr packages).
 }
 \description{
-Download a dataset using the BFS offical API v1. You should choose either the bfs number of the bfs offical url
+Get a dataset using the PXWEB API v1. 
+You should choose either the BFS number (FSO number) of the BFS offical url
 of a given dataset. You can query particulary variables using the `query` argument.
 }
 \seealso{

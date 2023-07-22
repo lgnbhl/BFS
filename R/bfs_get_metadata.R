@@ -1,6 +1,6 @@
 #' Get metadata of a BFS data in a given language
 #'
-#' Get the metadata of a BFS dataset using the BFS offical API v1. 
+#' Get the metadata of a BFS dataset using the PXWEB API v1. 
 #' You should choose either the bfs number of the bfs offical url of a given dataset. 
 #' 
 #' @param url_bfs The URL page of a dataset.
@@ -13,7 +13,7 @@
 #' \donttest{bfs_get_metadata(number_bfs = "px-x-2105000000_501", language = "fr")}
 #' 
 #' @export
-bfs_get_metadata <- function(url_bfs = NULL, language = "de", number_bfs = NULL) {
+bfs_get_metadata <- function(number_bfs = NULL, url_bfs = NULL, language = "de") {
   
   if (missing(language)) stop("must choose a language, either 'de', 'fr', 'it' or 'en'", call. = FALSE)
   language <- match.arg(arg = language, choices = c("de", "fr", "it", "en"))

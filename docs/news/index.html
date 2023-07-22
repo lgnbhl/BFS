@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">BFS</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.1.999</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,6 +65,17 @@
       <small>Source: <a href="https://github.com/lgnbhl/BFS/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.5.2" id="bfs-052">BFS 0.5.2<a class="anchor" aria-label="anchor" href="#bfs-052"></a></h2>
+<ul><li>BREAKING CHANGE: <code><a href="../reference/bfs_get_catalog_data.html">bfs_get_catalog_data()</a></code> and <code><a href="../reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables()</a></code> return now in the dataframe “number_asset” instead of “guid” as variables.</li>
+<li>add <code><a href="../reference/bfs_download_asset.html">bfs_download_asset()</a></code>
+</li>
+<li>add <code><a href="../reference/bfs_get_asset_metadata.html">bfs_get_asset_metadata()</a></code>
+</li>
+<li>“number_bfs” as first argument in <code><a href="../reference/bfs_get_metadata.html">bfs_get_metadata()</a></code>
+</li>
+<li>improve docs</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.5.1" id="bfs-051">BFS 0.5.1<a class="anchor" aria-label="anchor" href="#bfs-051"></a></h2><p class="text-muted">CRAN release: 2023-06-08</p>
 <ul><li>BREAKING CHANGE: fix BFS version 0.5 broke <code><a href="../reference/bfs_get_data.html">bfs_get_data()</a></code>. Fix now <a href="https://github.com/lgnbhl/BFS/issues/10" class="external-link">#10</a> by removing “all” default argument to <code>query</code>.</li>

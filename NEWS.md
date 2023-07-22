@@ -1,3 +1,10 @@
+# BFS 0.5.2
+- BREAKING CHANGE: `bfs_get_catalog_data()` and `bfs_get_catalog_tables()` return now in the dataframe "number_asset" instead of "guid" as variables.
+- add `bfs_download_asset()`
+- add `bfs_get_asset_metadata()`
+- "number_bfs" as first argument in `bfs_get_metadata()`
+- improve docs
+
 # BFS 0.5.1
 - BREAKING CHANGE: fix BFS version 0.5 broke `bfs_get_data()`. Fix now #10 by removing "all" default argument to `query`.
 

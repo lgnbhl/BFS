@@ -4,20 +4,20 @@
 \alias{bfs_get_metadata}
 \title{Get metadata of a BFS data in a given language}
 \usage{
-bfs_get_metadata(url_bfs = NULL, language = "de", number_bfs = NULL)
+bfs_get_metadata(number_bfs = NULL, url_bfs = NULL, language = "de")
 }
 \arguments{
+\item{number_bfs}{The BFS number of a dataset.}
+
 \item{url_bfs}{The URL page of a dataset.}
 
 \item{language}{Language of the dataset to be translated if exists.}
-
-\item{number_bfs}{The BFS number of a dataset.}
 }
 \value{
 A tbl_df (a type of data frame; see tibble or dplyr packages).
 }
 \description{
-Get the metadata of a BFS dataset using the BFS offical API v1. 
+Get the metadata of a BFS dataset using the PXWEB API v1. 
 You should choose either the bfs number of the bfs offical url of a given dataset.
 }
 \examples{

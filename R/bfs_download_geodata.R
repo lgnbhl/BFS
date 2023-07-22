@@ -1,4 +1,4 @@
-#' Download geographic data from the Swiss Confederation
+#' Download a geographic file from the Swiss Geo-portal
 #' 
 #' Download assets from the STAC API on the geodata catalog 
 #' of the Swiss Confederation (\url{https://data.geo.admin.ch/api/stac/v0.9/}).

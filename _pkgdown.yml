@@ -30,6 +30,8 @@ reference:
       - bfs_get_catalog_tables
       - bfs_get_catalog_geodata
       - bfs_get_data
+      - bfs_download_asset
       - bfs_download_geodata
-      - bfs_get_data_comments
       - bfs_get_metadata
+      - bfs_get_asset_metadata
+      - bfs_get_data_comments

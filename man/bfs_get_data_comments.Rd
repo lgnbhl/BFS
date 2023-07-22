@@ -28,7 +28,7 @@ A tbl_df (a type of data frame; see tibble or
 dplyr packages).
 }
 \description{
-Get the comments/footnotes of a BFS dataset in a given language
+Get the comments/footnotes of a BFS dataset using PXWEB BFS API v1.
 }
 \seealso{
 \code{\link{bfs_get_data}}

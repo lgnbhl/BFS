@@ -1,9 +1,10 @@
-#' Download BFS data in a given language
+#' Get a BFS dataset in a given language
 #'
-#' Download a dataset using the BFS offical API v1. You should choose either the bfs number of the bfs offical url
+#' Get a dataset using the PXWEB API v1. 
+#' You should choose either the BFS number (FSO number) of the BFS offical url
 #' of a given dataset. You can query particulary variables using the `query` argument.
 #'
-#' @param number_bfs The BFS number of a dataset.
+#' @param number_bfs The BFS number (FSO number) of a dataset.
 #' @param language Language of the dataset to be translated if exists, i.e. "de", "fr", "it" or "en".
 #' @param url_bfs The URL page of a dataset.
 #' @param query A list with named values, a json query file or json query string using \code{pxweb::pxweb_query()}.

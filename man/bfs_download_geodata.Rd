@@ -2,7 +2,7 @@
 % Please edit documentation in R/bfs_download_geodata.R
 \name{bfs_download_geodata}
 \alias{bfs_download_geodata}
-\title{Download geographic data from the Swiss Confederation}
+\title{Download a geographic file from the Swiss Geo-portal}
 \usage{
 bfs_download_geodata(
   collection_id = collection_id,

@@ -29,10 +29,10 @@
 #'   \item{title}{A character column with the title of the BFS dataset}
 #'   \item{language}{A character column with the language of the BFS dataset}
 #'   \item{publication_date}{The published date of the BFS dataset in the data catalog}
+#'   \item{number_asset}{The BFS asset number}
 #'   \item{url_bfs}{A character column with the URL of the related BFS 
 #'   webpage}
 #'   \item{url_px}{A character column with the URL of the PX file}
-#'   \item{guid}{Globally Unique Identifier from the item from the RSS document}
 #'   \item{catalog_date}{The released date of the current BFS data catalog}
 #' }
 #'
@@ -140,8 +140,12 @@ bfs_get_catalog_data <- function(language = "de", title = NULL, spatial_division
     df_feed$url_px <- gsub(base_url_bfs, base_url_px, df_feed$url_bfs)
     df_feed$url_px <- gsub(".html$", "/master", df_feed$url_px)
     
+    #get `number_asset`
+    df_feed$number_asset <- gsub(pattern = "\\D", replacement = "", x = df_feed$guid)
+    df_feed$number_asset <- as.numeric(df_feed$number_asset)
+    
     # select variables
-    vars <- c("title", "language", "publication_date", "url_bfs", "url_px", "guid", "catalog_date")
+    vars <- c("title", "language", "publication_date", "number_asset", "url_bfs", "url_px", "catalog_date")
     df <- df_feed[vars]
   }
 

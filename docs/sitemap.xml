@@ -22,7 +22,13 @@
     <loc>https://felixluginbuhl.com/BFS/news/index.html</loc>
   </url>
   <url>
+    <loc>https://felixluginbuhl.com/BFS/reference/bfs_download_asset.html</loc>
+  </url>
+  <url>
     <loc>https://felixluginbuhl.com/BFS/reference/bfs_download_geodata.html</loc>
+  </url>
+  <url>
+    <loc>https://felixluginbuhl.com/BFS/reference/bfs_get_asset_metadata.html</loc>
   </url>
   <url>
     <loc>https://felixluginbuhl.com/BFS/reference/bfs_get_catalog.html</loc>

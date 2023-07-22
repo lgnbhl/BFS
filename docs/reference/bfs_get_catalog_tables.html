@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">BFS</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.1.999</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -148,15 +148,15 @@ dplyr packages).</p>
   <dt>publication_date</dt>
 <dd><p>The published date of the BFS dataset in the tables catalog</p></dd>
 
+  <dt>number_asset</dt>
+<dd><p>The BFS asset number</p></dd>
+
   <dt>url_bfs</dt>
 <dd><p>A character column with the URL of the related BFS 
   webpage</p></dd>
 
   <dt>url_table</dt>
 <dd><p>A character column with the URL of the PX file</p></dd>
-
-  <dt>guid</dt>
-<dd><p>Globally Unique Identifier from the item from the RSS document</p></dd>
 
   <dt>catalog_date</dt>
 <dd><p>The released date of the current BFS tables catalog</p></dd>
@@ -173,13 +173,14 @@ dplyr packages).</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">bfs_get_catalog_tables</span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span>, title <span class="op">=</span> <span class="st">"students"</span>, prodima <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">900212</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> GET request successful. Parsing...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   title language publication_date    url_bfs url_table guid  catalog_date       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Stud… en       2023-04-05 <span style="color: #949494;">00:00:00</span> https:… https://… bfsR… 2023-04-05 <span style="color: #949494;">00:00:00</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Stud… en       2023-04-05 <span style="color: #949494;">00:00:00</span> https:… https://… bfsR… 2023-04-05 <span style="color: #949494;">00:00:00</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Stud… en       2023-03-28 <span style="color: #949494;">08:30:00</span> https:… https://… bfsR… 2023-04-05 <span style="color: #949494;">00:00:00</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Stud… en       2023-03-28 <span style="color: #949494;">08:30:00</span> https:… https://… bfsR… 2023-04-05 <span style="color: #949494;">00:00:00</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Stud… en       2023-03-28 <span style="color: #949494;">08:30:00</span> https:… https://… bfsR… 2023-04-05 <span style="color: #949494;">00:00:00</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   title              language publication_date    number_asset url_bfs url_table</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Students at unive… en       2023-04-05 <span style="color: #949494;">00:00:00</span>     24<span style="text-decoration: underline;">865</span>589 https:… https://…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Students at unive… en       2023-04-05 <span style="color: #949494;">00:00:00</span>     24<span style="text-decoration: underline;">865</span>590 https:… https://…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Students at unive… en       2023-03-28 <span style="color: #949494;">08:30:00</span>     24<span style="text-decoration: underline;">345</span>362 https:… https://…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Students at unive… en       2023-03-28 <span style="color: #949494;">08:30:00</span>     24<span style="text-decoration: underline;">345</span>374 https:… https://…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Students at unive… en       2023-03-28 <span style="color: #949494;">08:30:00</span>     24<span style="text-decoration: underline;">345</span>366 https:… https://…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: catalog_date &lt;dttm&gt;</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

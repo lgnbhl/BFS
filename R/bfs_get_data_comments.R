@@ -1,5 +1,7 @@
 #' Get the comments/footnotes of a BFS dataset in a given language
 #'
+#' Get the comments/footnotes of a BFS dataset using PXWEB BFS API v1. 
+#'
 #' @param number_bfs The BFS number of a dataset.
 #' @param language Language of the dataset to be translated if exists, i.e. "de", "fr", "it" or "en".
 #' @param url_bfs The URL page of a dataset.
