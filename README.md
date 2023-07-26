@@ -149,22 +149,32 @@ bfs_get_data_comments(number_bfs = "px-x-1502040100_131", language = "en")
     ##    <int>  <int> <chr>          <chr>                                            
     ## 1     NA      4 column_comment "To ensure that the presentations from cubes con…
 
+When running these functions you may have the following error message.
+
+    Error in pxweb_advanced_get(url = url, query = query, verbose = verbose) : 
+      Too Many Requests (RFC 6585) (HTTP 429).
+
+This could happen because you ran too many times the `bfs_get_*()`
+function (API config is
+[here](https://www.pxweb.bfs.admin.ch/api/v1/de/?config)). A solution is
+to wait a few seconds before running the next `bfs_get_*()`. You can for
+example add a delay in your R code, for example using `Sys.sleep(10)`
+(10 seconds delay).
+
 #### Query specific elements
 
-You may get an error message if the query is too large.
+You may get an error message when running `bfs_get_*()` because the
+dataset is too big.
 
     Error: 
     Too large query. 
     The smallest batch size is 24030 and the maximum number of values 
     that can be downloaded through the API is 5000.
 
-You may also have an error if the API calls too many requests.
-
-    Error in pxweb_advanced_get(url = url, query = query, verbose = verbose) : 
-      Too Many Requests (RFC 6585) (HTTP 429).
-
 One solution is to query only specific elements of the dataset to
-download less data. Here an example.
+download less data.
+
+Here an example:
 
 First you want to get the variable names, i.e. `code`, and categories,
 i.e. `values`, of your dataset.
