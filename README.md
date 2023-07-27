@@ -152,7 +152,7 @@ bfs_get_data_comments(number_bfs = "px-x-1502040100_131", language = "en")
 ### “Too Many Requests” error message
 
 When running the `bfs_get_*()` functions you may have the following
-error message (see issue [\#7](https://github.com/lgnbhl/BFS/issues/7)).
+error message (issue [\#7](https://github.com/lgnbhl/BFS/issues/7)).
 
     Error in pxweb_advanced_get(url = url, query = query, verbose = verbose) : 
       Too Many Requests (RFC 6585) (HTTP 429).

@@ -188,19 +188,32 @@
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="do">##   row_no col_no comment_type   comment                                          </span></span>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="do">##    &lt;int&gt;  &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;                                            </span></span>
 <span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="do">## 1     NA      4 column_comment "To ensure that the presentations from cubes con…</span></span></code></pre></div>
-<div class="section level4">
-<h4 id="query-specific-elements">Query specific elements<a class="anchor" aria-label="anchor" href="#query-specific-elements"></a>
-</h4>
-<p>You may get an error message if the query is too large.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>Error<span class="sc">:</span> </span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>Too large query. </span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>The smallest batch size is <span class="dv">24030</span> and the maximum number of values </span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>that can be downloaded through the API is <span class="fl">5000.</span></span></code></pre></div>
-<p>You may also have an error if the API calls too many requests.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">pxweb_advanced_get</span>(<span class="at">url =</span> url, <span class="at">query =</span> query, <span class="at">verbose =</span> verbose) <span class="sc">:</span> </span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  Too Many <span class="fu">Requests</span> (RFC <span class="dv">6585</span>) (HTTP <span class="dv">429</span>).</span></code></pre></div>
-<p>One solution is to query only specific elements of the dataset to download less data. Here an example.</p>
-<p>First you want to get the variable names, i.e. <code>code</code>, and categories, i.e. <code>values</code>, of your dataset.</p>
+</div>
+<div class="section level3">
+<h3 id="too-many-requests-error-message">“Too Many Requests” error message<a class="anchor" aria-label="anchor" href="#too-many-requests-error-message"></a>
+</h3>
+<p>When running the <code>bfs_get_*()</code> functions you may have the following error message (issue <a href="https://github.com/lgnbhl/BFS/issues/7" class="external-link">#7</a>).</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">pxweb_advanced_get</span>(<span class="at">url =</span> url, <span class="at">query =</span> query, <span class="at">verbose =</span> verbose) <span class="sc">:</span> </span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  Too Many <span class="fu">Requests</span> (RFC <span class="dv">6585</span>) (HTTP <span class="dv">429</span>).</span></code></pre></div>
+<p>This could happen because you ran too many times the <code>bfs_get_*()</code> function (API config is <a href="https://www.pxweb.bfs.admin.ch/api/v1/de/?config" class="external-link">here</a>). A solution is to wait a few seconds before running the next <code>bfs_get_*()</code> function. You can add a delay in your R code, for instance using <code>Sys.sleep(10)</code> (10 seconds delay).</p>
+<p>If the error message remains, it could be because you are querying a very large BFS dataset. Two workarounds exist: a) download the BFS file using <code><a href="reference/bfs_download_asset.html">bfs_download_asset()</a></code> (only in the GitHub development version for now) to read it locally or b) query only specific elements of the data to reduce the API call (see next section).</p>
+<p>Here an example using the <code><a href="reference/bfs_download_asset.html">bfs_download_asset()</a></code> function (only on GitHub for now):</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#devtools::install_github("lgnbhl/BFS") #GitHub version</span></span>
+<span><span class="fu">BFS</span><span class="fu">::</span><span class="fu"><a href="reference/bfs_download_asset.html">bfs_download_asset</a></span><span class="op">(</span></span>
+<span>  number_bfs <span class="op">=</span> <span class="st">"px-x-1502040100_131"</span>, <span class="co">#number_asset also possible</span></span>
+<span>  destfile <span class="op">=</span> <span class="st">"px-x-1502040100_131.px"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/cjgb/pxR" class="external-link">pxR</a></span><span class="op">)</span> <span class="co"># install.packages("pxR")</span></span>
+<span><span class="va">large_dataset</span> <span class="op">&lt;-</span> <span class="fu">pxR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pxR/man/read.px.html" class="external-link">read.px</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"px-x-1502040100_131.px"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Note that reading a PX file using <code><a href="https://rdrr.io/pkg/pxR/man/read.px.html" class="external-link">pxR::read.px()</a></code> gives access only to the German version.</p>
+</div>
+<div class="section level3">
+<h3 id="query-specific-elements">Query specific elements<a class="anchor" aria-label="anchor" href="#query-specific-elements"></a>
+</h3>
+<p>First you want to get the variable names, i.e. <code>code</code>, and categories, i.e. <code>values</code>, of your dataset. For example:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># choose a BFS number and language</span></span>
 <span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_metadata.html">bfs_get_metadata</a></span><span class="op">(</span>number_bfs <span class="op">=</span> <span class="st">"px-x-1502040100_131"</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></span>
@@ -250,7 +263,6 @@
 <span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="do">## 6 2021/22 Education science Male   Doctorate                          115</span></span>
 <span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="do">## 7 2021/22 Education science Female Master                             599</span></span>
 <span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a><span class="do">## 8 2021/22 Education science Female Doctorate                          318</span></span></code></pre></div>
-</div>
 </div>
 <div class="section level3">
 <h3 id="catalog-of-tables">Catalog of tables<a class="anchor" aria-label="anchor" href="#catalog-of-tables"></a>
@@ -356,15 +368,15 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-spatial/mapview" class="external-link">mapview</a></span><span class="op">)</span> <span class="co"># create interactive maps</span></span>
 <span></span>
 <span><span class="co"># explore available layers</span></span>
-<span><span class="fu">sf</span><span class="fu">::</span><span class="fu">st_layers</span><span class="op">(</span>dsn <span class="op">=</span> <span class="st">"borders_G1"</span><span class="op">)</span></span>
+<span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_layers.html" class="external-link">st_layers</a></span><span class="op">(</span>dsn <span class="op">=</span> <span class="st">"borders_G1"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#swiss_cantons &lt;- sf::st_read(dsn = "borders_G1", layer = "k3k23")</span></span>
 <span><span class="co">#swiss_districts &lt;- sf::st_read(dsn = "borders_G1", layer = "g1b23")</span></span>
 <span></span>
-<span><span class="va">swiss_communes</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu">st_read</span><span class="op">(</span>dsn <span class="op">=</span> <span class="st">"borders_G1"</span>, layer <span class="op">=</span> <span class="st">"g1g23"</span><span class="op">)</span></span>
+<span><span class="va">swiss_communes</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span>dsn <span class="op">=</span> <span class="st">"borders_G1"</span>, layer <span class="op">=</span> <span class="st">"g1g23"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">swiss_communes</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">mapview</span><span class="fu">::</span><span class="fu">mapview</span><span class="op">(</span>zcol <span class="op">=</span> <span class="st">"AREA_HA"</span>, layer.name <span class="op">=</span> <span class="st">"area ha"</span>, label <span class="op">=</span> <span class="st">"GMDNAME"</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">mapview</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mapview/man/mapView.html" class="external-link">mapview</a></span><span class="op">(</span>zcol <span class="op">=</span> <span class="st">"AREA_HA"</span>, layer.name <span class="op">=</span> <span class="st">"area ha"</span>, label <span class="op">=</span> <span class="st">"GMDNAME"</span><span class="op">)</span></span></code></pre></div>
 <p><img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/mapview.png" align="center"></p>
 </div>
 </div>
