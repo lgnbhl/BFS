@@ -1,5 +1,7 @@
 ---
 output: github_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -53,20 +55,21 @@ catalog_data_en <- bfs_get_catalog_data(language = "en")
 catalog_data_en
 ```
 
-    ## # A tibble: 180 × 7
-    ##    title   language publication_date    url_bfs url_px guid  catalog_date       
-    ##    <chr>   <chr>    <dttm>              <chr>   <chr>  <chr> <dttm>             
-    ##  1 Provis… en       2023-04-04 08:30:00 https:… https… bfsR… 2023-04-04 08:30:00
-    ##  2 Perman… en       2022-10-06 08:30:00 https:… https… bfsR… 2023-04-04 08:30:00
-    ##  3 Privat… en       2022-10-06 08:30:00 https:… https… bfsR… 2023-04-04 08:30:00
-    ##  4 Deaths… en       2022-09-26 08:30:00 https:… https… bfsR… 2023-04-04 08:30:00
-    ##  5 Divorc… en       2022-09-26 08:30:00 https:… https… bfsR… 2023-04-04 08:30:00
-    ##  6 Live b… en       2022-09-26 08:30:00 https:… https… bfsR… 2023-04-04 08:30:00
-    ##  7 Marria… en       2022-09-26 08:30:00 https:… https… bfsR… 2023-04-04 08:30:00
-    ##  8 Acquis… en       2022-08-25 08:30:00 https:… https… bfsR… 2023-04-04 08:30:00
-    ##  9 Acquis… en       2022-08-25 08:30:00 https:… https… bfsR… 2023-04-04 08:30:00
-    ## 10 Demogr… en       2022-08-25 08:30:00 https:… https… bfsR… 2023-04-04 08:30:00
-    ## # ℹ 170 more rows
+    ## # A tibble: 184 × 7
+    ##    title                language publication_date    number_asset url_bfs url_px
+    ##    <chr>                <chr>    <dttm>                     <dbl> <chr>   <chr> 
+    ##  1 Acknowledgment of p… en       2023-06-22 08:30:00     25945442 https:… https…
+    ##  2 Adoptions by differ… en       2023-06-22 08:30:00     25945406 https:… https…
+    ##  3 Deaths by instituti… en       2023-06-22 08:30:00     25945423 https:… https…
+    ##  4 Deaths by sex, citi… en       2023-06-22 08:30:00     25945436 https:… https…
+    ##  5 Deaths since 1803    en       2023-06-22 08:30:00     25945437 https:… https…
+    ##  6 Dissolved partnersh… en       2023-06-22 08:30:00     25945438 https:… https…
+    ##  7 Divorces by canton,… en       2023-06-22 08:30:00     25945378 https:… https…
+    ##  8 Divorces by duratio… en       2023-06-22 08:30:00     25945381 https:… https…
+    ##  9 Divorces by institu… en       2023-06-22 08:30:00     25945387 https:… https…
+    ## 10 Live births by inst… en       2023-06-22 08:30:00     25945410 https:… https…
+    ## # ℹ 174 more rows
+    ## # ℹ 1 more variable: catalog_date <dttm>
 
 English and Italian data catalogs offer a limited list of datasets. For the full list please get the French ("fr") or German ("de") data catalogs.
 
@@ -337,37 +340,50 @@ Download dataset and unzip file if needed.
 
 ```r
 # Access Generalised borders G1 and area with urban character
-geo_file_paths <- bfs_download_geodata(
-  collection_id = "ch.bfs.generalisierte-grenzen_agglomerationen_g1"
-  )
+borders_g1_path <- bfs_download_geodata(
+  collection_id = "ch.bfs.generalisierte-grenzen_agglomerationen_g1", 
+  output_dir = getwd()
+)
 
 # you may need to unzip the file
-unzip(geo_file_paths[4], exdir = "borders_G1")
+unzip(borders_g1_path[4], exdir = "borders_G1")
 ```
 
 By default, the files are downloaded in a temporary directory. You can specify the folder where saving the files using the `output_dir` argument.
 
 ### Explore and visualize data
 
-You can then easily read and visualize geodata, for example using "sf" or "mapview".
+You can then easily read and visualize geodata, for example using "sf" and "ggplot2".
 
 ```r
 library(sf) # read sf data
-library(mapview) # create interactive maps
+library(ggplot2) # data visualization
 
 # explore available layers
 sf::st_layers(dsn = "borders_G1")
 
-#swiss_cantons <- sf::st_read(dsn = "borders_G1", layer = "k3k23")
-#swiss_districts <- sf::st_read(dsn = "borders_G1", layer = "g1b23")
-
+swiss_cantons <- sf::st_read(dsn = "borders_G1", layer = "k3k23")
 swiss_communes <- sf::st_read(dsn = "borders_G1", layer = "g1g23")
+
+swiss_communes |> 
+  ggplot() + 
+  geom_sf() + 
+  theme_minimal()
+```
+
+<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/ggplot2_map.png" align="center" />
+
+Alternatively you can use the R package "mapview" to create an interactive map.
+
+```r
+library(mapview) # create interactive maps
 
 swiss_communes |> 
   mapview::mapview(zcol = "AREA_HA", layer.name = "area ha", label = "GMDNAME")
 ```
 
 <img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/mapview.png" align="center" />
+
 
 ## Main dependencies of the package
 

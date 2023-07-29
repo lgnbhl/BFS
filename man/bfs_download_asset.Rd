@@ -31,5 +31,6 @@ Returns the file path where the file has been downloaded
 }
 \description{
 This function uses the DAM API \url{https://dam-api.bfs.admin.ch/hub/swagger-ui/index.html}
-to download a BFS file by asset number or BFS number.
+to download a BFS file by asset number or BFS number. The file is downloaded using 
+`curl::curl_download()` under the hood.
 }

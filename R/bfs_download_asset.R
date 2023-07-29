@@ -1,7 +1,8 @@
 #' Download a BFS asset file
 #' 
 #' This function uses the DAM API \url{https://dam-api.bfs.admin.ch/hub/swagger-ui/index.html}
-#' to download a BFS file by asset number or BFS number.
+#' to download a BFS file by asset number or BFS number. The file is downloaded using 
+#' `curl::curl_download()` under the hood.
 #' 
 #' @param number_bfs The BFS number of a dataset.
 #' @param number_asset The asset number of a dataset
