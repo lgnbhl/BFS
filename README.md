@@ -402,6 +402,36 @@ swiss_communes |>
 
 <img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/mapview.png" align="center" />
 
+You can also download [cartographic base
+files](https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.assetdetail.24025646.html)
+using `bfs_download_asset()` (only in the GitHub development version for
+now). For instance you can add the main lakes.
+
+``` r
+# asset file: https://dam-api.bfs.admin.ch/hub/api/dam/assets/24025646/master
+themakart_map_path <- bfs_download_asset(
+  number_asset = "24025646",
+  destfile = "themakart_map.zip")
+
+# Manually unzip (encoding error using unzip(themakart_map_path))
+lakes_file_path <- "themakart_map/2023_GEOM_TK/00_TOPO/K4_seenyyyymmdd/k4seenyyyymmdd11_ch2007Poly.shp"
+
+lake_geo <- read_sf(lakes_file_path)
+
+swiss_communes |> 
+  ggplot() + 
+  geom_sf() + 
+  # add lakes
+  geom_sf(
+    data = lake_geo,
+    fill = "#516d81",
+    color = "#516d81"
+  ) +
+  theme_minimal()
+```
+
+<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/ggplot2_map2.png" align="center" />
+
 ## Main dependencies of the package
 
 Under the hood, this package is using the
