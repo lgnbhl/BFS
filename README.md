@@ -356,7 +356,7 @@ Download dataset and unzip file if needed.
 # Access Generalised borders G1 and area with urban character
 borders_g1_path <- bfs_download_geodata(
   collection_id = "ch.bfs.generalisierte-grenzen_agglomerationen_g1", 
-  output_dir = getwd()
+  output_dir = tempdir() #  temporary directory
 )
 
 # you may need to unzip the file
@@ -379,16 +379,17 @@ library(ggplot2) # data visualization
 # explore available layers
 sf::st_layers(dsn = "borders_G1")
 
-swiss_cantons <- sf::st_read(dsn = "borders_G1", layer = "k3k23")
-swiss_communes <- sf::st_read(dsn = "borders_G1", layer = "g1g23")
+swiss_cantons <- sf::st_read(dsn = "borders_G1", layer = "k4k23")
+swiss_communes <- sf::st_read(dsn = "borders_G1", layer = "k4g23")
 
 swiss_communes |> 
   ggplot() + 
   geom_sf() + 
-  theme_minimal()
+  theme_minimal() +
+  labs(caption = "Source: BFS Generalised borders G1 - www.bfs.admin.ch")
 ```
 
-<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/ggplot2_map.png" align="center" />
+<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/communes_g1.png" align="center" />
 
 Alternatively you can use the R package “mapview” to create an
 interactive map.
@@ -403,34 +404,50 @@ swiss_communes |>
 <img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/mapview.png" align="center" />
 
 You can also download [cartographic base
-files](https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.assetdetail.24025646.html)
+maps](https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.assetdetail.24025646.html)
 using `bfs_download_asset()` (only in the GitHub development version for
-now). For instance you can add the main lakes.
+now). For instance you can get the communes and the main lakes.
 
 ``` r
 # asset file: https://dam-api.bfs.admin.ch/hub/api/dam/assets/24025646/master
-themakart_map_path <- bfs_download_asset(
+base_maps_path <- bfs_download_asset(
   number_asset = "24025646",
-  destfile = "themakart_map.zip")
+  #number_bfs = "KM04-00-c-suis-2023-q",
+  destfile = "base_maps.zip")
 
-# Manually unzip (encoding error using unzip(themakart_map_path))
-lakes_file_path <- "themakart_map/2023_GEOM_TK/00_TOPO/K4_seenyyyymmdd/k4seenyyyymmdd11_ch2007Poly.shp"
+library(zip) #install.packages("zip")
+zip::unzip(zipfile = base_maps_path, exdir = "base_maps")
 
-lake_geo <- read_sf(lakes_file_path)
+lakes_file_path <- list.files(
+  path = "base_maps", 
+  pattern = "k4seenyyyymmdd11_ch2007Poly.shp", 
+  recursive = TRUE, 
+  full.names = TRUE)
 
-swiss_communes |> 
+lakes_sf <- read_sf(lakes_file_path)
+
+swiss_communes_path <- list.files(
+  path = "base_maps", 
+  pattern = "K4polg20230101gf_ch2007Poly.shp", 
+  recursive = TRUE, 
+  full.names = TRUE)
+
+swiss_communes_sf <- read_sf(swiss_communes_path)
+
+swiss_communes_sf |> 
   ggplot() + 
   geom_sf() + 
   # add lakes
   geom_sf(
-    data = lake_geo,
-    fill = "#516d81",
-    color = "#516d81"
+    data = lakes_sf,
+    fill = "lightblue4",
+    color = "lightblue4"
   ) +
-  theme_minimal()
+  theme_minimal() +
+  labs(caption = "Source: BFS ThemaKart - www.bfs.admin.ch")
 ```
 
-<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/ggplot2_map2.png" align="center" />
+<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/communes_themakart.png" align="center" />
 
 ## Main dependencies of the package
 
