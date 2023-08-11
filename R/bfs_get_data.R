@@ -1,4 +1,4 @@
-#' Get a BFS dataset in a given language
+#' Get BFS data in a given language
 #'
 #' Get a dataset using the PXWEB API v1. 
 #' You should choose either the BFS number (FSO number) of the BFS offical url

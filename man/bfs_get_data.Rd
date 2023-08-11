@@ -2,7 +2,7 @@
 % Please edit documentation in R/bfs_get_data.R
 \name{bfs_get_data}
 \alias{bfs_get_data}
-\title{Get a BFS dataset in a given language}
+\title{Get BFS data in a given language}
 \usage{
 bfs_get_data(
   number_bfs = NULL,

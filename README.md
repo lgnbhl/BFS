@@ -66,40 +66,97 @@ catalog_data_en
     ## # ℹ 174 more rows
     ## # ℹ 1 more variable: catalog_date <dttm>
 
-English and Italian data catalogs offer a limited list of datasets. For
-the full list please get the French (“fr”) or German (“de”) data
-catalogs.
+You can search in the data catalog using the following arguments:
 
-### Download a dataset in any language
+- `language`: The language of a BFS catalog, i.e. “de”, “fr”, “it” or
+  “en”.
+- `title`: to search in title, subtitle and supertitle.
+- `spatial_division`: choose between “Switzerland”, “Cantons”,
+  “Districts”, “Communes”, “Other spatial divisions” or “International”.
+- `prodima`: b specific BFS themes using one or multiple prodima
+  numbers.
+- `inquiry`: by inquiry.
+- `institution`: by institution.
+- `publishing_year_start`: by publishing year start.
+- `publishing_year_end`: by publishing year end.
+- `order_nr`: by BFS Number (FSO number).
 
-The function `bfs_get_data()` allows you to download any dataset for the
-data catalog.
-
-To download a specific dataset, you can either use the `url_bfs` or the
-`number_bfs`.
-
-The `url_bfs` argument refers to the offical webpage of a dataset. Find
-below an example using “dplyr”.
+For example, you can search data related to students:
 
 ``` r
-library(dplyr)
+bfs_get_catalog_data(language = "en", title = "students")
+```
 
-url_bfs_uni_students <- catalog_data_en |>
+    ## # A tibble: 4 × 7
+    ##   title                 language publication_date    number_asset url_bfs url_px
+    ##   <chr>                 <chr>    <dttm>                     <dbl> <chr>   <chr> 
+    ## 1 University of applie… en       2023-03-28 08:30:00     24367605 https:… https…
+    ## 2 University of applie… en       2023-03-28 08:30:00     24367607 https:… https…
+    ## 3 University students … en       2023-03-28 08:30:00     24367723 https:… https…
+    ## 4 University students … en       2023-03-28 08:30:00     24367729 https:… https…
+    ## # ℹ 1 more variable: catalog_date <dttm>
+
+English (“en”) and Italian (“it”) data catalogs offer a limited list of
+datasets. For the full list please get the French (“fr”) or German
+(“de”) data catalogs.
+
+### Download data in any language
+
+The function `bfs_get_data()` allows you to download any dataset from
+the [data
+catalog](https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/daten.html)
+using its BFS number (FSO number).
+
+You need first to find the asset number of the dataset.
+
+``` r
+library(dplyr) #install.packages("dplyr")
+
+asset_number_students <- bfs_get_catalog_data(language = "en", title = "students") |>
+  dplyr::filter(title == "University students by year, ISCED field, sex and level of study") |>
+  dplyr::pull(number_asset)
+
+asset_number_students
+```
+
+    ## [1] 24367729
+
+You can then find the BFS number by calling `bfs_get_asset_metadata()`.
+This function returns a list containing the metadata of the asset. For
+the student data, the BFS number is in the `orderNR` variable.
+
+``` r
+asset_meta_students <- bfs_get_asset_metadata(number_asset = asset_number_students)
+
+bfs_number_students <- asset_meta_students$shop$orderNr
+
+bfs_number_students
+```
+
+    ## [1] "px-x-1502040100_131"
+
+You can also manually find the BFS number (FSO number) by opening the
+related URL official webpage.
+
+``` r
+url_bfs_students <- bfs_get_catalog_data(language = "en", title = "students") |>
   dplyr::filter(title == "University students by year, ISCED field, sex and level of study") |>
   dplyr::pull(url_bfs)
 
-url_bfs_uni_students
+# open students dataset webpage
+browseURL(url_bfs_students)
 ```
 
-    ## [1] "https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-datenbanken/daten.assetdetail.24367729.html"
+<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/stat-tab.png" align="center" />
 
-Then you can download the full dataset using `url_bfs`.
+<br/>
+
+Finally you can get the data using the `number_bfs` argument in a given
+language (“en”, “de”, “fr” or “it”) from the official PXWeb API of the
+Swiss Federal Statistical Office.
 
 ``` r
-# https://www.bfs.admin.ch/content/bfs/en/home/statistiken/kataloge-datenbanken/daten.assetdetail.16324907.html
-df_uni <- bfs_get_data(url_bfs = url_bfs_uni_students, language = "en")
-
-df_uni
+bfs_get_data(number_bfs = bfs_number_students, language = "en")
 ```
 
     ## # A tibble: 18,060 × 5
@@ -117,65 +174,29 @@ df_uni
     ## 10 1980/81 Education science Female Further education, ad…                    52
     ## # ℹ 18,050 more rows
 
-It is recommended to privilege the use of the `number_bfs` argument for
-stability and reproducibility.
-
-You can manually find the `number_bfs` by opening the official webpage
-and looking for the “FSO number”.
-
-``` r
-# open Uni students dataset webpage
-browseURL(url_bfs_uni_students)
-```
-
-<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/stat-tab.png" align="center" />
-
-<br/>
-
-Then you can download the dataset using `number_bfs`.
-
-``` r
-bfs_get_data(number_bfs = "px-x-1502040100_131", language = "en")
-```
-
-You can also access additional information about the dataset by running
-`bfs_get_data_comments()`.
-
-``` r
-bfs_get_data_comments(number_bfs = "px-x-1502040100_131", language = "en")
-```
-
-    ## # A tibble: 1 × 4
-    ##   row_no col_no comment_type   comment                                          
-    ##    <int>  <int> <chr>          <chr>                                            
-    ## 1     NA      4 column_comment "To ensure that the presentations from cubes con…
-
 ### “Too Many Requests” error message
 
-When running the `bfs_get_*()` functions you may have the following
+When running the `bfs_get_data()` function you may get the following
 error message (issue [\#7](https://github.com/lgnbhl/BFS/issues/7)).
 
     Error in pxweb_advanced_get(url = url, query = query, verbose = verbose) : 
       Too Many Requests (RFC 6585) (HTTP 429).
 
-This could happen because you ran too many times the `bfs_get_*()`
+This could happen because you ran too many times a `bfs_get_*()`
 function (API config is
 [here](https://www.pxweb.bfs.admin.ch/api/v1/de/?config)). A solution is
 to wait a few seconds before running the next `bfs_get_*()` function.
-You can add a delay in your R code, for instance using `Sys.sleep(10)`
-(10 seconds delay).
+You can add a delay in your R code, for instance using `Sys.sleep(11)`
+(11 seconds delay).
 
 If the error message remains, it could be because you are querying a
 very large BFS dataset. Two workarounds exist: a) download the BFS file
-using `bfs_download_asset()` (only in the GitHub development version for
-now) to read it locally or b) query only specific elements of the data
-to reduce the API call (see next section).
+using `bfs_download_asset()` to read it locally or b) query only
+specific elements of the data to reduce the API call (see next section).
 
-Here an example using the `bfs_download_asset()` function (only on
-GitHub for now):
+Here an example using the `bfs_download_asset()` function:
 
 ``` r
-#devtools::install_github("lgnbhl/BFS") #GitHub version
 BFS::bfs_download_asset(
   number_bfs = "px-x-1502040100_131", #number_asset also possible
   destfile = "px-x-1502040100_131.px"
@@ -253,9 +274,9 @@ BFS::bfs_get_data(
 
 ### Catalog of tables
 
-A lot of tables are not accessible through the official API, but they
-are still present in the [official BFS
-website](https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/tabellen.html).
+A lot of datasets are not accessible through the official PXWeb API.
+They are listed in the [catalog of
+tables](https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/tabellen.html).
 You can search for specific tables using `bfs_get_catalog_tables()`.
 
 ``` r
@@ -265,44 +286,30 @@ catalog_tables_en_students
 ```
 
     ## # A tibble: 5 × 7
-    ##   title language publication_date    url_bfs url_table guid  catalog_date       
-    ##   <chr> <chr>    <dttm>              <chr>   <chr>     <chr> <dttm>             
-    ## 1 Stud… en       2023-04-05 00:00:00 https:… https://… bfsR… 2023-04-05 00:00:00
-    ## 2 Stud… en       2023-04-05 00:00:00 https:… https://… bfsR… 2023-04-05 00:00:00
-    ## 3 Stud… en       2023-03-28 08:30:00 https:… https://… bfsR… 2023-04-05 00:00:00
-    ## 4 Stud… en       2023-03-28 08:30:00 https:… https://… bfsR… 2023-04-05 00:00:00
-    ## 5 Stud… en       2023-03-28 08:30:00 https:… https://… bfsR… 2023-04-05 00:00:00
+    ##   title              language publication_date    number_asset url_bfs url_table
+    ##   <chr>              <chr>    <dttm>                     <dbl> <chr>   <chr>    
+    ## 1 Students at unive… en       2023-04-05 00:00:00     24865589 https:… https://…
+    ## 2 Students at unive… en       2023-04-05 00:00:00     24865590 https:… https://…
+    ## 3 Students at unive… en       2023-03-28 08:30:00     24345362 https:… https://…
+    ## 4 Students at unive… en       2023-03-28 08:30:00     24345374 https:… https://…
+    ## 5 Students at unive… en       2023-03-28 08:30:00     24345366 https:… https://…
+    ## # ℹ 1 more variable: catalog_date <dttm>
 
-Most of the BFS tables are Excel or CSV files. For example, you can use
-the “openxlsx” R package to read a specific Excel table using the
-`url_table` column.
+Most of the BFS tables are Excel or CSV files. You can download an table
+with `bfs_download_asset()` using the `number asset`.
 
 ``` r
 library(dplyr)
-library(openxlsx)
 
-tables_bfs_uni_students <- catalog_tables_en_students |>
-  dplyr::slice(3) |>
-  dplyr::pull(url_table)
+tables_asset_number_students <- catalog_tables_en_students |>
+  dplyr::filter(title == "Students at universities and institutes of technology: Basistables") |>
+  dplyr::pull(number_asset)
 
-df_table <- tryCatch(expr = openxlsx::read.xlsx(tables_bfs_uni_students, startRow = 1),
-    error = function(e) "Failed reading table") |>
-  dplyr::as_tibble()
-
-df_table
+file_path <- BFS::bfs_download_asset(
+  number_asset = tables_asset_number_students,
+  destfile = "su-e-15.02.04.01.xlsx"
+)
 ```
-
-    ## # A tibble: 6 × 2
-    ##   Students.at.Universities.and.Institutes.of.Technology.(UIT).2022/23:.S…¹ X2   
-    ##   <chr>                                                                    <chr>
-    ## 1 "Definitions "                                                           Defi…
-    ## 2 "Tab 1"                                                                  Entr…
-    ## 3 "Tab 2"                                                                  Stud…
-    ## 4 "Tab 3"                                                                  Stud…
-    ## 5 "Tab 4"                                                                  Stud…
-    ## 6 "Tab 5"                                                                  Fore…
-    ## # ℹ abbreviated name:
-    ## #   ¹​`Students.at.Universities.and.Institutes.of.Technology.(UIT).2022/23:.Standard.Tables`
 
 ## Get geodata catalog
 
@@ -405,8 +412,8 @@ swiss_communes |>
 
 You can also download [cartographic base
 maps](https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.assetdetail.24025646.html)
-using `bfs_download_asset()` (only in the GitHub development version for
-now). For instance you can get the communes and the main lakes.
+using `bfs_download_asset()`. For instance you can get the communes and
+the main lakes.
 
 ``` r
 # asset file: https://dam-api.bfs.admin.ch/hub/api/dam/assets/24025646/master
