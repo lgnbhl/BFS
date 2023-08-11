@@ -7,10 +7,12 @@
 lhs \%>\% rhs
 }
 \arguments{
-\item{No}{parameter}
+\item{lhs}{A value or the magrittr placeholder.}
+
+\item{rhs}{A function call using the magrittr semantics.}
 }
 \value{
-No return value, called as an utility for user
+The result of calling `rhs(lhs)`.
 }
 \description{
 See \code{magrittr::\link[magrittr:pipe]{\%>\%}} for details.

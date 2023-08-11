@@ -15,6 +15,8 @@
 #' @param datetime datetime
 #' @param feature_id feature_id
 #' 
+#' @importFrom magrittr %>%
+#' 
 #' @export
 bfs_download_geodata <- function(
     collection_id = collection_id, 

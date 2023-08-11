@@ -13,6 +13,8 @@
 #' @return A tbl_df (a type of data frame; see tibble or
 #' dplyr packages).
 #'
+#' @importFrom magrittr %>%
+#'
 #' @export
 bfs_get_data_comments <- function(number_bfs = NULL, language = "de", url_bfs = NULL, query = NULL, clean_names = FALSE) {
   

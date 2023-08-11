@@ -24,5 +24,5 @@ hexSticker::sticker("man/figures/logo_icon.png",
 # MOD with Gimp: removing red borders.
 
 bfs <- magick::image_read("man/figures/logo.png")
-magick::image_scale(bfs, "400") %>%
+magick::image_scale(bfs, "400") |>
   magick::image_write(path = "man/figures/logo.png", format = "png")

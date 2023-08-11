@@ -9,6 +9,8 @@
 #' 
 #' @return A tbl_df (a type of data frame; see tibble or dplyr packages).
 #' 
+#' @importFrom magrittr %>%
+#' 
 #' @examples
 #' \donttest{bfs_get_metadata(number_bfs = "px-x-2105000000_501", language = "fr")}
 #' 

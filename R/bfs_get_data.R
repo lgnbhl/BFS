@@ -12,6 +12,8 @@
 #' @param variable_value_type Variable value type as "text" or as "code".
 #' @param clean_names Clean column names using \code{janitor::clean_names()}.
 #'
+#' @importFrom magrittr %>%
+#'
 #' @seealso \code{\link{bfs_get_data_comments}}
 #'
 #' @return A tbl_df (a type of data frame; see tibble or

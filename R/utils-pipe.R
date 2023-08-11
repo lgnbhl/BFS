@@ -5,9 +5,10 @@
 #' @name %>%
 #' @rdname pipe
 #' @keywords internal
-#' @param No parameter
-#' @return No return value, called as an utility for user
 #' @export
 #' @importFrom magrittr %>%
 #' @usage lhs \%>\% rhs
+#' @param lhs A value or the magrittr placeholder.
+#' @param rhs A function call using the magrittr semantics.
+#' @return The result of calling `rhs(lhs)`.
 NULL
