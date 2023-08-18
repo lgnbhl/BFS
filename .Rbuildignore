@@ -1,13 +1,10 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$
-^test\.Rmd$
 ^_pkgdown.yml
 ^data-raw
 ^docs
 ^pkgdown
-^\.gitlab-ci\.yml$
-man/figures/logo.svg
-^\.github$
 ^LICENSE\.md$
+^\.github$
 ^CODE_OF_CONDUCT\.md$

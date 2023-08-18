@@ -2,7 +2,7 @@
 % Please edit documentation in R/bfs_get_catalog.R
 \name{bfs_get_catalog}
 \alias{bfs_get_catalog}
-\title{Get the BFS data catalog}
+\title{Get the BFS data or table catalog}
 \usage{
 bfs_get_catalog(language = "de", type = "data")
 }

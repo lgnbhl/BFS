@@ -2,7 +2,7 @@
 % Please edit documentation in R/bfs_get_catalog_data.R
 \name{bfs_get_catalog_data}
 \alias{bfs_get_catalog_data}
-\title{Get the BFS geo-portal data catalog}
+\title{Get the BFS data catalog}
 \usage{
 bfs_get_catalog_data(
   language = "de",

@@ -1,3 +1,8 @@
+# BFS 0.5.3
+- add `bfs_get_base_maps()`.
+- add data from the Swiss official commune register.
+- update README.
+
 # BFS 0.5.2
 - BREAKING CHANGE: `bfs_get_catalog_data()` and `bfs_get_catalog_tables()` return now in the dataframe "number_asset" instead of "guid" as variables.
 - add `bfs_download_asset()`

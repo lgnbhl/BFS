@@ -1,7 +1,7 @@
 Package: BFS
 Type: Package
 Title: Get Data from the Swiss Federal Statistical Office
-Version: 0.5.2
+Version: 0.5.3
 Authors@R: 
   c(person(given = "Felix",
            family = "Luginbuhl",
@@ -11,7 +11,7 @@ Authors@R:
            family = "Brenzel-Weiss",
            role = "ctb"))
 Maintainer: Felix Luginbuhl <felix.luginbuhl@protonmail.ch>
-Description: Search and download data from the Swiss Federal Statistical Office (BFS) <https://www.bfs.admin.ch/>.
+Description: Search and download data from the Swiss Federal Statistical Office (BFS) APIs <https://www.bfs.admin.ch/>.
 License: MIT + file LICENSE
 Depends: R (>= 3.0.1)
 Imports: 
@@ -26,7 +26,10 @@ Imports:
     purrr,
     dplyr,
     rstac,
-    curl
+    curl,
+    sf,
+    rappdirs,
+    zip
 Encoding: UTF-8
 RoxygenNote: 7.2.3
 URL: https://felixluginbuhl.com/BFS/, https://github.com/lgnbhl/BFS/
@@ -34,3 +37,4 @@ BugReports: https://github.com/lgnbhl/BFS/issues
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+LazyData: true

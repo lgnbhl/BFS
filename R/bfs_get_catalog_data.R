@@ -1,4 +1,4 @@
-#' Get the BFS geo-portal data catalog
+#' Get the BFS data catalog
 #'
 #' Get the list of the data available in the official \href{https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml}{RSS Feed} of the Swiss Federal Statistical Office data catalog.
 #'

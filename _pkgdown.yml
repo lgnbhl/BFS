@@ -23,15 +23,35 @@ navbar:
      href: http://felixluginbuhl.com
 
 reference:
-  - title: "Functions"
-    contents: 
-      - bfs_get_catalog
-      - bfs_get_catalog_data
-      - bfs_get_catalog_tables
-      - bfs_get_catalog_geodata
-      - bfs_get_data
-      - bfs_download_asset
-      - bfs_download_geodata
-      - bfs_get_metadata
-      - bfs_get_asset_metadata
-      - bfs_get_data_comments
+  - title: "PXWeb API"
+    contents:
+    - bfs_get_catalog
+    - bfs_get_catalog_data
+    - bfs_get_catalog_tables
+    - bfs_get_data
+    - bfs_get_metadata
+    - bfs_get_data_comments
+  - title: "DAM API"
+    contents:
+    - bfs_download_asset
+    - bfs_get_asset_metadata
+  - title: "STAC API"
+    contents:
+    - bfs_get_catalog_geodata
+    - bfs_download_geodata
+  - title: "ThemaKart Project"
+    contents:
+    - bfs_get_base_maps
+  - title: "Commune Register"
+    desc: >
+      The Swiss official commune register is structured according to cantons and 
+      districts or comparable administrative entities. Various federal, cantonal 
+      and communal governments and private businesses use this register when 
+      identifying and referring to communes.
+    contents:
+    - register_dic
+    - register_bzn
+    - register_gde
+    - register_gde_other
+    - register_kt
+    - register_kt_seeanteile

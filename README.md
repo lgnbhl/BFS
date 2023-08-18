@@ -16,7 +16,7 @@ total](https://cranlogs.r-pkg.org/badges/grand-total/BFS)](https://cran.r-projec
 The `BFS` package allows to search and download public data from the <a
 href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html"
 target="_blank">Swiss Federal Statistical Office</a> (BFS stands for
-*Bundesamt für Statistik* in German) API in a dynamic and reproducible
+*Bundesamt für Statistik* in German) APIs in a dynamic and reproducible
 way.
 
 ## Installation
@@ -311,9 +311,10 @@ file_path <- BFS::bfs_download_asset(
 )
 ```
 
-## Get geodata catalog
+## Access geodata catalog
 
-Display available geodata using `bfs_get_catalog_geodata()`.
+Display geo-information catalog of the Swiss Official STAC API using
+`bfs_get_catalog_geodata()`.
 
 ``` r
 catalog_geodata <- bfs_get_catalog_geodata(include_metadata = TRUE)
@@ -337,16 +338,18 @@ catalog_geodata
     ## # ℹ 271 more rows
     ## # ℹ 3 more variables: provider_name <chr>, bbox <list>, inverval <list>
 
-### Explore geodata catalog
+### Download geodata
 
-Get the geographic dataset “Generalised borders G1 and area with urban
-character”.
+For example you can get information about the dataset “Generalised
+borders G1 and area with urban character”.
 
 ``` r
 library(dplyr)
 
-catalog_geodata |>
+geodata_g1 <- catalog_geodata |>
   filter(title == "Generalised borders G1 and area with urban character")
+  
+geodata_g1
 ```
 
     ## # A tibble: 1 × 12
@@ -355,9 +358,8 @@ catalog_geodata |>
     ## 1 ch.bfs.generalisi… API   http… Gene… Administra… 2022-0… 2023-0… http… propri…
     ## # ℹ 3 more variables: provider_name <chr>, bbox <list>, inverval <list>
 
-### Download geodata
-
-Download dataset and unzip file if needed.
+Download dataset by collection id with `bfs_download_geodata()` and
+unzip file if needed.
 
 ``` r
 # Access Generalised borders G1 and area with urban character
@@ -374,76 +376,26 @@ By default, the files are downloaded in a temporary directory. You can
 specify the folder where saving the files using the `output_dir`
 argument.
 
-### Explore and visualize data
+### Cartographic base maps
 
-You can then easily read and visualize geodata, for example using “sf”
-and “ggplot2”.
-
-``` r
-library(sf) # read sf data
-library(ggplot2) # data visualization
-
-# explore available layers
-sf::st_layers(dsn = "borders_G1")
-
-swiss_cantons <- sf::st_read(dsn = "borders_G1", layer = "k4k23")
-swiss_communes <- sf::st_read(dsn = "borders_G1", layer = "k4g23")
-
-swiss_communes |> 
-  ggplot() + 
-  geom_sf() + 
-  theme_minimal() +
-  labs(caption = "Source: BFS Generalised borders G1 - www.bfs.admin.ch")
-```
-
-<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/communes_g1.png" align="center" />
-
-Alternatively you can use the R package “mapview” to create an
-interactive map.
-
-``` r
-library(mapview) # create interactive maps
-
-swiss_communes |> 
-  mapview::mapview(zcol = "AREA_HA", layer.name = "area ha", label = "GMDNAME")
-```
-
-<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/mapview.png" align="center" />
-
-You can also download [cartographic base
+You can get [cartographic base
 maps](https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.assetdetail.24025646.html)
-using `bfs_download_asset()`. For instance you can get the communes and
-the main lakes.
+from the ThemaKart project using `bfs_get_base_maps()`. For instance you
+can get the communes and main lakes. The list of available geometries in
+the [official
+documentation](https://www.bfs.admin.ch/asset/en/24025645).
 
 ``` r
-# asset file: https://dam-api.bfs.admin.ch/hub/api/dam/assets/24025646/master
-base_maps_path <- bfs_download_asset(
-  number_asset = "24025646",
-  #number_bfs = "KM04-00-c-suis-2023-q",
-  destfile = "base_maps.zip")
+# list of geometry names: https://www.bfs.admin.ch/asset/en/24025645
+#switzerland_sf <- bfs_get_base_maps(geom = "suis")
+#cantons_sf <- bfs_get_base_maps(geom = "kant")
+communes_sf <- bfs_get_base_maps(geom = "polg", date = "20230101")
+lakes_sf <- bfs_get_base_maps(geom = "seen", category = "11")
 
-library(zip) #install.packages("zip")
-zip::unzip(zipfile = base_maps_path, exdir = "base_maps")
+library(ggplot2)
 
-lakes_file_path <- list.files(
-  path = "base_maps", 
-  pattern = "k4seenyyyymmdd11_ch2007Poly.shp", 
-  recursive = TRUE, 
-  full.names = TRUE)
-
-lakes_sf <- read_sf(lakes_file_path)
-
-swiss_communes_path <- list.files(
-  path = "base_maps", 
-  pattern = "K4polg20230101gf_ch2007Poly.shp", 
-  recursive = TRUE, 
-  full.names = TRUE)
-
-swiss_communes_sf <- read_sf(swiss_communes_path)
-
-swiss_communes_sf |> 
-  ggplot() + 
-  geom_sf() + 
+ggplot() + 
+  geom_sf(data = communes_sf) + 
   # add lakes
   geom_sf(
     data = lakes_sf,
@@ -455,6 +407,31 @@ swiss_communes_sf |>
 ```
 
 <img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/communes_themakart.png" align="center" />
+
+### Swiss Official Commune Register
+
+The package also contains the official Swiss official commune registers
+for different administrative levels.
+
+``` r
+# commune register data
+BFS::register_gde
+```
+
+    ## # A tibble: 2,136 × 8
+    ##    GDEKT GDEBZNR GDENR GDENAME            GDENAMK      GDEBZNA GDEKTNA GDEMUTDAT
+    ##    <chr>   <dbl> <dbl> <chr>              <chr>        <chr>   <chr>   <chr>    
+    ##  1 ZH        101     1 Aeugst am Albis    Aeugst am A… Bezirk… Zürich  1976-11-…
+    ##  2 ZH        101     2 Affoltern am Albis Affoltern a… Bezirk… Zürich  1848-09-…
+    ##  3 ZH        101     3 Bonstetten         Bonstetten   Bezirk… Zürich  1848-09-…
+    ##  4 ZH        101     4 Hausen am Albis    Hausen am A… Bezirk… Zürich  1911-01-…
+    ##  5 ZH        101     5 Hedingen           Hedingen     Bezirk… Zürich  1848-09-…
+    ##  6 ZH        101     6 Kappel am Albis    Kappel am A… Bezirk… Zürich  1911-01-…
+    ##  7 ZH        101     7 Knonau             Knonau       Bezirk… Zürich  1848-09-…
+    ##  8 ZH        101     8 Maschwanden        Maschwanden  Bezirk… Zürich  1848-09-…
+    ##  9 ZH        101     9 Mettmenstetten     Mettmenstet… Bezirk… Zürich  1848-09-…
+    ## 10 ZH        101    10 Obfelden           Obfelden     Bezirk… Zürich  1848-09-…
+    ## # ℹ 2,126 more rows
 
 ## Main dependencies of the package
 

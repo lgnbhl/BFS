@@ -1,4 +1,4 @@
-#' Get the BFS data catalog
+#' Get the BFS data or table catalog
 #'
 #' This function scraps a given RSS Feed of the Swiss Federal Statistical Office.
 #'
