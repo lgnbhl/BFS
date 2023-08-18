@@ -360,26 +360,28 @@ You can get [cartographic base maps](https://www.bfs.admin.ch/bfs/en/home/statis
 
 ```r
 # list of geometry names: https://www.bfs.admin.ch/asset/en/24025645
-#switzerland_sf <- bfs_get_base_maps(geom = "suis")
-#cantons_sf <- bfs_get_base_maps(geom = "kant")
+switzerland_sf <- bfs_get_base_maps(geom = "suis")
 communes_sf <- bfs_get_base_maps(geom = "polg", date = "20230101")
+districts_sf <- bfs_get_base_maps(geom = "bezk")
+cantons_sf <- bfs_get_base_maps(geom = "kant")
+cantons_capitals_sf <- bfs_get_base_maps(geom = "stkt", type = "Pnts", category = "kk")
 lakes_sf <- bfs_get_base_maps(geom = "seen", category = "11")
 
 library(ggplot2)
 
 ggplot() + 
-  geom_sf(data = communes_sf) + 
-  # add lakes
-  geom_sf(
-    data = lakes_sf,
-    fill = "lightblue4",
-    color = "lightblue4"
-  ) +
+  geom_sf(data = communes_sf, color = "grey85") + 
+  geom_sf(data = lakes_sf, fill = "lightblue2", color = "lightblue2") +
+  geom_sf(data = districts_sf, fill = "transparent", color = "grey55") + 
+  geom_sf(data = cantons_sf, fill = "transparent", color = "grey20") +
+  geom_sf(data = switzerland_sf, fill = "transparent", color = "black") + 
+  geom_sf(data = cantons_capitals_sf, color = "red") +
   theme_minimal() +
-  labs(caption = "Source: BFS ThemaKart - www.bfs.admin.ch")
+  theme(axis.text = element_blank()) +
+  labs(caption = "Source: ThemaKart, © BFS")
 ```
 
-<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/communes_themakart.png" align="center" />
+<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/base_maps" align="center" />
 
 
 ### Swiss Official Commune Register
