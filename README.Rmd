@@ -393,6 +393,11 @@ The package also contains the official Swiss official commune registers for diff
 BFS::register_gde
 ```
 
+```{r}
+# canton register data
+BFS::register_kt
+```
+
 
 ## Main dependencies of the package
 

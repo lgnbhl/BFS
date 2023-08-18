@@ -24,6 +24,8 @@ navbar:
 
 reference:
   - title: "PXWeb API"
+    desc: >
+      PXWEB is an API structure developed to disseminate public statistics.
     contents:
     - bfs_get_catalog
     - bfs_get_catalog_data
@@ -36,6 +38,9 @@ reference:
     - bfs_download_asset
     - bfs_get_asset_metadata
   - title: "STAC API"
+    desc: >
+      STAC is a specification of files and web services used to describe 
+      geospatial information assets.
     contents:
     - bfs_get_catalog_geodata
     - bfs_download_geodata

@@ -435,6 +435,26 @@ BFS::register_gde
     ## 10 ZH        101    10 Obfelden           Obfelden     Bezirk… Zürich  1848-09-…
     ## # ℹ 2,126 more rows
 
+``` r
+# canton register data
+BFS::register_kt
+```
+
+    ## # A tibble: 26 × 3
+    ##     KTNR GDEKT GDEKTNA            
+    ##    <dbl> <chr> <chr>              
+    ##  1     1 ZH    Zürich             
+    ##  2     2 BE    Bern / Berne       
+    ##  3     3 LU    Luzern             
+    ##  4     4 UR    Uri                
+    ##  5     5 SZ    Schwyz             
+    ##  6     6 OW    Obwalden           
+    ##  7     7 NW    Nidwalden          
+    ##  8     8 GL    Glarus             
+    ##  9     9 ZG    Zug                
+    ## 10    10 FR    Fribourg / Freiburg
+    ## # ℹ 16 more rows
+
 ## Main dependencies of the package
 
 Under the hood, this package is using the
