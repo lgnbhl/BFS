@@ -408,7 +408,7 @@ ggplot() +
   labs(caption = "Source: ThemaKart, © BFS")
 ```
 
-<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/base_maps" align="center" />
+<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/base_maps.png" align="center" />
 
 ### Swiss Official Commune Register
 
