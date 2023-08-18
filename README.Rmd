@@ -370,12 +370,11 @@ lakes_sf <- bfs_get_base_maps(geom = "seen", category = "11")
 library(ggplot2)
 
 ggplot() + 
-  geom_sf(data = communes_sf, color = "grey85") + 
-  geom_sf(data = lakes_sf, fill = "lightblue2", color = "lightblue2") +
-  geom_sf(data = districts_sf, fill = "transparent", color = "grey55") + 
-  geom_sf(data = cantons_sf, fill = "transparent", color = "grey20") +
-  geom_sf(data = switzerland_sf, fill = "transparent", color = "black") + 
-  geom_sf(data = cantons_capitals_sf, color = "red") +
+  geom_sf(data = communes_sf, fill = "snow", color = "grey45") + 
+  geom_sf(data = lakes_sf, fill = "lightblue2", color = "black") +
+  geom_sf(data = districts_sf, fill = "transparent", color = "grey65") + 
+  geom_sf(data = cantons_sf, fill = "transparent", color = "black") +
+  geom_sf(data = cantons_capitals_sf, shape = 18, size = 3) +
   theme_minimal() +
   theme(axis.text = element_blank()) +
   labs(caption = "Source: ThemaKart, © BFS")
