@@ -384,6 +384,26 @@ from the ThemaKart project using `bfs_get_base_maps()`. The list of
 available geometries in the [official
 documentation](https://www.bfs.admin.ch/asset/en/24025645).
 
+The default arguments of `bfs_get_base_maps()` can be change to access
+specific files:
+
+``` r
+# default arguments
+bfs_get_base_maps(
+  geom = NULL,
+  category = "gf", # "gf" for total area (i.e. "Gesamtflaeche")
+  type = "Poly",
+  date = NULL,
+  most_recent = TRUE, #get most recent file by default
+  format = "shp",
+  asset_number = "24025646" #change to get older ThemaKart data
+)
+```
+
+A typical base maps ThemaKart file looks like this:
+
+<img style="border:0px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/base_maps_file.png" align="center" />
+
 ``` r
 # list of geometry names: https://www.bfs.admin.ch/asset/en/24025645
 switzerland_sf <- bfs_get_base_maps(geom = "suis")

@@ -379,7 +379,21 @@
 <h3 id="cartographic-base-maps">Cartographic base maps<a class="anchor" aria-label="anchor" href="#cartographic-base-maps"></a>
 </h3>
 <p>You can get <a href="https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.assetdetail.24025646.html" class="external-link">cartographic base maps</a> from the ThemaKart project using <code><a href="reference/bfs_get_base_maps.html">bfs_get_base_maps()</a></code>. The list of available geometries in the <a href="https://www.bfs.admin.ch/asset/en/24025645" class="external-link">official documentation</a>.</p>
+<p>The default arguments of <code><a href="reference/bfs_get_base_maps.html">bfs_get_base_maps()</a></code> can be change to access specific files:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># default arguments</span></span>
+<span><span class="fu"><a href="reference/bfs_get_base_maps.html">bfs_get_base_maps</a></span><span class="op">(</span></span>
+<span>  geom <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  category <span class="op">=</span> <span class="st">"gf"</span>, <span class="co"># "gf" for total area (i.e. "Gesamtflaeche")</span></span>
+<span>  type <span class="op">=</span> <span class="st">"Poly"</span>,</span>
+<span>  date <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  most_recent <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co">#get most recent file by default</span></span>
+<span>  format <span class="op">=</span> <span class="st">"shp"</span>,</span>
+<span>  asset_number <span class="op">=</span> <span class="st">"24025646"</span> <span class="co">#change to get older ThemaKart data</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>A typical base maps ThemaKart file looks like this:</p>
+<p><img style="border:0px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/base_maps_file.png" align="center"></p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># list of geometry names: https://www.bfs.admin.ch/asset/en/24025645</span></span>
 <span><span class="va">switzerland_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_base_maps.html">bfs_get_base_maps</a></span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"suis"</span><span class="op">)</span></span>
 <span><span class="va">communes_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_base_maps.html">bfs_get_base_maps</a></span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"polg"</span>, date <span class="op">=</span> <span class="st">"20230101"</span><span class="op">)</span></span>
@@ -413,25 +427,25 @@
 <li><code>register_kt_seeanteile</code></li>
 <li><code>register_dic</code></li>
 </ul>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># commune register data</span></span>
 <span><span class="fu">BFS</span><span class="fu">::</span><span class="va"><a href="reference/register_gde.html">register_gde</a></span></span></code></pre></div>
-<div class="sourceCode" id="cb31"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="do">## # A tibble: 2,136 × 8</span></span>
-<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a><span class="do">##    GDEKT GDEBZNR GDENR GDENAME            GDENAMK      GDEBZNA GDEKTNA GDEMUTDAT</span></span>
-<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a><span class="do">##    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;              &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;    </span></span>
-<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a><span class="do">##  1 ZH        101     1 Aeugst am Albis    Aeugst am A… Bezirk… Zürich  1976-11-…</span></span>
-<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a><span class="do">##  2 ZH        101     2 Affoltern am Albis Affoltern a… Bezirk… Zürich  1848-09-…</span></span>
-<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a><span class="do">##  3 ZH        101     3 Bonstetten         Bonstetten   Bezirk… Zürich  1848-09-…</span></span>
-<span id="cb31-7"><a href="#cb31-7" tabindex="-1"></a><span class="do">##  4 ZH        101     4 Hausen am Albis    Hausen am A… Bezirk… Zürich  1911-01-…</span></span>
-<span id="cb31-8"><a href="#cb31-8" tabindex="-1"></a><span class="do">##  5 ZH        101     5 Hedingen           Hedingen     Bezirk… Zürich  1848-09-…</span></span>
-<span id="cb31-9"><a href="#cb31-9" tabindex="-1"></a><span class="do">##  6 ZH        101     6 Kappel am Albis    Kappel am A… Bezirk… Zürich  1911-01-…</span></span>
-<span id="cb31-10"><a href="#cb31-10" tabindex="-1"></a><span class="do">##  7 ZH        101     7 Knonau             Knonau       Bezirk… Zürich  1848-09-…</span></span>
-<span id="cb31-11"><a href="#cb31-11" tabindex="-1"></a><span class="do">##  8 ZH        101     8 Maschwanden        Maschwanden  Bezirk… Zürich  1848-09-…</span></span>
-<span id="cb31-12"><a href="#cb31-12" tabindex="-1"></a><span class="do">##  9 ZH        101     9 Mettmenstetten     Mettmenstet… Bezirk… Zürich  1848-09-…</span></span>
-<span id="cb31-13"><a href="#cb31-13" tabindex="-1"></a><span class="do">## 10 ZH        101    10 Obfelden           Obfelden     Bezirk… Zürich  1848-09-…</span></span>
-<span id="cb31-14"><a href="#cb31-14" tabindex="-1"></a><span class="do">## # ℹ 2,126 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="do">## # A tibble: 2,136 × 8</span></span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="do">##    GDEKT GDEBZNR GDENR GDENAME            GDENAMK      GDEBZNA GDEKTNA GDEMUTDAT</span></span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a><span class="do">##    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;              &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;    </span></span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a><span class="do">##  1 ZH        101     1 Aeugst am Albis    Aeugst am A… Bezirk… Zürich  1976-11-…</span></span>
+<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a><span class="do">##  2 ZH        101     2 Affoltern am Albis Affoltern a… Bezirk… Zürich  1848-09-…</span></span>
+<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a><span class="do">##  3 ZH        101     3 Bonstetten         Bonstetten   Bezirk… Zürich  1848-09-…</span></span>
+<span id="cb32-7"><a href="#cb32-7" tabindex="-1"></a><span class="do">##  4 ZH        101     4 Hausen am Albis    Hausen am A… Bezirk… Zürich  1911-01-…</span></span>
+<span id="cb32-8"><a href="#cb32-8" tabindex="-1"></a><span class="do">##  5 ZH        101     5 Hedingen           Hedingen     Bezirk… Zürich  1848-09-…</span></span>
+<span id="cb32-9"><a href="#cb32-9" tabindex="-1"></a><span class="do">##  6 ZH        101     6 Kappel am Albis    Kappel am A… Bezirk… Zürich  1911-01-…</span></span>
+<span id="cb32-10"><a href="#cb32-10" tabindex="-1"></a><span class="do">##  7 ZH        101     7 Knonau             Knonau       Bezirk… Zürich  1848-09-…</span></span>
+<span id="cb32-11"><a href="#cb32-11" tabindex="-1"></a><span class="do">##  8 ZH        101     8 Maschwanden        Maschwanden  Bezirk… Zürich  1848-09-…</span></span>
+<span id="cb32-12"><a href="#cb32-12" tabindex="-1"></a><span class="do">##  9 ZH        101     9 Mettmenstetten     Mettmenstet… Bezirk… Zürich  1848-09-…</span></span>
+<span id="cb32-13"><a href="#cb32-13" tabindex="-1"></a><span class="do">## 10 ZH        101    10 Obfelden           Obfelden     Bezirk… Zürich  1848-09-…</span></span>
+<span id="cb32-14"><a href="#cb32-14" tabindex="-1"></a><span class="do">## # ℹ 2,126 more rows</span></span></code></pre></div>
 <p>You can use registers to ease geodata analysis.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
 <span></span>
@@ -455,8 +469,7 @@
 <span>  <span class="co"># bounding box</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">coord_sf</a></span><span class="op">(</span></span>
 <span>    xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bbox_ge</span><span class="op">$</span><span class="va">xmin</span>, <span class="va">bbox_ge</span><span class="op">$</span><span class="va">xmax</span><span class="op">)</span>,</span>
-<span>    ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bbox_ge</span><span class="op">$</span><span class="va">ymin</span>, <span class="va">bbox_ge</span><span class="op">$</span><span class="va">ymax</span><span class="op">)</span>,</span>
-<span>    expand <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>    ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bbox_ge</span><span class="op">$</span><span class="va">ymin</span>, <span class="va">bbox_ge</span><span class="op">$</span><span class="va">ymax</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
