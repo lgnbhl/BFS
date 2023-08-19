@@ -380,9 +380,8 @@ argument.
 
 You can get [cartographic base
 maps](https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.assetdetail.24025646.html)
-from the ThemaKart project using `bfs_get_base_maps()`. For instance you
-can get the communes and main lakes. The list of available geometries in
-the [official
+from the ThemaKart project using `bfs_get_base_maps()`. The list of
+available geometries in the [official
 documentation](https://www.bfs.admin.ch/asset/en/24025645).
 
 ``` r
@@ -412,7 +411,14 @@ ggplot() +
 ### Swiss Official Commune Register
 
 The package also contains the official Swiss official commune registers
-for different administrative levels.
+for different administrative levels:
+
+- `register_gde`
+- `register_gde_other`
+- `register_bzn`
+- `register_kt`
+- `register_kt_seeanteile`
+- `register_dic`
 
 ``` r
 # commune register data
@@ -434,25 +440,43 @@ BFS::register_gde
     ## 10 ZH        101    10 Obfelden           Obfelden     Bezirk… Zürich  1848-09-…
     ## # ℹ 2,126 more rows
 
+You can use registers to ease geodata analysis.
+
 ``` r
-# canton register data
-BFS::register_kt
+library(dplyr)
+library(sf)
+
+communes_sf <- bfs_get_base_maps(geom = "polg", date = "20230101")
+
+communes_ge <- communes_sf |>
+  inner_join(BFS::register_gde |> 
+               filter(GDEKTNA == "Genève"), 
+             by = c("id" = "GDENR"))
+
+bbox_ge <- sf::st_bbox(communes_ge)
+
+lake_leman <- bfs_get_base_maps(geom = "seen", category = "11") |>
+  filter(name == "Lac Léman")
+
+communes_ge |> 
+  ggplot() + 
+  geom_sf(data = lake_leman, fill = "lightblue2", color = "grey65") +
+  geom_sf(fill = "snow", color = "grey65") + 
+  geom_sf_text(aes(label = name), size = 3, check_overlap = T) + 
+  # bounding box
+  coord_sf(
+    xlim = c(bbox_ge$xmin, bbox_ge$xmax),
+    ylim = c(bbox_ge$ymin, bbox_ge$ymax),
+    expand = FALSE
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_blank()) +
+  labs(title = "Communes du canton de Genève",
+       x = NULL, y = NULL, 
+       caption = "Source: ThemaKart, © BFS")
 ```
 
-    ## # A tibble: 26 × 3
-    ##     KTNR GDEKT GDEKTNA            
-    ##    <dbl> <chr> <chr>              
-    ##  1     1 ZH    Zürich             
-    ##  2     2 BE    Bern / Berne       
-    ##  3     3 LU    Luzern             
-    ##  4     4 UR    Uri                
-    ##  5     5 SZ    Schwyz             
-    ##  6     6 OW    Obwalden           
-    ##  7     7 NW    Nidwalden          
-    ##  8     8 GL    Glarus             
-    ##  9     9 ZG    Zug                
-    ## 10    10 FR    Fribourg / Freiburg
-    ## # ℹ 16 more rows
+<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/base_maps_ge.png" align="center" />
 
 ## Main dependencies of the package
 
