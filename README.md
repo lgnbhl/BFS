@@ -466,8 +466,7 @@ communes_ge |>
   # bounding box
   coord_sf(
     xlim = c(bbox_ge$xmin, bbox_ge$xmax),
-    ylim = c(bbox_ge$ymin, bbox_ge$ymax),
-    expand = FALSE
+    ylim = c(bbox_ge$ymin, bbox_ge$ymax)
   ) +
   theme_minimal() +
   theme(axis.text = element_blank()) +
