@@ -373,7 +373,7 @@ bfs_get_base_maps(
 )
 ```
 
-A typical base maps ThemaKartfile looks like this:
+A typical base maps ThemaKart file looks like this:
 
 <img style="border:0px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/base_maps_file.png" align="center" />
 
