@@ -11,9 +11,6 @@
 #' 
 #' @importFrom magrittr %>%
 #' 
-#' @examples
-#' \donttest{bfs_get_metadata(number_bfs = "px-x-2105000000_501", language = "fr")}
-#' 
 #' @export
 bfs_get_metadata <- function(number_bfs = NULL, url_bfs = NULL, language = "de") {
   

@@ -1,3 +1,6 @@
+# BFS 0.5.4
+- using only magrittr pipe to allow older R versions, fix #11
+
 # BFS 0.5.3
 - add `bfs_get_base_maps()`.
 - add data from the Swiss official commune register.

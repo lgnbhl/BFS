@@ -10,6 +10,7 @@
 #' @param language character The language of a BFS catalog, i.e. "de", "fr", "it" or "en".
 #' 
 #' @importFrom httr2 request req_headers req_url_path_append req_perform resp_body_json
+#' @importFrom magrittr %>%
 #' 
 #' @returns list Returns a list containing asset metadata information.
 #' 
@@ -26,11 +27,11 @@ bfs_get_asset_metadata <- function(number_asset = NULL, number_bfs = NULL, langu
     id <- paste0("orderNr:", number_bfs)
   }
   
-  asset_metadata <- httr2::request(base_url = "https://dam-api.bfs.admin.ch/hub/api/dam/assets/") |> 
-    httr2::req_headers('accept' = "application/json") |>
-    httr2::req_headers('accept-language' = language) |>
-    httr2::req_url_path_append(id) |> 
-    httr2::req_perform() |> 
+  asset_metadata <- httr2::request(base_url = "https://dam-api.bfs.admin.ch/hub/api/dam/assets/") %>% 
+    httr2::req_headers('accept' = "application/json") %>%
+    httr2::req_headers('accept-language' = language) %>%
+    httr2::req_url_path_append(id) %>% 
+    httr2::req_perform() %>% 
     httr2::resp_body_json(simplifyVector = TRUE)
   
   return(asset_metadata)
