@@ -1,3 +1,3 @@
-test_that("bfs_get_asset_metadata() works", {
-  expect_identical(class(bfs_get_asset_metadata(number_asset = 24367729)), "list")
+test_that("bfs_get_data() works", {
+  expect_true(any(class(bfs_get_data(number_bfs = "px-x-1502040100_131")) == "data.frame"))
 })
