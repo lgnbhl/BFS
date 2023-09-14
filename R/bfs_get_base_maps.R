@@ -47,7 +47,7 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   
   #list all files
   files_all <- list.files(path_base_map, recursive = TRUE, full.names = TRUE)
-  
+
   if(identical(files_all, character(0))) {
     stop("Error in listing available base map files", call. = FALSE)
   }
