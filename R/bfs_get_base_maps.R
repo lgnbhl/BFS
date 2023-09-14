@@ -47,6 +47,8 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   
   #list all files
   files_all <- list.files(path_base_map, recursive = TRUE, full.names = TRUE)
+  Encoding(files_all) <- "UTF-8" # fix bug for Mac and Linux
+  
   if(identical(files_all, character(0))) {
     stop("Error in listing available base map files", call. = FALSE)
   }
@@ -82,5 +84,5 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   if(identical(file_selected, character(0))) {
     stop("No related file found. Please use other argument values.", call. = FALSE)
   }
-  sf::read_sf(file_selected, options = "ENCODING=WINDOWS-1252")
+  sf::read_sf(file_selected, options = "ENCODING=UTF-8")
 }
