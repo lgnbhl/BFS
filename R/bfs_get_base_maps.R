@@ -36,7 +36,6 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   # get base map files if not present in cache folder
   dir <- rappdirs::user_data_dir(appname = "BFS")
   path_base_map <- paste0(dir, "/base_map_", asset_number)
-  Encoding(path_base_map) <- "latin1"
   if (!dir.exists(path_base_map)) {
     dir.create(path_base_map, recursive = TRUE, showWarnings = FALSE)
     BFS::bfs_download_asset(
