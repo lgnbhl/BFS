@@ -24,7 +24,6 @@
 #' @param asset_number Asset number of the base maps zip file.
 #'
 #' @importFrom sf read_sf
-#' @importFrom rappdirs user_data_dir
 #' @importFrom zip unzip
 #'
 #' @export
@@ -34,7 +33,7 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   }
 
   # get base map files if not present in cache folder
-  dir <- rappdirs::user_data_dir(appname = "BFS")
+  dir <- tools::R_user_dir(package = "BFS")
   path_base_map <- paste0(dir, "/base_map_", asset_number)
   if (!dir.exists(path_base_map)) {
     dir.create(path_base_map, recursive = TRUE, showWarnings = FALSE)

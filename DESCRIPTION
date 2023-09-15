@@ -28,7 +28,6 @@ Imports:
     rstac,
     curl,
     sf,
-    rappdirs,
     zip
 Encoding: UTF-8
 RoxygenNote: 7.2.3
