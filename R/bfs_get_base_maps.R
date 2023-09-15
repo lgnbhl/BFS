@@ -43,7 +43,7 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
       destfile = paste0(path_base_map, ".zip")
     )
     # unzip
-    zip::unzip(zipfile = paste0(path_base_map, ".zip"), exdir = path_base_map)
+    utils::unzip(zipfile = paste0(path_base_map, ".zip"), exdir = path_base_map)
   }
 
   # list all files
