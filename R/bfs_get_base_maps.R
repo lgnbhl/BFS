@@ -35,6 +35,7 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   # get base map files if not present in cache folder
   dir <- tools::R_user_dir(package = "BFS")
   path_base_map <- paste0(dir, "/base_map_", asset_number)
+  browser()
   if (!dir.exists(path_base_map)) {
     dir.create(path_base_map, recursive = TRUE, showWarnings = FALSE)
     BFS::bfs_download_asset(
@@ -52,7 +53,7 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
     }
 
     if (os == "osx") {
-      system2("tar", "xop", paste0(path_base_map, ".zip"), "-C", path_base_map)
+      system2("unzip", "-v", paste0(path_base_map, ".zip"), "-d", path_base_map)
     } else {
       zip::unzip(
         zipfile = paste0(path_base_map, ".zip"),
