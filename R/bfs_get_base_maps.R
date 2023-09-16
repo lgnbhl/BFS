@@ -36,7 +36,7 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   dir <- rappdirs::user_data_dir(appname = "BFS")
   path_base_map <- paste0(dir, "/base_map_", asset_number)
   if(!dir.exists(path_base_map)) {
-    dir.create(path_base_map, recursive = TRUE, showWarnings = FALSE)
+    fs::dir_create(path_base_map, recursive = TRUE, showWarnings = FALSE)
     BFS::bfs_download_asset(
       number_asset = asset_number,
       #number_bfs = "KM04-00-c-suis-2023-q",
@@ -46,7 +46,7 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   }
   
   #list all files
-  files_all <- list.files(path_base_map, recursive = TRUE, full.names = TRUE)
+  files_all <- fs::dir_ls(path_base_map, recurse = TRUE, full.names = TRUE)
   # fix multibyte path bug #12
   Encoding(files_all) <- "latin1"
   
