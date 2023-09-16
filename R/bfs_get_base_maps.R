@@ -35,7 +35,6 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   # get base map files if not present in cache folder
   dir <- tools::R_user_dir(package = "BFS")
   path_base_map <- paste0(dir, "/base_map_", asset_number)
-  browser()
 
   if (!dir.exists(path_base_map)) {
     dir.create(path_base_map, recursive = TRUE, showWarnings = FALSE)
