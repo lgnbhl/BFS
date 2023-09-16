@@ -20,7 +20,3 @@ A tbl_df (a type of data frame; see tibble or dplyr packages).
 Get the metadata of a BFS dataset using the PXWEB API v1. 
 You should choose either the bfs number of the bfs offical url of a given dataset.
 }
-\examples{
-\donttest{bfs_get_metadata(number_bfs = "px-x-2105000000_501", language = "fr")}
-
-}
