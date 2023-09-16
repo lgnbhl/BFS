@@ -28,7 +28,8 @@ Imports:
     rstac,
     curl,
     sf,
-    zip
+    zip,
+    archive
 Encoding: UTF-8
 RoxygenNote: 7.2.3
 URL: https://felixluginbuhl.com/BFS/, https://github.com/lgnbhl/BFS/
