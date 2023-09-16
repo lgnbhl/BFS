@@ -68,7 +68,7 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   files_geom <- grep(pattern = geom, x = files_poly, value = TRUE, useBytes = TRUE)
   # by date
   if(!is.null(date)) {
-    file_selected <- grep(pattern = date, x = files_geom, value = TRUE)
+    file_selected <- grep(pattern = date, x = files_geom, value = TRUE, useBytes = TRUE)
   } else if(isTRUE(most_recent)) { # get most recent file by sorting in decreasing order
       files_geom_sorted <- sort(files_geom, decreasing = TRUE)
       # get first file
@@ -84,6 +84,6 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
     stop("No related file found. Please use other argument values.", call. = FALSE)
   }
   # fix multibyte path bug #12
-  Encoding(file_selected) <- "latin1"
+  Encoding(file_selected) <- "UTF-8"
   sf::read_sf(file_selected)
 }
