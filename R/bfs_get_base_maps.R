@@ -48,8 +48,6 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   
   #list all files
   files_all <- fs::dir_ls(path_base_map, recurse = TRUE, full.names = TRUE)
-  # fix multibyte path bug #12
-  #Encoding(files_all) <- "latin1"
   
   if(identical(files_all, character(0))) {
     stop("Error in listing available base map files", call. = FALSE)
@@ -86,5 +84,7 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   if(identical(file_selected, character(0))) {
     stop("No related file found. Please use other argument values.", call. = FALSE)
   }
+  # fix multibyte path bug #12
+  Encoding(file_selected) <- "latin1"
   sf::read_sf(file_selected)
 }
