@@ -24,7 +24,7 @@
 #' @param asset_number Asset number of the base maps zip file.
 #'
 #' @importFrom sf read_sf
-#' @importFrom archive archive_extract
+#' @importFrom zip unzip
 #'
 #' @export
 bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date = NULL, most_recent = TRUE, format = "shp", asset_number = "24025646") {
@@ -43,10 +43,22 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
       destfile = paste0(path_base_map, ".zip")
     )
     # unzip
-    archive::archive_extract(
-      archive = paste0(path_base_map, ".zip"),
-      dir = path_base_map
-    )
+    sysinf <- Sys.info()
+    if (!is.null(sysinf)) {
+      os <- sysinf["sysname"]
+      if (os == "Darwin") {
+        os <- "osx"
+      }
+    }
+
+    if (os == "osx") {
+      system2("tar", "xop", paste0(path_base_map, ".zip"), "-C", path_base_map)
+    } else {
+      zip::unzip(
+        zipfile = paste0(path_base_map, ".zip"),
+        exdir = path_base_map
+      )
+    }
   }
 
   # list all files
