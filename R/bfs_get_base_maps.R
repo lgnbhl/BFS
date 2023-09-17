@@ -24,6 +24,11 @@
 #' @param asset_number Asset number of the base maps zip file.
 #'
 #' @importFrom sf read_sf
+<<<<<<< HEAD
+=======
+#' @importFrom rappdirs user_data_dir
+#' @importFrom fs dir_create dir_ls
+>>>>>>> master
 #' @importFrom zip unzip
 #'
 #' @export
@@ -35,6 +40,7 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   # get base map files if not present in cache folder
   dir <- tools::R_user_dir(package = "BFS")
   path_base_map <- paste0(dir, "/base_map_", asset_number)
+<<<<<<< HEAD
 
   if (!dir.exists(path_base_map)) {
     dir.create(path_base_map, recursive = TRUE, showWarnings = FALSE)
@@ -71,6 +77,26 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   }
 
   files_format <- grep(pattern = paste0(".", format, "$"), x = files_all, value = TRUE, useBytes = TRUE)
+=======
+  if(!dir.exists(path_base_map)) {
+    fs::dir_create(path_base_map, recursive = TRUE, showWarnings = FALSE)
+    BFS::bfs_download_asset(
+      number_asset = asset_number,
+      #number_bfs = "KM04-00-c-suis-2023-q",
+      destfile = paste0(path_base_map, ".zip"))
+    # unzip 
+    zip::unzip(zipfile = paste0(path_base_map, ".zip"), exdir = path_base_map)
+  }
+  
+  #list all files
+  files_all <- fs::dir_ls(path_base_map, recurse = TRUE, full.names = TRUE)
+  
+  if(identical(files_all, character(0))) {
+    stop("Error in listing available base map files", call. = FALSE)
+  }
+  
+  files_format <- grep(pattern = paste0(".", format, "$"), x = files_all, value = TRUE, useBytes = TRUE, ignore.case = TRUE)
+>>>>>>> master
   # category, i.e. search file with "gf_ch" or "vf_ch"
   if (category == "total_area" || category == "gf") {
     category_selected <- "gf_ch"
@@ -79,12 +105,13 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   } else {
     category_selected <- category # other options, for example for 'k4seenyyyymmdd11_ch2007Poly'
   }
-  files_cat <- grep(pattern = category_selected, x = files_format, value = TRUE, useBytes = TRUE)
+  files_cat <- grep(pattern = category_selected, x = files_format, value = TRUE, useBytes = TRUE, ignore.case = TRUE)
   # type, i.e. "Poly" or "Pnts"
-  files_poly <- grep(pattern = paste0(type, ".", format, "$"), x = files_cat, value = TRUE, useBytes = TRUE)
+  files_poly <- grep(pattern = paste0(type, ".", format, "$"), x = files_cat, value = TRUE, useBytes = TRUE, ignore.case = TRUE)
   # by geom
-  files_geom <- grep(pattern = geom, x = files_poly, value = TRUE, useBytes = TRUE)
+  files_geom <- grep(pattern = geom, x = files_poly, value = TRUE, useBytes = TRUE, ignore.case = TRUE)
   # by date
+<<<<<<< HEAD
   if (!is.null(date)) {
     file_selected <- grep(pattern = date, x = files_geom, value = TRUE)
   } else if (isTRUE(most_recent)) { # get most recent file by sorting in decreasing order
@@ -95,6 +122,18 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
     file_selected <- files_geom[1]
   }
   if (length(file_selected) > 1) {
+=======
+  if(!is.null(date)) {
+    file_selected <- grep(pattern = date, x = files_geom, value = TRUE, useBytes = TRUE, ignore.case = TRUE)
+  } else if(isTRUE(most_recent)) { # get most recent file by sorting in decreasing order
+      files_geom_sorted <- sort(files_geom, decreasing = TRUE)
+      # get first file
+      file_selected <- files_geom_sorted[1]
+      } else {
+        file_selected <- files_geom[1]
+      }
+  if(length(file_selected) > 1) {
+>>>>>>> master
     file_selected <- file_selected[1]
     warning(paste0("Multiple file selected.\nUsing the first file\n", file_selected), call. = FALSE)
   }

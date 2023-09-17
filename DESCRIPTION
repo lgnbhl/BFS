@@ -28,8 +28,14 @@ Imports:
     rstac,
     curl,
     sf,
+<<<<<<< HEAD
     zip,
     archive
+=======
+    rappdirs,
+    zip,
+    fs
+>>>>>>> master
 Encoding: UTF-8
 RoxygenNote: 7.2.3
 URL: https://felixluginbuhl.com/BFS/, https://github.com/lgnbhl/BFS/
