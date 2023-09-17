@@ -40,7 +40,6 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   # get base map files if not present in cache folder
   dir <- tools::R_user_dir(package = "BFS")
   path_base_map <- paste0(dir, "/base_map_", asset_number)
-<<<<<<< HEAD
 
   if (!dir.exists(path_base_map)) {
     dir.create(path_base_map, recursive = TRUE, showWarnings = FALSE)
@@ -77,7 +76,6 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   }
 
   files_format <- grep(pattern = paste0(".", format, "$"), x = files_all, value = TRUE, useBytes = TRUE)
-=======
   if(!dir.exists(path_base_map)) {
     fs::dir_create(path_base_map, recursive = TRUE, showWarnings = FALSE)
     BFS::bfs_download_asset(
@@ -96,7 +94,6 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   }
   
   files_format <- grep(pattern = paste0(".", format, "$"), x = files_all, value = TRUE, useBytes = TRUE, ignore.case = TRUE)
->>>>>>> master
   # category, i.e. search file with "gf_ch" or "vf_ch"
   if (category == "total_area" || category == "gf") {
     category_selected <- "gf_ch"
