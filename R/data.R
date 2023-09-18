@@ -1,11 +1,11 @@
 #' Swiss official commune register GDE
 #'
-#' The official commune register is structured according to cantons and 
-#' districts or comparable administrative entities. Various federal, cantonal 
-#' and communal governments and private businesses use this register when 
+#' The official commune register is structured according to cantons and
+#' districts or comparable administrative entities. Various federal, cantonal
+#' and communal governments and private businesses use this register when
 #' identifying and referring to communes.
 #'
-#' The Federal Statistical Office assigns a number to each commune and creates, 
+#' The Federal Statistical Office assigns a number to each commune and creates,
 #' administers and publishes the Swiss official commune register.
 #'
 #' @format ## `register_gde`
@@ -25,12 +25,12 @@
 
 #' Swiss official commune register GDE Other
 #'
-#' The official commune register is structured according to cantons and 
-#' districts or comparable administrative entities. Various federal, cantonal 
-#' and communal governments and private businesses use this register when 
+#' The official commune register is structured according to cantons and
+#' districts or comparable administrative entities. Various federal, cantonal
+#' and communal governments and private businesses use this register when
 #' identifying and referring to communes.
 #'
-#' The Federal Statistical Office assigns a number to each commune and creates, 
+#' The Federal Statistical Office assigns a number to each commune and creates,
 #' administers and publishes the Swiss official commune register.
 #'
 #' @format ## `register_gde_other`
@@ -46,12 +46,12 @@
 
 #' Swiss official commune register BZN
 #'
-#' The official commune register is structured according to cantons and 
-#' districts or comparable administrative entities. Various federal, cantonal 
-#' and communal governments and private businesses use this register when 
+#' The official commune register is structured according to cantons and
+#' districts or comparable administrative entities. Various federal, cantonal
+#' and communal governments and private businesses use this register when
 #' identifying and referring to communes.
 #'
-#' The Federal Statistical Office assigns a number to each commune and creates, 
+#' The Federal Statistical Office assigns a number to each commune and creates,
 #' administers and publishes the Swiss official commune register.
 #'
 #' @format ## `register_bzn`
@@ -66,12 +66,12 @@
 
 #' Swiss official commune register KT
 #'
-#' The official commune register is structured according to cantons and 
-#' districts or comparable administrative entities. Various federal, cantonal 
-#' and communal governments and private businesses use this register when 
+#' The official commune register is structured according to cantons and
+#' districts or comparable administrative entities. Various federal, cantonal
+#' and communal governments and private businesses use this register when
 #' identifying and referring to communes.
 #'
-#' The Federal Statistical Office assigns a number to each commune and creates, 
+#' The Federal Statistical Office assigns a number to each commune and creates,
 #' administers and publishes the Swiss official commune register.
 #'
 #' @format ## `register_kt`
@@ -86,12 +86,12 @@
 
 #' Swiss official commune register KT Seeanteile
 #'
-#' The official commune register is structured according to cantons and 
-#' districts or comparable administrative entities. Various federal, cantonal 
-#' and communal governments and private businesses use this register when 
+#' The official commune register is structured according to cantons and
+#' districts or comparable administrative entities. Various federal, cantonal
+#' and communal governments and private businesses use this register when
 #' identifying and referring to communes.
 #'
-#' The Federal Statistical Office assigns a number to each commune and creates, 
+#' The Federal Statistical Office assigns a number to each commune and creates,
 #' administers and publishes the Swiss official commune register.
 #'
 #' @format ## `register_kt_seeanteile`
@@ -106,12 +106,12 @@
 
 #' Swiss official commune register Dictionary
 #'
-#' The official commune register is structured according to cantons and 
-#' districts or comparable administrative entities. Various federal, cantonal 
-#' and communal governments and private businesses use this register when 
+#' The official commune register is structured according to cantons and
+#' districts or comparable administrative entities. Various federal, cantonal
+#' and communal governments and private businesses use this register when
 #' identifying and referring to communes.
 #'
-#' The Federal Statistical Office assigns a number to each commune and creates, 
+#' The Federal Statistical Office assigns a number to each commune and creates,
 #' administers and publishes the Swiss official commune register.
 #'
 #' @format ## `register_dic`

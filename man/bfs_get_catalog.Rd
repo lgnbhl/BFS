@@ -17,10 +17,6 @@ A data frame
 \description{
 This function scraps a given RSS Feed of the Swiss Federal Statistical Office.
 }
-\examples{
-\donttest{bfs_get_catalog(language = "de", type = "data")}
-
-}
 \seealso{
 \code{\link{bfs_get_data}}
 }

@@ -25,13 +25,13 @@ A data frame with 2,136 rows and 8 columns:
 register_gde
 }
 \description{
-The official commune register is structured according to cantons and 
-districts or comparable administrative entities. Various federal, cantonal 
-and communal governments and private businesses use this register when 
+The official commune register is structured according to cantons and
+districts or comparable administrative entities. Various federal, cantonal
+and communal governments and private businesses use this register when
 identifying and referring to communes.
 }
 \details{
-The Federal Statistical Office assigns a number to each commune and creates, 
+The Federal Statistical Office assigns a number to each commune and creates,
 administers and publishes the Swiss official commune register.
 }
 \keyword{datasets}

@@ -42,7 +42,6 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
     fs::dir_create(path_base_map, showWarnings = FALSE)
     BFS::bfs_download_asset(
       number_asset = asset_number,
-      # number_bfs = "KM04-00-c-suis-2023-q",
       destfile = paste0(path_base_map, ".zip")
     )
     # unzip all files in same directory because of encoding issues with subfolders

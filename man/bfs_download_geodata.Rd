@@ -33,7 +33,7 @@ bfs_download_geodata(
 \item{feature_id}{feature_id}
 }
 \description{
-Download assets from the STAC API on the geodata catalog 
+Download assets from the STAC API on the geodata catalog
 of the Swiss Confederation (\url{https://data.geo.admin.ch/api/stac/v0.9/}).
 }
 \details{

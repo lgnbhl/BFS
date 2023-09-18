@@ -34,7 +34,7 @@ A tbl_df (a type of data frame; see tibble or
 dplyr packages).
 }
 \description{
-Get a dataset using the PXWEB API v1. 
+Get a dataset using the PXWEB API v1.
 You should choose either the BFS number (FSO number) of the BFS offical url
 of a given dataset. You can query particulary variables using the `query` argument.
 }

@@ -11,7 +11,7 @@ bfs_get_catalog_geodata(include_metadata = TRUE)
 }
 \description{
 Display geo-information catalog of the Swiss Confederation (\url{https://data.geo.admin.ch/}),
-including some geographic datasets provided by the Swiss Federal Statistical Office. 
+including some geographic datasets provided by the Swiss Federal Statistical Office.
 Note that this geodata catalog is not hosted by the Swiss Federal Statistical Office.
 }
 \details{
