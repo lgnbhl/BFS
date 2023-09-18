@@ -124,7 +124,7 @@ bfs_get_catalog_tables <- function(language = "de", title = NULL, spatial_divisi
   
   get_rss_feed_data <- function(language, skipLimit, prodima, institution, geography, inquiry, publishingyearstart, publishingyearend, title, orderNr) {
     feed <- paste0("https://www.bfs.admin.ch/bfs/", language, "/home/statistiken/kataloge-datenbanken/tabellen/_jcr_content/par/ws_catalog.rss.xml?skipLimit=", skipLimit, "&prodima=", prodima, "&institution=", institution, "&geography=", geography, "&inquiry=", inquiry, "&publishingyearstart=", publishingyearstart, "&publishingyearend=", publishingyearend, "&title=", title, "&orderNr=", orderNr)
-    df_feed <- tidyRSS::tidyfeed(feed = feed)
+    df_feed <- suppressMessages(tidyRSS::tidyfeed(feed = feed))
     colnames(df_feed) <- gsub('feed_', '', colnames(df_feed)) # cleaning
     colnames(df_feed) <- gsub('item_', '', colnames(df_feed)) # cleaning
     df_feed <- janitor::clean_names(df_feed, "small_camel") # cleaning
