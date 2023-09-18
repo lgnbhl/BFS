@@ -35,20 +35,20 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
 
   # get base map files if not present in cache folder
   dir <- rappdirs::user_data_dir(appname = "BFS")
-  path_base_map <- paste0(dir, "/base_map_", asset_number)
-  if(!dir.exists(path_base_map)) {
-    fs::dir_create(path_base_map, recursive = TRUE, showWarnings = FALSE)
+  path_base_map <- paste0(dir, "/base_maps_", asset_number)
+  if(!fs::dir_exists(path_base_map)) {
+    fs::dir_create(path_base_map, showWarnings = FALSE)
     BFS::bfs_download_asset(
       number_asset = asset_number,
       #number_bfs = "KM04-00-c-suis-2023-q",
       destfile = paste0(path_base_map, ".zip"))
-    # unzip 
-    zip::unzip(zipfile = paste0(path_base_map, ".zip"), exdir = path_base_map)
+    # unzip all files in same directory
+    zip::unzip(zipfile = paste0(path_base_map, ".zip"), junkpaths = TRUE, exdir = path_base_map)
   }
   
   #list all files
-  files_all <- fs::dir_ls(path_base_map, recurse = TRUE, full.names = TRUE)
-  
+  files_all <- fs::dir_ls(path_base_map, recurse = TRUE, type = "file")
+
   if(identical(files_all, character(0))) {
     stop("Error in listing available base map files", call. = FALSE)
   }
@@ -85,6 +85,6 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
     stop("No related file found. Please use other argument values.", call. = FALSE)
   }
   # fix multibyte path bug #12
-  Encoding(file_selected) <- "latin1"
+  #Encoding(file_selected) <- "latin1"
   sf::read_sf(file_selected)
 }
