@@ -17,7 +17,7 @@ bfs_get_base_maps(
 \arguments{
 \item{geom}{Geometry such as "suis", "kant", "bezk", "polg", "voge", etc.}
 
-\item{category}{Category such as 'total_area' ("gf" for "Gesamtflaeche") or 
+\item{category}{Category such as 'total_area' ("gf" for "Gesamtflaeche") or
 'vegetation_area' ("vf" for "Vegetationsflaeche").}
 
 \item{type}{The type of data, i.e. "Poly" or "Pnts".}
@@ -35,7 +35,7 @@ if FALSE then read the first file available.}
 \description{
 This functions helps to get base maps data from the ThemaKart project
 as an sf object. The geom names and the general structure of the files
-can be found in the offical BFS documentation, 
+can be found in the offical BFS documentation,
 see \url{https://www.bfs.admin.ch/asset/en/24025645}. When using this data, please read the condition of use
 and copyright mentions.
 }
@@ -44,5 +44,6 @@ If you want to get ThemaKart data from previous years, you can change
 the `asset_number` for the related zip file. For example, for the map
 set of year 2020, the asset number is "11927607".
 
-This function is caching the base map data using `rappdirs::user_data_dir()`.
+This function is caching the base map data using
+`tools::R_user_dir(package = "BFS")`.
 }

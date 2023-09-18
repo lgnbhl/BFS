@@ -36,9 +36,9 @@ Imports:
     rstac,
     curl,
     sf,
-    rappdirs,
     zip,
-    fs
+    fs,
+    tools
 Encoding: UTF-8
 RoxygenNote: 7.2.3
 URL: https://felixluginbuhl.com/BFS/, https://github.com/lgnbhl/BFS/
