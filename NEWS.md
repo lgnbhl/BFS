@@ -1,3 +1,9 @@
+# BFS 0.5.5
+- fix encoding bug in `bfs_get_base_maps()` #12
+- add fs R package dependency
+- add unit tests
+- remove unnecessary messages when calling `bfs_get_catalog_*()`
+
 # BFS 0.5.4
 - using only magrittr pipe to allow older R versions, fix #11
 
