@@ -13,7 +13,7 @@ Authors@R:
 Maintainer: Felix Luginbuhl <felix.luginbuhl@protonmail.ch>
 Description: Search and download data from the Swiss Federal Statistical Office (BFS) APIs <https://www.bfs.admin.ch/>.
 License: MIT + file LICENSE
-Depends: R (>= 3.0.1)
+Depends: R (>= 3.4)
 Imports: 
     pxweb,
     httr2,
