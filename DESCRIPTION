@@ -10,6 +10,9 @@ Authors@R:
     person(given = "Janosch",
            family = "Brenzel-Weiss",
            role = "ctb"),
+    person(given = "Joao",
+           family = "Martins",
+           role = "ctb"),
     person(given = "Philipp",
            family = "Baumann",
            role = "ctb"))
