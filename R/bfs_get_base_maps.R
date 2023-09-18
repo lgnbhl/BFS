@@ -42,7 +42,7 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
       number_asset = asset_number,
       #number_bfs = "KM04-00-c-suis-2023-q",
       destfile = paste0(path_base_map, ".zip"))
-    # unzip all files in same directory
+    # unzip all files in same directory because of encoding issues with subfolders
     zip::unzip(zipfile = paste0(path_base_map, ".zip"), junkpaths = TRUE, exdir = path_base_map)
   }
   
@@ -53,7 +53,7 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
     stop("Error in listing available base map files", call. = FALSE)
   }
   
-  files_format <- grep(pattern = paste0(".", format, "$"), x = files_all, value = TRUE, useBytes = TRUE, ignore.case = TRUE)
+  files_format <- grep(pattern = paste0(".", format, "$"), x = files_all, value = TRUE)
   # category, i.e. search file with "gf_ch" or "vf_ch"
   if(category == "total_area" || category == "gf") {
     category_selected <- "gf_ch"
@@ -62,14 +62,14 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   } else {
     category_selected <- category #other options, for example for 'k4seenyyyymmdd11_ch2007Poly'
   }
-  files_cat <- grep(pattern = category_selected, x = files_format, value = TRUE, useBytes = TRUE, ignore.case = TRUE)
+  files_cat <- grep(pattern = category_selected, x = files_format, value = TRUE)
   # type, i.e. "Poly" or "Pnts"
-  files_poly <- grep(pattern = paste0(type, ".", format, "$"), x = files_cat, value = TRUE, useBytes = TRUE, ignore.case = TRUE)
+  files_poly <- grep(pattern = paste0(type, ".", format, "$"), x = files_cat, value = TRUE)
   # by geom
-  files_geom <- grep(pattern = geom, x = files_poly, value = TRUE, useBytes = TRUE, ignore.case = TRUE)
+  files_geom <- grep(pattern = geom, x = files_poly, value = TRUE)
   # by date
   if(!is.null(date)) {
-    file_selected <- grep(pattern = date, x = files_geom, value = TRUE, useBytes = TRUE, ignore.case = TRUE)
+    file_selected <- grep(pattern = date, x = files_geom, value = TRUE)
   } else if(isTRUE(most_recent)) { # get most recent file by sorting in decreasing order
       files_geom_sorted <- sort(files_geom, decreasing = TRUE)
       # get first file
@@ -84,7 +84,5 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   if(identical(file_selected, character(0))) {
     stop("No related file found. Please use other argument values.", call. = FALSE)
   }
-  # fix multibyte path bug #12
-  #Encoding(file_selected) <- "latin1"
   sf::read_sf(file_selected)
 }
