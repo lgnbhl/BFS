@@ -13,9 +13,11 @@ Authors@R:
     person(given = "Joao",
            family = "Martins",
            role = "ctb"),
-    person(given = "Philipp",
+    person(given = "Philipp", 
            family = "Baumann",
-           role = "ctb"))
+           role = "ctb",
+           email = "baumann-philipp@protonmail.com", 
+           comment = c(ORCID = "0000-0002-3194-8975")))
 Maintainer: Felix Luginbuhl <felix.luginbuhl@protonmail.ch>
 Description: Search and download data from the Swiss Federal Statistical Office (BFS) APIs <https://www.bfs.admin.ch/>.
 License: MIT + file LICENSE
