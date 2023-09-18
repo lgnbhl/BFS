@@ -9,6 +9,9 @@ Authors@R:
            email = "felix.luginbuhl@protonmail.ch"),
     person(given = "Janosch",
            family = "Brenzel-Weiss",
+           role = "ctb"),
+    person(given = "Philipp",
+           family = "Baumann",
            role = "ctb"))
 Maintainer: Felix Luginbuhl <felix.luginbuhl@protonmail.ch>
 Description: Search and download data from the Swiss Federal Statistical Office (BFS) APIs <https://www.bfs.admin.ch/>.
