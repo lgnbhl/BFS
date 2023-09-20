@@ -251,8 +251,9 @@ metadata_tidy
     ## # ℹ 82 more rows
     ## # ℹ 1 more variable: title <chr>
 
-Then you can select the dimensions you want to query using the `text`
-and `valueTexts` variables.
+Then you can filter the dimensions you want to query using the `text`
+and `valueTexts` variables and build the query dimension object with the
+`code` and `values` variables.
 
 ``` r
 # select dimensions
