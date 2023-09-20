@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="index.html">BFS</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -242,76 +242,116 @@
 <div class="section level3">
 <h3 id="query-specific-elements">Query specific elements<a class="anchor" aria-label="anchor" href="#query-specific-elements"></a>
 </h3>
-<p>First you want to get the variable names, i.e. <code>code</code>, and categories, i.e. <code>values</code>, of your dataset. For example:</p>
+<p>First you want to get the metadata of your dataset, i.e. the variables (<code>code</code> and <code>text</code>) and dimensions (<code>values</code> and <code>valueTexts</code>). For example:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># choose a BFS number and language</span></span>
-<span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_metadata.html">bfs_get_metadata</a></span><span class="op">(</span>number_bfs <span class="op">=</span> <span class="st">"px-x-1502040100_131"</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_metadata.html">bfs_get_metadata</a></span><span class="op">(</span>number_bfs <span class="op">=</span> <span class="st">"px-x-1502040100_131"</span>, language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">metadata</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="do">## tibble [4 × 7] (S3: tbl_df/tbl/data.frame)</span></span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="do">##  $ code       : chr [1:4] "Jahr" "ISCED Fach" "Geschlecht" "Studienstufe"</span></span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="do">##  $ text       : chr [1:4] "Year" "ISCED Field" "Sex" "Level of study"</span></span>
-<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="do">##  $ values     :List of 4</span></span>
-<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="do">##   ..$ : chr [1:43] "0" "1" "2" "3" ...</span></span>
-<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="do">##   ..$ : chr [1:42] "0" "1" "2" "3" ...</span></span>
-<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="do">##   ..$ : chr [1:2] "0" "1"</span></span>
-<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="do">##   ..$ : chr [1:5] "0" "1" "2" "3" ...</span></span>
-<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a><span class="do">##  $ valueTexts :List of 4</span></span>
-<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="do">##   ..$ : chr [1:43] "1980/81" "1981/82" "1982/83" "1983/84" ...</span></span>
-<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a><span class="do">##   ..$ : chr [1:42] "Education science" "Teacher training without subject specialisation" "Teacher training with subject specialisation" "Fine arts" ...</span></span>
-<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a><span class="do">##   ..$ : chr [1:2] "Male" "Female"</span></span>
-<span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a><span class="do">##   ..$ : chr [1:5] "First university degree or diploma" "Bachelor" "Master" "Doctorate" ...</span></span>
-<span id="cb18-14"><a href="#cb18-14" tabindex="-1"></a><span class="do">##  $ time       : logi [1:4] TRUE NA NA NA</span></span>
-<span id="cb18-15"><a href="#cb18-15" tabindex="-1"></a><span class="do">##  $ elimination: logi [1:4] NA TRUE TRUE TRUE</span></span>
-<span id="cb18-16"><a href="#cb18-16" tabindex="-1"></a><span class="do">##  $ title      : chr [1:4] "University students by Year, ISCED Field, Sex and Level of study" "University students by Year, ISCED Field, Sex and Level of study" "University students by Year, ISCED Field, Sex and Level of study" "University students by Year, ISCED Field, Sex and Level of study"</span></span></code></pre></div>
-<p>Then you can manually select the dimensions of the dataset you want to query.</p>
+<span><span class="co"># tidy metadata</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span> <span class="co"># for unnest_longer</span></span>
+<span></span>
+<span><span class="va">metadata_tidy</span> <span class="op">&lt;-</span> <span class="va">metadata</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">valueTexts</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest_longer.html" class="external-link">unnest_longer</a></span><span class="op">(</span><span class="va">values</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>valueTexts <span class="op">=</span> <span class="va">metadata</span> <span class="op">|&gt;</span></span>
+<span>           <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">valueTexts</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>           <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest_longer.html" class="external-link">unnest_longer</a></span><span class="op">(</span><span class="va">valueTexts</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>           <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">valueTexts</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">code</span>, <span class="va">text</span>, <span class="va">values</span>, <span class="va">valueTexts</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">metadata_tidy</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="do">## # A tibble: 92 × 7</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="do">##    code  text  values valueTexts time  elimination</span></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="do">##    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;lgl&gt; &lt;lgl&gt;      </span></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="do">##  1 Jahr  Year  0      1980/81    TRUE  NA         </span></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="do">##  2 Jahr  Year  1      1981/82    TRUE  NA         </span></span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="do">##  3 Jahr  Year  2      1982/83    TRUE  NA         </span></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="do">##  4 Jahr  Year  3      1983/84    TRUE  NA         </span></span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="do">##  5 Jahr  Year  4      1984/85    TRUE  NA         </span></span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a><span class="do">##  6 Jahr  Year  5      1985/86    TRUE  NA         </span></span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="do">##  7 Jahr  Year  6      1986/87    TRUE  NA         </span></span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a><span class="do">##  8 Jahr  Year  7      1987/88    TRUE  NA         </span></span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a><span class="do">##  9 Jahr  Year  8      1988/89    TRUE  NA         </span></span>
+<span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a><span class="do">## 10 Jahr  Year  9      1989/90    TRUE  NA         </span></span>
+<span id="cb18-14"><a href="#cb18-14" tabindex="-1"></a><span class="do">## # ℹ 82 more rows</span></span>
+<span id="cb18-15"><a href="#cb18-15" tabindex="-1"></a><span class="do">## # ℹ 1 more variable: title &lt;chr&gt;</span></span></code></pre></div>
+<p>Then you can select the dimensions you want to query using the <code>text</code> and <code>valueTexts</code> variables.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Manually create BFS query dimensions</span></span>
-<span><span class="co"># Use `code` and `values` elements</span></span>
-<span><span class="co"># Use "*" to select all</span></span>
-<span><span class="va">dimensions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  <span class="st">"Jahr"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"40"</span>, <span class="st">"41"</span><span class="op">)</span>,</span>
-<span>  <span class="st">"ISCED Fach"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span><span class="op">)</span>,</span>
-<span>  <span class="st">"Geschlecht"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"*"</span><span class="op">)</span>,</span>
-<span>  <span class="st">"Studienstufe"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># select dimensions</span></span>
+<span><span class="va">dim1</span> <span class="op">&lt;-</span> <span class="va">metadata_tidy</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">text</span> <span class="op">==</span> <span class="st">"Year"</span> <span class="op">&amp;</span> <span class="va">valueTexts</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2020/21"</span>, <span class="st">"2021/22"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">dim2</span> <span class="op">&lt;-</span> <span class="va">metadata_tidy</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">text</span> <span class="op">==</span> <span class="st">"Level of study"</span> <span class="op">&amp;</span> <span class="va">valueTexts</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Master"</span>, <span class="st">"Doctorate"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">dim3</span> <span class="op">&lt;-</span> <span class="va">metadata_tidy</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">text</span> <span class="op">==</span> <span class="st">"ISCED Field"</span> <span class="op">&amp;</span> <span class="va">valueTexts</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Education science"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">dim4</span> <span class="op">&lt;-</span> <span class="va">metadata_tidy</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">text</span> <span class="op">==</span> <span class="st">"Sex"</span><span class="op">)</span> <span class="co"># all valueTexts dimensions</span></span>
 <span></span>
-<span><span class="co"># Query BFS data with specific dimensions</span></span>
-<span><span class="fu">BFS</span><span class="fu">::</span><span class="fu"><a href="reference/bfs_get_data.html">bfs_get_data</a></span><span class="op">(</span></span>
+<span><span class="co"># build dimensions list object</span></span>
+<span><span class="va">dimensions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="va">dim1</span><span class="op">$</span><span class="va">values</span>,</span>
+<span>  <span class="va">dim2</span><span class="op">$</span><span class="va">values</span>,</span>
+<span>  <span class="va">dim3</span><span class="op">$</span><span class="va">values</span>,</span>
+<span>  <span class="va">dim</span><span class="op">$</span><span class="va">values</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">dimensions</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">dim</span><span class="op">$</span><span class="va">code</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">dim</span><span class="op">$</span><span class="va">code</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">dim</span><span class="op">$</span><span class="va">code</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">dim</span><span class="op">$</span><span class="va">code</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dimensions</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="do">## $Jahr</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="do">## [1] "40" "41"</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="do">## $Studienstufe</span></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="do">## [1] "2" "3"</span></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="do">## $`ISCED Fach`</span></span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="do">## [1] "0"</span></span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="do">## $Geschlecht</span></span>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a><span class="do">## [1] "0" "1"</span></span></code></pre></div>
+<p>Finally you can query BFS data with specific dimensions.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">BFS</span><span class="fu">::</span><span class="fu"><a href="reference/bfs_get_data.html">bfs_get_data</a></span><span class="op">(</span></span>
 <span>  number_bfs <span class="op">=</span> <span class="st">"px-x-1502040100_131"</span>,</span>
 <span>  language <span class="op">=</span> <span class="st">"en"</span>,</span>
 <span>  query <span class="op">=</span> <span class="va">dimensions</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="do">## # A tibble: 8 × 5</span></span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="do">##   Year    `ISCED Field`     Sex    `Level of study` `University students`</span></span>
-<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="do">##   &lt;chr&gt;   &lt;chr&gt;             &lt;chr&gt;  &lt;chr&gt;                            &lt;dbl&gt;</span></span>
-<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="do">## 1 2020/21 Education science Male   Master                             151</span></span>
-<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="do">## 2 2020/21 Education science Male   Doctorate                          121</span></span>
-<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="do">## 3 2020/21 Education science Female Master                             555</span></span>
-<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="do">## 4 2020/21 Education science Female Doctorate                          306</span></span>
-<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="do">## 5 2021/22 Education science Male   Master                             143</span></span>
-<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="do">## 6 2021/22 Education science Male   Doctorate                          115</span></span>
-<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="do">## 7 2021/22 Education science Female Master                             599</span></span>
-<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a><span class="do">## 8 2021/22 Education science Female Doctorate                          318</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="do">## # A tibble: 8 × 5</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="do">##   Year    `ISCED Field`     Sex    `Level of study` `University students`</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="do">##   &lt;chr&gt;   &lt;chr&gt;             &lt;chr&gt;  &lt;chr&gt;                            &lt;dbl&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="do">## 1 2020/21 Education science Male   Master                             151</span></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="do">## 2 2020/21 Education science Male   Doctorate                          121</span></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="do">## 3 2020/21 Education science Female Master                             555</span></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="do">## 4 2020/21 Education science Female Doctorate                          306</span></span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a><span class="do">## 5 2021/22 Education science Male   Master                             143</span></span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a><span class="do">## 6 2021/22 Education science Male   Doctorate                          115</span></span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a><span class="do">## 7 2021/22 Education science Female Master                             599</span></span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a><span class="do">## 8 2021/22 Education science Female Doctorate                          318</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="catalog-of-tables">Catalog of tables<a class="anchor" aria-label="anchor" href="#catalog-of-tables"></a>
 </h3>
 <p>A lot of datasets are not accessible through the official PXWeb API. They are listed in the <a href="https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/tabellen.html" class="external-link">catalog of tables</a>. You can search for specific tables using <code><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables()</a></code>.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">catalog_tables_en_students</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span>, title <span class="op">=</span> <span class="st">"students"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">catalog_tables_en_students</span></span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="do">## # A tibble: 5 × 7</span></span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="do">##   title              language publication_date    number_asset url_bfs url_table</span></span>
-<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="do">##   &lt;chr&gt;              &lt;chr&gt;    &lt;dttm&gt;                     &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;    </span></span>
-<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="do">## 1 Students at unive… en       2023-04-05 00:00:00     24865589 https:… https://…</span></span>
-<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="do">## 2 Students at unive… en       2023-04-05 00:00:00     24865590 https:… https://…</span></span>
-<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="do">## 3 Students at unive… en       2023-03-28 08:30:00     24345362 https:… https://…</span></span>
-<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="do">## 4 Students at unive… en       2023-03-28 08:30:00     24345374 https:… https://…</span></span>
-<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a><span class="do">## 5 Students at unive… en       2023-03-28 08:30:00     24345366 https:… https://…</span></span>
-<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a><span class="do">## # ℹ 1 more variable: catalog_date &lt;dttm&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="do">## # A tibble: 5 × 7</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="do">##   title              language publication_date    number_asset url_bfs url_table</span></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="do">##   &lt;chr&gt;              &lt;chr&gt;    &lt;dttm&gt;                     &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;    </span></span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a><span class="do">## 1 Students at unive… en       2023-04-05 00:00:00     24865589 https:… https://…</span></span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a><span class="do">## 2 Students at unive… en       2023-04-05 00:00:00     24865590 https:… https://…</span></span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a><span class="do">## 3 Students at unive… en       2023-03-28 08:30:00     24345362 https:… https://…</span></span>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a><span class="do">## 4 Students at unive… en       2023-03-28 08:30:00     24345374 https:… https://…</span></span>
+<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a><span class="do">## 5 Students at unive… en       2023-03-28 08:30:00     24345366 https:… https://…</span></span>
+<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a><span class="do">## # ℹ 1 more variable: catalog_date &lt;dttm&gt;</span></span></code></pre></div>
 <p>Most of the BFS tables are Excel or CSV files. You can download an table with <code><a href="reference/bfs_download_asset.html">bfs_download_asset()</a></code> using the <code>number asset</code>.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">tables_asset_number_students</span> <span class="op">&lt;-</span> <span class="va">catalog_tables_en_students</span> <span class="op">|&gt;</span></span>
@@ -328,43 +368,43 @@
 <h2 id="access-geodata-catalog">Access geodata catalog<a class="anchor" aria-label="anchor" href="#access-geodata-catalog"></a>
 </h2>
 <p>Display geo-information catalog of the Swiss Official STAC API using <code><a href="reference/bfs_get_catalog_geodata.html">bfs_get_catalog_geodata()</a></code>.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">catalog_geodata</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_catalog_geodata.html">bfs_get_catalog_geodata</a></span><span class="op">(</span>include_metadata <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">catalog_geodata</span></span></code></pre></div>
-<div class="sourceCode" id="cb25"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="do">## # A tibble: 281 × 12</span></span>
-<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="do">##    collection_id     type  href  title description created updated crs   license</span></span>
-<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a><span class="do">##    &lt;chr&gt;             &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  </span></span>
-<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a><span class="do">##  1 ch.are.agglomera… API   http… Citi… "The list … 2021-1… 2023-0… http… propri…</span></span>
-<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a><span class="do">##  2 ch.are.alpenkonv… API   http… Alpi… "The perim… 2021-1… 2022-0… http… propri…</span></span>
-<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a><span class="do">##  3 ch.are.belastung… API   http… Load… "Passenger… 2021-1… 2022-0… http… propri…</span></span>
-<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a><span class="do">##  4 ch.are.belastung… API   http… Load… "Passenger… 2021-1… 2022-0… http… propri…</span></span>
-<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a><span class="do">##  5 ch.are.belastung… API   http… Load… "Vehicles … 2021-1… 2022-0… http… propri…</span></span>
-<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a><span class="do">##  6 ch.are.belastung… API   http… Load… "Vehicles … 2021-1… 2022-0… http… propri…</span></span>
-<span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a><span class="do">##  7 ch.are.erreichba… API   http… Acce… "Accessibi… 2021-1… 2022-0… http… propri…</span></span>
-<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a><span class="do">##  8 ch.are.erreichba… API   http… Acce… "Accessibi… 2021-1… 2022-0… http… propri…</span></span>
-<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a><span class="do">##  9 ch.are.gemeindet… API   http… Typo… "The typol… 2021-1… 2022-0… http… propri…</span></span>
-<span id="cb25-13"><a href="#cb25-13" tabindex="-1"></a><span class="do">## 10 ch.are.gueteklas… API   http… Publ… "The publi… 2021-1… 2023-0… http… propri…</span></span>
-<span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a><span class="do">## # ℹ 271 more rows</span></span>
-<span id="cb25-15"><a href="#cb25-15" tabindex="-1"></a><span class="do">## # ℹ 3 more variables: provider_name &lt;chr&gt;, bbox &lt;list&gt;, inverval &lt;list&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="do">## # A tibble: 281 × 12</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="do">##    collection_id     type  href  title description created updated crs   license</span></span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="do">##    &lt;chr&gt;             &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  </span></span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a><span class="do">##  1 ch.are.agglomera… API   http… Citi… "The list … 2021-1… 2023-0… http… propri…</span></span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a><span class="do">##  2 ch.are.alpenkonv… API   http… Alpi… "The perim… 2021-1… 2022-0… http… propri…</span></span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a><span class="do">##  3 ch.are.belastung… API   http… Load… "Passenger… 2021-1… 2022-0… http… propri…</span></span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a><span class="do">##  4 ch.are.belastung… API   http… Load… "Passenger… 2021-1… 2022-0… http… propri…</span></span>
+<span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a><span class="do">##  5 ch.are.belastung… API   http… Load… "Vehicles … 2021-1… 2022-0… http… propri…</span></span>
+<span id="cb27-9"><a href="#cb27-9" tabindex="-1"></a><span class="do">##  6 ch.are.belastung… API   http… Load… "Vehicles … 2021-1… 2022-0… http… propri…</span></span>
+<span id="cb27-10"><a href="#cb27-10" tabindex="-1"></a><span class="do">##  7 ch.are.erreichba… API   http… Acce… "Accessibi… 2021-1… 2022-0… http… propri…</span></span>
+<span id="cb27-11"><a href="#cb27-11" tabindex="-1"></a><span class="do">##  8 ch.are.erreichba… API   http… Acce… "Accessibi… 2021-1… 2022-0… http… propri…</span></span>
+<span id="cb27-12"><a href="#cb27-12" tabindex="-1"></a><span class="do">##  9 ch.are.gemeindet… API   http… Typo… "The typol… 2021-1… 2022-0… http… propri…</span></span>
+<span id="cb27-13"><a href="#cb27-13" tabindex="-1"></a><span class="do">## 10 ch.are.gueteklas… API   http… Publ… "The publi… 2021-1… 2023-0… http… propri…</span></span>
+<span id="cb27-14"><a href="#cb27-14" tabindex="-1"></a><span class="do">## # ℹ 271 more rows</span></span>
+<span id="cb27-15"><a href="#cb27-15" tabindex="-1"></a><span class="do">## # ℹ 3 more variables: provider_name &lt;chr&gt;, bbox &lt;list&gt;, inverval &lt;list&gt;</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="download-geodata">Download geodata<a class="anchor" aria-label="anchor" href="#download-geodata"></a>
 </h3>
 <p>For example you can get information about the dataset “Generalised borders G1 and area with urban character”.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">geodata_g1</span> <span class="op">&lt;-</span> <span class="va">catalog_geodata</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">title</span> <span class="op">==</span> <span class="st">"Generalised borders G1 and area with urban character"</span><span class="op">)</span></span>
 <span>  </span>
 <span><span class="va">geodata_g1</span></span></code></pre></div>
-<div class="sourceCode" id="cb27"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="do">## # A tibble: 1 × 12</span></span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="do">##   collection_id      type  href  title description created updated crs   license</span></span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="do">##   &lt;chr&gt;              &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  </span></span>
-<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a><span class="do">## 1 ch.bfs.generalisi… API   http… Gene… Administra… 2022-0… 2023-0… http… propri…</span></span>
-<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a><span class="do">## # ℹ 3 more variables: provider_name &lt;chr&gt;, bbox &lt;list&gt;, inverval &lt;list&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="do">## # A tibble: 1 × 12</span></span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="do">##   collection_id      type  href  title description created updated crs   license</span></span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a><span class="do">##   &lt;chr&gt;              &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  </span></span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a><span class="do">## 1 ch.bfs.generalisi… API   http… Gene… Administra… 2022-0… 2023-0… http… propri…</span></span>
+<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a><span class="do">## # ℹ 3 more variables: provider_name &lt;chr&gt;, bbox &lt;list&gt;, inverval &lt;list&gt;</span></span></code></pre></div>
 <p>Download dataset by collection id with <code><a href="reference/bfs_download_geodata.html">bfs_download_geodata()</a></code> and unzip file if needed.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Access Generalised borders G1 and area with urban character</span></span>
 <span><span class="va">borders_g1_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_download_geodata.html">bfs_download_geodata</a></span><span class="op">(</span></span>
 <span>  collection_id <span class="op">=</span> <span class="st">"ch.bfs.generalisierte-grenzen_agglomerationen_g1"</span>, </span>
@@ -380,7 +420,7 @@
 </h3>
 <p>You can get <a href="https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.assetdetail.24025646.html" class="external-link">cartographic base maps</a> from the ThemaKart project using <code><a href="reference/bfs_get_base_maps.html">bfs_get_base_maps()</a></code>. The list of available geometries in the <a href="https://www.bfs.admin.ch/asset/en/24025645" class="external-link">official documentation</a>.</p>
 <p>The default arguments of <code><a href="reference/bfs_get_base_maps.html">bfs_get_base_maps()</a></code> can be change to access specific files:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># default arguments</span></span>
 <span><span class="fu"><a href="reference/bfs_get_base_maps.html">bfs_get_base_maps</a></span><span class="op">(</span></span>
 <span>  geom <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -393,7 +433,7 @@
 <span><span class="op">)</span></span></code></pre></div>
 <p>A typical base maps ThemaKart file looks like this:</p>
 <p><img style="border:0px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/base_maps_file.png" align="center"></p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># list of geometry names: https://www.bfs.admin.ch/asset/en/24025645</span></span>
 <span><span class="va">switzerland_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_base_maps.html">bfs_get_base_maps</a></span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"suis"</span><span class="op">)</span></span>
 <span><span class="va">communes_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_base_maps.html">bfs_get_base_maps</a></span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"polg"</span>, date <span class="op">=</span> <span class="st">"20230101"</span><span class="op">)</span></span>
@@ -427,25 +467,25 @@
 <li><code>register_kt_seeanteile</code></li>
 <li><code>register_dic</code></li>
 </ul>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># commune register data</span></span>
 <span><span class="fu">BFS</span><span class="fu">::</span><span class="va"><a href="reference/register_gde.html">register_gde</a></span></span></code></pre></div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="do">## # A tibble: 2,136 × 8</span></span>
-<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="do">##    GDEKT GDEBZNR GDENR GDENAME            GDENAMK      GDEBZNA GDEKTNA GDEMUTDAT</span></span>
-<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a><span class="do">##    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;              &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;    </span></span>
-<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a><span class="do">##  1 ZH        101     1 Aeugst am Albis    Aeugst am A… Bezirk… Zürich  1976-11-…</span></span>
-<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a><span class="do">##  2 ZH        101     2 Affoltern am Albis Affoltern a… Bezirk… Zürich  1848-09-…</span></span>
-<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a><span class="do">##  3 ZH        101     3 Bonstetten         Bonstetten   Bezirk… Zürich  1848-09-…</span></span>
-<span id="cb32-7"><a href="#cb32-7" tabindex="-1"></a><span class="do">##  4 ZH        101     4 Hausen am Albis    Hausen am A… Bezirk… Zürich  1911-01-…</span></span>
-<span id="cb32-8"><a href="#cb32-8" tabindex="-1"></a><span class="do">##  5 ZH        101     5 Hedingen           Hedingen     Bezirk… Zürich  1848-09-…</span></span>
-<span id="cb32-9"><a href="#cb32-9" tabindex="-1"></a><span class="do">##  6 ZH        101     6 Kappel am Albis    Kappel am A… Bezirk… Zürich  1911-01-…</span></span>
-<span id="cb32-10"><a href="#cb32-10" tabindex="-1"></a><span class="do">##  7 ZH        101     7 Knonau             Knonau       Bezirk… Zürich  1848-09-…</span></span>
-<span id="cb32-11"><a href="#cb32-11" tabindex="-1"></a><span class="do">##  8 ZH        101     8 Maschwanden        Maschwanden  Bezirk… Zürich  1848-09-…</span></span>
-<span id="cb32-12"><a href="#cb32-12" tabindex="-1"></a><span class="do">##  9 ZH        101     9 Mettmenstetten     Mettmenstet… Bezirk… Zürich  1848-09-…</span></span>
-<span id="cb32-13"><a href="#cb32-13" tabindex="-1"></a><span class="do">## 10 ZH        101    10 Obfelden           Obfelden     Bezirk… Zürich  1848-09-…</span></span>
-<span id="cb32-14"><a href="#cb32-14" tabindex="-1"></a><span class="do">## # ℹ 2,126 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="do">## # A tibble: 2,136 × 8</span></span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a><span class="do">##    GDEKT GDEBZNR GDENR GDENAME            GDENAMK      GDEBZNA GDEKTNA GDEMUTDAT</span></span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a><span class="do">##    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;              &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;    </span></span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a><span class="do">##  1 ZH        101     1 Aeugst am Albis    Aeugst am A… Bezirk… Zürich  1976-11-…</span></span>
+<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a><span class="do">##  2 ZH        101     2 Affoltern am Albis Affoltern a… Bezirk… Zürich  1848-09-…</span></span>
+<span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a><span class="do">##  3 ZH        101     3 Bonstetten         Bonstetten   Bezirk… Zürich  1848-09-…</span></span>
+<span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a><span class="do">##  4 ZH        101     4 Hausen am Albis    Hausen am A… Bezirk… Zürich  1911-01-…</span></span>
+<span id="cb34-8"><a href="#cb34-8" tabindex="-1"></a><span class="do">##  5 ZH        101     5 Hedingen           Hedingen     Bezirk… Zürich  1848-09-…</span></span>
+<span id="cb34-9"><a href="#cb34-9" tabindex="-1"></a><span class="do">##  6 ZH        101     6 Kappel am Albis    Kappel am A… Bezirk… Zürich  1911-01-…</span></span>
+<span id="cb34-10"><a href="#cb34-10" tabindex="-1"></a><span class="do">##  7 ZH        101     7 Knonau             Knonau       Bezirk… Zürich  1848-09-…</span></span>
+<span id="cb34-11"><a href="#cb34-11" tabindex="-1"></a><span class="do">##  8 ZH        101     8 Maschwanden        Maschwanden  Bezirk… Zürich  1848-09-…</span></span>
+<span id="cb34-12"><a href="#cb34-12" tabindex="-1"></a><span class="do">##  9 ZH        101     9 Mettmenstetten     Mettmenstet… Bezirk… Zürich  1848-09-…</span></span>
+<span id="cb34-13"><a href="#cb34-13" tabindex="-1"></a><span class="do">## 10 ZH        101    10 Obfelden           Obfelden     Bezirk… Zürich  1848-09-…</span></span>
+<span id="cb34-14"><a href="#cb34-14" tabindex="-1"></a><span class="do">## # ℹ 2,126 more rows</span></span></code></pre></div>
 <p>You can use registers to ease geodata analysis.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
 <span></span>
