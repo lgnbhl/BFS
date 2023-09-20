@@ -197,46 +197,89 @@ Note that reading a PX file using `pxR::read.px()` gives access only to the Germ
 
 ### Query specific elements
 
-First you want to get the variable names, i.e. `code`, and categories, i.e. `values`, of your dataset. For example:
+First you want to get the metadata of your dataset, i.e. the variables (`code` and `text`) and dimensions (`values` and `valueTexts`). For example:
 
 ```r
-# choose a BFS number and language
 metadata <- bfs_get_metadata(number_bfs = "px-x-1502040100_131", language = "en")
 
-str(metadata)
+# tidy metadata
+library(dplyr)
+library(tidyr) # for unnest_longer
+
+metadata_tidy <- metadata |>
+  select(-valueTexts) |>
+  unnest_longer(values) |>
+  mutate(valueTexts = metadata |>
+           select(valueTexts) |>
+           unnest_longer(valueTexts) |>
+           pull(valueTexts)) |>
+  select(code, text, values, valueTexts, everything())
+
+metadata_tidy
 ```
 
-    ## tibble [4 × 7] (S3: tbl_df/tbl/data.frame)
-    ##  $ code       : chr [1:4] "Jahr" "ISCED Fach" "Geschlecht" "Studienstufe"
-    ##  $ text       : chr [1:4] "Year" "ISCED Field" "Sex" "Level of study"
-    ##  $ values     :List of 4
-    ##   ..$ : chr [1:43] "0" "1" "2" "3" ...
-    ##   ..$ : chr [1:42] "0" "1" "2" "3" ...
-    ##   ..$ : chr [1:2] "0" "1"
-    ##   ..$ : chr [1:5] "0" "1" "2" "3" ...
-    ##  $ valueTexts :List of 4
-    ##   ..$ : chr [1:43] "1980/81" "1981/82" "1982/83" "1983/84" ...
-    ##   ..$ : chr [1:42] "Education science" "Teacher training without subject specialisation" "Teacher training with subject specialisation" "Fine arts" ...
-    ##   ..$ : chr [1:2] "Male" "Female"
-    ##   ..$ : chr [1:5] "First university degree or diploma" "Bachelor" "Master" "Doctorate" ...
-    ##  $ time       : logi [1:4] TRUE NA NA NA
-    ##  $ elimination: logi [1:4] NA TRUE TRUE TRUE
-    ##  $ title      : chr [1:4] "University students by Year, ISCED Field, Sex and Level of study" "University students by Year, ISCED Field, Sex and Level of study" "University students by Year, ISCED Field, Sex and Level of study" "University students by Year, ISCED Field, Sex and Level of study"
+    ## # A tibble: 92 × 7
+    ##    code  text  values valueTexts time  elimination
+    ##    <chr> <chr> <chr>  <chr>      <lgl> <lgl>      
+    ##  1 Jahr  Year  0      1980/81    TRUE  NA         
+    ##  2 Jahr  Year  1      1981/82    TRUE  NA         
+    ##  3 Jahr  Year  2      1982/83    TRUE  NA         
+    ##  4 Jahr  Year  3      1983/84    TRUE  NA         
+    ##  5 Jahr  Year  4      1984/85    TRUE  NA         
+    ##  6 Jahr  Year  5      1985/86    TRUE  NA         
+    ##  7 Jahr  Year  6      1986/87    TRUE  NA         
+    ##  8 Jahr  Year  7      1987/88    TRUE  NA         
+    ##  9 Jahr  Year  8      1988/89    TRUE  NA         
+    ## 10 Jahr  Year  9      1989/90    TRUE  NA         
+    ## # ℹ 82 more rows
+    ## # ℹ 1 more variable: title <chr>
 
-
-Then you can manually select the dimensions of the dataset you want to query.
+Then you can select the dimensions you want to query using the `text` and `valueTexts` variables.
 
 ```r
-# Manually create BFS query dimensions
-# Use `code` and `values` elements
-# Use "*" to select all
-dimensions <- list(
-  "Jahr" = c("40", "41"),
-  "ISCED Fach" = c("0"),
-  "Geschlecht" = c("*"),
-  "Studienstufe" = c("2", "3"))
+# select dimensions
+dim1 <- metadata_tidy |>
+  filter(text == "Year" & valueTexts %in% c("2020/21", "2021/22"))
+dim2 <- metadata_tidy |>
+  filter(text == "Level of study" & valueTexts %in% c("Master", "Doctorate"))
+dim3 <- metadata_tidy |>
+  filter(text == "ISCED Field" & valueTexts %in% c("Education science"))
+dim4 <- metadata_tidy |>
+  filter(text == "Sex") # all valueTexts dimensions
 
-# Query BFS data with specific dimensions
+# build dimensions list object
+dimensions <- list(
+  dim1$values,
+  dim2$values,
+  dim3$values,
+  dim$values
+)
+
+names(dimensions) <- c(
+  unique(dim$code), 
+  unique(dim$code), 
+  unique(dim$code), 
+  unique(dim$code)
+)
+
+dimensions
+```
+
+    ## $Jahr
+    ## [1] "40" "41"
+    ## 
+    ## $Studienstufe
+    ## [1] "2" "3"
+    ## 
+    ## $`ISCED Fach`
+    ## [1] "0"
+    ## 
+    ## $Geschlecht
+    ## [1] "0" "1"
+
+Finally you can query BFS data with specific dimensions.
+
+```r
 BFS::bfs_get_data(
   number_bfs = "px-x-1502040100_131",
   language = "en",
