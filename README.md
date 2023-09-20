@@ -270,14 +270,14 @@ dimensions <- list(
   dim1$values,
   dim2$values,
   dim3$values,
-  dim$values
+  dim4$values
 )
 
 names(dimensions) <- c(
-  unique(dim$code), 
-  unique(dim$code), 
-  unique(dim$code), 
-  unique(dim$code)
+  unique(dim1$code), 
+  unique(dim2$code), 
+  unique(dim3$code), 
+  unique(dim4$code)
 )
 
 dimensions

@@ -4,6 +4,7 @@
 - add unit tests
 - remove unnecessary messages when calling `bfs_get_catalog_*()`
 - use tools instead of rappdirs
+- improve docs related to query dimensions
 
 # BFS 0.5.4
 - using only magrittr pipe to allow older R versions, fix #11
