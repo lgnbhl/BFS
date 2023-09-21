@@ -9,7 +9,8 @@ bfs_get_data_comments(
   language = "de",
   url_bfs = NULL,
   query = NULL,
-  clean_names = FALSE
+  clean_names = FALSE,
+  delay = NULL
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ bfs_get_data_comments(
 \item{query}{a list with named values, a json query file or json query string using \code{pxweb::pxweb_query()}.}
 
 \item{clean_names}{Clean column names using \code{janitor::clean_names()}}
+
+\item{delay}{Integer Number of seconds to wait before query using \code{Sys.sleep()}.}
 }
 \value{
 A tbl_df (a type of data frame; see tibble or

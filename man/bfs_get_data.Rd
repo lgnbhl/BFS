@@ -11,7 +11,8 @@ bfs_get_data(
   query = NULL,
   column_name_type = "text",
   variable_value_type = "text",
-  clean_names = FALSE
+  clean_names = FALSE,
+  delay = NULL
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ bfs_get_data(
 \item{variable_value_type}{Variable value type as "text" or as "code".}
 
 \item{clean_names}{Clean column names using \code{janitor::clean_names()}.}
+
+\item{delay}{Integer Number of seconds to wait before query using \code{Sys.sleep()}.}
 }
 \value{
 A tbl_df (a type of data frame; see tibble or

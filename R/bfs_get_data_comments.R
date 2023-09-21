@@ -7,6 +7,7 @@
 #' @param url_bfs The URL page of a dataset.
 #' @param query a list with named values, a json query file or json query string using \code{pxweb::pxweb_query()}.
 #' @param clean_names Clean column names using \code{janitor::clean_names()}
+#' @param delay Integer Number of seconds to wait before query using \code{Sys.sleep()}.
 #'
 #' @seealso \code{\link{bfs_get_data}}
 #'
@@ -16,7 +17,7 @@
 #' @importFrom magrittr %>%
 #'
 #' @export
-bfs_get_data_comments <- function(number_bfs = NULL, language = "de", url_bfs = NULL, query = NULL, clean_names = FALSE) {
+bfs_get_data_comments <- function(number_bfs = NULL, language = "de", url_bfs = NULL, query = NULL, clean_names = FALSE, delay = NULL) {
   if (is.null(number_bfs) && is.null(url_bfs)) {
     stop("Please fill bfs_number or url_bfs", call. = FALSE)
   }
@@ -44,6 +45,10 @@ bfs_get_data_comments <- function(number_bfs = NULL, language = "de", url_bfs = 
     httr2::req_perform() %>%
     httr2::resp_body_json(simplifyVector = TRUE)
 
+  if(!is.null(delay)) {
+    Sys.sleep(delay) # waiting time in seconds before query
+  }
+  
   if (is.null(query)) {
     variables <- df_json$variables$code
     values <- df_json$variables$values

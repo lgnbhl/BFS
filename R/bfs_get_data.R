@@ -11,6 +11,7 @@
 #' @param column_name_type Column name type as "text" or as "code".
 #' @param variable_value_type Variable value type as "text" or as "code".
 #' @param clean_names Clean column names using \code{janitor::clean_names()}.
+#' @param delay Integer Number of seconds to wait before query using \code{Sys.sleep()}.
 #'
 #' @importFrom magrittr %>%
 #'
@@ -20,7 +21,7 @@
 #' dplyr packages).
 #'
 #' @export
-bfs_get_data <- function(number_bfs = NULL, language = "de", url_bfs = NULL, query = NULL, column_name_type = "text", variable_value_type = "text", clean_names = FALSE) {
+bfs_get_data <- function(number_bfs = NULL, language = "de", url_bfs = NULL, query = NULL, column_name_type = "text", variable_value_type = "text", clean_names = FALSE, delay = NULL) {
   language <- match.arg(arg = language, choices = c("de", "fr", "it", "en"))
 
   if (is.null(number_bfs) && is.null(url_bfs)) {
@@ -50,6 +51,10 @@ bfs_get_data <- function(number_bfs = NULL, language = "de", url_bfs = NULL, que
     httr2::req_perform() %>%
     httr2::resp_body_json(simplifyVector = TRUE)
 
+    if(!is.null(delay)) {
+    Sys.sleep(delay) # waiting time in seconds before query
+  }
+  
   if (is.null(query)) {
     variables <- df_json$variables$code
     values <- df_json$variables$values

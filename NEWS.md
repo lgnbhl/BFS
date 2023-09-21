@@ -1,3 +1,7 @@
+# BFS 0.5.6
+- add "delay" argument in `bfs_get_data()` and `bfs_get_data_comments()`
+  - using `Sys.sleep()` of 10 seconds to avoid reaching API limits
+
 # BFS 0.5.5
 - fix encoding bug in `bfs_get_base_maps()` #12
 - add fs R package dependency
