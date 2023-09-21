@@ -46,7 +46,7 @@ bfs_get_data <- function(number_bfs = NULL, language = "de", url_bfs = NULL, que
   # if too many requests HTTP 429
   df_json <- httr2::request("https://www.pxweb.bfs.admin.ch/api/v1") %>%
     httr2::req_url_path_append(paste0(language, "/", number_bfs, "/", number_bfs, ".px")) %>%
-    httr2::req_retry(max_tries = 2, max_seconds = 5) %>%
+    httr2::req_retry(max_tries = 2, max_seconds = 10) %>%
     httr2::req_perform() %>%
     httr2::resp_body_json(simplifyVector = TRUE)
 
