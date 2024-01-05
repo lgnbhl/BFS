@@ -60,7 +60,7 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   if (category == "total_area" || category == "gf") {
     category_selected <- "gf_ch"
   } else if (category == "vegetation_area" || category == "vf") {
-    category_selected <- "gf_ch"
+    category_selected <- "vf_ch"
   } else {
     category_selected <- category # other options, for example for 'k4seenyyyymmdd11_ch2007Poly'
   }
