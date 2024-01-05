@@ -188,8 +188,15 @@ This could happen because you ran too many times a `bfs_get_*()`
 function (API config is
 [here](https://www.pxweb.bfs.admin.ch/api/v1/de/?config)). A solution is
 to wait a few seconds before running the next `bfs_get_*()` function.
-You can add a delay in your R code, for instance using `Sys.sleep(11)`
-(11 seconds delay).
+You can add a delay in your R code using the `delay` argument.
+
+``` r
+bfs_get_data(
+  number_bfs = "px-x-1502040100_131", 
+  language = "en", 
+  delay = 10
+)
+```
 
 If the error message remains, it could be because you are querying a
 very large BFS dataset. Two workarounds exist: a) download the BFS file
@@ -485,7 +492,7 @@ BFS::bfs_get_base_maps(geom = "bezk") |>
   mapview(zcol = "name", legend = FALSE)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/mapview.png" align="center" />
 
 ### Swiss Official Commune Register
 
