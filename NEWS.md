@@ -1,6 +1,14 @@
 # BFS 0.5.6
 - add "delay" argument in `bfs_get_data()` and `bfs_get_data_comments()`
   - using `Sys.sleep()` of 10 seconds to avoid reaching API limits
+  - the "delay" arg allows to loop on large datasets, for example see #7
+- BREAKING CHANGE: remove "bfs_url" argument in `bfs_get_data()` and
+  `bfs_get_data_comments()`
+  - "bfs_url" argument unstable and slow. See README for recommended workflow 
+    using `bfs_get_catalog_data()` and `bfs_get_asset_metadata()`
+- add deprecation warning for `bfs_get_catalog()`
+- add more tests
+- add test coverage
 
 # BFS 0.5.5
 - fix encoding bug in `bfs_get_base_maps()` #12

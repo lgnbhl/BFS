@@ -7,6 +7,8 @@ status](https://www.r-pkg.org/badges/version/BFS)](https://CRAN.R-project.org/pa
 [![Grand
 total](https://cranlogs.r-pkg.org/badges/grand-total/BFS)](https://cran.r-project.org/package=BFS)
 [![R-CMD-check](https://github.com/lgnbhl/BFS/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lgnbhl/BFS/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/lgnbhl/BFS/branch/master/graph/badge.svg)](https://app.codecov.io/gh/lgnbhl/BFS?branch=master)
 <!-- badges: end -->
 
 # BFS <img src="man/figures/logo.png" align="right" height="138" />
@@ -73,9 +75,9 @@ You can search in the data catalog using the following arguments:
 - `title`: to search in title, subtitle and supertitle.
 - `spatial_division`: choose between “Switzerland”, “Cantons”,
   “Districts”, “Communes”, “Other spatial divisions” or “International”.
-- `prodima`: b specific BFS themes using one or multiple prodima
+- `prodima`: by specific BFS themes using one or multiple prodima
   numbers.
-- `inquiry`: by inquiry.
+- `inquiry`: by inquiry number.
 - `institution`: by institution.
 - `publishing_year_start`: by publishing year start.
 - `publishing_year_end`: by publishing year end.
@@ -473,6 +475,17 @@ ggplot() +
 ```
 
 <img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/base_maps.png" align="center" />
+
+You can create an interactive map easily with the mapview R package.
+
+``` r
+library(mapview)
+
+BFS::bfs_get_base_maps(geom = "bezk") |>
+  mapview(zcol = "name", legend = FALSE)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
 ### Swiss Official Commune Register
 

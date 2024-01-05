@@ -5,9 +5,8 @@
 \title{Get BFS data in a given language}
 \usage{
 bfs_get_data(
-  number_bfs = NULL,
+  number_bfs,
   language = "de",
-  url_bfs = NULL,
   query = NULL,
   column_name_type = "text",
   variable_value_type = "text",
@@ -19,8 +18,6 @@ bfs_get_data(
 \item{number_bfs}{The BFS number (FSO number) of a dataset.}
 
 \item{language}{Language of the dataset to be translated if exists, i.e. "de", "fr", "it" or "en".}
-
-\item{url_bfs}{The URL page of a dataset.}
 
 \item{query}{A list with named values, a json query file or json query string using \code{pxweb::pxweb_query()}.}
 

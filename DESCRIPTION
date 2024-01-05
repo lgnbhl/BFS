@@ -6,7 +6,8 @@ Authors@R:
   c(person(given = "Felix",
            family = "Luginbuhl",
            role = c("aut", "cre"),
-           email = "felix.luginbuhl@protonmail.ch"),
+           email = "felix.luginbuhl@protonmail.ch", 
+           comment = c(ORCID = "0009-0008-6625-2899")),
     person(given = "Janosch",
            family = "Brenzel-Weiss",
            role = "ctb"),
@@ -20,7 +21,7 @@ Authors@R:
            comment = c(ORCID = "0000-0002-3194-8975")))
 Maintainer: Felix Luginbuhl <felix.luginbuhl@protonmail.ch>
 Description: Search and download data from the Swiss Federal Statistical Office (BFS) APIs <https://www.bfs.admin.ch/>.
-License: MIT + file LICENSE
+License: GPL (>= 3) + file LICENSE
 Depends: R (>= 3.4)
 Imports: 
     pxweb,
@@ -38,7 +39,8 @@ Imports:
     sf,
     zip,
     fs,
-    tools
+    tools,
+    lifecycle
 Encoding: UTF-8
 RoxygenNote: 7.2.3
 URL: https://felixluginbuhl.com/BFS/, https://github.com/lgnbhl/BFS/

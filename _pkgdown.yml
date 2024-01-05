@@ -4,6 +4,10 @@ template:
   bootswatch: litera
   ganalytics: UA-158089797-1
 
+authors:
+  Felix Luginbuhl:
+    href: "https://felixluginbuhl.com"
+
 navbar:
   left:
   - text: Home

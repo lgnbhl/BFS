@@ -4,12 +4,10 @@
 \alias{bfs_get_metadata}
 \title{Get metadata of a BFS data in a given language}
 \usage{
-bfs_get_metadata(number_bfs = NULL, url_bfs = NULL, language = "de")
+bfs_get_metadata(number_bfs, language = "de")
 }
 \arguments{
 \item{number_bfs}{The BFS number of a dataset.}
-
-\item{url_bfs}{The URL page of a dataset.}
 
 \item{language}{Language of the dataset to be translated if exists.}
 }

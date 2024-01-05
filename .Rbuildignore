@@ -8,3 +8,5 @@
 ^LICENSE\.md$
 ^\.github$
 ^CODE_OF_CONDUCT\.md$
+^codemeta.json
+^codecov\.yml$

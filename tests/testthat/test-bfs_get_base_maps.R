@@ -18,3 +18,21 @@ test_that("Get Lake base map data as sf works", {
   expect_s3_class(sf_seen, "sf")
   expect_gt(nrow(sf_seen), 1)
 })
+test_that("bfs_get_base_maps() fails with missing arguments", {
+  expect_error(BFS::bfs_get_base_maps())
+})
+test_that("bfs_get_base_maps() with gf_ch category", {
+  sf_suis_gf <- BFS::bfs_get_base_maps(geom = "suis", category = "gf_ch")
+  expect_s3_class(sf_suis_gf, "sf")
+  expect_equal(nrow(sf_suis_gf), 1)
+})
+test_that("bfs_get_base_maps() with 'polg' geom and date", {
+  communes_sf <- BFS::bfs_get_base_maps(geom = "polg", date = "20230101")
+  expect_s3_class(communes_sf, "sf")
+  expect_equal(nrow(communes_sf), 2136)
+})
+test_that("bfs_get_base_maps() with 'polg' geom and recent date different", {
+  sf_kant_recent <- BFS::bfs_get_base_maps(geom = "kant", most_recent = TRUE)
+  sf_kant_not_recent <- BFS::bfs_get_base_maps(geom = "kant", most_recent = FALSE)
+  expect_false(identical(sf_kant_recent, sf_kant_not_recent))
+})

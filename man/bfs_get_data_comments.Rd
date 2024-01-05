@@ -5,9 +5,8 @@
 \title{Get the comments/footnotes of a BFS dataset in a given language}
 \usage{
 bfs_get_data_comments(
-  number_bfs = NULL,
+  number_bfs,
   language = "de",
-  url_bfs = NULL,
   query = NULL,
   clean_names = FALSE,
   delay = NULL
@@ -17,8 +16,6 @@ bfs_get_data_comments(
 \item{number_bfs}{The BFS number of a dataset.}
 
 \item{language}{Language of the dataset to be translated if exists, i.e. "de", "fr", "it" or "en".}
-
-\item{url_bfs}{The URL page of a dataset.}
 
 \item{query}{a list with named values, a json query file or json query string using \code{pxweb::pxweb_query()}.}
 
