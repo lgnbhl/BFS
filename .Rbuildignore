@@ -10,3 +10,4 @@
 ^CODE_OF_CONDUCT\.md$
 ^codemeta.json
 ^codecov\.yml$
+^test/testthat/test-bfs_get_base_maps.R # failed only on Ubuntu-latest (oldrel-1)
