@@ -22,9 +22,6 @@
 #'
 #' @seealso \code{\link{bfs_get_data}}
 #'
-#' @return A tbl_df (a type of data frame; see tibble or
-#' dplyr packages).
-#'
 #' \describe{
 #'   \item{title}{A character column with the title of the BFS dataset}
 #'   \item{language}{A character column with the language of the BFS dataset}
@@ -40,6 +37,9 @@
 #' \donttest{
 #' bfs_get_catalog_data(language = "en", title = "students", prodima = c(900212))
 #' }
+#'
+#' @return A tbl_df (a type of data frame; see tibble or
+#' dplyr packages).
 #'
 #' @export
 bfs_get_catalog_data <- function(language = "de", title = NULL, spatial_division = NULL, prodima = NULL, inquiry = NULL, institution = NULL, publishing_year_start = NULL, publishing_year_end = NULL, order_nr = NULL, skip_limit = TRUE) {

@@ -17,6 +17,8 @@
 #'
 #' @importFrom magrittr %>%
 #'
+#' @return Returns the file path where the file has been downloaded
+#'
 #' @export
 bfs_download_geodata <- function(
     collection_id = collection_id,

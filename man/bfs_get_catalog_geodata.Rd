@@ -9,6 +9,10 @@ bfs_get_catalog_geodata(include_metadata = TRUE)
 \arguments{
 \item{include_metadata}{boolean TRUE to loop on each geodata to add metadata.}
 }
+\value{
+A tbl_df (a type of data frame; see tibble or
+dplyr packages).
+}
 \description{
 Display geo-information catalog of the Swiss Confederation (\url{https://data.geo.admin.ch/}),
 including some geographic datasets provided by the Swiss Federal Statistical Office.

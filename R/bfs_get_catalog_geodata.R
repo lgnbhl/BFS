@@ -9,6 +9,8 @@
 #' @details
 #' For now only Stac API datasets are accessible.
 #'
+#' @return A tbl_df (a type of data frame; see tibble or
+#' dplyr packages).
 #'
 #' @export
 bfs_get_catalog_geodata <- function(include_metadata = TRUE) {

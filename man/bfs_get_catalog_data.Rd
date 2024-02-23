@@ -43,17 +43,6 @@ A data frame
 
 A tbl_df (a type of data frame; see tibble or
 dplyr packages).
-
-\describe{
-  \item{title}{A character column with the title of the BFS dataset}
-  \item{language}{A character column with the language of the BFS dataset}
-  \item{publication_date}{The published date of the BFS dataset in the data catalog}
-  \item{number_asset}{The BFS asset number}
-  \item{url_bfs}{A character column with the URL of the related BFS
-  webpage}
-  \item{url_px}{A character column with the URL of the PX file}
-  \item{catalog_date}{The released date of the current BFS data catalog}
-}
 }
 \description{
 Get the list of the data available in the official \href{https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml}{RSS Feed} of the Swiss Federal Statistical Office data catalog.
@@ -66,4 +55,15 @@ bfs_get_catalog_data(language = "en", title = "students", prodima = c(900212))
 }
 \seealso{
 \code{\link{bfs_get_data}}
+
+\describe{
+  \item{title}{A character column with the title of the BFS dataset}
+  \item{language}{A character column with the language of the BFS dataset}
+  \item{publication_date}{The published date of the BFS dataset in the data catalog}
+  \item{number_asset}{The BFS asset number}
+  \item{url_bfs}{A character column with the URL of the related BFS
+  webpage}
+  \item{url_px}{A character column with the URL of the PX file}
+  \item{catalog_date}{The released date of the current BFS data catalog}
+}
 }

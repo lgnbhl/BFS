@@ -29,6 +29,8 @@
 #' @importFrom fs dir_create dir_ls
 #' @importFrom zip unzip
 #'
+#' @return sf object with geometries
+#'
 #' @export
 bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date = NULL, most_recent = TRUE, format = "shp", asset_number = "24025646") {
   if (is.null(geom)) {

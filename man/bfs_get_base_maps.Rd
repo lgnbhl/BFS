@@ -32,6 +32,9 @@ if FALSE then read the first file available.}
 
 \item{asset_number}{Asset number of the base maps zip file.}
 }
+\value{
+sf object with geometries
+}
 \description{
 This functions helps to get base maps data from the ThemaKart project
 as an sf object. The geom names and the general structure of the files
