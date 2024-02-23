@@ -33,7 +33,7 @@ bfs_download_geodata(
 \item{feature_id}{feature_id}
 }
 \value{
-Returns the file path where the file has been downloaded
+Returns the file path where the file has been downloaded. Returns NULL if no connection.
 }
 \description{
 Download assets from the STAC API on the geodata catalog

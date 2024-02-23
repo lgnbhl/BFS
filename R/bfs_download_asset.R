@@ -14,10 +14,15 @@
 #'
 #' @importFrom curl curl_download
 #'
-#' @returns Returns the file path where the file has been downloaded
+#' @return Returns the file path where the file has been downloaded. Returns NULL if no connection.
 #'
 #' @export
 bfs_download_asset <- function(number_asset = NULL, number_bfs = NULL, destfile, quiet = TRUE, mode = "wb", handle = curl::new_handle()) {
+  # fail gracefully if no internet connection
+  if (!curl::has_internet()) {
+    message("No internet connection")
+    return(NULL)
+  }
   if (is.null(number_asset) && is.null(number_bfs)) {
     stop("Please specify number_bfs or number_asset")
   } else if (!is.null(number_asset) && !is.null(number_bfs)) {

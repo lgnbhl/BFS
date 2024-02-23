@@ -17,7 +17,7 @@
 #'
 #' @importFrom magrittr %>%
 #'
-#' @return Returns the file path where the file has been downloaded
+#' @return Returns the file path where the file has been downloaded. Returns NULL if no connection.
 #'
 #' @export
 bfs_download_geodata <- function(
@@ -29,6 +29,13 @@ bfs_download_geodata <- function(
     asset_names = NULL,
     datetime = NULL,
     feature_id = NULL) {
+  
+  # fail gracefully if no internet connection
+  if (!curl::has_internet()) {
+    message("No internet connection")
+    return(NULL)
+  }
+  
   if (!exists(output_dir)) dir.create(output_dir, showWarnings = FALSE)
 
   items <- rstac::stac("https://data.geo.admin.ch/api/stac/v0.9/") %>%

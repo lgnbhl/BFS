@@ -1,3 +1,7 @@
+# BFS 0.5.8
+- All functions return NULL if no internet connection.
+- Tests skipped if no internet connection.
+
 # BFS 0.5.6
 - add "delay" argument in `bfs_get_data()` and `bfs_get_data_comments()`
   - using `Sys.sleep()` of 10 seconds to avoid reaching API limits

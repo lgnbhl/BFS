@@ -39,10 +39,10 @@ bfs_get_catalog_tables(
 \item{skip_limit}{boolean skip limit, TRUE or FALSE}
 }
 \value{
-A data frame
+A data frame. Returns NULL if no connection.
 
 A tbl_df (a type of data frame; see tibble or
-dplyr packages).
+dplyr packages). Returns NULL if no connection.
 
 \describe{
   \item{title}{A character column with the title of the BFS dataset}

@@ -10,10 +10,15 @@
 #' For now only Stac API datasets are accessible.
 #'
 #' @return A tbl_df (a type of data frame; see tibble or
-#' dplyr packages).
+#' dplyr packages). Returns NULL if no connection.
 #'
 #' @export
 bfs_get_catalog_geodata <- function(include_metadata = TRUE) {
+  # fail gracefully if no internet connection
+  if (!curl::has_internet()) {
+    message("No internet connection")
+    return(NULL)
+  }
   elements_html <- xml2::read_html("https://data.geo.admin.ch/") %>%
     rvest::html_element("#data") %>%
     rvest::html_elements("a")

@@ -25,7 +25,7 @@ bfs_get_data_comments(
 }
 \value{
 A tbl_df (a type of data frame; see tibble or
-dplyr packages).
+dplyr packages). Returns NULL if no connection.
 }
 \description{
 Get the comments/footnotes of a BFS dataset using PXWEB BFS API v1.

@@ -1,4 +1,7 @@
 test_that("bfs_get_data() works", {
+  if (!curl::has_internet()) {
+    skip("No internet connection")
+  }
   df <- BFS::bfs_get_data(
     number_bfs = "px-x-1502040100_131", 
     language = "en", 
@@ -8,6 +11,9 @@ test_that("bfs_get_data() works", {
   expect_true(nrow(df) > 1)
 })
 test_that("bfs_get_data() query argument", {
+  if (!curl::has_internet()) {
+    skip("No internet connection")
+  }
   df <- BFS::bfs_get_data(
     number_bfs = "px-x-1502040100_131", 
     language = "en", 
@@ -33,6 +39,9 @@ test_that("bfs_get_data() query argument", {
   expect_false(identical(names(df), names(df_clean_names)))
 })
 test_that("bfs_get_data() query argument not list", {
+  if (!curl::has_internet()) {
+    skip("No internet connection")
+  }
   expect_error(BFS::bfs_get_data(
     number_bfs = "px-x-1502040100_131", 
     language = "en", 

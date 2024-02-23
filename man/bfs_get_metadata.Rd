@@ -12,7 +12,7 @@ bfs_get_metadata(number_bfs, language = "de")
 \item{language}{Language of the dataset to be translated if exists.}
 }
 \value{
-A tbl_df (a type of data frame; see tibble or dplyr packages).
+A tbl_df (a type of data frame; see tibble or dplyr packages). Returns NULL if no connection.
 }
 \description{
 Get the metadata of a BFS dataset using the PXWEB API v1.

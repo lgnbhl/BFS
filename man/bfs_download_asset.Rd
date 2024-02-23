@@ -27,7 +27,7 @@ bfs_download_asset(
 \item{handle}{a curl handle object}
 }
 \value{
-Returns the file path where the file has been downloaded
+Returns the file path where the file has been downloaded. Returns NULL if no connection.
 }
 \description{
 This function uses the DAM API

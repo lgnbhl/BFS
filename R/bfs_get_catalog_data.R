@@ -13,7 +13,7 @@
 #' @param order_nr character Filter by BFS Number (FSO number)
 #' @param skip_limit boolean skip limit, TRUE or FALSE
 #'
-#' @return A data frame
+#' @return A data frame. Returns NULL if no connection.
 #'
 #' @importFrom tidyRSS tidyfeed
 #' @importFrom janitor clean_names
@@ -39,13 +39,19 @@
 #' }
 #'
 #' @return A tbl_df (a type of data frame; see tibble or
-#' dplyr packages).
+#' dplyr packages). Returns NULL if no connection.
 #'
 #' @export
 bfs_get_catalog_data <- function(language = "de", title = NULL, spatial_division = NULL, prodima = NULL, inquiry = NULL, institution = NULL, publishing_year_start = NULL, publishing_year_end = NULL, order_nr = NULL, skip_limit = TRUE) {
   # if (missing(language)) stop("must choose a language, either 'de', 'fr', 'it' or 'en'", call. = FALSE)
   language <- match.arg(arg = language, choices = c("de", "fr", "it", "en"))
-
+  
+  # fail gracefully if no internet connection
+  if (!curl::has_internet()) {
+    message("No internet connection")
+    return(NULL)
+  }
+  
   # Construct geography query based on spatial division names
   geography_names <- c("Switzerland", "Cantons", "Districts", "Communes", "Other spatial divisions", "International")
   geography_numbers <- c(900091, 900092, 900093, 900004, 900008, 900068)

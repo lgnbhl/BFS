@@ -39,10 +39,10 @@ bfs_get_catalog_data(
 \item{skip_limit}{boolean skip limit, TRUE or FALSE}
 }
 \value{
-A data frame
+A data frame. Returns NULL if no connection.
 
 A tbl_df (a type of data frame; see tibble or
-dplyr packages).
+dplyr packages). Returns NULL if no connection.
 }
 \description{
 Get the list of the data available in the official \href{https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml}{RSS Feed} of the Swiss Federal Statistical Office data catalog.

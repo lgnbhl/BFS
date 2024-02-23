@@ -31,7 +31,7 @@ bfs_get_data(
 }
 \value{
 A tbl_df (a type of data frame; see tibble or
-dplyr packages).
+dplyr packages). Returns NULL if no connection.
 }
 \description{
 Get a dataset using the PXWEB API v1.

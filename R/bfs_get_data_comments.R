@@ -11,13 +11,18 @@
 #' @seealso \code{\link{bfs_get_data}}
 #'
 #' @return A tbl_df (a type of data frame; see tibble or
-#' dplyr packages).
+#' dplyr packages). Returns NULL if no connection.
 #'
 #' @importFrom magrittr %>%
 #'
 #' @export
 bfs_get_data_comments <- function(number_bfs, language = "de", query = NULL, clean_names = FALSE, delay = NULL) {
   language <- match.arg(arg = language, choices = c("de", "fr", "it", "en"))
+  # fail gracefully if no internet connection
+  if (!curl::has_internet()) {
+    message("No internet connection")
+    return(NULL)
+  }
   pxweb_api_url <- paste0("https://www.pxweb.bfs.admin.ch/api/v1/", language, "/", number_bfs, "/", number_bfs, ".px")
   # check if too many requests HTTP 429
   df_json <- httr2::request("https://www.pxweb.bfs.admin.ch/api/v1") %>%

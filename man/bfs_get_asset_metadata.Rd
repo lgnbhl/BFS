@@ -18,7 +18,7 @@ bfs_get_asset_metadata(
 \item{language}{character The language of a BFS catalog, i.e. "de", "fr", "it" or "en".}
 }
 \value{
-list Returns a list containing asset metadata information.
+list Returns a list containing asset metadata information. Returns NULL if no connection.
 }
 \description{
 This function uses the DAM API \url{https://dam-api.bfs.admin.ch/hub/swagger-ui/index.html}

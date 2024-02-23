@@ -12,7 +12,7 @@ bfs_get_catalog(language = "de", type = "data")
 \item{type}{character A BFS catalog}
 }
 \value{
-A data frame
+A data frame. Returns NULL if no connection.
 }
 \description{
 This function scraps a given RSS Feed of the Swiss Federal Statistical Office.

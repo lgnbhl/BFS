@@ -17,11 +17,16 @@
 #' @seealso \code{\link{bfs_get_data_comments}}
 #'
 #' @return A tbl_df (a type of data frame; see tibble or
-#' dplyr packages).
+#' dplyr packages). Returns NULL if no connection.
 #'
 #' @export
 bfs_get_data <- function(number_bfs, language = "de", query = NULL, column_name_type = "text", variable_value_type = "text", clean_names = FALSE, delay = NULL) {
   language <- match.arg(arg = language, choices = c("de", "fr", "it", "en"))
+  # fail gracefully if no internet connection
+  if (!curl::has_internet()) {
+    message("No internet connection")
+    return(NULL)
+  }
   pxweb_api_url <- paste0("https://www.pxweb.bfs.admin.ch/api/v1/", language, "/", number_bfs, "/", number_bfs, ".px")
   # if too many requests HTTP 429
   df_json <- httr2::request("https://www.pxweb.bfs.admin.ch/api/v1") %>%

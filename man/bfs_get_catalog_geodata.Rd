@@ -11,7 +11,7 @@ bfs_get_catalog_geodata(include_metadata = TRUE)
 }
 \value{
 A tbl_df (a type of data frame; see tibble or
-dplyr packages).
+dplyr packages). Returns NULL if no connection.
 }
 \description{
 Display geo-information catalog of the Swiss Confederation (\url{https://data.geo.admin.ch/}),

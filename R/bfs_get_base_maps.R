@@ -29,14 +29,18 @@
 #' @importFrom fs dir_create dir_ls
 #' @importFrom zip unzip
 #'
-#' @return sf object with geometries
+#' @return sf object with geometries. Returns NULL if no connection.
 #'
 #' @export
 bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date = NULL, most_recent = TRUE, format = "shp", asset_number = "24025646") {
   if (is.null(geom)) {
     stop("Please choose a geom, such as 'suis', 'kant' or 'polg'.\nGeometry names are listed here: \nhttps://www.bfs.admin.ch/asset/en/24025645", call. = FALSE)
   }
-
+  # fail gracefully if no internet connection
+  if (!curl::has_internet()) {
+    message("No internet connection")
+    return(NULL)
+  }
   # get base map files if not present in cache folder
   dir <- tools::R_user_dir(package = "BFS")
   path_base_map <- paste0(dir, "/base_maps_", asset_number)

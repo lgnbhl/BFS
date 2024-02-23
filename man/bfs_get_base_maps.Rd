@@ -33,7 +33,7 @@ if FALSE then read the first file available.}
 \item{asset_number}{Asset number of the base maps zip file.}
 }
 \value{
-sf object with geometries
+sf object with geometries. Returns NULL if no connection.
 }
 \description{
 This functions helps to get base maps data from the ThemaKart project

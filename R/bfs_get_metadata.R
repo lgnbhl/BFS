@@ -6,7 +6,7 @@
 #' @param number_bfs The BFS number of a dataset.
 #' @param language Language of the dataset to be translated if exists.
 #'
-#' @return A tbl_df (a type of data frame; see tibble or dplyr packages).
+#' @return A tbl_df (a type of data frame; see tibble or dplyr packages). Returns NULL if no connection.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom tibble as_tibble
@@ -14,6 +14,11 @@
 #' @export
 bfs_get_metadata <- function(number_bfs, language = "de") {
   language <- match.arg(arg = language, choices = c("de", "fr", "it", "en"))
+  # fail gracefully if no internet connection
+  if (!curl::has_internet()) {
+    message("No internet connection")
+    return(NULL)
+  }
   # if too many requests HTTP 429
   df <- httr2::request("https://www.pxweb.bfs.admin.ch/api/v1") %>%
     httr2::req_url_path_append(paste0(language, "/", number_bfs, "/", number_bfs, ".px")) %>%

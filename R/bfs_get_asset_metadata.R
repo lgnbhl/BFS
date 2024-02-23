@@ -12,10 +12,15 @@
 #' @importFrom httr2 request req_headers req_url_path_append req_perform resp_body_json
 #' @importFrom magrittr %>%
 #'
-#' @returns list Returns a list containing asset metadata information.
+#' @return list Returns a list containing asset metadata information. Returns NULL if no connection.
 #'
 #' @export
 bfs_get_asset_metadata <- function(number_asset = NULL, number_bfs = NULL, language = c("de", "fr", "it", "en")) {
+  # fail gracefully if no internet connection
+  if (!curl::has_internet()) {
+    message("No internet connection")
+    return(NULL)
+  }
   if (is.null(number_asset) && is.null(number_bfs)) {
     stop("Please specify number_asset or number_bfs")
   } else if (!is.null(number_asset) && !is.null(number_bfs)) {
