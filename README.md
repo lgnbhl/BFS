@@ -431,6 +431,20 @@ By default, the files are downloaded in a temporary directory. You can
 specify the folder where saving the files using the `output_dir`
 argument.
 
+Some layers are accessible using WMS (Web Map Service)
+
+``` r
+library(leaflet)
+
+leaflet() %>% 
+  setView(lng = 8, lat = 46.8, zoom = 8) %>%
+  addWMSTiles(
+    baseUrl = "https://wms.geo.admin.ch/?", 
+    layers = "ch.bfs.generalisierte-grenzen_agglomerationen_g2",
+    options = WMSTileOptions(format = "image/png", transparent = TRUE),
+    attribution = "Generalised borders G1 © 2024 BFS")
+```
+
 ### Cartographic base maps
 
 You can get [cartographic base

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">BFS</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.8</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +66,12 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.5.6" id="bfs-056">BFS 0.5.6<a class="anchor" aria-label="anchor" href="#bfs-056"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.5.8" id="bfs-058">BFS 0.5.8<a class="anchor" aria-label="anchor" href="#bfs-058"></a></h2><p class="text-muted">CRAN release: 2024-02-23</p>
+<ul><li>All functions return NULL if no internet connection.</li>
+<li>Tests skipped if no internet connection.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.5.6" id="bfs-056">BFS 0.5.6<a class="anchor" aria-label="anchor" href="#bfs-056"></a></h2><p class="text-muted">CRAN release: 2024-01-08</p>
 <ul><li>add “delay” argument in <code><a href="../reference/bfs_get_data.html">bfs_get_data()</a></code> and <code><a href="../reference/bfs_get_data_comments.html">bfs_get_data_comments()</a></code>
 <ul><li>using <code><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep()</a></code> of 10 seconds to avoid reaching API limits</li>
 <li>the “delay” arg allows to loop on large datasets, for example see <a href="https://github.com/lgnbhl/BFS/issues/7" class="external-link">#7</a></li>
