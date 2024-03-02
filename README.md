@@ -431,7 +431,7 @@ By default, the files are downloaded in a temporary directory. You can
 specify the folder where saving the files using the `output_dir`
 argument.
 
-Some layers are accessible using WMS (Web Map Service)
+Some layers are accessible using WMS (Web Map Service):
 
 ``` r
 library(leaflet)
@@ -444,6 +444,8 @@ leaflet() %>%
     options = WMSTileOptions(format = "image/png", transparent = TRUE),
     attribution = "Generalised borders G1 © 2024 BFS")
 ```
+
+<img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/leaflet_g1.png" align="center" />
 
 ### Cartographic base maps
 

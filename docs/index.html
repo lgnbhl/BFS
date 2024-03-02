@@ -420,7 +420,7 @@
 <span><span class="co"># you may need to unzip the file</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span><span class="va">borders_g1_path</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span>, exdir <span class="op">=</span> <span class="st">"borders_G1"</span><span class="op">)</span></span></code></pre></div>
 <p>By default, the files are downloaded in a temporary directory. You can specify the folder where saving the files using the <code>output_dir</code> argument.</p>
-<p>Some layers are accessible using WMS (Web Map Service)</p>
+<p>Some layers are accessible using WMS (Web Map Service):</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/leaflet/" class="external-link">leaflet</a></span><span class="op">)</span></span>
 <span></span>
@@ -431,6 +431,7 @@
 <span>    layers <span class="op">=</span> <span class="st">"ch.bfs.generalisierte-grenzen_agglomerationen_g2"</span>,</span>
 <span>    options <span class="op">=</span> <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-options.html" class="external-link">WMSTileOptions</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"image/png"</span>, transparent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    attribution <span class="op">=</span> <span class="st">"Generalised borders G1 © 2024 BFS"</span><span class="op">)</span></span></code></pre></div>
+<p><img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/leaflet_g1.png" align="center"></p>
 </div>
 <div class="section level3">
 <h3 id="cartographic-base-maps">Cartographic base maps<a class="anchor" aria-label="anchor" href="#cartographic-base-maps"></a>
