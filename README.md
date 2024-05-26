@@ -9,6 +9,7 @@ total](https://cranlogs.r-pkg.org/badges/grand-total/BFS)](https://cran.r-projec
 [![R-CMD-check](https://github.com/lgnbhl/BFS/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lgnbhl/BFS/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/lgnbhl/BFS/branch/master/graph/badge.svg)](https://app.codecov.io/gh/lgnbhl/BFS?branch=master)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Follow-E4405F?style=social&logo=linkedin)](https://www.linkedin.com/in/FelixLuginbuhl)
 <!-- badges: end -->
 
 # BFS <img src="man/figures/logo.png" align="right" height="138" />
