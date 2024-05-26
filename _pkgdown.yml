@@ -3,6 +3,8 @@ template:
   bootstrap: 5
   bootswatch: litera
   ganalytics: UA-158089797-1
+  bslib:
+    primary: "#f72517"
 
 authors:
   Felix Luginbuhl:
