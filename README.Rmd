@@ -217,13 +217,7 @@ library(dplyr)
 library(tidyr) # for unnest_longer
 
 metadata_tidy <- metadata |>
-  select(-valueTexts) |>
-  unnest_longer(values) |>
-  mutate(valueTexts = metadata |>
-           select(valueTexts) |>
-           unnest_longer(valueTexts) |>
-           pull(valueTexts)) |>
-  select(code, text, values, valueTexts, everything())
+  unnest_longer(c(values, valueTexts))
 
 metadata_tidy
 ```
