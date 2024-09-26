@@ -9,15 +9,15 @@ total](https://cranlogs.r-pkg.org/badges/grand-total/BFS)](https://cran.r-projec
 [![R-CMD-check](https://github.com/lgnbhl/BFS/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lgnbhl/BFS/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/lgnbhl/BFS/branch/master/graph/badge.svg)](https://app.codecov.io/gh/lgnbhl/BFS?branch=master)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Follow-E4405F?style=social&logo=linkedin)](https://www.linkedin.com/in/FelixLuginbuhl)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Follow-E4405F?style=social&logo=linkedin)](https://www.linkedin.com/in/FelixLuginbuhl/)
 <!-- badges: end -->
 
 # BFS <img src="man/figures/logo.png" align="right" height="138" />
 
 > Search and download data from the Swiss Federal Statistical Office
 
-The `BFS` package allows to search and download public data from the <a
-href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogues-databases/data.html"
+The `BFS` package allows to search and download public data from the
+<a href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html"
 target="_blank">Swiss Federal Statistical Office</a> (BFS stands for
 *Bundesamt für Statistik* in German) APIs in a dynamic and reproducible
 way.
@@ -288,7 +288,7 @@ BFS::bfs_get_data(
 
 A lot of datasets are not accessible through the official PXWeb API.
 They are listed in the [catalog of
-tables](https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/tabellen.html).
+tables](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html).
 You can search for specific tables using `bfs_get_catalog_tables()`.
 
 ``` r
