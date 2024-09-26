@@ -7,8 +7,6 @@
 #'
 #' @return A data frame. Returns NULL if no connection.
 #'
-#' @importFrom tidyRSS tidyfeed
-#' @importFrom janitor clean_names
 #' @importFrom lifecycle deprecate_warn
 #'
 #' @seealso \code{\link{bfs_get_data}}

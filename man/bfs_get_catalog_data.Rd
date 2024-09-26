@@ -7,6 +7,7 @@
 bfs_get_catalog_data(
   language = "de",
   title = NULL,
+  extended_search = NULL,
   spatial_division = NULL,
   prodima = NULL,
   inquiry = NULL,
@@ -14,13 +15,17 @@ bfs_get_catalog_data(
   publishing_year_start = NULL,
   publishing_year_end = NULL,
   order_nr = NULL,
-  skip_limit = TRUE
+  limit = 1000,
+  article_model = 900033,
+  article_model_group = 900029
 )
 }
 \arguments{
 \item{language}{character The language of a BFS catalog, i.e. "de", "fr", "it" or "en".}
 
-\item{title}{character String to search in title, subtitle and supertitle}
+\item{title}{character String to search in (sub/super)title}
+
+\item{extended_search}{character String for an extended search in (sub/super)title, orderNr, summary, shortSummary, shortTextGNP}
 
 \item{spatial_division}{BFS datasets by spatial division, choose between "Switzerland", "Cantons", "Districts", "Communes", "Other spatial divisions" or "International"}
 
@@ -36,7 +41,11 @@ bfs_get_catalog_data(
 
 \item{order_nr}{character Filter by BFS Number (FSO number)}
 
-\item{skip_limit}{boolean skip limit, TRUE or FALSE}
+\item{limit}{integer limit of query results (1000 by default)}
+
+\item{article_model}{integer articleModel parameter query}
+
+\item{article_model_group}{integer articleModel parameter query}
 }
 \value{
 A data frame. Returns NULL if no connection.
@@ -45,7 +54,7 @@ A tbl_df (a type of data frame; see tibble or
 dplyr packages). Returns NULL if no connection.
 }
 \description{
-Get the list of the data available in the official \href{https://www.bfs.admin.ch/bfs/en/home/statistiken/kataloge-datenbanken/daten/_jcr_content/par/ws_catalog.rss.xml}{RSS Feed} of the Swiss Federal Statistical Office data catalog.
+Get the list of the data available in the official DAM-API of the Swiss Federal Statistical Office asset catalog.
 }
 \examples{
 \donttest{
@@ -61,9 +70,6 @@ bfs_get_catalog_data(language = "en", title = "students", prodima = c(900212))
   \item{language}{A character column with the language of the BFS dataset}
   \item{publication_date}{The published date of the BFS dataset in the data catalog}
   \item{number_asset}{The BFS asset number}
-  \item{url_bfs}{A character column with the URL of the related BFS
-  webpage}
   \item{url_px}{A character column with the URL of the PX file}
-  \item{catalog_date}{The released date of the current BFS data catalog}
 }
 }

@@ -1,8 +1,8 @@
-pandoc: 3.1.11
+pandoc: '3.2'
 pkgdown: 2.0.9
 pkgdown_sha: ~
 articles: {}
-last_built: 2024-05-26T19:08Z
+last_built: 2024-09-26T10:48Z
 urls:
   reference: https://felixluginbuhl.com/BFS/reference
   article: https://felixluginbuhl.com/BFS/articles

@@ -1,15 +1,22 @@
-test_that("bfs_get_catalog_tables() returns a none-empty data.frame", {
+test_that("bfs_get_catalog_tables() returns a data.frame of 5 rows", {
   if (!curl::has_internet()) {
     skip("No internet connection")
   }
-  df_tables <- bfs_get_catalog_tables(prodima = c(900210, 900212), skip_limit = FALSE)
+  df_tables <- bfs_get_catalog_tables(limit = 5)
   expect_s3_class(df_tables, "data.frame")
-  expect_equal(nrow(df_tables), 40)
+  expect_true(nrow(df_tables) == 5)
 })
-test_that("bfs_get_catalog_data() using some arguments", {
+test_that("bfs_get_catalog_tables() using title argument", {
   if (!curl::has_internet()) {
     skip("No internet connection")
   }
-  df_catalog_data <- bfs_get_catalog_tables(title = "studierende", prodima = c(900210, 900212), spatial_division = "Switzerland", skip_limit = FALSE)
-  expect_s3_class(df_catalog_data, "data.frame")
+  df_tables <- bfs_get_catalog_tables(title = "student", limit = 5)
+  expect_s3_class(df_tables, "data.frame")
+})
+test_that("bfs_get_catalog_tables() using prodima argument", {
+  if (!curl::has_internet()) {
+    skip("No internet connection")
+  }
+  df_tables <- bfs_get_catalog_tables(prodima = 900210, limit = 5)
+  expect_s3_class(df_tables, "data.frame")
 })

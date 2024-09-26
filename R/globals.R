@@ -6,6 +6,7 @@ utils::globalVariables(
     "url_bfs",
     "type",
     "href",
-    "collection_id"
+    "collection_id",
+    "rel"
   )
 )
