@@ -72,6 +72,8 @@ For example, you can search data related to students using the extend search:
 
 ```{r}
 catalog_student <- bfs_get_catalog_data(language = "en", extended_search = "student")
+
+catalog_student
 ```
 
 Note the the BFS number (FSO number) is available in column `order_nr`.

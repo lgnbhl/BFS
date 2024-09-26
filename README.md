@@ -88,7 +88,18 @@ search:
 
 ``` r
 catalog_student <- bfs_get_catalog_data(language = "en", extended_search = "student")
+
+catalog_student
 ```
+
+    ## # A tibble: 4 × 8
+    ##   title                   language publication_date number_asset order_nr url_px
+    ##   <chr>                   <chr>    <date>           <chr>        <chr>    <chr> 
+    ## 1 University of applied … en       2024-03-28       31306033     px-x-15… https…
+    ## 2 University of applied … en       2024-03-28       31306033     px-x-15… https…
+    ## 3 University students by… en       2024-03-28       31306033     px-x-15… https…
+    ## 4 University students by… en       2024-03-28       31306033     px-x-15… https…
+    ## # ℹ 2 more variables: language_available <list>, url_structure_json <chr>
 
 Note the the BFS number (FSO number) is available in column `order_nr`.
 

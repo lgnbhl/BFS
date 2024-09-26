@@ -1,3 +1,6 @@
+# BFS 0.5.9
+- fix `bfs_get_catalog()`, `bfs_get_catalog_data()` and `bfs_get_catalog_tables()`
+
 # BFS 0.5.8
 - All functions return NULL if no internet connection.
 - Tests skipped if no internet connection.
