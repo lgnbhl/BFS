@@ -7,6 +7,10 @@ utils::globalVariables(
     "type",
     "href",
     "collection_id",
-    "rel"
+    "rel",
+    "damId", 
+    "number_asset", 
+    "publication_date", 
+    "url_structure_json"
   )
 )

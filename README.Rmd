@@ -230,22 +230,11 @@ BFS::bfs_get_data(
 
 A lot of datasets are not accessible through the official PXWeb API. They are listed in the [catalog of tables](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html). You can search for specific tables using `bfs_get_catalog_tables()`.
 
-```r
-catalog_tables_en_students <- bfs_get_catalog_tables(language = "en", title = "students")
+```{r}
+catalog_tables_en_students <- bfs_get_catalog_tables(language = "en", extended_search = "students")
 
 catalog_tables_en_students
 ```
-
-    ## # A tibble: 5 × 7
-    ##   title              language publication_date    number_asset url_bfs url_table
-    ##   <chr>              <chr>    <dttm>                     <dbl> <chr>   <chr>    
-    ## 1 Students at unive… en       2023-04-05 00:00:00     24865589 https:… https://…
-    ## 2 Students at unive… en       2023-04-05 00:00:00     24865590 https:… https://…
-    ## 3 Students at unive… en       2023-03-28 08:30:00     24345362 https:… https://…
-    ## 4 Students at unive… en       2023-03-28 08:30:00     24345374 https:… https://…
-    ## 5 Students at unive… en       2023-03-28 08:30:00     24345366 https:… https://…
-    ## # ℹ 1 more variable: catalog_date <dttm>
-
 
 Most of the BFS tables are Excel or CSV files. You can download an table with `bfs_download_asset()` using the `number asset`.
 

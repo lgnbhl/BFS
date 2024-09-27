@@ -1,3 +1,7 @@
+# BFS 0.5.10
+- fix bug in metadata extraction in `bfs_get_catalog()`, 
+  `bfs_get_catalog_data()` and `bfs_get_catalog_tables()`
+
 # BFS 0.5.9
 - fix `bfs_get_catalog()`, `bfs_get_catalog_data()` and `bfs_get_catalog_tables()`
 

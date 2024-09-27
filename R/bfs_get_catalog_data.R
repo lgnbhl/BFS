@@ -19,7 +19,7 @@
 #' @return A data frame. Returns NULL if no connection.
 #'
 #' @importFrom httr2 req_headers req_url_path_append req_url_query req_retry req_perform resp_body_json
-#' @importFrom dplyr filter pull as_tibble
+#' @importFrom dplyr filter pull as_tibble left_join select
 #' @importFrom curl has_internet
 #'
 #' @seealso \code{\link{bfs_get_data}}
@@ -30,6 +30,8 @@
 #'   \item{publication_date}{The published date of the BFS dataset in the data catalog}
 #'   \item{number_asset}{The BFS asset number}
 #'   \item{url_px}{A character column with the URL of the PX file}
+#'   \item{url_bfs}{A character column with the URL of the related BFS
+#'   webpage}
 #' }
 #'
 #' @examples
@@ -95,38 +97,72 @@ bfs_get_catalog_data <- function(language = "de", title = NULL, extended_search 
       order_nr = NA_character_,
       url_px = NA_character_,
       language_available = list(),
+      url_bfs = NA_character_,
       url_structure_json = NA_character_
     )
     return(df_final)
   }
   
-  df_links <- df$links[[1]] %>%
-    as_tibble()
-  
-  url_asset <- df_links %>%
-    filter(rel == "self") %>%
-    pull(href)
-  
-  url_px <- df_links %>%
-    filter(rel == "related") %>%
-    pull(href)
-  
-  url_structure_json <- df_links %>%
-    filter(rel == "related-further") %>%
-    pull(href)
-  
-  number_asset <- basename(url_asset)
   language_available <- strsplit(tolower(df$description$language), split = "/")
   
-  df_final <- dplyr::tibble(
+  df_catalog_metadata <- dplyr::tibble(
     title = df$description$titles$main,
     language = language,
     publication_date = as.Date(df$bfs$embargo),
-    number_asset = number_asset,
     order_nr = df$shop$orderNr,
-    url_px = url_px,
     language_available = language_available,
-    url_structure_json = url_structure_json
+    damId = df$ids$damId
   )
+  
+  get_catalog_links_metadata <- function(i) {
+    
+    damId <- df$ids$damId[i]
+    
+    df_links <- df$links[[i]] %>%
+      as_tibble()
+    
+    if(nrow(df_links) == 0) {
+      df_links_cleaned <- dplyr::tibble(
+        number_asset = NA_character_,
+        url_px = NA_character_,
+        url_structure_json = NA_character_,
+        damId = damId
+      )
+      return(df_links_cleaned)
+    }
+    
+    url_bfs <- df_links %>%
+      filter(rel == "self") %>%
+      pull(href)
+    
+    url_px <- df_links %>%
+      filter(rel == "related") %>%
+      pull(href)
+    
+    url_structure_json <- df_links %>%
+      filter(rel == "related-further") %>%
+      pull(href)
+    
+    number_asset <- basename(url_bfs)
+
+    df_links_cleaned <- dplyr::tibble(
+      number_asset = number_asset[1],
+      url_bfs = url_bfs[1],
+      url_px = url_px[1],
+      url_structure_json = url_structure_json[1],
+      damId = damId
+    )
+    return(df_links_cleaned)
+  }
+  
+  df_catalog_links_metadata <- purrr::map_dfr(
+    .x = seq_along(df$links), 
+    .f = get_catalog_links_metadata
+  )
+  
+  df_final <- df_catalog_metadata |>
+    left_join(df_catalog_links_metadata, by = "damId") |>
+    select(title, language, number_asset, publication_date, order_nr, url_px, url_bfs, language_available, url_structure_json, damId)
+  
   return(df_final)
 }
