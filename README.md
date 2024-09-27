@@ -44,7 +44,8 @@ library(BFS)
 
 Retrieve the list of publicly available datasets from the [data
 catalog](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html)
-in any language (“de”, “fr”, “it” or “en”) by calling
+(equivalent of selecting “data” in the “Article Type” dropdown of the
+BFS website) in any language (“de”, “fr”, “it” or “en”) by calling
 `bfs_get_catalog_data()`.
 
 ``` r
@@ -84,7 +85,7 @@ You can search in the data catalog using the following arguments:
 - `publishing_year_end`: by publishing year end.
 - `order_nr`: by BFS Number (FSO number).
 
-For example, you can search data related to students using the extend
+For example, you can search data related to students using the extended
 search:
 
 ``` r
@@ -112,9 +113,10 @@ datasets. For the full list please get the French (“fr”) or German
 ### Download data in any language
 
 The function `bfs_get_data()` allows you to download any dataset from
-the [data
+the [BFS
 catalog](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html)
-using its BFS number (FSO number).
+(equivalent to selecting “data” in the “Article Type” dropdown of the
+BFS website) using its BFS number (FSO number).
 
 Using the `number_bfs` argument (FSO number), you can get BFS data in a
 given language (“en”, “de”, “fr” or “it”) from the official PXWeb API of
@@ -289,9 +291,10 @@ BFS::bfs_get_data(
 ### Catalog of tables
 
 A lot of datasets are not accessible through the official PXWeb API.
-They are listed in the [catalog of
-tables](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html).
-You can search for specific tables using `bfs_get_catalog_tables()`.
+They are listed in the [data
+catalog](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html)
+as “tables” in the “Article Type” dropdown of the BFS website. You can
+search for specific tables using `bfs_get_catalog_tables()`.
 
 ``` r
 catalog_tables_en_students <- bfs_get_catalog_tables(language = "en", extended_search = "students")
