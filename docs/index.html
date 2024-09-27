@@ -118,19 +118,19 @@
 <p>Retrieve the list of publicly available datasets from the <a href="https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html" class="external-link">data catalog</a> in any language (“de”, “fr”, “it” or “en”) by calling <code><a href="reference/bfs_get_catalog_data.html">bfs_get_catalog_data()</a></code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/bfs_get_catalog_data.html">bfs_get_catalog_data</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="do">## # A tibble: 202 × 10</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="do">##    title          language number_asset publication_date order_nr url_px url_bfs</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="do">##    &lt;chr&gt;          &lt;chr&gt;    &lt;chr&gt;        &lt;date&gt;           &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;  </span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="do">##  1 Air emissions… en       32331273     2024-09-26       px-x-02… https… https:…</span></span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="do">##  2 Deaths per mo… en       32506839     2024-09-26       px-x-01… https… https:…</span></span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="do">##  3 Divorces and … en       32506841     2024-09-26       px-x-01… https… https:…</span></span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="do">##  4 Energy accoun… en       32331272     2024-09-26       px-x-02… https… https:…</span></span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="do">##  5 Live births p… en       32506840     2024-09-26       px-x-01… https… https:…</span></span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="do">##  6 Marriages and… en       32506838     2024-09-26       px-x-01… https… https:…</span></span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="do">##  7 New registrat… en       32466294     2024-09-16       px-x-11… https… https:…</span></span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="do">##  8 Hotel sector:… en       32427368     2024-09-05       px-x-10… https… https:…</span></span>
-<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="do">##  9 Hotel sector:… en       32427369     2024-09-05       px-x-10… https… https:…</span></span>
-<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="do">## 10 Hotel sector:… en       32427370     2024-09-05       px-x-10… https… https:…</span></span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="do">## # A tibble: 202 × 9</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="do">##    title                  language number_asset publication_date order_nr url_px</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="do">##    &lt;chr&gt;                  &lt;chr&gt;    &lt;chr&gt;        &lt;date&gt;           &lt;chr&gt;    &lt;chr&gt; </span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="do">##  1 Air emissions account… en       32331273     2024-09-26       px-x-02… https…</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="do">##  2 Deaths per month and … en       32506839     2024-09-26       px-x-01… https…</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="do">##  3 Divorces and divortia… en       32506841     2024-09-26       px-x-01… https…</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="do">##  4 Energy accounts of ec… en       32331272     2024-09-26       px-x-02… https…</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="do">##  5 Live births per month… en       32506840     2024-09-26       px-x-01… https…</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="do">##  6 Marriages and nuptial… en       32506838     2024-09-26       px-x-01… https…</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="do">##  7 New registrations of … en       32466294     2024-09-16       px-x-11… https…</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="do">##  8 Hotel sector: arrival… en       32427368     2024-09-05       px-x-10… https…</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="do">##  9 Hotel sector: arrival… en       32427369     2024-09-05       px-x-10… https…</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="do">## 10 Hotel sector: arrival… en       32427370     2024-09-05       px-x-10… https…</span></span>
 <span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="do">## # ℹ 192 more rows</span></span>
 <span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="do">## # ℹ 3 more variables: language_available &lt;list&gt;, url_structure_json &lt;chr&gt;,</span></span>
 <span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="do">## #   damId &lt;int&gt;</span></span></code></pre></div>
@@ -162,13 +162,13 @@
 <code class="sourceCode R"><span><span class="va">catalog_student</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_catalog_data.html">bfs_get_catalog_data</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span>, extended_search <span class="op">=</span> <span class="st">"student"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">catalog_student</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="do">## # A tibble: 4 × 10</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="do">##   title           language number_asset publication_date order_nr url_px url_bfs</span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="do">##   &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;        &lt;date&gt;           &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;  </span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="do">## 1 University of … en       31306033     2024-03-28       px-x-15… https… https:…</span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="do">## 2 University of … en       31306029     2024-03-28       px-x-15… https… https:…</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="do">## 3 University stu… en       31305852     2024-03-28       px-x-15… https… https:…</span></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="do">## 4 University stu… en       31305854     2024-03-28       px-x-15… https… https:…</span></span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="do">## # A tibble: 4 × 9</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="do">##   title                   language number_asset publication_date order_nr url_px</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="do">##   &lt;chr&gt;                   &lt;chr&gt;    &lt;chr&gt;        &lt;date&gt;           &lt;chr&gt;    &lt;chr&gt; </span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="do">## 1 University of applied … en       31306033     2024-03-28       px-x-15… https…</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="do">## 2 University of applied … en       31306029     2024-03-28       px-x-15… https…</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="do">## 3 University students by… en       31305852     2024-03-28       px-x-15… https…</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="do">## 4 University students by… en       31305854     2024-03-28       px-x-15… https…</span></span>
 <span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="do">## # ℹ 3 more variables: language_available &lt;list&gt;, url_structure_json &lt;chr&gt;,</span></span>
 <span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="do">## #   damId &lt;int&gt;</span></span></code></pre></div>
 <p>Note the the BFS number (FSO number) is available in column <code>order_nr</code>.</p>
@@ -320,7 +320,7 @@
 <code class="sourceCode R"><span><span class="va">catalog_tables_en_students</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bfs_get_catalog_tables.html">bfs_get_catalog_tables</a></span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span>, extended_search <span class="op">=</span> <span class="st">"students"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">catalog_tables_en_students</span></span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="do">## # A tibble: 5 × 8</span></span>
+<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="do">## # A tibble: 5 × 7</span></span>
 <span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="do">##   title       language number_asset publication_date order_nr language_available</span></span>
 <span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="do">##   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;        &lt;date&gt;           &lt;chr&gt;    &lt;list&gt;            </span></span>
 <span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="do">## 1 Students a… en       31826381     2024-05-01       ts-x-15… &lt;chr [4]&gt;         </span></span>
@@ -328,7 +328,7 @@
 <span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="do">## 3 Students a… en       31185431     2024-03-28       su-e-15… &lt;chr [1]&gt;         </span></span>
 <span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="do">## 4 Students a… en       31185438     2024-03-28       su-e-15… &lt;chr [1]&gt;         </span></span>
 <span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="do">## 5 Students a… en       31185427     2024-03-28       su-e-15… &lt;chr [1]&gt;         </span></span>
-<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="do">## # ℹ 2 more variables: url_bfs &lt;chr&gt;, damId &lt;int&gt;</span></span></code></pre></div>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="do">## # ℹ 1 more variable: damId &lt;int&gt;</span></span></code></pre></div>
 <p>Most of the BFS tables are Excel or CSV files. You can download an table with <code><a href="reference/bfs_download_asset.html">bfs_download_asset()</a></code> using the <code>number asset</code>.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>

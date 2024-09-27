@@ -71,7 +71,5 @@ bfs_get_catalog_data(language = "en", title = "students", prodima = c(900212))
   \item{publication_date}{The published date of the BFS dataset in the data catalog}
   \item{number_asset}{The BFS asset number}
   \item{url_px}{A character column with the URL of the PX file}
-  \item{url_bfs}{A character column with the URL of the related BFS
-  webpage}
 }
 }

@@ -30,8 +30,6 @@
 #'   \item{publication_date}{The published date of the BFS dataset in the data catalog}
 #'   \item{number_asset}{The BFS asset number}
 #'   \item{url_px}{A character column with the URL of the PX file}
-#'   \item{url_bfs}{A character column with the URL of the related BFS
-#'   webpage}
 #' }
 #'
 #' @examples
@@ -97,7 +95,6 @@ bfs_get_catalog_data <- function(language = "de", title = NULL, extended_search 
       order_nr = NA_character_,
       url_px = NA_character_,
       language_available = list(),
-      url_bfs = NA_character_,
       url_structure_json = NA_character_
     )
     return(df_final)
@@ -131,7 +128,7 @@ bfs_get_catalog_data <- function(language = "de", title = NULL, extended_search 
       return(df_links_cleaned)
     }
     
-    url_bfs <- df_links %>%
+    url_asset <- df_links %>%
       filter(rel == "self") %>%
       pull(href)
     
@@ -143,11 +140,10 @@ bfs_get_catalog_data <- function(language = "de", title = NULL, extended_search 
       filter(rel == "related-further") %>%
       pull(href)
     
-    number_asset <- basename(url_bfs)
+    number_asset <- basename(url_asset)
 
     df_links_cleaned <- dplyr::tibble(
       number_asset = number_asset[1],
-      url_bfs = url_bfs[1],
       url_px = url_px[1],
       url_structure_json = url_structure_json[1],
       damId = damId
@@ -162,7 +158,7 @@ bfs_get_catalog_data <- function(language = "de", title = NULL, extended_search 
   
   df_final <- df_catalog_metadata |>
     left_join(df_catalog_links_metadata, by = "damId") |>
-    select(title, language, number_asset, publication_date, order_nr, url_px, url_bfs, language_available, url_structure_json, damId)
+    select(title, language, number_asset, publication_date, order_nr, url_px, language_available, url_structure_json, damId)
   
   return(df_final)
 }

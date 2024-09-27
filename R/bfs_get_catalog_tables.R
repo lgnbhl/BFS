@@ -29,8 +29,6 @@
 #'   \item{language}{A character column with the language of the BFS dataset}
 #'   \item{publication_date}{The published date of the BFS dataset in the data catalog}
 #'   \item{number_asset}{The BFS asset number}
-#'   \item{url_bfs}{A character column with the URL of the related BFS
-#'   webpage}
 #' }
 #'
 #' @examples
@@ -94,7 +92,6 @@ bfs_get_catalog_tables <- function(language = "de", title = NULL, extended_searc
       publication_date = as.Date(x = integer(0)),
       number_asset = NA_character_,
       order_nr = NA_character_,
-      url_bfs = NA_character_,
       language_available = list()
     )
     return(df_final)
@@ -126,14 +123,13 @@ bfs_get_catalog_tables <- function(language = "de", title = NULL, extended_searc
       return(df_links_cleaned)
     }
     
-    url_bfs <- df_links %>%
+    url_asset <- df_links %>%
       filter(rel == "self") %>%
       pull(href)
     
-    number_asset <- basename(url_bfs)
+    number_asset <- basename(url_asset)
     
     df_links_cleaned <- dplyr::tibble(
-      url_bfs = url_bfs[1],
       number_asset = number_asset[1],
       damId = damId
     )
@@ -147,7 +143,7 @@ bfs_get_catalog_tables <- function(language = "de", title = NULL, extended_searc
   
   df_final <- df_catalog_metadata |>
     left_join(df_catalog_links_metadata, by = "damId") |>
-    select(title, language, number_asset, publication_date, order_nr, language_available, url_bfs, damId)
+    select(title, language, number_asset, publication_date, order_nr, language_available, damId)
   
   return(df_final)
 }
