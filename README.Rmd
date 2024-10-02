@@ -49,10 +49,10 @@ library(BFS)
 
 ### Get the data catalog
 
-Retrieve the list of publicly available datasets from the [data catalog](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html) (equivalent of selecting "data" in the "Article Type" dropdown of the BFS website) in any language ("de", "fr", "it" or "en") by calling `bfs_get_catalog_data()`.
+Before downloading a BFS dataset, you need to get its related BFS number (FSO number) in the [official data catalog](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html). You can search in the catalog directly from R using the `bfs_get_catalog_data()` function in any language ("de", "fr", "it" or "en"):
 
 ```{r}
-bfs_get_catalog_data(language = "en")
+bfs_get_catalog_data(language = "en", extended_search = "student")
 ```
 
 You can search in the data catalog using the following arguments:
@@ -67,18 +67,33 @@ You can search in the data catalog using the following arguments:
 - `publishing_year_start`: by publishing year start.
 - `publishing_year_end`: by publishing year end.
 - `order_nr`: by BFS Number (FSO number).
+- `limit`: limit of query results (API limit seems to be 350)
+- `article_model_group`:  article model group
+- `article_model`: article model
 
-For example, you can search data related to students using the extended search:
+Note that English ("en") and Italian ("it") data catalogs offer a limited list of datasets. For the full list please get the French ("fr") or German ("de") data catalogs (see `language_available` column).
+
+As the API limit is 350 results, you can get the full data catalog by looping on specific parameters. For example, you can loop over all `prodima` numbers (equivalent to BFS themes):
 
 ```{r}
-catalog_student <- bfs_get_catalog_data(language = "en", extended_search = "student")
+# themes_names <- c("Statistical basis and overviews 00", "Population 01", "Territory and environment 02", "Work and income 03", "National economy 04", "Prices 05", "Industry and services 06", "Agriculture and forestry 07", "Energy 08", "Construction and housing 09", "Tourism 10", "Mobility and transport 11", "Money, banks and insurance 12", "Social security 13", "Health 14", "Education and science 15", "Culture, media, information society, sports 16", "Politics 17", "General Government and finance 18", "Crime and criminal justice 19", "Economic and social situation of the population 20", "Sustainable development, regional and international disparities 21")
+themes_prodima <- c(900001, 900010, 900035, 900051, 900075, 900084, 900092, 900104, 900127, 900140, 900160, 900169, 900191, 900198, 900210, 900212, 900214, 900226, 900239, 900257, 900269, 900276)
 
-catalog_student
+library(purrr)
+
+catalog_all <- purrr::pmap_dfr(
+  .l = list(language = "de", prodima = themes_prodima),
+  .f = bfs_get_catalog_data,
+)
+
+catalog_all
+
+# to not overload the server, please save the data frame locally
+# readr::write_csv(catalog_all, "catalog_all.csv") 
+# catalog_all <- readr::read_csv("catalog_all.csv") 
 ```
 
-Note the the BFS number (FSO number) is available in column `order_nr`.
-
-English ("en") and Italian ("it") data catalogs offer a limited list of datasets. For the full list please get the French ("fr") or German ("de") data catalogs (see `language_available` column).
+Please use this loop moderately to not overload BFS server unnecessarily (just run it when needed and save the result locally).
 
 ### Download data in any language
 
@@ -87,8 +102,7 @@ The function `bfs_get_data()` allows you to download any dataset from the [BFS c
 Using the `number_bfs` argument (FSO number), you can get BFS data in a given language ("en", "de", "fr" or "it") from the official PXWeb API of the Swiss Federal Statistical Office. 
 
 ```{r}
-#catalog_student$order_nr[1] # px-x-1502040100_131
-
+#catalog_student$number_bfs[1] # px-x-1502040100_131
 bfs_get_data(number_bfs = "px-x-1502040100_131", language = "en")
 ```
 

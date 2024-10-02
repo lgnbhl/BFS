@@ -20,6 +20,7 @@
 #'
 #' @importFrom httr2 req_headers req_url_path_append req_url_query req_retry req_perform resp_body_json
 #' @importFrom dplyr filter pull as_tibble left_join select
+#' @importFrom purrr pmap_dfr
 #' @importFrom curl has_internet
 #'
 #' @seealso \code{\link{bfs_get_data}}
@@ -27,9 +28,13 @@
 #' \describe{
 #'   \item{title}{A character column with the title of the BFS dataset}
 #'   \item{language}{A character column with the language of the BFS dataset}
-#'   \item{publication_date}{The published date of the BFS dataset in the data catalog}
 #'   \item{number_asset}{The BFS asset number}
+#'   \item{number_bfs}{The BFS number (FSO number), named orderNr in the API}
+#'   \item{publication_date}{The published date of the BFS dataset, named embargo in the API}
+#'   \item{language_available}{A list The list of all languages available for the BFS dataset}
 #'   \item{url_px}{A character column with the URL of the PX file}
+#'   \item{url_structure_json}{A character column with the URL of the json structure of the BFS dataset}
+#'   \item{damId}{DAM API unique ID}
 #' }
 #'
 #' @examples
@@ -90,12 +95,13 @@ bfs_get_catalog_data <- function(language = "de", title = NULL, extended_search 
     df_final <- dplyr::tibble(
       title = NA_character_,
       language = NA_character_,
-      publication_date = as.Date(x = integer(0)),
+      number_bfs = NA_character_,
       number_asset = NA_character_,
-      order_nr = NA_character_,
-      url_px = NA_character_,
+      publication_date = as.Date(x = integer(0)),
       language_available = list(),
-      url_structure_json = NA_character_
+      url_px = NA_character_,
+      url_structure_json = NA_character_,
+      damId = integer(0)
     )
     return(df_final)
   }
@@ -105,8 +111,8 @@ bfs_get_catalog_data <- function(language = "de", title = NULL, extended_search 
   df_catalog_metadata <- dplyr::tibble(
     title = df$description$titles$main,
     language = language,
+    number_bfs = df$shop$orderNr,
     publication_date = as.Date(df$bfs$embargo),
-    order_nr = df$shop$orderNr,
     language_available = language_available,
     damId = df$ids$damId
   )
@@ -158,7 +164,7 @@ bfs_get_catalog_data <- function(language = "de", title = NULL, extended_search 
   
   df_final <- df_catalog_metadata |>
     left_join(df_catalog_links_metadata, by = "damId") |>
-    select(title, language, number_asset, publication_date, order_nr, url_px, language_available, url_structure_json, damId)
+    select(title, language, number_bfs, number_asset, publication_date, language_available, url_px, url_structure_json, damId)
   
   return(df_final)
 }

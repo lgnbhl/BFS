@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">BFS</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.10</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.11</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -162,14 +162,26 @@ dplyr packages). Returns NULL if no connection.</p>
   <dt>language</dt>
 <dd><p>A character column with the language of the BFS dataset</p></dd>
 
-  <dt>publication_date</dt>
-<dd><p>The published date of the BFS dataset in the data catalog</p></dd>
-
   <dt>number_asset</dt>
 <dd><p>The BFS asset number</p></dd>
 
+  <dt>number_bfs</dt>
+<dd><p>The BFS number (FSO number), named orderNr in the API</p></dd>
+
+  <dt>publication_date</dt>
+<dd><p>The published date of the BFS dataset, named embargo in the API</p></dd>
+
+  <dt>language_available</dt>
+<dd><p>A list The list of all languages available for the BFS dataset</p></dd>
+
   <dt>url_px</dt>
 <dd><p>A character column with the URL of the PX file</p></dd>
+
+  <dt>url_structure_json</dt>
+<dd><p>A character column with the URL of the json structure of the BFS dataset</p></dd>
+
+  <dt>damId</dt>
+<dd><p>DAM API unique ID</p></dd>
 
 
 </dl></div>
@@ -180,14 +192,13 @@ dplyr packages). Returns NULL if no connection.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">bfs_get_catalog_data</span><span class="op">(</span>language <span class="op">=</span> <span class="st">"en"</span>, title <span class="op">=</span> <span class="st">"students"</span>, prodima <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">900212</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   title                   language number_asset publication_date order_nr url_px</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> University of applied … en       31306033     2024-03-28       px-x-15… https…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> University of applied … en       31306029     2024-03-28       px-x-15… https…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> University students by… en       31305852     2024-03-28       px-x-15… https…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> University students by… en       31305854     2024-03-28       px-x-15… https…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: language_available &lt;list&gt;, url_structure_json &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   damId &lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   title     language number_bfs number_asset publication_date language_available</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Universi… en       px-x-1502… 31306033     2024-03-28       <span style="color: #949494;">&lt;chr [4]&gt;</span>         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Universi… en       px-x-1502… 31306029     2024-03-28       <span style="color: #949494;">&lt;chr [4]&gt;</span>         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Universi… en       px-x-1502… 31305852     2024-03-28       <span style="color: #949494;">&lt;chr [4]&gt;</span>         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Universi… en       px-x-1502… 31305854     2024-03-28       <span style="color: #949494;">&lt;chr [4]&gt;</span>         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: url_px &lt;chr&gt;, url_structure_json &lt;chr&gt;, damId &lt;int&gt;</span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
