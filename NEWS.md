@@ -1,3 +1,10 @@
+# BFS 0.5.11
+- BREAKING CHANGE: column `orderNr` returned by `bfs_get_catalog()` renamed 
+  as `number_bfs` for more clarity. Unnecessary new variables also removed in
+  profit of the `return_raw` argument.
+- add `return_raw` in `bfs_get_catalog()` and `bfs_get_tables()`, which returns
+  all metadata in an raw / unstructured tibble.
+
 # BFS 0.5.10
 - fix bug in metadata extraction in `bfs_get_catalog()`, 
   `bfs_get_catalog_data()` and `bfs_get_catalog_tables()`

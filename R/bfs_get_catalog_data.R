@@ -15,6 +15,7 @@
 #' @param limit integer limit of query results (1000 by default)
 #' @param article_model_group integer articleModel parameter query
 #' @param article_model integer articleModel parameter query
+#' @param return_raw boolean Return raw data from json structure as a tibble data.frame
 #'
 #' @return A data frame. Returns NULL if no connection.
 #'
@@ -46,7 +47,7 @@
 #' dplyr packages). Returns NULL if no connection.
 #'
 #' @export
-bfs_get_catalog_data <- function(language = "de", title = NULL, extended_search = NULL, spatial_division = NULL, prodima = NULL, inquiry = NULL, institution = NULL, publishing_year_start = NULL, publishing_year_end = NULL, order_nr = NULL, limit = 1000, article_model = 900033, article_model_group = 900029) {
+bfs_get_catalog_data <- function(language = "de", title = NULL, extended_search = NULL, spatial_division = NULL, prodima = NULL, inquiry = NULL, institution = NULL, publishing_year_start = NULL, publishing_year_end = NULL, order_nr = NULL, limit = 1000, article_model = 900033, article_model_group = 900029, return_raw = FALSE) {
   # fail gracefully if no internet connection
   if (!curl::has_internet()) {
     message("No internet connection")
@@ -91,6 +92,10 @@ bfs_get_catalog_data <- function(language = "de", title = NULL, extended_search 
   
   df <- as_tibble(df_raw$data)
   
+  if(return_raw == TRUE) {
+    return(df)
+  }
+  
   if(nrow(df) == 0) {
     df_final <- dplyr::tibble(
       title = NA_character_,
@@ -98,7 +103,6 @@ bfs_get_catalog_data <- function(language = "de", title = NULL, extended_search 
       number_bfs = NA_character_,
       number_asset = NA_character_,
       publication_date = as.Date(x = integer(0)),
-      language_available = list(),
       url_px = NA_character_,
       url_structure_json = NA_character_,
       damId = integer(0)
@@ -106,14 +110,12 @@ bfs_get_catalog_data <- function(language = "de", title = NULL, extended_search 
     return(df_final)
   }
   
-  language_available <- strsplit(tolower(df$description$language), split = "/")
-  
+
   df_catalog_metadata <- dplyr::tibble(
     title = df$description$titles$main,
     language = language,
     number_bfs = df$shop$orderNr,
     publication_date = as.Date(df$bfs$embargo),
-    language_available = language_available,
     damId = df$ids$damId
   )
   
@@ -142,16 +144,11 @@ bfs_get_catalog_data <- function(language = "de", title = NULL, extended_search 
       filter(rel == "related") %>%
       pull(href)
     
-    url_structure_json <- df_links %>%
-      filter(rel == "related-further") %>%
-      pull(href)
-    
     number_asset <- basename(url_asset)
 
     df_links_cleaned <- dplyr::tibble(
       number_asset = number_asset[1],
       url_px = url_px[1],
-      url_structure_json = url_structure_json[1],
       damId = damId
     )
     return(df_links_cleaned)
@@ -164,7 +161,7 @@ bfs_get_catalog_data <- function(language = "de", title = NULL, extended_search 
   
   df_final <- df_catalog_metadata |>
     left_join(df_catalog_links_metadata, by = "damId") |>
-    select(title, language, number_bfs, number_asset, publication_date, language_available, url_px, url_structure_json, damId)
+    select(title, language, number_bfs, number_asset, publication_date, url_px)
   
   return(df_final)
 }

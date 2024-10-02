@@ -17,7 +17,8 @@ bfs_get_catalog_tables(
   order_nr = NULL,
   limit = 1000,
   article_model = 900030,
-  article_model_group = 900029
+  article_model_group = 900029,
+  return_raw = FALSE
 )
 }
 \arguments{
@@ -46,6 +47,8 @@ bfs_get_catalog_tables(
 \item{article_model}{integer articleModel parameter query}
 
 \item{article_model_group}{integer articleModel parameter query}
+
+\item{return_raw}{boolean Return raw data from json structure as a tibble data.frame}
 }
 \value{
 A data frame. Returns NULL if no connection.

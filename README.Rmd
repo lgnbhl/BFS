@@ -73,6 +73,26 @@ You can search in the data catalog using the following arguments:
 
 Note that English ("en") and Italian ("it") data catalogs offer a limited list of datasets. For the full list please get the French ("fr") or German ("de") data catalogs (see `language_available` column).
 
+To return all the catalog metadata in the raw (uncleaned) structure, you can add `return_raw = TRUE`:
+
+```{r}
+catalog_raw <- bfs_get_catalog_data(
+  language = "en", 
+  extended_search = "student", 
+  return_raw = TRUE
+)
+
+catalog_raw
+```
+
+The data catalog in a raw structure returns a data.frame containing nested data.frames in some columns. Here an example to get the `description` nested data.frame as a tibble:
+
+```{r}
+library(dplyr)
+
+as_tibble(catalog_raw$description)
+```
+
 As the API limit is 350 results, you can get the full data catalog by looping on specific parameters. For example, you can loop over all `prodima` numbers (equivalent to BFS themes):
 
 ```{r}
@@ -82,7 +102,7 @@ themes_prodima <- c(900001, 900010, 900035, 900051, 900075, 900084, 900092, 9001
 library(purrr)
 
 catalog_all <- purrr::pmap_dfr(
-  .l = list(language = "de", prodima = themes_prodima),
+  .l = list(language = "de", prodima = themes_prodima, return_raw = TRUE),
   .f = bfs_get_catalog_data,
 )
 
@@ -263,6 +283,26 @@ file_path <- BFS::bfs_download_asset(
   number_asset = tables_asset_number_students,
   destfile = "su-e-15.02.04.01.xlsx"
 )
+```
+
+To return all the catalog metadata in the raw (uncleaned) structure, you can add `return_raw = TRUE`:
+
+```{r}
+catalog_tables_raw <- bfs_get_catalog_tables(
+  language = "en", 
+  extended_search = "student", 
+  return_raw = TRUE
+)
+
+catalog_tables_raw
+```
+
+The data catalog in a raw structure returns a data.frame containing nested data.frames in some columns. Here an example to get the `description` nested data.frame as a tibble:
+
+```{r}
+library(dplyr)
+
+as_tibble(catalog_tables_raw$description)
 ```
 
 ## Access geodata catalog
