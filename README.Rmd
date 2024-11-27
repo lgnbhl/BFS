@@ -385,7 +385,7 @@ leaflet() %>%
 
 ### Cartographic base maps
 
-You can get [cartographic base maps](https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.assetdetail.24025646.html) from the ThemaKart project using `bfs_get_base_maps()`. The list of available geometries in the [official documentation](https://www.bfs.admin.ch/asset/en/24025645).
+You can get [cartographic base maps](https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.assetdetail.24025646.html) from the ThemaKart project using `bfs_get_base_maps()`. The list of available geometries in the [official documentation](https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.html).
 
 The default arguments of `bfs_get_base_maps()` can be change to access specific files:
 
@@ -398,7 +398,7 @@ bfs_get_base_maps(
   date = NULL,
   most_recent = TRUE, #get most recent file by default
   format = "shp",
-  asset_number = "24025646" #change to get older ThemaKart data
+  asset_number = "24025646" #change ThemaKart geodata as updated every year
 )
 ```
 
@@ -407,9 +407,8 @@ A typical base maps ThemaKart file looks like this:
 <img style="border:0px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/base_maps_file.png" align="center" />
 
 ```r
-# list of geometry names: https://www.bfs.admin.ch/asset/en/24025645
 switzerland_sf <- bfs_get_base_maps(geom = "suis")
-communes_sf <- bfs_get_base_maps(geom = "polg", date = "20230101")
+communes_sf <- bfs_get_base_maps(geom = "polg")
 districts_sf <- bfs_get_base_maps(geom = "bezk")
 cantons_sf <- bfs_get_base_maps(geom = "kant")
 cantons_capitals_sf <- bfs_get_base_maps(geom = "stkt", type = "Pnts", category = "kk")
@@ -441,34 +440,78 @@ BFS::bfs_get_base_maps(geom = "bezk") |>
 
 <img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/mapview.png" align="center" />
 
-### Swiss Official Commune Register
+### Get official list of Swiss municipalities
 
-The package also contains the official Swiss official commune registers for different administrative levels:
-
-- `register_gde`
-- `register_gde_other`
-- `register_bzn`
-- `register_kt`
-- `register_kt_seeanteile`
-- `register_dic`
-
-```{r}
-# commune register data
-BFS::register_gde
-```
-
-You can use registers to ease geodata analysis.
+You can also get the historicized list of Swiss municipalities from the official BFS API using the new **swissMunicipalities** R package. The documentation is [here](https://github.com/SwissStatsR/swissMunicipalities).
 
 ```r
-library(dplyr)
+# remotes::install_github("SwissStatsR/swissMunicipalities")
+library(swissMunicipalities)
+library(dplyr) # just for data wrangling
+
+# snapshot of today list of Swiss municipalites/districts/cantons
+snapshot <- swissMunicipalities::get_snapshots(hist_id = TRUE)
+
+municipalities <- snapshot |> 
+  filter(Level == 3) |>
+  rename_with(~ paste0(.x, "_municipality", recycle0 = TRUE)) |>
+  select(-Level_municipality)
+
+districts <- snapshot |> 
+  filter(Level == 2) |>
+  rename_with(~ paste0(.x, "_district", recycle0 = TRUE)) |>
+  select(-Level_district)
+
+cantons <- snapshot |> 
+  filter(Level == 1) |>
+  rename_with(~ paste0(.x, "_canton", recycle0 = TRUE)) |>
+  select(-Level_canton)
+
+# consolidate municipality data with districts and cantons levels
+municipalities_consolidated <- municipalities |>
+  left_join(districts, by = join_by(Parent_municipality == Identifier_district)) |>
+  left_join(cantons, by = join_by(Parent_district == Identifier_canton)) |>
+  rename(Identifier_district = Parent_municipality, Identifier_canton = Parent_district) |>
+  select(starts_with(c("Identifier", "Name", "ABBREV", "Valid")), everything()) |>
+  arrange(Identifier_municipality, Identifier_district)
+
+municipalities_consolidated
+```
+
+    # A tibble: 2,131 × 82
+       Identifier_municipality Identifier_district Identifier_canton Name_en_municipality Name_fr_municipality
+                         <dbl>               <dbl>             <dbl> <chr>                <chr>               
+     1                       1                 101                 1 Aeugst am Albis      Aeugst am Albis     
+     2                       2                 101                 1 Affoltern am Albis   Affoltern am Albis  
+     3                       3                 101                 1 Bonstetten           Bonstetten          
+     4                       4                 101                 1 Hausen am Albis      Hausen am Albis     
+     5                       5                 101                 1 Hedingen             Hedingen            
+     6                       6                 101                 1 Kappel am Albis      Kappel am Albis     
+     7                       7                 101                 1 Knonau               Knonau              
+     8                       8                 101                 1 Maschwanden          Maschwanden         
+     9                       9                 101                 1 Mettmenstetten       Mettmenstetten      
+    10                      10                 101                 1 Obfelden             Obfelden            
+    # ℹ 2,121 more rows
+    # ℹ 77 more variables: Name_de_municipality <chr>, Name_it_municipality <chr>, Name_en_district <chr>,
+    #   Name_fr_district <chr>, Name_de_district <chr>, Name_it_district <chr>, Name_en_canton <chr>,
+    #   Name_fr_canton <chr>, Name_de_canton <chr>, Name_it_canton <chr>, ABBREV_1_Text_en_municipality <chr>,
+    #   ABBREV_1_Text_fr_municipality <chr>, ABBREV_1_Text_de_municipality <chr>, ABBREV_1_Text_it_municipality <chr>,
+    #   ABBREV_1_Text_municipality <chr>, ABBREV_1_Text_en_district <chr>, ABBREV_1_Text_fr_district <chr>,
+    #   ABBREV_1_Text_de_district <chr>, ABBREV_1_Text_it_district <chr>, ABBREV_1_Text_district <chr>, …
+    # ℹ Use `print(n = ...)` to see more rows
+
+You can now use the consolidated list of Swiss municipalities to ease geodata analysis.
+
+```r
 library(sf)
+library(ggplot2)
 
 communes_sf <- bfs_get_base_maps(geom = "polg", date = "20230101")
 
 communes_ge <- communes_sf |>
-  inner_join(BFS::register_gde |> 
-               filter(GDEKTNA == "Genève"), 
-             by = c("id" = "GDENR"))
+  inner_join(municipalities_consolidated |>
+               filter(Name_de_canton == "Genève"), 
+             by = c("id" = "Identifier_municipality"))
 
 bbox_ge <- sf::st_bbox(communes_ge)
 

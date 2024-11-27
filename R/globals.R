@@ -8,9 +8,8 @@ utils::globalVariables(
     "href",
     "collection_id",
     "rel",
-    "damId", 
+    "number_bfs", 
     "number_asset", 
-    "publication_date", 
-    "url_structure_json"
+    "publication_date"
   )
 )

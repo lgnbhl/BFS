@@ -147,28 +147,33 @@ themes_prodima <- c(900001, 900010, 900035, 900051, 900075, 900084, 900092, 9001
 library(purrr)
 
 catalog_all <- purrr::pmap_dfr(
-  .l = list(language = "de", prodima = themes_prodima),
+  .l = list(language = "de", prodima = themes_prodima, return_raw = TRUE),
   .f = bfs_get_catalog_data,
 )
 
 catalog_all
 ```
 
-    ## # A tibble: 760 × 8
-    ##    title                language number_bfs number_asset publication_date url_px
-    ##    <chr>                <chr>    <chr>      <chr>        <date>           <chr> 
-    ##  1 Heiraten und Heirat… de       px-x-0102… 32506838     2024-09-26       https…
-    ##  2 Lebendgeburten nach… de       px-x-0102… 32506840     2024-09-26       https…
-    ##  3 Scheidungen und Sch… de       px-x-0102… 32506841     2024-09-26       https…
-    ##  4 Todesfälle nach Mon… de       px-x-0102… 32506839     2024-09-26       https…
-    ##  5 Männliche Vornamen … de       px-x-0104… 32187356     2024-08-23       https…
-    ##  6 Weibliche Vornamen … de       px-x-0104… 32187357     2024-08-23       https…
-    ##  7 Auswanderung der st… de       px-x-0103… 32208056     2024-08-22       https…
-    ##  8 Auswanderung der st… de       px-x-0103… 32208055     2024-08-22       https…
-    ##  9 Auswanderung der st… de       px-x-0103… 32208061     2024-08-22       https…
-    ## 10 Auswanderung der st… de       px-x-0103… 32208057     2024-08-22       https…
-    ## # ℹ 750 more rows
-    ## # ℹ 2 more variables: url_structure_json <chr>, damId <int>
+    ## # A tibble: 764 × 5
+    ##    ids$uuid     $contentId bfs$embargo description$titles$m…¹ shop$orderNr links
+    ##    <chr>             <int> <chr>       <chr>                  <chr>        <lis>
+    ##  1 8a2bfd2e-a9…    1085359 2024-10-03… Privathaushalte nach … px-x-010202… <df> 
+    ##  2 a964371b-27…    1085346 2024-10-03… Ständige Wohnbevölker… px-x-010202… <df> 
+    ##  3 ef70eb19-93…     325772 2024-09-26… Heiraten und Heiratsh… px-x-010202… <df> 
+    ##  4 32069ba3-1c…     189095 2024-09-26… Lebendgeburten nach M… px-x-010202… <df> 
+    ##  5 5a8b2ea1-e2…     325776 2024-09-26… Scheidungen und Schei… px-x-010202… <df> 
+    ##  6 66f3d4f6-ed…     189065 2024-09-26… Todesfälle nach Monat… px-x-010202… <df> 
+    ##  7 51dfa1cf-21…   13807205 2024-08-23… Männliche Vornamen de… px-x-010405… <df> 
+    ##  8 b65c9036-b0…   13807212 2024-08-23… Weibliche Vornamen de… px-x-010405… <df> 
+    ##  9 38a86458-22…     189124 2024-08-22… Auswanderung der stän… px-x-010302… <df> 
+    ## 10 6426823f-cb…     189120 2024-08-22… Auswanderung der stän… px-x-010302… <df> 
+    ## # ℹ 754 more rows
+    ## # ℹ abbreviated name: ¹​description$titles$main
+    ## # ℹ 16 more variables: ids$gnp <chr>, $damId <int>, $languageCopyId <int>,
+    ## #   bfs$lifecycle <df[,4]>, $lifecycleGroup <chr>, $provisional <lgl>,
+    ## #   $articleModel <df[,4]>, $articleModelGroup <df[,4]>,
+    ## #   $lastUpdatedVersion <chr>, description$titles$sub <chr>,
+    ## #   description$categorization <df[,13]>, $bibliography <df[,2]>, …
 
 ``` r
 # to not overload the server, please save the data frame locally
@@ -411,18 +416,18 @@ catalog_tables_raw
     ## # A tibble: 6 × 5
     ##   ids$uuid      $contentId bfs$embargo description$titles$m…¹ shop$orderNr links
     ##   <chr>              <int> <chr>       <chr>                  <chr>        <lis>
-    ## 1 7a604831-d27…   20044168 2024-05-01… Students at universit… ts-x-15.02.… <df> 
-    ## 2 ac4e3021-db4…   20044200 2024-05-01… Students at universit… ts-x-15.02.… <df> 
-    ## 3 5e328530-77f…     528179 2024-03-28… Students at universit… su-e-15.02.… <df> 
-    ## 4 6e27402b-8dc…     528173 2024-03-28… Students at universit… su-e-15.02.… <df> 
-    ## 5 1e86c267-5f9…     528176 2024-03-28… Students at universit… su-e-15.02.… <df> 
-    ## 6 ab482495-fc9…   14876281 2023-11-02… Student mobility with… su-e-15.02.… <df> 
+    ## 1 a5169f0b-6f8…   14876281 2024-10-31… Student mobility with… su-e-15.02.… <df> 
+    ## 2 7a604831-d27…   20044168 2024-05-01… Students at universit… ts-x-15.02.… <df> 
+    ## 3 ac4e3021-db4…   20044200 2024-05-01… Students at universit… ts-x-15.02.… <df> 
+    ## 4 5e328530-77f…     528179 2024-03-28… Students at universit… su-e-15.02.… <df> 
+    ## 5 6e27402b-8dc…     528173 2024-03-28… Students at universit… su-e-15.02.… <df> 
+    ## 6 1e86c267-5f9…     528176 2024-03-28… Students at universit… su-e-15.02.… <df> 
     ## # ℹ abbreviated name: ¹​description$titles$main
     ## # ℹ 14 more variables: ids$gnp <chr>, $damId <int>, $languageCopyId <int>,
     ## #   bfs$lifecycle <df[,4]>, $lifecycleGroup <chr>, $provisional <lgl>,
     ## #   $articleModel <df[,4]>, $articleModelGroup <df[,4]>,
     ## #   description$categorization <df[,13]>, $bibliography <df[,1]>,
-    ## #   $shortSummary <df[,2]>, $language <chr>, $abstractShort <chr>,
+    ## #   $language <chr>, $shortSummary <df[,2]>, $abstractShort <chr>,
     ## #   shop$stock <lgl>
 
 The data catalog in a raw structure returns a data.frame containing
@@ -436,20 +441,20 @@ as_tibble(catalog_tables_raw$description)
 ```
 
     ## # A tibble: 6 × 6
-    ##   titles$main       categorization$colle…¹ bibliography$period shortSummary$html
-    ##   <chr>             <list>                 <chr>               <chr>            
-    ## 1 Students at univ… <df [3 × 4]>           1980-2023           <p>Descriptions …
-    ## 2 Students at univ… <df [3 × 4]>           2000-2023           <p>Descriptions …
-    ## 3 Students at univ… <df [3 × 4]>           1990-2023           <NA>             
-    ## 4 Students at univ… <df [3 × 4]>           1997-2023           <NA>             
-    ## 5 Students at univ… <df [2 × 4]>           2005-2023           <NA>             
-    ## 6 Student mobility… <df [2 × 4]>           2021                <NA>             
+    ##   titles$main                categorization$colle…¹ bibliography$period language
+    ##   <chr>                      <list>                 <chr>               <chr>   
+    ## 1 Student mobility within S… <df [2 × 4]>           2022                EN      
+    ## 2 Students at universities … <df [3 × 4]>           1980-2023           DE/EN/F…
+    ## 3 Students at universities … <df [3 × 4]>           2000-2023           DE/EN/F…
+    ## 4 Students at universities … <df [3 × 4]>           1990-2023           EN      
+    ## 5 Students at universities … <df [3 × 4]>           1997-2023           EN      
+    ## 6 Students at universities … <df [2 × 4]>           2005-2023           EN      
     ## # ℹ abbreviated name: ¹​categorization$collection
-    ## # ℹ 15 more variables: categorization$prodima <list>, $inquiry <list>,
+    ## # ℹ 14 more variables: categorization$prodima <list>, $inquiry <list>,
     ## #   $spatialdivision <list>, $classification <list>, $institution <list>,
     ## #   $publisher <list>, $tags <list>, $dataSource <list>, $copyrights <list>,
     ## #   $termsOfUse <list>, $serie <list>, $periodicity <list>,
-    ## #   shortSummary$raw <chr>, language <chr>, abstractShort <chr>
+    ## #   shortSummary <df[,2]>, abstractShort <chr>
 
 ## Access geodata catalog
 
@@ -538,7 +543,7 @@ You can get [cartographic base
 maps](https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.assetdetail.24025646.html)
 from the ThemaKart project using `bfs_get_base_maps()`. The list of
 available geometries in the [official
-documentation](https://www.bfs.admin.ch/asset/en/24025645).
+documentation](https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.html).
 
 The default arguments of `bfs_get_base_maps()` can be change to access
 specific files:
@@ -552,7 +557,7 @@ bfs_get_base_maps(
   date = NULL,
   most_recent = TRUE, #get most recent file by default
   format = "shp",
-  asset_number = "24025646" #change to get older ThemaKart data
+  asset_number = "24025646" #change ThemaKart geodata as updated every year
 )
 ```
 
@@ -561,9 +566,8 @@ A typical base maps ThemaKart file looks like this:
 <img style="border:0px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/base_maps_file.png" align="center" />
 
 ``` r
-# list of geometry names: https://www.bfs.admin.ch/asset/en/24025645
 switzerland_sf <- bfs_get_base_maps(geom = "suis")
-communes_sf <- bfs_get_base_maps(geom = "polg", date = "20230101")
+communes_sf <- bfs_get_base_maps(geom = "polg")
 districts_sf <- bfs_get_base_maps(geom = "bezk")
 cantons_sf <- bfs_get_base_maps(geom = "kant")
 cantons_capitals_sf <- bfs_get_base_maps(geom = "stkt", type = "Pnts", category = "kk")
@@ -595,50 +599,82 @@ BFS::bfs_get_base_maps(geom = "bezk") |>
 
 <img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/mapview.png" align="center" />
 
-### Swiss Official Commune Register
+### Get official list of Swiss municipalities
 
-The package also contains the official Swiss official commune registers
-for different administrative levels:
-
-- `register_gde`
-- `register_gde_other`
-- `register_bzn`
-- `register_kt`
-- `register_kt_seeanteile`
-- `register_dic`
+You can also get the historicized list of Swiss municipalities from the
+official BFS API using the new **swissMunicipalities** R package. The
+documentation is
+[here](https://github.com/SwissStatsR/swissMunicipalities).
 
 ``` r
-# commune register data
-BFS::register_gde
+# remotes::install_github("SwissStatsR/swissMunicipalities")
+library(swissMunicipalities)
+library(dplyr) # just for data wrangling
+
+# snapshot of today list of Swiss municipalites/districts/cantons
+snapshot <- swissMunicipalities::get_snapshots(hist_id = TRUE)
+
+municipalities <- snapshot |> 
+  filter(Level == 3) |>
+  rename_with(~ paste0(.x, "_municipality", recycle0 = TRUE)) |>
+  select(-Level_municipality)
+
+districts <- snapshot |> 
+  filter(Level == 2) |>
+  rename_with(~ paste0(.x, "_district", recycle0 = TRUE)) |>
+  select(-Level_district)
+
+cantons <- snapshot |> 
+  filter(Level == 1) |>
+  rename_with(~ paste0(.x, "_canton", recycle0 = TRUE)) |>
+  select(-Level_canton)
+
+# consolidate municipality data with districts and cantons levels
+municipalities_consolidated <- municipalities |>
+  left_join(districts, by = join_by(Parent_municipality == Identifier_district)) |>
+  left_join(cantons, by = join_by(Parent_district == Identifier_canton)) |>
+  rename(Identifier_district = Parent_municipality, Identifier_canton = Parent_district) |>
+  select(starts_with(c("Identifier", "Name", "ABBREV", "Valid")), everything()) |>
+  arrange(Identifier_municipality, Identifier_district)
+
+municipalities_consolidated
 ```
 
-    ## # A tibble: 2,136 × 8
-    ##    GDEKT GDEBZNR GDENR GDENAME            GDENAMK      GDEBZNA GDEKTNA GDEMUTDAT
-    ##    <chr>   <dbl> <dbl> <chr>              <chr>        <chr>   <chr>   <chr>    
-    ##  1 ZH        101     1 Aeugst am Albis    Aeugst am A… Bezirk… Zürich  1976-11-…
-    ##  2 ZH        101     2 Affoltern am Albis Affoltern a… Bezirk… Zürich  1848-09-…
-    ##  3 ZH        101     3 Bonstetten         Bonstetten   Bezirk… Zürich  1848-09-…
-    ##  4 ZH        101     4 Hausen am Albis    Hausen am A… Bezirk… Zürich  1911-01-…
-    ##  5 ZH        101     5 Hedingen           Hedingen     Bezirk… Zürich  1848-09-…
-    ##  6 ZH        101     6 Kappel am Albis    Kappel am A… Bezirk… Zürich  1911-01-…
-    ##  7 ZH        101     7 Knonau             Knonau       Bezirk… Zürich  1848-09-…
-    ##  8 ZH        101     8 Maschwanden        Maschwanden  Bezirk… Zürich  1848-09-…
-    ##  9 ZH        101     9 Mettmenstetten     Mettmenstet… Bezirk… Zürich  1848-09-…
-    ## 10 ZH        101    10 Obfelden           Obfelden     Bezirk… Zürich  1848-09-…
-    ## # ℹ 2,126 more rows
+    # A tibble: 2,131 × 82
+       Identifier_municipality Identifier_district Identifier_canton Name_en_municipality Name_fr_municipality
+                         <dbl>               <dbl>             <dbl> <chr>                <chr>               
+     1                       1                 101                 1 Aeugst am Albis      Aeugst am Albis     
+     2                       2                 101                 1 Affoltern am Albis   Affoltern am Albis  
+     3                       3                 101                 1 Bonstetten           Bonstetten          
+     4                       4                 101                 1 Hausen am Albis      Hausen am Albis     
+     5                       5                 101                 1 Hedingen             Hedingen            
+     6                       6                 101                 1 Kappel am Albis      Kappel am Albis     
+     7                       7                 101                 1 Knonau               Knonau              
+     8                       8                 101                 1 Maschwanden          Maschwanden         
+     9                       9                 101                 1 Mettmenstetten       Mettmenstetten      
+    10                      10                 101                 1 Obfelden             Obfelden            
+    # ℹ 2,121 more rows
+    # ℹ 77 more variables: Name_de_municipality <chr>, Name_it_municipality <chr>, Name_en_district <chr>,
+    #   Name_fr_district <chr>, Name_de_district <chr>, Name_it_district <chr>, Name_en_canton <chr>,
+    #   Name_fr_canton <chr>, Name_de_canton <chr>, Name_it_canton <chr>, ABBREV_1_Text_en_municipality <chr>,
+    #   ABBREV_1_Text_fr_municipality <chr>, ABBREV_1_Text_de_municipality <chr>, ABBREV_1_Text_it_municipality <chr>,
+    #   ABBREV_1_Text_municipality <chr>, ABBREV_1_Text_en_district <chr>, ABBREV_1_Text_fr_district <chr>,
+    #   ABBREV_1_Text_de_district <chr>, ABBREV_1_Text_it_district <chr>, ABBREV_1_Text_district <chr>, …
+    # ℹ Use `print(n = ...)` to see more rows
 
-You can use registers to ease geodata analysis.
+You can now use the consolidated list of Swiss municipalities to ease
+geodata analysis.
 
 ``` r
-library(dplyr)
 library(sf)
+library(ggplot2)
 
 communes_sf <- bfs_get_base_maps(geom = "polg", date = "20230101")
 
 communes_ge <- communes_sf |>
-  inner_join(BFS::register_gde |> 
-               filter(GDEKTNA == "Genève"), 
-             by = c("id" = "GDENR"))
+  inner_join(municipalities_consolidated |>
+               filter(Name_de_canton == "Genève"), 
+             by = c("id" = "Identifier_municipality"))
 
 bbox_ge <- sf::st_bbox(communes_ge)
 
