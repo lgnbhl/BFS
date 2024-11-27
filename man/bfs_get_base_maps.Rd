@@ -39,8 +39,8 @@ sf object with geometries. Returns NULL if no connection.
 This functions helps to get base maps data from the ThemaKart project
 as an sf object. The geom names and the general structure of the files
 can be found in the offical BFS documentation,
-see \url{https://www.bfs.admin.ch/asset/en/24025645}. When using this data, please read the condition of use
-and copyright mentions.
+see \url{https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.html}. 
+When using this data, please read the condition of use and copyright mentions.
 }
 \details{
 If you want to get ThemaKart data from previous years, you can change
