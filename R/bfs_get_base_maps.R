@@ -32,7 +32,7 @@
 #' @return sf object with geometries. Returns NULL if no connection.
 #'
 #' @export
-bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date = NULL, most_recent = TRUE, format = "shp", asset_number = "24025646") {
+bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date = NULL, most_recent = TRUE, format = "shp", asset_number = "30566934") {
   if (is.null(geom)) {
     stop("Please choose a geom, such as 'suis', 'kant' or 'polg'.\nGeometry names are listed here: \nhttps://www.bfs.admin.ch/asset/en/24025645", call. = FALSE)
   }

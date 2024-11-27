@@ -11,7 +11,7 @@ bfs_get_base_maps(
   date = NULL,
   most_recent = TRUE,
   format = "shp",
-  asset_number = "24025646"
+  asset_number = "30566934"
 )
 }
 \arguments{
