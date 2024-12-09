@@ -424,6 +424,20 @@ length(all_themakart_files) # number of files available
 
     ## [1] 701
 
+For example, all available river files can be found with:
+
+```r
+all_river_files <- bfs_get_base_maps(
+    return_sf = FALSE, # do NOT return sf object
+    asset_number = "30566934", # ThemaKart asset of 2024
+    geom = "flus", # "flus" for river related files
+    category = "", 
+    type = "", 
+    format = "shp",
+    date = ""
+)
+```
+
 The function `bfs_get_base_maps()` eases file selection with arguments and returns an sf object by default.
 
 ```r
@@ -451,6 +465,8 @@ ggplot() +
 ```
 
 <img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/base_maps.png" align="center" />
+
+Note that the geometries are available for different date of data release. By default, `bfs_get_base_maps()` tries to get the most recent date. You can specify the date using the "date" argument.
 
 You can create an interactive map easily with the mapview R package.
 
