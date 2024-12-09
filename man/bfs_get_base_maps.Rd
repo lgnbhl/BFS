@@ -11,7 +11,8 @@ bfs_get_base_maps(
   date = NULL,
   most_recent = TRUE,
   format = "shp",
-  asset_number = "30566934"
+  asset_number = "30566934",
+  return_sf = TRUE
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ if FALSE then read the first file available.}
 \item{format}{Format of the file, by default SHP format.}
 
 \item{asset_number}{Asset number of the base maps zip file.}
+
+\item{return_sf}{if TRUE, read file path and return sf object. If FALSE, return file path}
 }
 \value{
 sf object with geometries. Returns NULL if no connection.

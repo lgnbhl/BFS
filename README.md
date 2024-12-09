@@ -540,7 +540,7 @@ leaflet() %>%
 ### Cartographic base maps
 
 You can get [cartographic base
-maps](https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.assetdetail.24025646.html)
+maps](https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.assetdetail.30566934.html)
 from the ThemaKart project using `bfs_get_base_maps()`. The list of
 available geometries in the [official
 documentation](https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.html).
@@ -565,6 +565,28 @@ A typical base maps ThemaKart file looks like this:
 
 <img style="border:0px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/base_maps_file.png" align="center" />
 
+All available geometry files in ThemaKart asset can be listed using
+`return_sf = FALSE`:
+
+``` r
+all_themakart_files <- bfs_get_base_maps(
+  return_sf = FALSE, # do NOT return sf object
+  asset_number = "30566934", # ThemaKart asset of 2024
+  geom = "", 
+  category = "", 
+  type = "", 
+  format = "",
+  date = ""
+)
+
+length(all_themakart_files) # number of files available
+```
+
+    ## [1] 701
+
+The function `bfs_get_base_maps()` eases file selection with arguments
+and returns an sf object by default.
+
 ``` r
 switzerland_sf <- bfs_get_base_maps(geom = "suis")
 communes_sf <- bfs_get_base_maps(geom = "polg")
@@ -572,6 +594,8 @@ districts_sf <- bfs_get_base_maps(geom = "bezk")
 cantons_sf <- bfs_get_base_maps(geom = "kant")
 cantons_capitals_sf <- bfs_get_base_maps(geom = "stkt", type = "Pnts", category = "kk")
 lakes_sf <- bfs_get_base_maps(geom = "seen", category = "11")
+# for some reason rivers don't have a "type" in their file names, so add type = ""
+rivers_sf <- bfs_get_base_maps(geom = "flus", type = "", category = "22")
 
 library(ggplot2)
 
@@ -581,6 +605,7 @@ ggplot() +
   geom_sf(data = districts_sf, fill = "transparent", color = "grey65") + 
   geom_sf(data = cantons_sf, fill = "transparent", color = "black") +
   geom_sf(data = cantons_capitals_sf, shape = 18, size = 3) +
+  geom_sf(data = rivers_sf, color = "lightblue2", lwd = 1) +
   theme_minimal() +
   theme(axis.text = element_blank()) +
   labs(caption = "Source: ThemaKart, © BFS")

@@ -60,3 +60,18 @@ test_that("bfs_get_base_maps() with 'polg' geom and recent date different", {
   sf_kant_not_recent <- BFS::bfs_get_base_maps(geom = "kant", most_recent = FALSE)
   expect_false(identical(sf_kant_recent, sf_kant_not_recent))
 })
+test_that("bfs_get_base_maps() with return_sf = FALSE returns and character class", {
+  if (!curl::has_internet()) {
+    skip("No internet connection")
+  }
+  all_file_path <- bfs_get_base_maps(
+    return_sf = FALSE, # do NOT return sf object
+    asset_number = "30566934", # ThemaKart asset for 2024
+    geom = "", 
+    category = "", 
+    type = "", 
+    format = "",
+    date = ""
+  )
+  expect_identical(class(all_file_path), "character")
+})

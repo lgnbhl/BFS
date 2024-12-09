@@ -23,6 +23,7 @@
 #'  if FALSE then read the first file available.
 #' @param format Format of the file, by default SHP format.
 #' @param asset_number Asset number of the base maps zip file.
+#' @param return_sf if TRUE, read file path and return sf object. If FALSE, return file path
 #'
 #' @importFrom sf read_sf
 #' @importFrom tools R_user_dir
@@ -32,10 +33,7 @@
 #' @return sf object with geometries. Returns NULL if no connection.
 #'
 #' @export
-bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date = NULL, most_recent = TRUE, format = "shp", asset_number = "30566934") {
-  if (is.null(geom)) {
-    stop("Please choose a geom, such as 'suis', 'kant' or 'polg'.\nGeometry names are listed here: \nhttps://www.bfs.admin.ch/asset/en/24025645", call. = FALSE)
-  }
+bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date = NULL, most_recent = TRUE, format = "shp", asset_number = "30566934", return_sf = TRUE) {
   # fail gracefully if no internet connection
   if (!curl::has_internet()) {
     message("No internet connection")
@@ -85,12 +83,17 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   } else {
     file_selected <- files_geom[1]
   }
-  if (length(file_selected) > 1) {
-    file_selected <- file_selected[1]
-    warning(paste0("Multiple file selected.\nUsing the first file\n", file_selected), call. = FALSE)
+  # return sf object or file path
+  if(return_sf) {
+    if (length(file_selected) > 1) {
+      file_selected <- file_selected[1]
+      warning(paste0("Multiple file selected.\nUsing the first file\n", file_selected), call. = FALSE)
+    }
+    if (identical(file_selected, character(0))) {
+      stop("No related file found. Please use other argument values.", call. = FALSE)
+    }
+    sf::read_sf(file_selected)
+  } else {
+    file_selected
   }
-  if (identical(file_selected, character(0))) {
-    stop("No related file found. Please use other argument values.", call. = FALSE)
-  }
-  sf::read_sf(file_selected)
 }
