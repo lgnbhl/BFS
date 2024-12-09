@@ -60,7 +60,7 @@ test_that("bfs_get_base_maps() with 'polg' geom and recent date different", {
   sf_kant_not_recent <- BFS::bfs_get_base_maps(geom = "kant", most_recent = FALSE)
   expect_false(identical(sf_kant_recent, sf_kant_not_recent))
 })
-test_that("bfs_get_base_maps() with return_sf = FALSE returns and character class", {
+test_that("bfs_get_base_maps() with return_sf = FALSE returns an non empty character class", {
   if (!curl::has_internet()) {
     skip("No internet connection")
   }
@@ -74,4 +74,5 @@ test_that("bfs_get_base_maps() with return_sf = FALSE returns and character clas
     date = ""
   )
   expect_identical(class(all_file_path), "character")
+  expect_true(length(all_file_path) > 0)
 })
