@@ -457,8 +457,8 @@ ggplot() +
   geom_sf(data = lakes_sf, fill = "lightblue2", color = "black") +
   geom_sf(data = districts_sf, fill = "transparent", color = "grey65") + 
   geom_sf(data = cantons_sf, fill = "transparent", color = "black") +
-  geom_sf(data = cantons_capitals_sf, shape = 18, size = 3) +
   geom_sf(data = rivers_sf, color = "lightblue2", lwd = 1) +
+  geom_sf(data = cantons_capitals_sf, shape = 18, size = 3) +
   theme_minimal() +
   theme(axis.text = element_blank()) +
   labs(caption = "Source: ThemaKart, © BFS")

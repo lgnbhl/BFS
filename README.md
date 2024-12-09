@@ -618,8 +618,8 @@ ggplot() +
   geom_sf(data = lakes_sf, fill = "lightblue2", color = "black") +
   geom_sf(data = districts_sf, fill = "transparent", color = "grey65") + 
   geom_sf(data = cantons_sf, fill = "transparent", color = "black") +
-  geom_sf(data = cantons_capitals_sf, shape = 18, size = 3) +
   geom_sf(data = rivers_sf, color = "lightblue2", lwd = 1) +
+  geom_sf(data = cantons_capitals_sf, shape = 18, size = 3) +
   theme_minimal() +
   theme(axis.text = element_blank()) +
   labs(caption = "Source: ThemaKart, © BFS")
@@ -627,9 +627,9 @@ ggplot() +
 
 <img style="border:1px solid black;" src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/base_maps.png" align="center" />
 
-Note that the geometries are available for different date production. By
-default, `bfs_get_base_maps()` tries to get the most recent date. You
-can specify the date using the “date” argument.
+Note that the geometries are available for different date of data
+release. By default, `bfs_get_base_maps()` tries to get the most recent
+date. You can specify the date using the “date” argument.
 
 You can create an interactive map easily with the mapview R package.
 
