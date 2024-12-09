@@ -1,3 +1,8 @@
+# BFS 0.5.12
+- improve `bfs_get_base_maps()` with new `return_sf` argument,
+  which allows to return all file path available (see README).
+- improve README related to `bfs_get_base_maps()`
+
 # BFS 0.5.11
 - BREAKING CHANGE: column `orderNr` returned by `bfs_get_catalog()` renamed 
   as `number_bfs` for more clarity. Unnecessary new variables also removed in
