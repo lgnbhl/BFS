@@ -46,7 +46,7 @@ register_dic_it$language <- "it"
 register_dic_raw <- rbind(register_dic_de, register_dic_fr, register_dic_it)
 
 # reorder variables
-register_dic <- register_dic_raw |>
+register_dic <- register_dic_raw %>%
   dplyr::select(language, abbreviation, title, spec, notes)
 
 # save data in package

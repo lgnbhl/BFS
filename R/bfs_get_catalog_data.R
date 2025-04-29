@@ -159,8 +159,8 @@ bfs_get_catalog_data <- function(language = "de", title = NULL, extended_search 
     .f = get_catalog_links_metadata
   )
   
-  df_final <- df_catalog_metadata |>
-    left_join(df_catalog_links_metadata, by = "damId") |>
+  df_final <- df_catalog_metadata %>%
+    left_join(df_catalog_links_metadata, by = "damId") %>%
     select(title, language, number_bfs, number_asset, publication_date, url_px)
   
   return(df_final)

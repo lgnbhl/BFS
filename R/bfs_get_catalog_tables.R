@@ -142,8 +142,8 @@ bfs_get_catalog_tables <- function(language = "de", title = NULL, extended_searc
     .f = get_catalog_links_metadata
   )
   
-  df_final <- df_catalog_metadata |>
-    left_join(df_catalog_links_metadata, by = "damId") |>
+  df_final <- df_catalog_metadata %>%
+    left_join(df_catalog_links_metadata, by = "damId") %>%
     select(title, language, number_asset, publication_date, order_nr)
   
   return(df_final)
