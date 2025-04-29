@@ -1,3 +1,6 @@
+# BFS 0.5.13
+- fix CRAN NOTE: remove native pipes for older R version compatibility.
+
 # BFS 0.5.12
 - improve `bfs_get_base_maps()` with new `return_sf` argument,
   which allows to return all file path available (see README).
