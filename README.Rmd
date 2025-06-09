@@ -310,6 +310,8 @@ as_tibble(catalog_tables_raw$description)
 Display geo-information catalog of the Swiss Official STAC API using `bfs_get_catalog_geodata()`.
 
 ```r
+library(rstac) # install.packages("rstac")
+
 catalog_geodata <- bfs_get_catalog_geodata(include_metadata = TRUE)
 
 catalog_geodata
@@ -390,6 +392,8 @@ You can get [cartographic base maps](https://www.bfs.admin.ch/bfs/en/home/statis
 The default arguments of `bfs_get_base_maps()` can be change to access specific files:
 
 ```r
+library(sf) install.packages("sf")
+
 # default arguments
 bfs_get_base_maps(
   geom = NULL,
