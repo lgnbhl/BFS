@@ -36,6 +36,8 @@ bfs_download_geodata <- function(
     return(NULL)
   }
   
+  rlang::check_installed("rstac")
+  
   if (!exists(output_dir)) dir.create(output_dir, showWarnings = FALSE)
 
   items <- rstac::stac("https://data.geo.admin.ch/api/stac/v0.9/") %>%

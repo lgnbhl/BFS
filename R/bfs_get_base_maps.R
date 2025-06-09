@@ -92,6 +92,7 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
     if (identical(file_selected, character(0))) {
       stop("No related file found. Please use other argument values.", call. = FALSE)
     }
+    rlang::check_installed("sf")
     sf::read_sf(file_selected)
   } else {
     file_selected

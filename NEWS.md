@@ -1,3 +1,12 @@
+# BFS 0.5.2
+- remove "rstac" and "sf" R package dependencies to make the package lighter
+  and easier to install. When using the functions `bfs_download_geodata()` and
+  `bfs_get_base_maps()`, the user will be asked to install "rstac" and "sf" if
+  they are not installed locally. Tests using these dependencies are skipped
+  in CRAN and CI.
+- removing `bfs_download_geodata()` automated tests will reduce API calls on
+  "data.geo.admin.ch" server.
+
 # BFS 0.5.13
 - fix CRAN NOTE: remove native pipes for older R version compatibility.
 
