@@ -1,7 +1,7 @@
 Package: BFS
 Type: Package
 Title: Get Data from the Swiss Federal Statistical Office
-Version: 0.5.2
+Version: 0.6.0
 Authors@R: 
   c(person(given = "Felix",
            family = "Luginbuhl",
