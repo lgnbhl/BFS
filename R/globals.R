@@ -10,6 +10,7 @@ utils::globalVariables(
     "rel",
     "number_bfs", 
     "number_asset", 
-    "publication_date"
+    "publication_date",
+    "."
   )
 )
