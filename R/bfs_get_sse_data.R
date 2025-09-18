@@ -82,11 +82,11 @@ bfs_get_sse_data <-
         Accept = "application/xml",
         `Accept-Language` = language
       ) %>%
-      req_error(is_error = ~ FALSE) %>% 
+      httr2::req_error(is_error = ~ FALSE) %>% 
       httr2::req_perform()
     
     # Check status of request
-    status <- resp_status(resp)
+    status <- httr2::resp_status(resp)
     # Meaningfull error message
     if (status != 200) {
       body <- httr2::resp_body_string(resp)
