@@ -41,6 +41,7 @@ bfs_get_sse_data <-
     
     # Get API URLs
     url_data <- bfs_get_sse_url(number_bfs)
+    url_data <- bfs_get_sse_url(number_bfs)[1]
     url_metadata <- gsub(",", "/", url_data) %>% 
       gsub("data", "dataflow", .) %>% 
       gsub("\\/$", "?references=all", .)
@@ -77,13 +78,27 @@ bfs_get_sse_data <-
                      "dimensionAtObservation=AllDimensions"), collapse = "&"))
     
     # Request data
-    res_xml <- httr2::request(url_sse) %>% 
+    resp <- httr2::request(url_sse) %>% 
       httr2::req_headers(
         Accept = "application/xml",
         `Accept-Language` = language
-      ) %>% 
-      httr2::req_perform() %>% 
-      httr2::resp_body_xml()
+      ) %>%
+      req_error(is_error = ~ FALSE) %>% 
+      httr2::req_perform()
+    
+    # Check status of request
+    status <- resp_status(resp)
+    # Meaningfull error message
+    if (status != 200) {
+      body <- httr2::resp_body_string(resp)
+      if (body == "NoRecordsFound") {
+        stop("No records found for the specified query.")
+      }
+      stop("HTTP error: ", status, " ", body)
+    }
+    
+    # Parse XML response
+    res_xml <- httr2::resp_body_xml(resp)
     
     # Extract all Obs nodes
     obs_nodes <- xml2::xml_find_all(res_xml, ".//generic:Obs")
