@@ -23,7 +23,7 @@ bfs_get_sse_metadata <- function(number_bfs, language = "de") {
   }
   
   # Get URL based on number_bfs
-  meta_url <- bfs_get_sse_url(number_bfs, metadata = TRUE)
+  meta_url <- bfs_get_sse_url(number_bfs, metadata = TRUE)[1]
   
   # Request Metadata
   res_xml <- httr2::request(meta_url) %>% 

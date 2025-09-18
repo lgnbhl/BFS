@@ -40,7 +40,6 @@ bfs_get_sse_data <-
     }
     
     # Get API URLs
-    url_data <- bfs_get_sse_url(number_bfs)
     url_data <- bfs_get_sse_url(number_bfs)[1]
     url_metadata <- gsub(",", "/", url_data) %>% 
       gsub("data", "dataflow", .) %>% 
