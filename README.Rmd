@@ -48,6 +48,36 @@ devtools::install_github("lgnbhl/BFS")
 library(BFS)
 ```
 
+## Access Swiss Stats Exporer API (NEW)
+
+Two new functions are currently tested to access the new Swiss Stats Explorer API.
+
+These functions are only accessible when using the development version of this package on GitHub.
+
+```r
+# install dev version of the BFS R package
+devtools::install_github("lgnbhl/BFS")
+```
+
+Access a Swiss Stats Explorer dataset by BFS number using the new `bfs_get_sse_data()` function.
+
+```{r}
+bfs_get_sse_data(
+  number_bfs = "DF_PASTA_552_MONTHLY", 
+  language = "en", 
+  query =  list("FREQ" = "M", "ACCOMMODATION_TYPE" = c("552001"), 
+                "COUNTRY_ORIGIN" = c("CH", "AUSL")),
+  start_period = "2020",
+  end_period = "2023"
+)
+```
+
+You can also access the Swiss Stats Explorer metadata with the following function:
+
+```{r}
+bfs_get_sse_metadata("DF_SSV_POL_LEG", language = "de")
+```
+
 ### Get the data catalog
 
 Before downloading a BFS dataset, you need to get its related BFS number (FSO number) in the [official data catalog](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html). You can search in the catalog directly from R using the `bfs_get_catalog_data()` function in any language ("de", "fr", "it" or "en"):
