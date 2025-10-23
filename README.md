@@ -45,8 +45,8 @@ library(BFS)
 
 ## Access Swiss Stats Exporer API (NEW)
 
-Two new functions are currently tested to access the new Swiss Stats
-Explorer API.
+Two new functions are currently tested to access the new [Swiss Stats
+Explorer API](https://stats.swiss/).
 
 These functions are only accessible when using the development version
 of this package on GitHub.
