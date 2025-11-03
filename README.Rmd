@@ -50,7 +50,7 @@ library(BFS)
 
 ## Access Swiss Stats Exporer API (NEW)
 
-Two new functions are currently tested to access the new [Swiss Stats Explorer API](https://stats.swiss/).
+Two new functions are currently tested to access the new [Swiss Stats Explorer API](https://stats.swiss/) (SSE).
 
 These functions are only accessible when using the development version of this package on GitHub.
 
@@ -59,23 +59,35 @@ These functions are only accessible when using the development version of this p
 devtools::install_github("lgnbhl/BFS")
 ```
 
-Access a Swiss Stats Explorer dataset by BFS number using the new `bfs_get_sse_data()` function.
+To get data from SSE you first create a query using the metadata codelist from SSE using the `bfs_get_sse_metadata()` function. First get the codelist of a BFS dataset:
+```{r}
+codelist <- bfs_get_sse_metadata("DF_LWZ_1", language = "en")
+
+codelist
+```
+
+Then filter the codelist to build your query:
+```{r}
+querydat <- codelist %>% 
+  dplyr::filter((code == "GR_KT_GDE" & valueText %in% c("Aarau", "Olten")) |
+                  (code == "WOHN_ANZAHL" & valueText == "Total") |
+                  (code == "LEERWOHN_TYP" & valueText == "Vacant dwelling for rent") |
+                  (code == "MEASURE_DIMENSION" & valueText == "Value"))
+query <- tapply(querydat$value, querydat$code, c)
+
+query
+```
+
+This query can be used in the new `bfs_get_sse_data()` function to import the data.
 
 ```{r}
 bfs_get_sse_data(
-  number_bfs = "DF_PASTA_552_MONTHLY", 
+  number_bfs = "DF_LWZ_1", 
   language = "en", 
-  query =  list("FREQ" = "M", "ACCOMMODATION_TYPE" = c("552001"), 
-                "COUNTRY_ORIGIN" = c("CH", "AUSL")),
+  query =  query,
   start_period = "2020",
   end_period = "2023"
 )
-```
-
-You can also access the Swiss Stats Explorer metadata with the following function:
-
-```{r}
-bfs_get_sse_metadata("DF_SSV_POL_LEG", language = "de")
 ```
 
 ### Get the data catalog
