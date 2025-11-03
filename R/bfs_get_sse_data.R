@@ -122,7 +122,7 @@ bfs_get_sse_data <-
     # Get observation names instead of codes if specified
     if (variable_value_type == "text") {
       dim_df <- dim_df %>% 
-        dplyr::mutate(dim_value = dplyr::coalesce(.data$valueTexts, .data$dim_value))
+        dplyr::mutate(dim_value = dplyr::coalesce(.data$valueText, .data$dim_value))
     }
     
     # Get dimension names instead of codes if specified
