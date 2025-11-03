@@ -43,22 +43,12 @@ devtools::install_github("lgnbhl/BFS")
 library(BFS)
 ```
 
-## Access Swiss Stats Exporer API (NEW)
+## Access Swiss Stats Exporer API
 
-Two new functions are currently tested to access the new [Swiss Stats
-Explorer API](https://stats.swiss/) (SSE).
-
-These functions are only accessible when using the development version
-of this package on GitHub.
-
-``` r
-# install dev version of the BFS R package
-devtools::install_github("lgnbhl/BFS")
-```
-
-To get data from SSE you first create a query using the metadata
-codelist from SSE using the `bfs_get_sse_metadata()` function. First get
-the codelist of a BFS dataset:
+To get data from the [Swiss Stats Explorer API](https://stats.swiss/)
+(SSE) you first create a query using the metadata codelist from SSE
+using the `bfs_get_sse_metadata()` function. First get the codelist of a
+BFS dataset:
 
 ``` r
 codelist <- bfs_get_sse_metadata("DF_LWZ_1", language = "en")
