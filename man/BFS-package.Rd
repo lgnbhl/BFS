@@ -24,6 +24,7 @@ Useful links:
 
 Other contributors:
 \itemize{
+  \item Marius Hodel (\href{https://orcid.org/0000-0001-8789-506X}{ORCID}) [contributor]
   \item Janosch Brenzel-Weiss [contributor]
   \item Joao Martins [contributor]
   \item Philipp Baumann \email{baumann-philipp@protonmail.com} (\href{https://orcid.org/0000-0002-3194-8975}{ORCID}) [contributor]

@@ -103,7 +103,7 @@ bfs_get_sse_metadata <- function(number_bfs, language = "de") {
     dplyr::left_join(dim_info, by = c("codelist_id" = "dimension_id")) %>% 
     dplyr::left_join(all_codes, by = c("codelist_ref" = "codelist_id", "code")) %>% 
     dplyr::select(code = "codelist_id", text = "codelist_text", 
-                  value = "code", valueTexts = "label", 
+                  value = "code", valueText = "label", 
                   position_dimension = "position") %>% 
     dplyr::distinct()
   
