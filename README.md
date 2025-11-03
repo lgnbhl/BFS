@@ -1,16 +1,16 @@
 
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <!-- badges: start -->
 
 [![CRAN
-status](https://www.r-pkg.org/badges/version/BFS.png)](https://CRAN.R-project.org/package=BFS)
+status](https://www.r-pkg.org/badges/version/BFS)](https://CRAN.R-project.org/package=BFS)
 [![Grand
-total](https://cranlogs.r-pkg.org/badges/grand-total/BFS.png)](https://cran.r-project.org/package=BFS)
+total](https://cranlogs.r-pkg.org/badges/grand-total/BFS)](https://cran.r-project.org/package=BFS)
 [![R-CMD-check](https://github.com/lgnbhl/BFS/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lgnbhl/BFS/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/lgnbhl/BFS/branch/master/graph/badge.svg)](https://app.codecov.io/gh/lgnbhl/BFS?branch=master)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Follow-E4405F?style=social&logo=linkedin.png)](https://www.linkedin.com/in/FelixLuginbuhl/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Follow-E4405F?style=social&logo=linkedin)](https://www.linkedin.com/in/FelixLuginbuhl/)
 [![Codecov test
 coverage](https://codecov.io/gh/lgnbhl/BFS/graph/badge.svg)](https://app.codecov.io/gh/lgnbhl/BFS)
 <!-- badges: end -->
@@ -46,7 +46,7 @@ library(BFS)
 ## Access Swiss Stats Exporer API (NEW)
 
 Two new functions are currently tested to access the new [Swiss Stats
-Explorer API](https://stats.swiss/).
+Explorer API](https://stats.swiss/) (SSE).
 
 These functions are only accessible when using the development version
 of this package on GitHub.
@@ -56,57 +56,80 @@ of this package on GitHub.
 devtools::install_github("lgnbhl/BFS")
 ```
 
-Access a Swiss Stats Explorer dataset by BFS number using the new
-`bfs_get_sse_data()` function.
+To get data from SSE you first create a query using the metadata
+codelist from SSE using the `bfs_get_sse_metadata()` function. First get
+the codelist of a BFS dataset:
+
+``` r
+codelist <- bfs_get_sse_metadata("DF_LWZ_1", language = "en")
+
+codelist
+```
+
+    ## # A tibble: 2,321 × 5
+    ##    code      text                             value valueText position_dimension
+    ##    <chr>     <chr>                            <chr> <chr>                  <int>
+    ##  1 GR_KT_GDE Cantons, districts and municipa… 1     Aeugst a…                  1
+    ##  2 GR_KT_GDE Cantons, districts and municipa… 10    Obfelden                   1
+    ##  3 GR_KT_GDE Cantons, districts and municipa… 100   Stadel                     1
+    ##  4 GR_KT_GDE Cantons, districts and municipa… 1001  Dopplesc…                  1
+    ##  5 GR_KT_GDE Cantons, districts and municipa… 1002  Entlebuch                  1
+    ##  6 GR_KT_GDE Cantons, districts and municipa… 1004  Flühli                     1
+    ##  7 GR_KT_GDE Cantons, districts and municipa… 1005  Hasle (L…                  1
+    ##  8 GR_KT_GDE Cantons, districts and municipa… 1007  Romoos                     1
+    ##  9 GR_KT_GDE Cantons, districts and municipa… 1008  Schüpfhe…                  1
+    ## 10 GR_KT_GDE Cantons, districts and municipa… 1009  Werthens…                  1
+    ## # ℹ 2,311 more rows
+
+Then filter the codelist to build your query:
+
+``` r
+querydat <- codelist %>% 
+  dplyr::filter((code == "GR_KT_GDE" & valueText %in% c("Aarau", "Olten")) |
+                  (code == "WOHN_ANZAHL" & valueText == "Total") |
+                  (code == "LEERWOHN_TYP" & valueText == "Vacant dwelling for rent") |
+                  (code == "MEASURE_DIMENSION" & valueText == "Value"))
+query <- tapply(querydat$value, querydat$code, c)
+
+query
+```
+
+    ## $GR_KT_GDE
+    ## [1] "2581" "4001"
+    ## 
+    ## $LEERWOHN_TYP
+    ## [1] "4"
+    ## 
+    ## $MEASURE_DIMENSION
+    ## [1] "V"
+    ## 
+    ## $WOHN_ANZAHL
+    ## [1] "_T"
+
+This query can be used in the new `bfs_get_sse_data()` function to
+import the data.
 
 ``` r
 bfs_get_sse_data(
-  number_bfs = "DF_PASTA_552_MONTHLY", 
+  number_bfs = "DF_LWZ_1", 
   language = "en", 
-  query =  list("FREQ" = "M", "ACCOMMODATION_TYPE" = c("552001"), 
-                "COUNTRY_ORIGIN" = c("CH", "AUSL")),
+  query =  query,
   start_period = "2020",
   end_period = "2023"
 )
 ```
 
-    # A tibble: 480 × 7
-       TIME_PERIOD FREQ    ACCOMMODATION_TYPE               INDICATOR COUNTRY_ORIGIN
-       <chr>       <chr>   <chr>                            <chr>     <chr>         
-     1 2020-01     Monthly Holiday apartments, holiday hom… Arrivals  Switzerland   
-     2 2020-02     Monthly Holiday apartments, holiday hom… Arrivals  Switzerland   
-     3 2020-03     Monthly Holiday apartments, holiday hom… Arrivals  Switzerland   
-     4 2020-04     Monthly Holiday apartments, holiday hom… Arrivals  Switzerland   
-     5 2020-05     Monthly Holiday apartments, holiday hom… Arrivals  Switzerland   
-     6 2020-06     Monthly Holiday apartments, holiday hom… Arrivals  Switzerland   
-     7 2020-07     Monthly Holiday apartments, holiday hom… Arrivals  Switzerland   
-     8 2020-08     Monthly Holiday apartments, holiday hom… Arrivals  Switzerland   
-     9 2020-09     Monthly Holiday apartments, holiday hom… Arrivals  Switzerland   
-    10 2020-10     Monthly Holiday apartments, holiday hom… Arrivals  Switzerland   
-    # ℹ 470 more rows
-    # ℹ 2 more variables: STATISTICAL_OPERATION <chr>, value <dbl>
-
-You can also access the Swiss Stats Explorer metadata with the following
-function:
-
-``` r
-bfs_get_sse_metadata("DF_SSV_POL_LEG", language = "de")
-```
-
-    # A tibble: 226 × 5
-       code           text              value valueTexts          position_dimension
-       <chr>          <chr>             <chr> <chr>                            <int>
-     1 SSV_SWISS_CITY CL_SSV_SWISS_CITY _ST   Gesamtwert für Sch…                  1
-     2 SSV_SWISS_CITY CL_SSV_SWISS_CITY 1024  Gesamtwert für Sch…                  1
-     3 SSV_SWISS_CITY CL_SSV_SWISS_CITY 1031  Gesamtwert für Sch…                  1
-     4 SSV_SWISS_CITY CL_SSV_SWISS_CITY 1054  Gesamtwert für Sch…                  1
-     5 SSV_SWISS_CITY CL_SSV_SWISS_CITY 1058  Gesamtwert für Sch…                  1
-     6 SSV_SWISS_CITY CL_SSV_SWISS_CITY 1059  Gesamtwert für Sch…                  1
-     7 SSV_SWISS_CITY CL_SSV_SWISS_CITY 1061  Gesamtwert für Sch…                  1
-     8 SSV_SWISS_CITY CL_SSV_SWISS_CITY 1103  Gesamtwert für Sch…                  1
-     9 SSV_SWISS_CITY CL_SSV_SWISS_CITY 1151  Gesamtwert für Sch…                  1
-    10 SSV_SWISS_CITY CL_SSV_SWISS_CITY 117   Gesamtwert für Sch…                  1
-    # ℹ 216 more rows
+    ## # A tibble: 8 × 7
+    ##   TIME_PERIOD GR_KT_GDE WOHN_ANZAHL LEERWOHN_TYP   MEASURE_DIMENSION FREQ  value
+    ##   <chr>       <chr>     <chr>       <chr>          <chr>             <chr> <dbl>
+    ## 1 2020        Olten     Total       Vacant dwelli… Value             Annu…   350
+    ## 2 2021        Olten     Total       Vacant dwelli… Value             Annu…   393
+    ## 3 2022        Olten     Total       Vacant dwelli… Value             Annu…   418
+    ## 4 2023        Olten     Total       Vacant dwelli… Value             Annu…   266
+    ## 5 2020        Aarau     Total       Vacant dwelli… Value             Annu…   110
+    ## 6 2021        Aarau     Total       Vacant dwelli… Value             Annu…    85
+    ## 7 2022        Aarau     Total       Vacant dwelli… Value             Annu…    61
+    ## 8 2023        Aarau     Total       Vacant dwelli… Value             Annu…    49
 
 ### Get the data catalog
 
@@ -121,33 +144,32 @@ You can search in the catalog directly from R using the
 bfs_get_catalog_data(language = "en", extended_search = "student")
 ```
 
-    # A tibble: 4 × 6
-      title                 language number_bfs number_asset publication_date url_px
-      <chr>                 <chr>    <chr>      <chr>        <date>           <chr> 
-    1 University of applie… en       px-x-1502… 34248852     2025-03-27       https…
-    2 University of applie… en       px-x-1502… 34248849     2025-03-27       https…
-    3 University students … en       px-x-1502… 34248664     2025-03-27       https…
-    4 University students … en       px-x-1502… 34248666     2025-03-27       https…
+    ## # A tibble: 4 × 6
+    ##   title                 language number_bfs number_asset publication_date url_px
+    ##   <chr>                 <chr>    <chr>      <chr>        <date>           <chr> 
+    ## 1 University of applie… en       px-x-1502… 34248852     2025-03-27       https…
+    ## 2 University of applie… en       px-x-1502… 34248849     2025-03-27       https…
+    ## 3 University students … en       px-x-1502… 34248664     2025-03-27       https…
+    ## 4 University students … en       px-x-1502… 34248666     2025-03-27       https…
 
 You can search in the data catalog using the following arguments:
 
--   `language`: The language of a BFS catalog, i.e. “de”, “fr”, “it” or
-    “en”.
--   `title`: to search in title, subtitle and supertitle.
--   `extended_search`: extended search in (sub/super)title, orderNr,
-    summary, shortSummary, shortTextGNP.
--   `spatial_division`: choose between “Switzerland”, “Cantons”,
-    “Districts”, “Communes”, “Other spatial divisions” or
-    “International”.
--   `prodima`: by specific BFS themes using a unique prodima number.
--   `inquiry`: by inquiry number.
--   `institution`: by institution.
--   `publishing_year_start`: by publishing year start.
--   `publishing_year_end`: by publishing year end.
--   `order_nr`: by BFS Number (FSO number).
--   `limit`: limit of query results (API limit seems to be 350)
--   `article_model_group`: article model group
--   `article_model`: article model
+- `language`: The language of a BFS catalog, i.e. “de”, “fr”, “it” or
+  “en”.
+- `title`: to search in title, subtitle and supertitle.
+- `extended_search`: extended search in (sub/super)title, orderNr,
+  summary, shortSummary, shortTextGNP.
+- `spatial_division`: choose between “Switzerland”, “Cantons”,
+  “Districts”, “Communes”, “Other spatial divisions” or “International”.
+- `prodima`: by specific BFS themes using a unique prodima number.
+- `inquiry`: by inquiry number.
+- `institution`: by institution.
+- `publishing_year_start`: by publishing year start.
+- `publishing_year_end`: by publishing year end.
+- `order_nr`: by BFS Number (FSO number).
+- `limit`: limit of query results (API limit seems to be 350)
+- `article_model_group`: article model group
+- `article_model`: article model
 
 Note that English (“en”) and Italian (“it”) data catalogs offer a
 limited list of datasets. For the full list please get the French (“fr”)
@@ -166,20 +188,20 @@ catalog_raw <- bfs_get_catalog_data(
 catalog_raw
 ```
 
-    # A tibble: 4 × 5
-      ids$uuid      $contentId bfs$embargo description$titles$m…¹ shop$orderNr links
-      <chr>              <int> <chr>       <chr>                  <chr>        <lis>
-    1 1e58cdb7-01b…    2301224 2025-03-27… University of applied… px-x-150204… <df> 
-    2 fa6d167c-6b6…    2301215 2025-03-27… University of applied… px-x-150204… <df> 
-    3 dfd53d00-f5c…    2301207 2025-03-27… University students b… px-x-150204… <df> 
-    4 8f4fb90d-b6a…    2301195 2025-03-27… University students b… px-x-150204… <df> 
-    # ℹ abbreviated name: ¹​description$titles$main
-    # ℹ 14 more variables: ids$gnp <chr>, $damId <int>, $languageCopyId <int>,
-    #   bfs$lifecycle <df[,4]>, $lifecycleGroup <chr>, $provisional <lgl>,
-    #   $articleModel <df[,4]>, $articleModelGroup <df[,4]>,
-    #   description$categorization <df[,13]>, $bibliography <df[,1]>,
-    #   $shortSummary <df[,2]>, $language <chr>, $abstractShort <chr>,
-    #   shop$stock <lgl>
+    ## # A tibble: 4 × 5
+    ##   ids$uuid      $contentId bfs$embargo description$titles$m…¹ shop$orderNr links
+    ##   <chr>              <int> <chr>       <chr>                  <chr>        <lis>
+    ## 1 1e58cdb7-01b…    2301224 2025-03-27… University of applied… px-x-150204… <df> 
+    ## 2 fa6d167c-6b6…    2301215 2025-03-27… University of applied… px-x-150204… <df> 
+    ## 3 dfd53d00-f5c…    2301207 2025-03-27… University students b… px-x-150204… <df> 
+    ## 4 8f4fb90d-b6a…    2301195 2025-03-27… University students b… px-x-150204… <df> 
+    ## # ℹ abbreviated name: ¹​description$titles$main
+    ## # ℹ 14 more variables: ids$gnp <chr>, $damId <int>, $languageCopyId <int>,
+    ## #   bfs$lifecycle <df[,4]>, $lifecycleGroup <chr>, $provisional <lgl>,
+    ## #   $articleModel <df[,4]>, $articleModelGroup <df[,4]>,
+    ## #   description$categorization <df[,13]>, $bibliography <df[,1]>,
+    ## #   $shortSummary <df[,2]>, $language <chr>, $abstractShort <chr>,
+    ## #   shop$stock <lgl>
 
 The data catalog in a raw structure returns a data.frame containing
 nested data.frames in some columns. Here an example to get the
@@ -191,19 +213,19 @@ library(dplyr)
 as_tibble(catalog_raw$description)
 ```
 
-    # A tibble: 4 × 6
-      titles$main       categorization$colle…¹ bibliography$period shortSummary$html
-      <chr>             <list>                 <chr>               <chr>            
-    1 University of ap… <df [2 × 4]>           1997-2024           This dataset pre…
-    2 University of ap… <df [2 × 4]>           1997-2024           This dataset pre…
-    3 University stude… <df [2 × 4]>           1990-2024           This dataset pre…
-    4 University stude… <df [2 × 4]>           1980-2024           This dataset pre…
-    # ℹ abbreviated name: ¹​categorization$collection
-    # ℹ 15 more variables: categorization$prodima <list>, $inquiry <list>,
-    #   $spatialdivision <list>, $classification <list>, $institution <list>,
-    #   $publisher <list>, $tags <list>, $dataSource <list>, $copyrights <list>,
-    #   $termsOfUse <list>, $serie <list>, $periodicity <list>,
-    #   shortSummary$raw <chr>, language <chr>, abstractShort <chr>
+    ## # A tibble: 4 × 6
+    ##   titles$main       categorization$colle…¹ bibliography$period shortSummary$html
+    ##   <chr>             <list>                 <chr>               <chr>            
+    ## 1 University of ap… <df [2 × 4]>           1997-2024           This dataset pre…
+    ## 2 University of ap… <df [2 × 4]>           1997-2024           This dataset pre…
+    ## 3 University stude… <df [2 × 4]>           1990-2024           This dataset pre…
+    ## 4 University stude… <df [2 × 4]>           1980-2024           This dataset pre…
+    ## # ℹ abbreviated name: ¹​categorization$collection
+    ## # ℹ 15 more variables: categorization$prodima <list>, $inquiry <list>,
+    ## #   $spatialdivision <list>, $classification <list>, $institution <list>,
+    ## #   $publisher <list>, $tags <list>, $dataSource <list>, $copyrights <list>,
+    ## #   $termsOfUse <list>, $serie <list>, $periodicity <list>,
+    ## #   shortSummary$raw <chr>, language <chr>, abstractShort <chr>
 
 As the API limit is 350 results, you can get the full data catalog by
 looping on specific parameters. For example, you can loop over all
@@ -223,26 +245,26 @@ catalog_all <- purrr::pmap_dfr(
 catalog_all
 ```
 
-    # A tibble: 768 × 5
-       ids$uuid     $contentId bfs$embargo description$titles$m…¹ shop$orderNr links
-       <chr>             <int> <chr>       <chr>                  <chr>        <lis>
-     1 ed95f4e3-4a…   13807205 2025-08-28… Männliche Vornamen de… px-x-010405… <df> 
-     2 dcefda9c-b6…   13807212 2025-08-28… Weibliche Vornamen de… px-x-010405… <df> 
-     3 4d53b847-9d…     189124 2025-08-27… Auswanderung der stän… px-x-010302… <df> 
-     4 010ce6b9-38…     189120 2025-08-27… Auswanderung der stän… px-x-010302… <df> 
-     5 baf1b850-e1…     189087 2025-08-27… Auswanderung der stän… px-x-010302… <df> 
-     6 a3460776-11…     325764 2025-08-27… Auswanderung der stän… px-x-010302… <df> 
-     7 cee71724-66…     282359 2025-08-27… Binnenabwanderung der… px-x-010301… <df> 
-     8 937a2dac-2e…    9566523 2025-08-27… Binnenwanderung der s… px-x-010301… <df> 
-     9 a0e0ae62-c0…     189128 2025-08-27… Binnenzuwanderung der… px-x-010301… <df> 
-    10 53412e22-9e…     289933 2025-08-27… Demografische Bilanz … px-x-010202… <df> 
-    # ℹ 758 more rows
-    # ℹ abbreviated name: ¹​description$titles$main
-    # ℹ 16 more variables: ids$gnp <chr>, $damId <int>, $languageCopyId <int>,
-    #   bfs$lifecycle <df[,4]>, $lifecycleGroup <chr>, $provisional <lgl>,
-    #   $articleModel <df[,4]>, $articleModelGroup <df[,4]>,
-    #   $lastUpdatedVersion <chr>, description$titles$sub <chr>,
-    #   description$categorization <df[,13]>, $bibliography <df[,2]>, …
+    ## # A tibble: 768 × 5
+    ##    ids$uuid     $contentId bfs$embargo description$titles$m…¹ shop$orderNr links
+    ##    <chr>             <int> <chr>       <chr>                  <chr>        <lis>
+    ##  1 c001d7d3-c8…     325772 2025-09-25… Heiraten und Heiratsh… px-x-010202… <df> 
+    ##  2 be1f72da-ab…     189095 2025-09-25… Lebendgeburten nach M… px-x-010202… <df> 
+    ##  3 595d7bde-97…     325776 2025-09-25… Scheidungen und Schei… px-x-010202… <df> 
+    ##  4 cbc06e96-d8…     189065 2025-09-25… Todesfälle nach Monat… px-x-010202… <df> 
+    ##  5 ed95f4e3-4a…   13807205 2025-08-28… Männliche Vornamen de… px-x-010405… <df> 
+    ##  6 dcefda9c-b6…   13807212 2025-08-28… Weibliche Vornamen de… px-x-010405… <df> 
+    ##  7 4d53b847-9d…     189124 2025-08-27… Auswanderung der stän… px-x-010302… <df> 
+    ##  8 010ce6b9-38…     189120 2025-08-27… Auswanderung der stän… px-x-010302… <df> 
+    ##  9 baf1b850-e1…     189087 2025-08-27… Auswanderung der stän… px-x-010302… <df> 
+    ## 10 a3460776-11…     325764 2025-08-27… Auswanderung der stän… px-x-010302… <df> 
+    ## # ℹ 758 more rows
+    ## # ℹ abbreviated name: ¹​description$titles$main
+    ## # ℹ 16 more variables: ids$gnp <chr>, $damId <int>, $languageCopyId <int>,
+    ## #   bfs$lifecycle <df[,4]>, $lifecycleGroup <chr>, $provisional <lgl>,
+    ## #   $articleModel <df[,4]>, $articleModelGroup <df[,4]>,
+    ## #   $lastUpdatedVersion <chr>, description$titles$sub <chr>,
+    ## #   description$categorization <df[,13]>, $bibliography <df[,2]>, …
 
 ``` r
 # to not overload the server, please save the data frame locally
@@ -270,25 +292,25 @@ the Swiss Federal Statistical Office.
 bfs_get_data(number_bfs = "px-x-1502040100_131", language = "en")
 ```
 
-    # A tibble: 18,900 × 5
-       Year    `ISCED Field`     Sex    `Level of study`       `University students`
-       <chr>   <chr>             <chr>  <chr>                                  <dbl>
-     1 1980/81 Education science Male   First university degr…                   545
-     2 1980/81 Education science Male   Bachelor                                   0
-     3 1980/81 Education science Male   Master                                     0
-     4 1980/81 Education science Male   Doctorate                                 93
-     5 1980/81 Education science Male   Further education, ad…                    13
-     6 1980/81 Education science Female First university degr…                   946
-     7 1980/81 Education science Female Bachelor                                   0
-     8 1980/81 Education science Female Master                                     0
-     9 1980/81 Education science Female Doctorate                                 70
-    10 1980/81 Education science Female Further education, ad…                    52
-    # ℹ 18,890 more rows
+    ## # A tibble: 18,900 × 5
+    ##    Year    `ISCED Field`     Sex    `Level of study`       `University students`
+    ##    <chr>   <chr>             <chr>  <chr>                                  <dbl>
+    ##  1 1980/81 Education science Male   First university degr…                   545
+    ##  2 1980/81 Education science Male   Bachelor                                   0
+    ##  3 1980/81 Education science Male   Master                                     0
+    ##  4 1980/81 Education science Male   Doctorate                                 93
+    ##  5 1980/81 Education science Male   Further education, ad…                    13
+    ##  6 1980/81 Education science Female First university degr…                   946
+    ##  7 1980/81 Education science Female Bachelor                                   0
+    ##  8 1980/81 Education science Female Master                                     0
+    ##  9 1980/81 Education science Female Doctorate                                 70
+    ## 10 1980/81 Education science Female Further education, ad…                    52
+    ## # ℹ 18,890 more rows
 
 ### “Too Many Requests” error message
 
 When running the `bfs_get_data()` function you may get the following
-error message (issue [#7](https://github.com/lgnbhl/BFS/issues/7)).
+error message (issue [\#7](https://github.com/lgnbhl/BFS/issues/7)).
 
     Error in pxweb_advanced_get(url = url, query = query, verbose = verbose) : 
       Too Many Requests (RFC 6585) (HTTP 429).
@@ -444,14 +466,14 @@ catalog_tables_en_students <- bfs_get_catalog_tables(language = "en", extended_s
 catalog_tables_en_students
 ```
 
-    # A tibble: 5 × 5
-      title                          language number_asset publication_date order_nr
-      <chr>                          <chr>    <chr>        <date>           <chr>   
-    1 Students at universities and … en       35008068     2025-03-27       ts-x-15…
-    2 Students at universities and … en       34707698     2025-03-27       su-e-15…
-    3 Students at universities of a… en       35008067     2025-03-27       ts-x-15…
-    4 Students at universities of a… en       34707700     2025-03-27       su-e-15…
-    5 Students at universities of t… en       34707695     2025-03-27       su-e-15…
+    ## # A tibble: 5 × 5
+    ##   title                          language number_asset publication_date order_nr
+    ##   <chr>                          <chr>    <chr>        <date>           <chr>   
+    ## 1 Students at universities and … en       35008068     2025-03-27       ts-x-15…
+    ## 2 Students at universities and … en       34707698     2025-03-27       su-e-15…
+    ## 3 Students at universities of a… en       35008067     2025-03-27       ts-x-15…
+    ## 4 Students at universities of a… en       34707700     2025-03-27       su-e-15…
+    ## 5 Students at universities of t… en       34707695     2025-03-27       su-e-15…
 
 Most of the BFS tables are Excel or CSV files. You can download an table
 with `bfs_download_asset()` using the `number asset`.
@@ -482,22 +504,22 @@ catalog_tables_raw <- bfs_get_catalog_tables(
 catalog_tables_raw
 ```
 
-    # A tibble: 6 × 5
-      ids$uuid      $contentId bfs$embargo description$titles$m…¹ shop$orderNr links
-      <chr>              <int> <chr>       <chr>                  <chr>        <lis>
-    1 bf5e392a-e95…   20044168 2025-03-27… Students at universit… ts-x-15.02.… <df> 
-    2 c9eb6b70-43f…     528179 2025-03-27… Students at universit… su-e-15.02.… <df> 
-    3 36a042c8-b94…   20044200 2025-03-27… Students at universit… ts-x-15.02.… <df> 
-    4 28ce8307-668…     528173 2025-03-27… Students at universit… su-e-15.02.… <df> 
-    5 d3bc2d74-119…     528176 2025-03-27… Students at universit… su-e-15.02.… <df> 
-    6 a5169f0b-6f8…   14876281 2024-10-31… Student mobility with… su-e-15.02.… <df> 
-    # ℹ abbreviated name: ¹​description$titles$main
-    # ℹ 14 more variables: ids$gnp <chr>, $damId <int>, $languageCopyId <int>,
-    #   bfs$lifecycle <df[,4]>, $lifecycleGroup <chr>, $provisional <lgl>,
-    #   $articleModel <df[,4]>, $articleModelGroup <df[,4]>,
-    #   description$categorization <df[,13]>, $bibliography <df[,1]>,
-    #   $shortSummary <df[,2]>, $language <chr>, $abstractShort <chr>,
-    #   shop$stock <lgl>
+    ## # A tibble: 6 × 5
+    ##   ids$uuid      $contentId bfs$embargo description$titles$m…¹ shop$orderNr links
+    ##   <chr>              <int> <chr>       <chr>                  <chr>        <lis>
+    ## 1 2f0d3744-3b1…   14876281 2025-10-27… Student mobility with… su-e-15.02.… <df> 
+    ## 2 bf5e392a-e95…   20044168 2025-03-27… Students at universit… ts-x-15.02.… <df> 
+    ## 3 c9eb6b70-43f…     528179 2025-03-27… Students at universit… su-e-15.02.… <df> 
+    ## 4 36a042c8-b94…   20044200 2025-03-27… Students at universit… ts-x-15.02.… <df> 
+    ## 5 28ce8307-668…     528173 2025-03-27… Students at universit… su-e-15.02.… <df> 
+    ## 6 d3bc2d74-119…     528176 2025-03-27… Students at universit… su-e-15.02.… <df> 
+    ## # ℹ abbreviated name: ¹​description$titles$main
+    ## # ℹ 14 more variables: ids$gnp <chr>, $damId <int>, $languageCopyId <int>,
+    ## #   bfs$lifecycle <df[,4]>, $lifecycleGroup <chr>, $provisional <lgl>,
+    ## #   $articleModel <df[,4]>, $articleModelGroup <df[,4]>,
+    ## #   description$categorization <df[,13]>, $bibliography <df[,1]>,
+    ## #   $language <chr>, $shortSummary <df[,2]>, $abstractShort <chr>,
+    ## #   shop$stock <lgl>
 
 The data catalog in a raw structure returns a data.frame containing
 nested data.frames in some columns. Here an example to get the
@@ -509,21 +531,21 @@ library(dplyr)
 as_tibble(catalog_tables_raw$description)
 ```
 
-    # A tibble: 6 × 6
-      titles$main       categorization$colle…¹ bibliography$period shortSummary$html
-      <chr>             <list>                 <chr>               <chr>            
-    1 Students at univ… <df [3 × 4]>           1980-2024           <p>Descriptions …
-    2 Students at univ… <df [3 × 4]>           1990-2024           <NA>             
-    3 Students at univ… <df [3 × 4]>           2000-2024           <p>Descriptions …
-    4 Students at univ… <df [3 × 4]>           1997-2024           <NA>             
-    5 Students at univ… <df [2 × 4]>           2005-2024           <NA>             
-    6 Student mobility… <df [2 × 4]>           2022                <NA>             
-    # ℹ abbreviated name: ¹​categorization$collection
-    # ℹ 15 more variables: categorization$prodima <list>, $inquiry <list>,
-    #   $spatialdivision <list>, $classification <list>, $institution <list>,
-    #   $publisher <list>, $tags <list>, $dataSource <list>, $copyrights <list>,
-    #   $termsOfUse <list>, $serie <list>, $periodicity <list>,
-    #   shortSummary$raw <chr>, language <chr>, abstractShort <chr>
+    ## # A tibble: 6 × 6
+    ##   titles$main                categorization$colle…¹ bibliography$period language
+    ##   <chr>                      <list>                 <chr>               <chr>   
+    ## 1 Student mobility within S… <df [2 × 4]>           2023                EN      
+    ## 2 Students at universities … <df [3 × 4]>           1980-2024           DE/EN/F…
+    ## 3 Students at universities … <df [3 × 4]>           1990-2024           EN      
+    ## 4 Students at universities … <df [3 × 4]>           2000-2024           DE/EN/F…
+    ## 5 Students at universities … <df [3 × 4]>           1997-2024           EN      
+    ## 6 Students at universities … <df [2 × 4]>           2005-2024           EN      
+    ## # ℹ abbreviated name: ¹​categorization$collection
+    ## # ℹ 14 more variables: categorization$prodima <list>, $inquiry <list>,
+    ## #   $spatialdivision <list>, $classification <list>, $institution <list>,
+    ## #   $publisher <list>, $tags <list>, $dataSource <list>, $copyrights <list>,
+    ## #   $termsOfUse <list>, $serie <list>, $periodicity <list>,
+    ## #   shortSummary <df[,2]>, abstractShort <chr>
 
 ## Access geodata catalog
 
