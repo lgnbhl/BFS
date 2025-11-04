@@ -1,3 +1,7 @@
+# BFS 0.7.0
+- Add new functions to access the data and metadata of the new Swiss Stats
+  Explorer API.
+
 # BFS 0.5.2
 - remove "rstac" and "sf" R package dependencies to make the package lighter
   and easier to install. When using the functions `bfs_download_geodata()` and

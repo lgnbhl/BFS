@@ -29,6 +29,14 @@ navbar:
      href: http://felixluginbuhl.com
 
 reference:
+  - title: "Swiss Stats Explorer API"
+    desc: >
+      The Swiss Stats Explorer is the new official API of the Swiss Federal Statistical Office.
+    contents:
+    - bfs_get_sse_data
+    - bfs_get_sse_metadata
+    - bfs_get_sse_url
+    - get_xml_name
   - title: "PXWeb API"
     desc: >
       PXWEB is an API structure developed to disseminate public statistics.
