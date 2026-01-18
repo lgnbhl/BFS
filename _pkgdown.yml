@@ -10,6 +10,8 @@ authors:
   Felix Luginbuhl:
     href: "https://felixluginbuhl.com"
 
+llm-docs: true
+
 navbar:
   left:
   - text: Home
