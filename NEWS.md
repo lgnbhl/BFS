@@ -1,3 +1,6 @@
+# BFS 0.7.1
+- test fails for a specific test for `bfs_get_sse_data()` on Debian-clang.
+
 # BFS 0.7.0
 - Add new functions to access the data and metadata of the new Swiss Stats
   Explorer API.
