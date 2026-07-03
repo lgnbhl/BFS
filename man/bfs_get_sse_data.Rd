@@ -39,12 +39,14 @@ A tibble with the requested data.
 Get Data from Swiss Stats Explorer (SSE) API
 }
 \examples{
+\donttest{
 bfs_get_sse_data(
-  number_bfs = "DF_PASTA_552_MONTHLY", 
-  language = "en", 
-  query =  list("FREQ" = "M", "ACCOMMODATION_TYPE" = c("552001"), 
+  number_bfs = "DF_PASTA_552_MONTHLY",
+  language = "en",
+  query =  list("FREQ" = "M", "ACCOMMODATION_TYPE" = c("552001"),
                 "COUNTRY_ORIGIN" = c("CH", "AUSL")),
   start_period = "2020",
   end_period = "2023"
   )
+}
 }

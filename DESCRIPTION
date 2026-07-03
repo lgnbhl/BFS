@@ -1,7 +1,7 @@
 Package: BFS
 Type: Package
 Title: Get Data from the Swiss Federal Statistical Office
-Version: 0.7.1
+Version: 0.7.2
 Authors@R: 
   c(person(given = "Felix",
            family = "Luginbuhl",
@@ -49,7 +49,7 @@ Suggests:
     rstac,
     sf
 Encoding: UTF-8
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 URL: https://felixluginbuhl.com/BFS/, https://github.com/lgnbhl/BFS/
 BugReports: https://github.com/lgnbhl/BFS/issues
 Config/testthat/edition: 3

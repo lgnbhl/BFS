@@ -1,3 +1,8 @@
+# BFS 0.7.2
+- wrap the network-dependent examples of `bfs_get_sse_data()` and
+  `bfs_get_sse_metadata()` in `\donttest{}` to avoid CRAN/CI check failures
+  when the Swiss Stats Explorer API is unreachable or times out.
+
 # BFS 0.7.1
 - test fails for a specific test for `bfs_get_sse_data()` on Debian-clang.
 

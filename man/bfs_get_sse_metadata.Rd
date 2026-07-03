@@ -19,5 +19,7 @@ Retrieve metadata codelists for a specified BFS dataset from the Swiss Stats Exp
 This function is required to built queries for \link{bfs_get_sse_data}.
 }
 \examples{
+\donttest{
 bfs_get_sse_metadata("DF_SSV_POL_LEG", language = "de")
+}
 }
