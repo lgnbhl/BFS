@@ -48,6 +48,7 @@ bfs_get_catalog_geodata <- function(include_metadata = TRUE) {
       # if too many requests HTTP 429
       json <- httr2::request("https://data.geo.admin.ch/api/stac/v0.9/collections/") %>%
         httr2::req_url_path_append(collection_id) %>%
+        httr2::req_retry(max_tries = 3, max_seconds = 30) %>%
         httr2::req_perform() %>%
         httr2::resp_body_json()
 
@@ -65,7 +66,21 @@ bfs_get_catalog_geodata <- function(include_metadata = TRUE) {
       )
     }
 
-    df <- purrr::map_dfr(collection_ids$collection_id, purrr::possibly(geo_get_metadata, otherwise = tibble::tibble()), .progress = TRUE)
+    # a collection whose metadata can't be retrieved keeps NA metadata
+    failed <- character(0)
+    geo_get_metadata_safely <- function(collection_id) {
+      tryCatch(geo_get_metadata(collection_id), error = function(e) {
+        failed <<- c(failed, collection_id)
+        tibble::tibble()
+      })
+    }
+    df <- purrr::map_dfr(collection_ids$collection_id, geo_get_metadata_safely, .progress = TRUE)
+    if (length(failed) > 0) {
+      message(
+        "The metadata of ", length(failed), " collection(s) could not be retrieved ",
+        "and is NA: ", paste(failed, collapse = ", ")
+      )
+    }
 
     collection_ids <- collection_ids %>%
       dplyr::left_join(df, by = "collection_id")

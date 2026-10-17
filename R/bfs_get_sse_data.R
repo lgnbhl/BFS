@@ -116,9 +116,13 @@ bfs_get_sse_data <-
       xml2::xml_attr("value") %>% 
       as.numeric()
     
+    # Number of dimension values of each observation, so values stay on the
+    # right observation even if one has fewer dimensions
+    n_keys <- xml2::xml_length(xml2::xml_find_first(obs_nodes, "generic:ObsKey"))
+
     # Create a data frame
     dim_df <- tibble::tibble(
-      obs_index = rep(seq_along(obs_nodes), each = length(unique(dim_ids))),
+      obs_index = rep(seq_along(obs_nodes), times = n_keys),
       dimension = dim_ids,
       dim_value = dim_values
     ) %>% 

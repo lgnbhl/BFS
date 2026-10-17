@@ -8,32 +8,22 @@
 #' @importFrom magrittr %>%
 #'
 bfs_get_sse_url <- function(number_bfs, metadata = FALSE) {
-  
+
   url_sse <- "https://disseminate.stats.swiss/rest"
-  
-  # Get all available dataflows
-  dataflows <- httr2::request(paste0(url_sse, "/dataflow")) %>% 
-    req_headers(Accept = "application/json") %>% 
-    httr2::req_perform() %>% 
-    httr2::resp_body_json(simplifyVector = TRUE) %>% 
-    abort_on_http_error()
-  
-  dataflows <- as.data.frame(names(dataflows$references))
-  colnames(dataflows) <- "urn"
-  
-  # Create part of the URL required for the selected number_bfs
-  part_url <- dataflows %>% 
-    dplyr::mutate(urn = gsub(".*Dataflow=|\\)", "", .data$urn)) %>% 
-    tidyr::separate(.data$urn, into = c("agency_id", "dataflow_id", "version"),
-                    sep = ":|\\(") %>% 
-    dplyr::filter(.data$dataflow_id == number_bfs) %>% 
-    tidyr::unite("part_url", "agency_id":"version", sep = ",") %>% 
-    dplyr::pull(.data$part_url)
-  
+
+  # Get all available dataflows, cached for the R session
+  fetched_now <- is.null(sse_cache$urns)
+  part_url <- sse_part_url(sse_dataflow_urns(url_sse), number_bfs)
+
+  # the dataflow may have been published after the list was cached
+  if (length(part_url) == 0 && !fetched_now) {
+    part_url <- sse_part_url(sse_dataflow_urns(url_sse, refresh = TRUE), number_bfs)
+  }
+
   if (length(part_url) == 0) {
     stop("The provided BFS number does not exist in the SSE API.")
   }
-  
+
   final_url <- paste0(url_sse, "/data/", part_url, "/")
   
   if (metadata) {
@@ -43,6 +33,36 @@ bfs_get_sse_url <- function(number_bfs, metadata = FALSE) {
   }
   
   return(final_url)
+}
+
+# Session cache of the SSE API, see bfs_clear_cache()
+sse_cache <- new.env(parent = emptyenv())
+
+# Get the URNs of all available SSE dataflows, cached for the R session
+sse_dataflow_urns <- function(url_sse, refresh = FALSE) {
+  if (refresh || is.null(sse_cache$urns)) {
+    dataflows <- httr2::request(paste0(url_sse, "/dataflow")) %>%
+      req_headers(Accept = "application/json") %>%
+      httr2::req_perform() %>%
+      httr2::resp_body_json(simplifyVector = TRUE) %>%
+      abort_on_http_error()
+    sse_cache$urns <- names(dataflows$references)
+  }
+  sse_cache$urns
+}
+
+# Create part of the URL required for the selected number_bfs
+sse_part_url <- function(urns, number_bfs) {
+  dataflows <- as.data.frame(urns)
+  colnames(dataflows) <- "urn"
+
+  dataflows %>%
+    dplyr::mutate(urn = gsub(".*Dataflow=|\\)", "", .data$urn)) %>%
+    tidyr::separate(.data$urn, into = c("agency_id", "dataflow_id", "version"),
+                    sep = ":|\\(") %>%
+    dplyr::filter(.data$dataflow_id == number_bfs) %>%
+    tidyr::unite("part_url", "agency_id":"version", sep = ",") %>%
+    dplyr::pull(.data$part_url)
 }
 
 #' Get the name from an XML node for a specified language, with fallback
