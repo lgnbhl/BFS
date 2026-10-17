@@ -5,6 +5,9 @@
 #' from the codelists of [bfs_get_sse_metadata()].
 #'
 #' @inheritParams bfs_get_sse_metadata
+#' @param version Version of the dataflow, e.g. `"1.1.0"`. If `NULL`
+#'   (default), the latest version is used. Set it in a data pipeline to keep
+#'   the same structure when a new version is published.
 #' @param language Language of the labels: `"de"` (default), `"fr"`, `"it"`
 #'   or `"en"`.
 #' @param start_period,end_period Optional first and last period of the data,
@@ -41,7 +44,7 @@
 bfs_get_sse_data <- 
   function(number_bfs, language = "de", start_period = NULL, end_period = NULL, 
            query = NULL, column_name_type = "code", variable_value_type = "text", 
-           clean_names = FALSE) {
+           clean_names = FALSE, version = NULL) {
     
     language <- match.arg(arg = language, choices = c("de", "fr", "it", "en"))
     
@@ -57,17 +60,17 @@ bfs_get_sse_data <-
     }
     
     # Get API URLs
-    urls <- sse_dataflow(number_bfs)
+    urls <- sse_dataflow(number_bfs, version)
 
     # Request metadata
-    metadata <- sse_metadata_from_url(urls$metadata, language)$codelist
-    
-    # Construct part of URL for filtering in the API request
-    ordered_codes <- metadata %>%
-      dplyr::arrange(.data$position_dimension) %>% 
-      dplyr::pull(.data$code) %>% unique()
-    
-    url_parts <- 
+    sse_meta <- sse_metadata_from_url(urls$metadata, language)
+    metadata <- sse_meta$codelist
+
+    # Construct part of URL for filtering in the API request: one part per
+    # dimension of the data structure, in the order of the SDMX key
+    ordered_codes <- sse_meta$dimensions
+
+    url_parts <-
       sapply(ordered_codes, function(dim) {
         if (dim %in% names(query)) paste(query[[dim]], collapse = "+") else ""
       } 
@@ -87,9 +90,10 @@ bfs_get_sse_data <-
                       paste(names(params), params, sep = "=", collapse = "&"))
 
     # Request data
-    resp <- httr2::request(url_sse) %>%
+    resp <- sse_request(url_sse) %>%
       httr2::req_headers(
-        Accept = "application/xml",
+        # the SDMX format parsed below
+        Accept = "application/vnd.sdmx.genericdata+xml;version=2.1",
         `Accept-Language` = language
       ) %>%
       httr2::req_error(is_error = ~ FALSE) %>% 

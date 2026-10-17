@@ -435,6 +435,119 @@ test_that("bfs_get_sse_data() sends the time period only if given", {with_empty_
   })
 })})
 
+# a dataflow with several versions, whose structure has:
+# - a codelist CL_AGE of another agency, listed first, with other labels
+# - a dimension (SEX) missing from the constraint
+# - a region excluding the value Y99 of AGE
+sse_versions_json <- '{"references": {
+  "urn:sdmx:org.sdmx.infomodel.datastructure.Dataflow=CH1:DF_V(1.2.0)": {},
+  "urn:sdmx:org.sdmx.infomodel.datastructure.Dataflow=CH1:DF_V(1.10.0)": {},
+  "urn:sdmx:org.sdmx.infomodel.datastructure.Dataflow=CH1:DF_V(1.0.0)": {}
+}}'
+
+sse_structure_xml <- '<message:Structure
+  xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message"
+  xmlns:structure="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/structure"
+  xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common">
+  <message:Structures>
+    <structure:Codelists>
+      <structure:Codelist id="CL_AGE" agencyID="OTHER" version="2.0.0">
+        <common:Name xml:lang="en">Wrong</common:Name>
+        <structure:Code id="Y0"><common:Name xml:lang="en">Wrong</common:Name></structure:Code>
+      </structure:Codelist>
+      <structure:Codelist id="CL_SEX" agencyID="CH1" version="1.0.0">
+        <common:Name xml:lang="en">Sex</common:Name>
+        <structure:Code id="M"><common:Name xml:lang="en">Man</common:Name></structure:Code>
+      </structure:Codelist>
+      <structure:Codelist id="CL_AGE" agencyID="CH1" version="1.0.0">
+        <common:Name xml:lang="en">Age</common:Name>
+        <structure:Code id="Y0"><common:Name xml:lang="en">0 years</common:Name></structure:Code>
+        <structure:Code id="Y99"><common:Name xml:lang="en">99 years</common:Name></structure:Code>
+      </structure:Codelist>
+    </structure:Codelists>
+    <structure:DataStructures>
+      <structure:DataStructure id="DSD">
+        <structure:DataStructureComponents>
+          <structure:DimensionList id="DimensionDescriptor">
+            <structure:Dimension id="AGE" position="2">
+              <structure:LocalRepresentation>
+                <structure:Enumeration><Ref id="CL_AGE" agencyID="CH1" version="1.0.0"/></structure:Enumeration>
+              </structure:LocalRepresentation>
+            </structure:Dimension>
+            <structure:Dimension id="SEX" position="1">
+              <structure:LocalRepresentation>
+                <structure:Enumeration><Ref id="CL_SEX" agencyID="CH1" version="1.0.0"/></structure:Enumeration>
+              </structure:LocalRepresentation>
+            </structure:Dimension>
+            <structure:TimeDimension id="TIME_PERIOD" position="3"/>
+          </structure:DimensionList>
+        </structure:DataStructureComponents>
+      </structure:DataStructure>
+    </structure:DataStructures>
+    <structure:Constraints>
+      <structure:ContentConstraint id="CC">
+        <structure:CubeRegion include="true">
+          <common:KeyValue id="AGE"><common:Value>Y0</common:Value></common:KeyValue>
+          <common:KeyValue id="TIME_PERIOD"/>
+        </structure:CubeRegion>
+        <structure:CubeRegion include="false">
+          <common:KeyValue id="AGE"><common:Value>Y99</common:Value></common:KeyValue>
+        </structure:CubeRegion>
+      </structure:ContentConstraint>
+    </structure:Constraints>
+  </message:Structures>
+</message:Structure>'
+
+mock_sse_versions <- function(req) {
+  sse_requests$last_url <- req$url
+  if (grepl("/rest/dataflow$", req$url)) {
+    return(mock_json(sse_versions_json)(req))
+  }
+  body <- if (grepl("references=all", req$url, fixed = TRUE)) sse_structure_xml else sse_data_xml
+  httr2::response(status_code = 200, url = req$url, headers = "Content-Type: application/xml", body = charToRaw(body))
+}
+
+test_that("the latest SSE dataflow version is used, unless one is given", {with_empty_sse_cache({
+  httr2::with_mocked_responses(mock_sse_versions, {
+    expect_message(
+      url <- bfs_get_sse_url("DF_V"),
+      "several versions \\(1.10.0, 1.2.0, 1.0.0\\): using the latest, 1.10.0"
+    )
+    expect_identical(url, "https://disseminate.stats.swiss/rest/data/CH1,DF_V,1.10.0/")
+    expect_identical(
+      bfs_get_sse_url("DF_V", version = "1.2.0"),
+      "https://disseminate.stats.swiss/rest/data/CH1,DF_V,1.2.0/"
+    )
+    expect_error(bfs_get_sse_url("DF_V", version = "9.9.9"), "Available versions: 1.2.0, 1.10.0, 1.0.0")
+  })
+})})
+
+test_that("SSE metadata uses the referenced codelist and skips excluded values", {with_empty_sse_cache({
+  local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  httr2::with_mocked_responses(mock_sse_versions, {
+    meta <- bfs_get_sse_metadata("DF_V", language = "en", version = "1.0.0")
+  })
+  expect_identical(meta$value, "Y0")
+  expect_identical(meta$valueText, "0 years")
+  expect_identical(meta$text, "Age")
+  sse_meta <- httr2::with_mocked_responses(mock_sse_versions, {
+    sse_metadata_from_url("https://disseminate.stats.swiss/rest/dataflow/x?references=all", language = "en")
+  })
+  expect_identical(sse_meta$dimensions, c("SEX", "AGE"))
+})})
+
+test_that("the SSE key has one part per dimension of the data structure", {with_empty_sse_cache({
+  local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  httr2::with_mocked_responses(mock_sse_versions, {
+    # SEX is not in the constraint, but keeps its position in the key
+    df <- bfs_get_sse_data("DF_V", language = "en", version = "1.0.0", query = list(SEX = "M", AGE = "Y0"))
+    expect_identical(
+      sse_requests$last_url,
+      "https://disseminate.stats.swiss/rest/data/CH1,DF_V,1.0.0/M.Y0?dimensionAtObservation=AllDimensions"
+    )
+  })
+})})
+
 test_that("the SSE dataflow list is requested once per session", {with_empty_sse_cache({
   local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
   sse_requests$dataflow <- 0

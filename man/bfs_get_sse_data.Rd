@@ -12,7 +12,8 @@ bfs_get_sse_data(
   query = NULL,
   column_name_type = "code",
   variable_value_type = "text",
-  clean_names = FALSE
+  clean_names = FALSE,
+  version = NULL
 )
 }
 \arguments{
@@ -38,6 +39,10 @@ the whole dataset is downloaded, which can be large and slow.}
 
 \item{clean_names}{If `TRUE`, clean the column names with
 [janitor::clean_names()].}
+
+\item{version}{Version of the dataflow, e.g. `"1.1.0"`. If `NULL`
+(default), the latest version is used. Set it in a data pipeline to keep
+the same structure when a new version is published.}
 }
 \value{
 A tibble with one column per dimension and the observations in

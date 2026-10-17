@@ -1,4 +1,17 @@
 # BFS 0.7.3
+- `bfs_get_sse_data()` and `bfs_get_sse_metadata()` have a new `version`
+  argument to choose the version of an SSE dataflow, e.g. to keep the same
+  structure in a data pipeline. By default the latest version is used, with
+  a message if there are several (before, the first one listed by the API).
+- `bfs_get_sse_data()` builds the SDMX key from the dimensions of the data
+  structure, so a filter can't apply to the wrong dimension if a dimension is
+  missing from the dataset constraint.
+- `bfs_get_sse_metadata()` takes the labels from the codelist referenced by
+  the data structure (agency, id and version), and leaves out the values
+  excluded by the dataset constraint.
+- the SSE requests explicitly ask for the SDMX generic data format, are
+  retried once if the API is temporarily unavailable, and identify the
+  package in their user agent.
 - new "Get started" vignette: which API to use for which data, and the move
   from STAT-TAB to the Swiss Stats Explorer. The BFS is replacing STAT-TAB,
   and its PXWeb API used by `bfs_get_data()`, `bfs_get_metadata()` and

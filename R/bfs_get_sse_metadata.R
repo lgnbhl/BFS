@@ -9,6 +9,9 @@
 #' @param language Language of the labels: `"de"` (default), `"fr"`, `"it"`
 #'   or `"en"`. A label missing in this language falls back to another
 #'   language.
+#' @param version Version of the dataflow, e.g. `"1.1.0"`. If `NULL`
+#'   (default), the latest version is used. Set it to keep the same version
+#'   when a new one is published.
 #'
 #' @returns A tibble with one row per value of each dimension:
 #' \describe{
@@ -31,7 +34,7 @@
 #'
 #' # the dimensions and their codes
 #' unique(codelist[c("code", "text")])
-bfs_get_sse_metadata <- function(number_bfs, language = "de") {
+bfs_get_sse_metadata <- function(number_bfs, language = "de", version = NULL) {
   
   language <- match.arg(arg = language, choices = c("de", "fr", "it", "en"))
   
@@ -41,7 +44,7 @@ bfs_get_sse_metadata <- function(number_bfs, language = "de") {
     return(NULL)
   }
   
-  urls <- sse_dataflow(number_bfs)
+  urls <- sse_dataflow(number_bfs, version)
 
   sse_metadata_from_url(urls$metadata, language)$codelist
 }
@@ -63,38 +66,43 @@ bfs_get_sse_metadata <- function(number_bfs, language = "de") {
 sse_metadata_from_url <- function(meta_url, language) {
 
   # Request Metadata
-  res_xml <- httr2::request(meta_url) %>% 
-    httr2::req_headers(Accept = "application/xml") %>% 
-    httr2::req_perform() %>% 
-    httr2::resp_body_xml() %>% 
+  res_xml <- sse_request(meta_url) %>%
+    httr2::req_headers(Accept = "application/xml") %>%
+    httr2::req_perform() %>%
+    httr2::resp_body_xml() %>%
     abort_on_http_error()
-  
+
+  # Codelists
+  # .........
+
+  all_codelist_nodes <- xml2::xml_find_all(res_xml, ".//structure:Codelist")
+
   # Dimensions
   # ..........
-  
-  dimensions <- 
+
+  dimensions <-
     xml2::xml_find_all(res_xml, ".//structure:DimensionList/structure:Dimension")
-  
+
+  # codelist of each dimension, matched on its agency, id and version, so
+  # codelists with the same id in another agency or version are not mixed up
+  refs <- xml2::xml_find_first(dimensions, ".//structure:Enumeration/Ref")
+  codelist_index <- match(sse_ref_key(refs), sse_ref_key(all_codelist_nodes))
+  # a reference without agency or version: match on the id alone
+  by_id <- is.na(codelist_index)
+  codelist_index[by_id] <- match(xml2::xml_attr(refs[by_id], "id"),
+                                 xml2::xml_attr(all_codelist_nodes, "id"))
+
   dim_info <- tibble::tibble(
     dimension_id = xml2::xml_attr(dimensions, "id"),
     position = as.integer(xml2::xml_attr(dimensions, "position")),
-    codelist_ref = xml2::xml_attr(xml2::xml_find_first(dimensions, ".//structure:Enumeration/Ref"), "id")
+    codelist_ref = codelist_index
   ) %>%
     dplyr::arrange(.data$position)
-  
-  # Codelists
-  # .........
-  
-  all_codelist_nodes <- xml2::xml_find_all(res_xml, ".//structure:Codelist")
-  names(all_codelist_nodes) <- xml2::xml_attr(all_codelist_nodes, "id")
-  
-  # Only codelists needed for the dataset
-  needed_codelists <- 
-    all_codelist_nodes[dim_info$codelist_ref[!is.na(dim_info$codelist_ref)]]
-  
-  # Extract codes for all dimensions
-  all_codes <- purrr::map(names(needed_codelists), function(cl_id) {
-    cl_node <- needed_codelists[[cl_id]]
+
+  # Extract codes for all dimensions, from the codelists needed for the dataset
+  needed_codelists <- unique(dim_info$codelist_ref[!is.na(dim_info$codelist_ref)])
+  all_codes <- purrr::map(needed_codelists, function(cl_id) {
+    cl_node <- all_codelist_nodes[[cl_id]]
     codes <- xml2::xml_find_all(cl_node, ".//structure:Code")
     
     # name of each code in the requested language, with fallback to the
@@ -118,7 +126,9 @@ sse_metadata_from_url <- function(meta_url, language) {
   # Options that are actually present in the dataset
   # ................................................
   
-  rel_options <- xml2::xml_find_all(res_xml, ".//structure:CubeRegion")
+  # a region with include="false" lists values excluded from the dataset
+  rel_options <-
+    xml2::xml_find_all(res_xml, ".//structure:CubeRegion[not(@include='false')]")
   
   # Extract KeyValue nodes
   kv_nodes <- xml2::xml_find_all(rel_options, ".//common:KeyValue")
