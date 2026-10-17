@@ -11,10 +11,8 @@
 #' 
 #' @importFrom magrittr %>%
 #'
-#' @examples
-#' \donttest{
+#' @examplesIf interactive()
 #' bfs_get_sse_metadata("DF_SSV_POL_LEG", language = "de")
-#' }
 bfs_get_sse_metadata <- function(number_bfs, language = "de") {
   
   language <- match.arg(arg = language, choices = c("de", "fr", "it", "en"))

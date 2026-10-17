@@ -60,10 +60,9 @@ dplyr packages). Returns NULL if no connection.
 Get the list of the tables available in the official DAM-API of the Swiss Federal Statistical Office asset catalog.
 }
 \examples{
-\donttest{
-bfs_get_catalog_data(language = "en", title = "students", prodima = c(900212))
-}
-
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
+bfs_get_catalog_tables(language = "en", title = "students", prodima = c(900212))
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link{bfs_get_data}}

@@ -39,7 +39,7 @@ A tibble with the requested data.
 Get Data from Swiss Stats Explorer (SSE) API
 }
 \examples{
-\donttest{
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 bfs_get_sse_data(
   number_bfs = "DF_PASTA_552_MONTHLY",
   language = "en",
@@ -48,5 +48,5 @@ bfs_get_sse_data(
   start_period = "2020",
   end_period = "2023"
   )
-}
+\dontshow{\}) # examplesIf}
 }

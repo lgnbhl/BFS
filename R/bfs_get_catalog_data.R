@@ -38,10 +38,8 @@
 #'   \item{damId}{DAM API unique ID}
 #' }
 #'
-#' @examples
-#' \donttest{
+#' @examplesIf interactive()
 #' bfs_get_catalog_data(language = "en", title = "students", prodima = c(900212))
-#' }
 #'
 #' @return A tbl_df (a type of data frame; see tibble or
 #' dplyr packages). Returns NULL if no connection.

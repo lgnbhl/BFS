@@ -12,8 +12,7 @@
 #' @returns A tibble with the requested data.
 #' @export
 #'
-#' @examples
-#' \donttest{
+#' @examplesIf interactive()
 #' bfs_get_sse_data(
 #'   number_bfs = "DF_PASTA_552_MONTHLY",
 #'   language = "en",

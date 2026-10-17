@@ -32,10 +32,8 @@
 #'   \item{number_asset}{The BFS asset number}
 #' }
 #'
-#' @examples
-#' \donttest{
-#' bfs_get_catalog_data(language = "en", title = "students", prodima = c(900212))
-#' }
+#' @examplesIf interactive()
+#' bfs_get_catalog_tables(language = "en", title = "students", prodima = c(900212))
 #'
 #' @return A tbl_df (a type of data frame; see tibble or
 #' dplyr packages). Returns NULL if no connection.
