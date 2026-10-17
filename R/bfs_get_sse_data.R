@@ -46,7 +46,7 @@ bfs_get_sse_data <-
       gsub("\\/$", "?references=all", .)
     
     # Request metadata
-    metadata <- bfs_get_sse_metadata(number_bfs, language)
+    metadata <- sse_metadata_from_url(url_metadata, language)
     
     # Construct part of URL for filtering in the API request
     ordered_codes <- metadata %>%

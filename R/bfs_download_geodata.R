@@ -6,14 +6,15 @@
 #' @details The use of the data and services is free but
 #' subject to the provisions on fair use (see \url{https://www.geo.admin.ch/terms-of-use}).
 #'
-#' @param collection_id collection_id
-#' @param output_dir output_dir
-#' @param overwrite overwrite
-#' @param create_json create_json
-#' @param bbox bbox
-#' @param asset_names asset_names
-#' @param datetime datetime
-#' @param feature_id feature_id
+#' @param collection_id The STAC collection id, see the `collection_id` column
+#'  of [bfs_get_catalog_geodata()].
+#' @param output_dir The directory where the files are downloaded.
+#' @param overwrite If TRUE, overwrite existing files.
+#' @param create_json If TRUE, also save the STAC items as a json file.
+#' @param bbox Optional bounding box to filter the items, see `rstac::items()`.
+#' @param asset_names Optional names of the assets to download, see `rstac::assets_download()`.
+#' @param datetime Optional date-time or interval to filter the items, see `rstac::items()`.
+#' @param feature_id Optional id of a single item, see `rstac::items()`.
 #'
 #' @importFrom magrittr %>%
 #'
@@ -21,7 +22,7 @@
 #'
 #' @export
 bfs_download_geodata <- function(
-    collection_id = collection_id,
+    collection_id,
     output_dir = tempdir(),
     overwrite = FALSE,
     create_json = FALSE,
@@ -38,7 +39,7 @@ bfs_download_geodata <- function(
   
   rlang::check_installed("rstac")
   
-  if (!exists(output_dir)) dir.create(output_dir, showWarnings = FALSE)
+  if (!dir.exists(output_dir)) dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 
   items <- rstac::stac("https://data.geo.admin.ch/api/stac/v0.9/") %>%
     rstac::collections(collection_id = collection_id) %>%

@@ -5,7 +5,7 @@
 \title{Download a geographic file from the Swiss geo-portal}
 \usage{
 bfs_download_geodata(
-  collection_id = collection_id,
+  collection_id,
   output_dir = tempdir(),
   overwrite = FALSE,
   create_json = FALSE,
@@ -16,21 +16,22 @@ bfs_download_geodata(
 )
 }
 \arguments{
-\item{collection_id}{collection_id}
+\item{collection_id}{The STAC collection id, see the `collection_id` column
+of [bfs_get_catalog_geodata()].}
 
-\item{output_dir}{output_dir}
+\item{output_dir}{The directory where the files are downloaded.}
 
-\item{overwrite}{overwrite}
+\item{overwrite}{If TRUE, overwrite existing files.}
 
-\item{create_json}{create_json}
+\item{create_json}{If TRUE, also save the STAC items as a json file.}
 
-\item{bbox}{bbox}
+\item{bbox}{Optional bounding box to filter the items, see `rstac::items()`.}
 
-\item{asset_names}{asset_names}
+\item{asset_names}{Optional names of the assets to download, see `rstac::assets_download()`.}
 
-\item{datetime}{datetime}
+\item{datetime}{Optional date-time or interval to filter the items, see `rstac::items()`.}
 
-\item{feature_id}{feature_id}
+\item{feature_id}{Optional id of a single item, see `rstac::items()`.}
 }
 \value{
 Returns the file path where the file has been downloaded. Returns NULL if no connection.

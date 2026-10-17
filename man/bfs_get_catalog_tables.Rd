@@ -51,10 +51,16 @@ bfs_get_catalog_tables(
 \item{return_raw}{boolean Return raw data from json structure as a tibble data.frame}
 }
 \value{
-A data frame. Returns NULL if no connection.
-
 A tbl_df (a type of data frame; see tibble or
-dplyr packages). Returns NULL if no connection.
+dplyr packages) with the columns:
+\describe{
+  \item{title}{A character column with the title of the BFS table}
+  \item{language}{A character column with the language of the BFS table}
+  \item{number_asset}{The BFS asset number}
+  \item{publication_date}{The published date of the BFS table in the data catalog}
+  \item{order_nr}{The BFS number (FSO number), named orderNr in the API}
+}
+Returns NULL if no connection.
 }
 \description{
 Get the list of the tables available in the official DAM-API of the Swiss Federal Statistical Office asset catalog.
@@ -66,11 +72,4 @@ bfs_get_catalog_tables(language = "en", title = "students", prodima = c(900212))
 }
 \seealso{
 \code{\link{bfs_get_data}}
-
-\describe{
-  \item{title}{A character column with the title of the BFS dataset}
-  \item{language}{A character column with the language of the BFS dataset}
-  \item{publication_date}{The published date of the BFS dataset in the data catalog}
-  \item{number_asset}{The BFS asset number}
-}
 }

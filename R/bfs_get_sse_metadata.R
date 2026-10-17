@@ -25,7 +25,24 @@ bfs_get_sse_metadata <- function(number_bfs, language = "de") {
   
   # Get URL based on number_bfs
   meta_url <- bfs_get_sse_url(number_bfs, metadata = TRUE)[1]
-  
+
+  sse_metadata_from_url(meta_url, language)
+}
+
+#' Get the SSE metadata (codelists) from a metadata URL
+#'
+#' Used by [bfs_get_sse_metadata()] and [bfs_get_sse_data()], which already
+#' knows the metadata URL and so avoids requesting the dataflow list twice.
+#'
+#' @param meta_url The SSE metadata URL, see [bfs_get_sse_url()].
+#' @param language The desired language code ("de", "fr", "it", "en").
+#'
+#' @importFrom magrittr %>%
+#'
+#' @returns A tibble containing the codelists of the dataset.
+#' @noRd
+sse_metadata_from_url <- function(meta_url, language) {
+
   # Request Metadata
   res_xml <- httr2::request(meta_url) %>% 
     httr2::req_headers(Accept = "application/xml") %>% 
@@ -61,15 +78,14 @@ bfs_get_sse_metadata <- function(number_bfs, language = "de") {
     cl_node <- needed_codelists[[cl_id]]
     codes <- xml2::xml_find_all(cl_node, ".//structure:Code")
     
-    # extract code IDs
-    ids <- xml2::xml_attr(codes, "id")
-    
-    # extract all <Name> children of all codes in one pass
-    name_nodes <- xml2::xml_find_all(codes, ".//common:Name")
-    langs <- xml2::xml_attr(name_nodes, "lang")
-    texts <- xml2::xml_text(name_nodes)
-    label <- texts[langs == language]
-    
+    # name of each code in the requested language, with fallback to the
+    # first available name (one result per code, so labels stay aligned)
+    label <- xml2::xml_text(
+      xml2::xml_find_first(codes, paste0("common:Name[@xml:lang='", language, "']"))
+    )
+    label_fallback <- xml2::xml_text(xml2::xml_find_first(codes, "common:Name"))
+    label <- ifelse(is.na(label), label_fallback, label)
+
     tibble::tibble(
       codelist_id = cl_id,
       codelist_text = get_xml_name(cl_node, language = language),

@@ -17,7 +17,17 @@
 #' @param article_model integer articleModel parameter query
 #' @param return_raw boolean Return raw data from json structure as a tibble data.frame
 #'
-#' @return A data frame. Returns NULL if no connection.
+#' @return A tbl_df (a type of data frame; see tibble or
+#' dplyr packages) with the columns:
+#' \describe{
+#'   \item{title}{A character column with the title of the BFS dataset}
+#'   \item{language}{A character column with the language of the BFS dataset}
+#'   \item{number_bfs}{The BFS number (FSO number), named orderNr in the API}
+#'   \item{number_asset}{The BFS asset number}
+#'   \item{publication_date}{The published date of the BFS dataset, named embargo in the API}
+#'   \item{url_px}{A character column with the URL of the PX file}
+#' }
+#' Returns NULL if no connection.
 #'
 #' @importFrom httr2 req_headers req_url_path_append req_url_query req_retry req_perform resp_body_json
 #' @importFrom dplyr filter pull as_tibble left_join select
@@ -26,23 +36,8 @@
 #'
 #' @seealso \code{\link{bfs_get_data}}
 #'
-#' \describe{
-#'   \item{title}{A character column with the title of the BFS dataset}
-#'   \item{language}{A character column with the language of the BFS dataset}
-#'   \item{number_asset}{The BFS asset number}
-#'   \item{number_bfs}{The BFS number (FSO number), named orderNr in the API}
-#'   \item{publication_date}{The published date of the BFS dataset, named embargo in the API}
-#'   \item{language_available}{A list The list of all languages available for the BFS dataset}
-#'   \item{url_px}{A character column with the URL of the PX file}
-#'   \item{url_structure_json}{A character column with the URL of the json structure of the BFS dataset}
-#'   \item{damId}{DAM API unique ID}
-#' }
-#'
 #' @examplesIf interactive()
 #' bfs_get_catalog_data(language = "en", title = "students", prodima = c(900212))
-#'
-#' @return A tbl_df (a type of data frame; see tibble or
-#' dplyr packages). Returns NULL if no connection.
 #'
 #' @export
 bfs_get_catalog_data <- function(language = "de", title = NULL, extended_search = NULL, spatial_division = NULL, prodima = NULL, inquiry = NULL, institution = NULL, publishing_year_start = NULL, publishing_year_end = NULL, order_nr = NULL, limit = 1000, article_model = 900033, article_model_group = 900029, return_raw = FALSE) {
@@ -83,7 +78,8 @@ bfs_get_catalog_data <- function(language = "de", title = NULL, extended_search 
       `periodStart` = publishing_year_start,
       `periodEnd` = publishing_year_end,
       `orderNr` = order_nr,
-      `limit` = limit) %>%
+      `limit` = limit,
+      .multi = "explode") %>%
     req_retry(max_tries = 2, max_seconds = 10) %>%
     req_perform() %>%
     resp_body_json(simplifyVector = TRUE) %>%
@@ -96,15 +92,14 @@ bfs_get_catalog_data <- function(language = "de", title = NULL, extended_search 
   }
   
   if(nrow(df) == 0) {
+    # same columns as a non-empty catalog
     df_final <- dplyr::tibble(
-      title = NA_character_,
-      language = NA_character_,
-      number_bfs = NA_character_,
-      number_asset = NA_character_,
+      title = character(0),
+      language = character(0),
+      number_bfs = character(0),
+      number_asset = character(0),
       publication_date = as.Date(x = integer(0)),
-      url_px = NA_character_,
-      url_structure_json = NA_character_,
-      damId = integer(0)
+      url_px = character(0)
     )
     return(df_final)
   }

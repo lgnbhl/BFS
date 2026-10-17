@@ -16,6 +16,7 @@
 #'
 #' @export
 bfs_get_asset_metadata <- function(number_asset = NULL, number_bfs = NULL, language = c("de", "fr", "it", "en")) {
+  language <- match.arg(language)
   # fail gracefully if no internet connection
   if (!curl::has_internet()) {
     message("No internet connection")
