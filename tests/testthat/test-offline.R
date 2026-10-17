@@ -70,6 +70,10 @@ test_that("bfs_get_asset_metadata() sends a single language", {
     bfs_get_asset_metadata(number_asset = "24367729", language = "EN")
   })
   expect_identical(last_req$headers[["accept-language"]], "EN")
+  expect_error(
+    bfs_get_asset_metadata(number_asset = "24367729", language = c("fr", "de")),
+    "Please specify only one language", fixed = TRUE
+  )
 })
 
 sse_metadata_xml <- '<message:Structure

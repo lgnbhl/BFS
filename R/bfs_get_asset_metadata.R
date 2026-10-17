@@ -16,7 +16,10 @@
 #'
 #' @export
 bfs_get_asset_metadata <- function(number_asset = NULL, number_bfs = NULL, language = c("de", "fr", "it", "en")) {
-  # send one language only, without rejecting values the API accepts (e.g. "EN")
+  # the API only uses one language; single values it accepts (e.g. "EN") still work
+  if (!missing(language) && length(language) > 1) {
+    stop("Please specify only one language, i.e. \"de\", \"fr\", \"it\" or \"en\".", call. = FALSE)
+  }
   language <- language[1]
   # fail gracefully if no internet connection
   if (!curl::has_internet()) {

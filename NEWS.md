@@ -18,6 +18,9 @@
   columns when no dataset is found as when datasets are found.
 - `bfs_get_asset_metadata()` sends only one language to the API (by default
   "de", which returns the same metadata as before).
+- BREAKING CHANGE: `bfs_get_asset_metadata()` gives an error if several
+  languages are passed, e.g. `language = c("fr", "de")`. Before, only the first
+  language was used by the API. Pass a single language instead.
 - `bfs_get_sse_metadata()` and `bfs_get_sse_data()` fall back to another
   language if a code has no name in the requested language, instead of
   failing. `bfs_get_sse_data()` sends one request fewer to the API.
