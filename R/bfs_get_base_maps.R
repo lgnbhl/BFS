@@ -42,11 +42,11 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
   dir <- tools::R_user_dir(package = "BFS")
   path_base_map <- paste0(dir, "/base_maps_", asset_number)
   if (!fs::dir_exists(path_base_map)) {
-    fs::dir_create(path_base_map, showWarnings = FALSE)
     BFS::bfs_download_asset(
       number_asset = asset_number,
       destfile = paste0(path_base_map, ".zip")
     )
+    fs::dir_create(path_base_map)
     # unzip all files in same directory because of encoding issues with subfolders
     zip::unzip(zipfile = paste0(path_base_map, ".zip"), junkpaths = TRUE, exdir = path_base_map)
   }
