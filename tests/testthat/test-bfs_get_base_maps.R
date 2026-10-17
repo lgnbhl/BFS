@@ -80,6 +80,8 @@ test_that("bfs_get_base_maps() with return_sf = FALSE returns an non empty chara
   if (!curl::has_internet()) {
     skip("No internet connection")
   }
+  skip_on_cran()
+  skip_on_ci()
   all_file_path <- bfs_get_base_maps(
     return_sf = FALSE, # do NOT return sf object
     asset_number = "30566934", # ThemaKart asset for 2024
