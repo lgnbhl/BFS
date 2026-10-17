@@ -41,10 +41,9 @@ bfs_get_sse_metadata <- function(number_bfs, language = "de") {
     return(NULL)
   }
   
-  # Get URL based on number_bfs
-  meta_url <- bfs_get_sse_url(number_bfs, metadata = TRUE)[1]
+  urls <- sse_dataflow(number_bfs)
 
-  sse_metadata_from_url(meta_url, language)
+  sse_metadata_from_url(urls$metadata, language)$codelist
 }
 
 #' Get the SSE metadata (codelists) from a metadata URL
@@ -52,12 +51,14 @@ bfs_get_sse_metadata <- function(number_bfs, language = "de") {
 #' Used by [bfs_get_sse_metadata()] and [bfs_get_sse_data()], which already
 #' knows the metadata URL and so avoids requesting the dataflow list twice.
 #'
-#' @param meta_url The SSE metadata URL, see [bfs_get_sse_url()].
+#' @param meta_url The SSE metadata URL, see [sse_dataflow()].
 #' @param language The desired language code ("de", "fr", "it", "en").
 #'
 #' @importFrom magrittr %>%
 #'
-#' @returns A tibble containing the codelists of the dataset.
+#' @returns A list with `codelist`, a tibble of the codelists of the dataset,
+#'   and `dimensions`, the ids of its dimensions (without the time dimension)
+#'   in the order of the SDMX key.
 #' @noRd
 sse_metadata_from_url <- function(meta_url, language) {
 
@@ -142,6 +143,6 @@ sse_metadata_from_url <- function(meta_url, language) {
                   value = "code", valueText = "label", 
                   position_dimension = "position") %>% 
     dplyr::distinct()
-  
-  return(codelist)
+
+  list(codelist = codelist, dimensions = dim_info$dimension_id)
 }

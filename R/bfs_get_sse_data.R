@@ -57,13 +57,10 @@ bfs_get_sse_data <-
     }
     
     # Get API URLs
-    url_data <- bfs_get_sse_url(number_bfs)[1]
-    url_metadata <- gsub(",", "/", url_data) %>% 
-      gsub("data", "dataflow", .) %>% 
-      gsub("\\/$", "?references=all", .)
-    
+    urls <- sse_dataflow(number_bfs)
+
     # Request metadata
-    metadata <- sse_metadata_from_url(url_metadata, language)
+    metadata <- sse_metadata_from_url(urls$metadata, language)$codelist
     
     # Construct part of URL for filtering in the API request
     ordered_codes <- metadata %>%
@@ -82,19 +79,15 @@ bfs_get_sse_data <-
       url_query <- paste(url_parts, collapse = ".")
     }
     
-    # Add time period filtering if specified
-    url_start_period <- 
-      ifelse(!is.null(start_period), paste0("startPeriod=", start_period), "")
-    url_end_period <-
-      ifelse(!is.null(end_period), paste0("endPeriod=", end_period), "")
-    
-    url_sse <- 
-      paste0(url_data, url_query, "?",
-             paste(c(url_start_period, url_end_period, 
-                     "dimensionAtObservation=AllDimensions"), collapse = "&"))
-    
+    # Add time period filtering if specified (c() drops the NULL ones). Not
+    # httr2::req_url_query(), which would escape the commas of the URL path
+    params <- c(startPeriod = start_period, endPeriod = end_period,
+                dimensionAtObservation = "AllDimensions")
+    url_sse <- paste0(urls$data, url_query, "?",
+                      paste(names(params), params, sep = "=", collapse = "&"))
+
     # Request data
-    resp <- httr2::request(url_sse) %>% 
+    resp <- httr2::request(url_sse) %>%
       httr2::req_headers(
         Accept = "application/xml",
         `Accept-Language` = language
@@ -143,7 +136,7 @@ bfs_get_sse_data <-
       dimension = dim_ids,
       dim_value = dim_values
     ) %>% 
-      left_join(metadata, by = c("dimension" = "code", "dim_value" = "value"))
+      dplyr::left_join(metadata, by = c("dimension" = "code", "dim_value" = "value"))
     
     # Get observation names instead of codes if specified
     if (variable_value_type == "text") {

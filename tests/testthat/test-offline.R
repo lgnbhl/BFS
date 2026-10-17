@@ -136,7 +136,7 @@ test_that("SSE metadata falls back to another language for a missing name", {
     )
   }
   httr2::with_mocked_responses(mock, {
-    meta <- sse_metadata_from_url("https://disseminate.stats.swiss/rest/dataflow/x", language = "en")
+    meta <- sse_metadata_from_url("https://disseminate.stats.swiss/rest/dataflow/x", language = "en")$codelist
   })
   expect_equal(nrow(meta), 2)
   expect_equal(meta$text, c("Sex", "Sex"))
@@ -378,9 +378,11 @@ with_empty_sse_cache <- function(code) {
   code
 }
 
-# mocked SSE API, counting the requests of the dataflow list
+# mocked SSE API, counting the requests of the dataflow list and keeping the
+# URL of the last request
 sse_requests <- new.env()
 mock_sse <- function(req) {
+  sse_requests$last_url <- req$url
   if (grepl("/rest/dataflow$", req$url)) {
     sse_requests$dataflow <- sse_requests$dataflow + 1
     return(mock_json(sse_dataflows_json)(req))
@@ -400,6 +402,37 @@ test_that("bfs_get_sse_data() keeps values on the right observation", {with_empt
     TIME_PERIOD = c("2023", "2023", "2024"),
     value = c(10, 20, 30)
   ))
+})})
+
+test_that("the SSE data and metadata URLs are built from the dataflow URN", {with_empty_sse_cache({
+  sse_requests$dataflow <- 0
+  httr2::with_mocked_responses(mock_sse, {
+    expect_identical(
+      bfs_get_sse_url("DF_TEST"),
+      "https://disseminate.stats.swiss/rest/data/CH1,DF_TEST,1.0.0/"
+    )
+    expect_identical(
+      bfs_get_sse_url("DF_TEST", metadata = TRUE),
+      "https://disseminate.stats.swiss/rest/dataflow/CH1/DF_TEST/1.0.0?references=all"
+    )
+  })
+})})
+
+test_that("bfs_get_sse_data() sends the time period only if given", {with_empty_sse_cache({
+  local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  sse_requests$dataflow <- 0
+  httr2::with_mocked_responses(mock_sse, {
+    bfs_get_sse_data("DF_TEST", query = list(SEX = "M"))
+    expect_identical(
+      sse_requests$last_url,
+      "https://disseminate.stats.swiss/rest/data/CH1,DF_TEST,1.0.0/M?dimensionAtObservation=AllDimensions"
+    )
+    bfs_get_sse_data("DF_TEST", query = list(SEX = "M"), start_period = 2020, end_period = "2023")
+    expect_identical(
+      sse_requests$last_url,
+      "https://disseminate.stats.swiss/rest/data/CH1,DF_TEST,1.0.0/M?startPeriod=2020&endPeriod=2023&dimensionAtObservation=AllDimensions"
+    )
+  })
 })})
 
 test_that("the SSE dataflow list is requested once per session", {with_empty_sse_cache({
