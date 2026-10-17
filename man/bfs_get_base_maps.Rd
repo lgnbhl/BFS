@@ -36,7 +36,8 @@ if FALSE then read the first file available.}
 \item{return_sf}{if TRUE, read file path and return sf object. If FALSE, return file path}
 }
 \value{
-sf object with geometries. Returns NULL if no connection.
+sf object with geometries. Returns NULL if no connection and the
+ base maps are not cached yet.
 }
 \description{
 This functions helps to get base maps data from the ThemaKart project

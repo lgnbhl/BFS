@@ -29,26 +29,39 @@
 #' @importFrom fs dir_create dir_ls
 #' @importFrom zip unzip
 #'
-#' @return sf object with geometries. Returns NULL if no connection.
+#' @return sf object with geometries. Returns NULL if no connection and the
+#'  base maps are not cached yet.
 #'
 #' @export
 bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date = NULL, most_recent = TRUE, format = "shp", asset_number = "30566934", return_sf = TRUE) {
-  # fail gracefully if no internet connection
-  if (!curl::has_internet()) {
-    message("No internet connection")
-    return(NULL)
+  if (is.null(geom)) {
+    stop("Please specify `geom`, for example \"suis\", \"kant\", \"bezk\" or \"polg\".", call. = FALSE)
   }
   # get base map files if not present in cache folder
   dir <- tools::R_user_dir(package = "BFS")
   path_base_map <- paste0(dir, "/base_maps_", asset_number)
   if (!fs::dir_exists(path_base_map)) {
+    # fail gracefully if no internet connection
+    if (!curl::has_internet()) {
+      message("No internet connection")
+      return(NULL)
+    }
+    # the cache folder doesn't exist on a fresh install
+    fs::dir_create(dir)
     BFS::bfs_download_asset(
       number_asset = asset_number,
       destfile = paste0(path_base_map, ".zip")
     )
     fs::dir_create(path_base_map)
     # unzip all files in same directory because of encoding issues with subfolders
-    zip::unzip(zipfile = paste0(path_base_map, ".zip"), junkpaths = TRUE, exdir = path_base_map)
+    tryCatch(
+      zip::unzip(zipfile = paste0(path_base_map, ".zip"), junkpaths = TRUE, exdir = path_base_map),
+      error = function(e) {
+        # don't keep a partially extracted cache
+        fs::dir_delete(path_base_map)
+        stop(e)
+      }
+    )
   }
 
   # list all files
