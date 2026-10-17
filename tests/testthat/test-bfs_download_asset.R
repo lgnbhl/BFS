@@ -1,4 +1,5 @@
 test_that("bfs_download_asset() works", {
+  skip_on_cran()
   if (!curl::has_internet()) {
     skip("No internet connection")
   }
@@ -9,12 +10,14 @@ test_that("bfs_download_asset() works", {
   expect_true(file.exists(asset_path2))
 })
 test_that("bfs_download_asset() fails with missing arguments", {
+  skip_on_cran()
   if (!curl::has_internet()) {
     skip("No internet connection")
   }
   expect_error(bfs_download_asset())
 })
 test_that("bfs_download_asset() fails with missing arguments", {
+  skip_on_cran()
   if (!curl::has_internet()) {
     skip("No internet connection")
   }

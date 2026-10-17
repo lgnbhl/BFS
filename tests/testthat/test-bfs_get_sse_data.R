@@ -1,4 +1,5 @@
 test_that("bfs_get_sse_data() works", { 
+  skip_on_cran()
   if (!curl::has_internet()) {
     skip("No internet connection")
   }

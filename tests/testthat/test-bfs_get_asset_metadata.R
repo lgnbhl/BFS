@@ -1,4 +1,5 @@
 test_that("bfs_get_asset_metadata() returns a none-empty list", {
+  skip_on_cran()
   if (!curl::has_internet()) {
     skip("No internet connection")
   }
@@ -8,6 +9,7 @@ test_that("bfs_get_asset_metadata() returns a none-empty list", {
 })
 
 test_that("bfs_get_asset_metadata() returns a none-empty list", {
+  skip_on_cran()
   if (!curl::has_internet()) {
     skip("No internet connection")
   }
@@ -17,6 +19,7 @@ test_that("bfs_get_asset_metadata() returns a none-empty list", {
 })
 
 test_that("bfs_get_asset_metadata() fails with missing arguments", {
+  skip_on_cran()
   if (!curl::has_internet()) {
     skip("No internet connection")
   }
@@ -24,6 +27,7 @@ test_that("bfs_get_asset_metadata() fails with missing arguments", {
 })
 
 test_that("bfs_get_asset_metadata() fails with missing arguments", {
+  skip_on_cran()
   if (!curl::has_internet()) {
     skip("No internet connection")
   }

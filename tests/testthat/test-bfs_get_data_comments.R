@@ -1,4 +1,5 @@
 test_that("bfs_get_data_comments() works", {
+  skip_on_cran()
   if (!curl::has_internet()) {
     skip("No internet connection")
   }
@@ -10,6 +11,7 @@ test_that("bfs_get_data_comments() works", {
   expect_s3_class(df, "data.frame")
 })
 test_that("bfs_get_data_comments() query argument", {
+  skip_on_cran()
   if (!curl::has_internet()) {
     skip("No internet connection")
   }
@@ -25,6 +27,7 @@ test_that("bfs_get_data_comments() query argument", {
   expect_s3_class(df, "data.frame")
 })
 test_that("bfs_get_data_comments() query argument not list", {
+  skip_on_cran()
   if (!curl::has_internet()) {
     skip("No internet connection")
   }

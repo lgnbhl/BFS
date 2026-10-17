@@ -1,4 +1,5 @@
 test_that("bfs_get_data() works", {
+  skip_on_cran()
   if (!curl::has_internet()) {
     skip("No internet connection")
   }
@@ -11,6 +12,7 @@ test_that("bfs_get_data() works", {
   expect_true(nrow(df) > 1)
 })
 test_that("bfs_get_data() query argument", {
+  skip_on_cran()
   if (!curl::has_internet()) {
     skip("No internet connection")
   }
@@ -39,6 +41,7 @@ test_that("bfs_get_data() query argument", {
   expect_false(identical(names(df), names(df_clean_names)))
 })
 test_that("bfs_get_data() query argument not list", {
+  skip_on_cran()
   if (!curl::has_internet()) {
     skip("No internet connection")
   }

@@ -1,4 +1,5 @@
 test_that("bfs_get_catalog_tables() returns a data.frame of 5 rows", {
+  skip_on_cran()
   if (!curl::has_internet()) {
     skip("No internet connection")
   }
@@ -7,6 +8,7 @@ test_that("bfs_get_catalog_tables() returns a data.frame of 5 rows", {
   expect_true(nrow(df_tables) == 5)
 })
 test_that("bfs_get_catalog_tables() using title argument", {
+  skip_on_cran()
   if (!curl::has_internet()) {
     skip("No internet connection")
   }
@@ -14,6 +16,7 @@ test_that("bfs_get_catalog_tables() using title argument", {
   expect_s3_class(df_tables, "data.frame")
 })
 test_that("bfs_get_catalog_tables() using prodima argument", {
+  skip_on_cran()
   if (!curl::has_internet()) {
     skip("No internet connection")
   }
