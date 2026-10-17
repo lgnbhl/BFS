@@ -39,7 +39,8 @@ bfs_download_asset <- function(number_asset = NULL, number_bfs = NULL, destfile,
     quiet = quiet,
     mode = mode,
     handle = handle
-  )
+  ) %>%
+    abort_on_http_error()
 
   file_path
 }
