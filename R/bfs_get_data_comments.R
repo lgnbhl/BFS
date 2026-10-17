@@ -29,7 +29,8 @@ bfs_get_data_comments <- function(number_bfs, language = "de", query = NULL, cle
     httr2::req_url_path_append(paste0(language, "/", number_bfs, "/", number_bfs, ".px")) %>%
     httr2::req_retry(max_tries = 2, max_seconds = 10) %>%
     httr2::req_perform() %>%
-    httr2::resp_body_json(simplifyVector = TRUE)
+    httr2::resp_body_json(simplifyVector = TRUE) %>%
+    abort_on_http_error()
   if(!is.null(delay)) {
     Sys.sleep(delay) # waiting time in seconds before query
   }

@@ -22,7 +22,6 @@
 #'   start_period = "2020",
 #'   end_period = "2023"
 #'   )
-#' }
 bfs_get_sse_data <- 
   function(number_bfs, language = "de", start_period = NULL, end_period = NULL, 
            query = NULL, column_name_type = "code", variable_value_type = "text", 
@@ -85,7 +84,8 @@ bfs_get_sse_data <-
         `Accept-Language` = language
       ) %>%
       httr2::req_error(is_error = ~ FALSE) %>% 
-      httr2::req_perform()
+      httr2::req_perform() %>% 
+      abort_on_http_error()
     
     # Check status of request
     status <- httr2::resp_status(resp)
@@ -95,7 +95,11 @@ bfs_get_sse_data <-
       if (body == "NoRecordsFound") {
         stop("No records found for the specified query.")
       }
-      stop("HTTP error: ", status, " ", body)
+      rlang::abort(
+        c("The BFS API is not available.", i = paste0("HTTP error: ", status, " ", body)),
+        class = "bfs_http_error",
+        call = NULL
+      )
     }
     
     # Parse XML response

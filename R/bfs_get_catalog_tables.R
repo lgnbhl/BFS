@@ -82,7 +82,8 @@ bfs_get_catalog_tables <- function(language = "de", title = NULL, extended_searc
       `limit` = limit) %>%
     req_retry(max_tries = 2, max_seconds = 10) %>%
     req_perform() %>%
-    resp_body_json(simplifyVector = TRUE)
+    resp_body_json(simplifyVector = TRUE) %>%
+    abort_on_http_error()
   
   df <- as_tibble(df_raw$data)
   

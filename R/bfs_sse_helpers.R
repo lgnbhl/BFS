@@ -15,7 +15,8 @@ bfs_get_sse_url <- function(number_bfs, metadata = FALSE) {
   dataflows <- httr2::request(paste0(url_sse, "/dataflow")) %>% 
     req_headers(Accept = "application/json") %>% 
     httr2::req_perform() %>% 
-    httr2::resp_body_json(simplifyVector = TRUE)
+    httr2::resp_body_json(simplifyVector = TRUE) %>% 
+    abort_on_http_error()
   
   dataflows <- as.data.frame(names(dataflows$references))
   colnames(dataflows) <- "urn"

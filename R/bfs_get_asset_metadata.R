@@ -36,7 +36,8 @@ bfs_get_asset_metadata <- function(number_asset = NULL, number_bfs = NULL, langu
     httr2::req_headers("accept-language" = language) %>%
     httr2::req_url_path_append(id) %>%
     httr2::req_perform() %>%
-    httr2::resp_body_json(simplifyVector = TRUE)
+    httr2::resp_body_json(simplifyVector = TRUE) %>%
+    abort_on_http_error()
 
   return(asset_metadata)
 }

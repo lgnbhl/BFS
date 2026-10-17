@@ -32,7 +32,8 @@ bfs_get_sse_metadata <- function(number_bfs, language = "de") {
   res_xml <- httr2::request(meta_url) %>% 
     httr2::req_headers(Accept = "application/xml") %>% 
     httr2::req_perform() %>% 
-    httr2::resp_body_xml()
+    httr2::resp_body_xml() %>% 
+    abort_on_http_error()
   
   # Dimensions
   # ..........
