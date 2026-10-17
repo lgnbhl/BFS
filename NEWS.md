@@ -1,8 +1,12 @@
 # BFS 0.7.3
 - functions using the BFS APIs now give an informative error of class
   `bfs_http_error` if the API is not available (e.g. HTTP 429 Too Many
-  Requests, timeout, server error). The original httr2 error classes are
-  kept, so existing error handlers still work.
+  Requests, timeout, server error). The original httr2 error classes and
+  fields are kept, so existing error handlers still work, e.g.
+  `tryCatch(..., httr2_http_429 = function(e) httr2::resp_retry_after(e$resp))`.
+  The error message now starts with "The BFS API is not available.", followed
+  by the original message, and the first class is `bfs_http_error`: test the
+  class with `inherits()` instead of `class(e)[1]`.
 - skip all tests calling the BFS APIs on CRAN (`skip_on_cran()`), as the
   PXWeb API can rate-limit the CRAN check machines.
 - examples calling the BFS APIs are only run in interactive sessions.
@@ -15,15 +19,28 @@
 - `bfs_get_catalog_data()` and `bfs_get_catalog_tables()` accept multiple
   values for an argument, e.g. `prodima = c(900210, 900212)`, as documented.
 - `bfs_get_catalog_data()` and `bfs_get_catalog_tables()` return the same
-  columns when no dataset is found as when datasets are found.
+  columns, in the same order, when no dataset is found as when datasets are
+  found. The empty result of `bfs_get_catalog_data()` no longer has the
+  columns `url_structure_json` and `damId`, and in the empty result of
+  `bfs_get_catalog_tables()` the column `number_asset` now comes before
+  `publication_date`.
 - `bfs_get_asset_metadata()` sends only one language to the API (by default
   "de", which returns the same metadata as before).
 - BREAKING CHANGE: `bfs_get_asset_metadata()` gives an error if several
   languages are passed, e.g. `language = c("fr", "de")`. Before, only the first
-  language was used by the API. Pass a single language instead.
-- `bfs_get_sse_metadata()` and `bfs_get_sse_data()` fall back to another
-  language if a code has no name in the requested language, instead of
-  failing. `bfs_get_sse_data()` sends one request fewer to the API.
+  language was used by the API. Pass a single language instead. The default
+  value `c("de", "fr", "it", "en")`, e.g. forwarded by a wrapper function,
+  still uses "de".
+- BREAKING CHANGE (data): `bfs_get_sse_metadata()` and `bfs_get_sse_data()`
+  returned wrong labels when some codes of a codelist have no name in the
+  requested language. Before, the few available labels were recycled over all
+  codes, e.g. in `DF_SSV_POL_LEG` with `language = "de"`, "fr" or "it" all 181
+  cities were labelled "Gesamtwert für Schweizer Städte" / "Total des villes
+  suisses". Each code now gets its own label, with fallback to another
+  language if it has no name in the requested language. The values were not
+  affected, but results filtered, grouped, pivoted or joined on these labels
+  (`variable_value_type = "text"`, the default of `bfs_get_sse_data()`) can
+  change. `bfs_get_sse_data()` sends one request fewer to the API.
 - `bfs_download_geodata()` creates the `output_dir` folder correctly and gives
   a clear error if `collection_id` is missing.
 - the data download of `bfs_get_data()` and `bfs_get_data_comments()` and the
@@ -32,7 +49,7 @@
   (e.g. `http_429` or `curl_error_couldnt_connect`) are kept.
 - `bfs_get_catalog_data()` and `bfs_get_catalog_tables()` give a message if
   the catalog has as many results as `limit`, as more results may be
-  available.
+  available. Use `suppressMessages()` if this message is not wanted.
 - `bfs_get_catalog_geodata()` retries the metadata requests of the collections
   and gives a message listing the collections whose metadata could not be
   retrieved (NA metadata), instead of hiding them.
