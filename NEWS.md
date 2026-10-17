@@ -7,8 +7,25 @@
   PXWeb API can rate-limit the CRAN check machines.
 - examples calling the BFS APIs are only run in interactive sessions.
 - `bfs_get_base_maps()` no longer leaves an empty cache folder if the
-  download of the base maps fails.
+  download of the base maps fails, nor a partially extracted cache folder if
+  the extraction fails. It also creates the cache folder if it doesn't exist
+  yet, and uses the cached base maps when there is no internet connection.
+- `bfs_get_base_maps()` gives an informative error if `geom` is missing.
 - fix the example of `bfs_get_catalog_tables()`.
+- `bfs_get_catalog_data()` and `bfs_get_catalog_tables()` accept multiple
+  values for an argument, e.g. `prodima = c(900210, 900212)`, as documented.
+- `bfs_get_catalog_data()` and `bfs_get_catalog_tables()` return the same
+  columns when no dataset is found as when datasets are found.
+- `bfs_get_asset_metadata()` checks the `language` argument and sends only one
+  language to the API.
+- `bfs_get_sse_metadata()` and `bfs_get_sse_data()` fall back to another
+  language if a code has no name in the requested language, instead of
+  failing. `bfs_get_sse_data()` sends one request fewer to the API.
+- `bfs_download_geodata()` creates the `output_dir` folder correctly and gives
+  a clear error if `collection_id` is missing.
+- require httr2 >= 1.0.0 and purrr >= 1.0.0.
+- add offline tests (mocked HTTP responses) that also run on CRAN, and skip
+  a remaining base maps test calling the BFS API on CRAN.
 
 # BFS 0.7.2
 - wrap the network-dependent examples of `bfs_get_sse_data()` and

@@ -29,13 +29,13 @@ License: GPL (>= 3)
 Depends: R (>= 3.4)
 Imports: 
     pxweb,
-    httr2,
+    httr2 (>= 1.0.0),
     xml2,
     rvest,
     tibble,
     magrittr,
     janitor,
-    purrr,
+    purrr (>= 1.0.0),
     dplyr,
     curl,
     zip,
