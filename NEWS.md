@@ -26,6 +26,23 @@
   failing. `bfs_get_sse_data()` sends one request fewer to the API.
 - `bfs_download_geodata()` creates the `output_dir` folder correctly and gives
   a clear error if `collection_id` is missing.
+- the data download of `bfs_get_data()` and `bfs_get_data_comments()` and the
+  file download of `bfs_download_asset()` also give an error of class
+  `bfs_http_error` if the API is not available. The original error classes
+  (e.g. `http_429` or `curl_error_couldnt_connect`) are kept.
+- `bfs_get_catalog_data()` and `bfs_get_catalog_tables()` give a message if
+  the catalog has as many results as `limit`, as more results may be
+  available.
+- `bfs_get_catalog_geodata()` retries the metadata requests of the collections
+  and gives a message listing the collections whose metadata could not be
+  retrieved (NA metadata), instead of hiding them.
+- `bfs_get_sse_data()` keeps the values on the right observation if an
+  observation has fewer dimensions.
+- the list of Swiss Stats Explorer dataflows is cached for the R session, so
+  `bfs_get_sse_data()` and `bfs_get_sse_metadata()` send one request fewer
+  after the first call.
+- new `bfs_clear_cache()` to delete the cached base maps and SSE dataflows.
+  `bfs_get_base_maps()` no longer keeps the zip file once extracted.
 - require httr2 >= 1.0.0 and purrr >= 1.0.0.
 - add offline tests (mocked HTTP responses) that also run on CRAN, and skip
   a remaining base maps test calling the BFS API on CRAN.

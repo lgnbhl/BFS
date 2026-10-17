@@ -169,8 +169,254 @@ test_that("bfs_get_base_maps() works with a fresh cache and offline afterwards",
   # cached base maps are used without internet connection
   local_mocked_bindings(has_internet = function() FALSE, .package = "curl")
   expect_identical(bfs_get_base_maps(geom = "suis", return_sf = FALSE), path)
+  # the zip file is deleted once extracted
+  expect_length(list.files(tools::R_user_dir(package = "BFS"), pattern = "\\.zip$"), 0)
 })})
 
 test_that("bfs_get_base_maps() gives an informative error without geom", {
   expect_error(bfs_get_base_maps(), "Please specify `geom`", fixed = TRUE)
 })
+
+# ---- catalogs ----------------------------------------------------------------
+
+test_that("bfs_get_catalog_data() and bfs_get_catalog_tables() return the expected columns", {
+  local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  httr2::with_mocked_responses(mock_json(catalog_json), {
+    df_data <- bfs_get_catalog_data(language = "en")
+    df_tables <- bfs_get_catalog_tables(language = "en")
+  })
+  expect_identical(df_data, tibble::tibble(
+    title = "Students",
+    language = "en",
+    number_bfs = "px-x-1502040100_131",
+    number_asset = "111",
+    publication_date = as.Date("2024-01-01"),
+    url_px = "https://www.pxweb.bfs.admin.ch/px.px"
+  ))
+  expect_identical(df_tables, tibble::tibble(
+    title = "Students",
+    language = "en",
+    number_asset = "111",
+    publication_date = as.Date("2024-01-01"),
+    order_nr = "px-x-1502040100_131"
+  ))
+})
+
+test_that("a catalog with as many results as `limit` gives a message", {
+  local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  httr2::with_mocked_responses(mock_json(catalog_json), {
+    expect_message(bfs_get_catalog_data(limit = 1), "More results may be available")
+    expect_message(bfs_get_catalog_tables(limit = 1), "More results may be available")
+    expect_message(bfs_get_catalog_data(limit = 1, return_raw = TRUE), "More results may be available")
+    expect_message(bfs_get_catalog_data(), NA)
+  })
+})
+
+# ---- PXWeb -------------------------------------------------------------------
+
+pxweb_metadata_json <- '{"title": "Students", "variables": [
+  {"code": "Jahr", "text": "Year", "values": ["40", "41"], "valueTexts": ["2020", "2021"]},
+  {"code": "Geschlecht", "text": "Sex", "values": ["0", "1"], "valueTexts": ["Man", "Woman"]}
+]}'
+
+test_that("bfs_get_data() builds the pxweb query", {
+  local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  args <- NULL
+  local_mocked_bindings(pxweb_get_data = function(...) {
+    args <<- list(...)
+    data.frame(`Year` = "2020", `Students count` = 1, check.names = FALSE)
+  }, .package = "pxweb")
+  httr2::with_mocked_responses(mock_json(pxweb_metadata_json), {
+    df <- bfs_get_data(number_bfs = "px-x-1502040100_131", language = "en")
+  })
+  expect_identical(args$url, "https://www.pxweb.bfs.admin.ch/api/v1/en/px-x-1502040100_131/px-x-1502040100_131.px")
+  expect_identical(args$query, pxweb::pxweb_query(list(Jahr = "*", Geschlecht = "*")))
+  expect_identical(args$column.name.type, "text")
+  expect_identical(args$variable.value.type, "text")
+  expect_identical(df, tibble::tibble(`Year` = "2020", `Students count` = 1))
+
+  httr2::with_mocked_responses(mock_json(pxweb_metadata_json), {
+    df <- bfs_get_data(number_bfs = "px-x-1502040100_131", query = list(Jahr = "40"),
+                       column_name_type = "code", variable_value_type = "code", clean_names = TRUE)
+    expect_error(
+      bfs_get_data(number_bfs = "px-x-1502040100_131", query = "Jahr"),
+      "`query` should be a list using the variables: Jahr, Geschlecht.", fixed = TRUE
+    )
+  })
+  expect_identical(args$query, pxweb::pxweb_query(list(Jahr = "40")))
+  expect_identical(args$column.name.type, "code")
+  expect_identical(args$variable.value.type, "code")
+  expect_named(df, c("year", "students_count"))
+})
+
+test_that("bfs_get_data_comments() builds the pxweb query", {
+  local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  args <- NULL
+  local_mocked_bindings(
+    pxweb_get = function(...) {
+      args <<- list(...)
+      "pxweb_data"
+    },
+    pxweb_data_comments = function(x) data.frame(`Comment Text` = "a comment", check.names = FALSE),
+    .package = "pxweb"
+  )
+  httr2::with_mocked_responses(mock_json(pxweb_metadata_json), {
+    df <- bfs_get_data_comments(number_bfs = "px-x-1502040100_131", language = "fr", clean_names = TRUE)
+  })
+  expect_identical(args$url, "https://www.pxweb.bfs.admin.ch/api/v1/fr/px-x-1502040100_131/px-x-1502040100_131.px")
+  expect_identical(args$query, pxweb::pxweb_query(list(Jahr = "*", Geschlecht = "*")))
+  expect_identical(df, tibble::tibble(comment_text = "a comment"))
+})
+
+http_429_error <- function() {
+  # condition as raised by httr::stop_for_status(), used by pxweb
+  stop(structure(
+    class = c("http_429", "http_400", "http_error", "error", "condition"),
+    list(message = "Too Many Requests (RFC 6585) (HTTP 429).", call = NULL)
+  ))
+}
+
+test_that("an unavailable PXWeb API gives a bfs_http_error and keeps the httr class", {
+  local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  local_mocked_bindings(
+    pxweb_get_data = function(...) http_429_error(),
+    pxweb_get = function(...) http_429_error(),
+    .package = "pxweb"
+  )
+  httr2::with_mocked_responses(mock_json(pxweb_metadata_json), {
+    expect_error(bfs_get_data(number_bfs = "px-x-1502040100_131"), class = "bfs_http_error")
+    expect_error(bfs_get_data(number_bfs = "px-x-1502040100_131"), class = "http_429")
+    expect_error(bfs_get_data_comments(number_bfs = "px-x-1502040100_131"), class = "bfs_http_error")
+  })
+})
+
+# ---- DAM API downloads -------------------------------------------------------
+
+test_that("an unavailable DAM API gives a bfs_http_error when downloading", {
+  local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  local_mocked_bindings(curl_download = function(...) {
+    stop(structure(
+      class = c("curl_error_couldnt_connect", "curl_error", "error", "condition"),
+      list(message = "Could not connect to server", call = NULL)
+    ))
+  }, .package = "curl")
+  expect_error(bfs_download_asset(number_asset = "1", destfile = tempfile()), class = "bfs_http_error")
+  expect_error(bfs_download_asset(number_asset = "1", destfile = tempfile()), class = "curl_error_couldnt_connect")
+})
+
+test_that("a local download error is not reported as an unavailable API", {
+  local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  local_mocked_bindings(curl_download = function(...) stop("Failed to open file x.curltmp."), .package = "curl")
+  e <- tryCatch(bfs_download_asset(number_asset = "1", destfile = tempfile()), error = identity)
+  expect_false(inherits(e, "bfs_http_error"))
+  expect_match(conditionMessage(e), "Failed to open file")
+})
+
+# ---- geodata catalog ---------------------------------------------------------
+
+test_that("bfs_get_catalog_geodata() reports collections without metadata", {
+  local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  read_html <- xml2::read_html
+  local_mocked_bindings(read_html = function(x, ...) read_html(
+    '<html><body><div id="data">
+      <a href="https://data.geo.admin.ch/api/stac/v0.9/collections/ch.bfs.a">API</a>
+      <a href="https://data.geo.admin.ch/api/stac/v0.9/collections/ch.bfs.b">API</a>
+    </div></body></html>'
+  ), .package = "xml2")
+  collection_json <- '{"id": "ch.bfs.a", "title": "A", "description": "d",
+    "created": "2020-01-01", "updated": "2021-01-01", "crs": ["http://www.opengis.net/def/crs/OGC/1.3/CRS84"],
+    "license": "proprietary", "providers": [{"name": "BFS"}],
+    "extent": {"spatial": {"bbox": [[5.9, 45.8, 10.5, 47.8]]}, "temporal": {"interval": [["2020-01-01", null]]}}}'
+  mock <- function(req) {
+    if (grepl("ch.bfs.a$", req$url)) mock_json(collection_json)(req) else httr2::response(status_code = 404, url = req$url)
+  }
+  httr2::with_mocked_responses(mock, {
+    expect_message(df <- bfs_get_catalog_geodata(), "1 collection(s) could not be retrieved and is NA: ch.bfs.b", fixed = TRUE)
+  })
+  expect_identical(df$collection_id, c("ch.bfs.a", "ch.bfs.b"))
+  expect_identical(df$title, c("A", NA))
+})
+
+# ---- Swiss Stats Explorer ----------------------------------------------------
+
+sse_dataflows_json <- '{"references": {
+  "urn:sdmx:org.sdmx.infomodel.datastructure.Dataflow=CH1:DF_TEST(1.0.0)": {},
+  "urn:sdmx:org.sdmx.infomodel.datastructure.Dataflow=CH1:DF_OTHER(1.0.0)": {}
+}}'
+
+# the third observation has no SEX dimension
+sse_data_xml <- '<message:GenericData
+  xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message"
+  xmlns:generic="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic">
+  <message:DataSet>
+    <generic:Obs>
+      <generic:ObsKey><generic:Value id="SEX" value="M"/><generic:Value id="TIME_PERIOD" value="2023"/></generic:ObsKey>
+      <generic:ObsValue value="10"/>
+    </generic:Obs>
+    <generic:Obs>
+      <generic:ObsKey><generic:Value id="SEX" value="F"/><generic:Value id="TIME_PERIOD" value="2023"/></generic:ObsKey>
+      <generic:ObsValue value="20"/>
+    </generic:Obs>
+    <generic:Obs>
+      <generic:ObsKey><generic:Value id="TIME_PERIOD" value="2024"/></generic:ObsKey>
+      <generic:ObsValue value="30"/>
+    </generic:Obs>
+  </message:DataSet>
+</message:GenericData>'
+
+# evaluate code with an empty SSE session cache, emptied again afterwards so
+# the mocked dataflows are never used by other tests
+with_empty_sse_cache <- function(code) {
+  sse_cache$urns <- NULL
+  on.exit(sse_cache$urns <- NULL)
+  code
+}
+
+# mocked SSE API, counting the requests of the dataflow list
+sse_requests <- new.env()
+mock_sse <- function(req) {
+  if (grepl("/rest/dataflow$", req$url)) {
+    sse_requests$dataflow <- sse_requests$dataflow + 1
+    return(mock_json(sse_dataflows_json)(req))
+  }
+  body <- if (grepl("references=all", req$url, fixed = TRUE)) sse_metadata_xml else sse_data_xml
+  httr2::response(status_code = 200, url = req$url, headers = "Content-Type: application/xml", body = charToRaw(body))
+}
+
+test_that("bfs_get_sse_data() keeps values on the right observation", {with_empty_sse_cache({
+  local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  sse_requests$dataflow <- 0
+  httr2::with_mocked_responses(mock_sse, {
+    df <- bfs_get_sse_data("DF_TEST", language = "en", query = list(SEX = c("M", "F")))
+  })
+  expect_identical(df, tibble::tibble(
+    SEX = c("Man", "Frau", NA),
+    TIME_PERIOD = c("2023", "2023", "2024"),
+    value = c(10, 20, 30)
+  ))
+})})
+
+test_that("the SSE dataflow list is requested once per session", {with_empty_sse_cache({
+  local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  sse_requests$dataflow <- 0
+  httr2::with_mocked_responses(mock_sse, {
+    bfs_get_sse_data("DF_TEST", language = "en", query = list(SEX = "M"))
+    bfs_get_sse_metadata("DF_OTHER", language = "en")
+    expect_equal(sse_requests$dataflow, 1)
+    # an unknown BFS number requests the list again before failing
+    expect_error(bfs_get_sse_metadata("DF_UNKNOWN"), "does not exist in the SSE API")
+    expect_equal(sse_requests$dataflow, 2)
+  })
+})})
+
+# ---- cache -------------------------------------------------------------------
+
+test_that("bfs_clear_cache() deletes the cached base maps and SSE dataflows", {with_fresh_cache({with_empty_sse_cache({
+  cache_dir <- tools::R_user_dir(package = "BFS")
+  expect_message(bfs_clear_cache(), "No BFS cache to clear")
+  dir.create(file.path(cache_dir, "base_maps_1"), recursive = TRUE)
+  sse_cache$urns <- "urn"
+  expect_message(expect_identical(bfs_clear_cache(), cache_dir), "BFS cache cleared")
+  expect_false(dir.exists(cache_dir))
+  expect_null(sse_cache$urns)
+})})})
