@@ -2,7 +2,8 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   schedule:
-    - cron: '0 0 1 * *' # trigger R-CMD-check every month
+    - cron: '0 6 * * 1' # trigger R-CMD-check every Monday, to catch BFS API changes early
+  workflow_dispatch: # allow to run it manually from the Actions tab
   push:
     branches: [main, master]
   pull_request:
@@ -29,6 +30,9 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
+      # run the base maps tests (download of the base maps) only in scheduled
+      # or manual runs, and only on one runner
+      BFS_TEST_BASE_MAPS: ${{ (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'release' }}
 
     steps:
       - uses: actions/checkout@v3
