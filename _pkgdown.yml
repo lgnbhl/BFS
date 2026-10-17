@@ -63,6 +63,7 @@ reference:
   - title: "ThemaKart Project"
     contents:
     - bfs_get_base_maps
+    - bfs_clear_cache
   - title: "Commune Register"
     desc: >
       The Swiss official commune register is structured according to cantons and 

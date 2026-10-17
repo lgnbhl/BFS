@@ -11,7 +11,7 @@
 #' set of year 2020, the asset number is "11927607".
 #'
 #' This function is caching the base map data using
-#' `tools::R_user_dir(package = "BFS")`.
+#' `tools::R_user_dir(package = "BFS")`. Use [bfs_clear_cache()] to delete it.
 #'
 #' @param geom Geometry such as "suis", "kant", "bezk", "polg", "voge", etc.
 #' @param category Category such as 'total_area' ("gf" for "Gesamtflaeche") or
@@ -62,6 +62,8 @@ bfs_get_base_maps <- function(geom = NULL, category = "gf", type = "Poly", date 
         stop(e)
       }
     )
+    # the extracted files are enough
+    fs::file_delete(paste0(path_base_map, ".zip"))
   }
 
   # list all files

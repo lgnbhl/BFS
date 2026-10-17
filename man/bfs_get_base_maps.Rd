@@ -52,5 +52,5 @@ the `asset_number` for the related zip file. For example, for the map
 set of year 2020, the asset number is "11927607".
 
 This function is caching the base map data using
-`tools::R_user_dir(package = "BFS")`.
+`tools::R_user_dir(package = "BFS")`. Use [bfs_clear_cache()] to delete it.
 }
