@@ -1,79 +1,141 @@
 url: https://felixluginbuhl.com/BFS
 template:
   bootstrap: 5
-  bootswatch: litera
-  ganalytics: UA-158089797-1
+  # Look of felixluginbuhl.com (cream paper, warm ink, DM Sans text, Space
+  # Grotesk headings), as in muiChat, with the red of the hex logo as primary.
   bslib:
-    primary: "#f72517"
+    primary: "#D52B1E"
+    bg: "#FAF6F1"
+    fg: "#3D3229"
+    base_font: {google: "DM Sans"}
+    heading_font: {google: {family: "Space Grotesk", wght: [500, 600, 700]}}
+    code_font: {google: "Fira Code"}
+    border-color: "rgba(28, 25, 23, 0.12)"
+    # Dark mode (light-switch below): the dark scheme of felixluginbuhl.com.
+    body-bg-dark: "#14120F"
+    body-color-dark: "#E8E2DC"
+    body-emphasis-color-dark: "#F5F1EC"
+    body-secondary-color-dark: "#AFA294"
+    body-secondary-bg-dark: "#1C1917"
+    body-tertiary-bg-dark: "#1C1917"
+    border-color-dark: "rgba(232, 226, 220, 0.12)"
+    link-color-dark: "#FF8A80"
+    link-hover-color-dark: "#FFB3AB"
+  theme: arrow-dark
+  light-switch: true
+  # The rest of the site styles are in pkgdown/extra.css.
 
 authors:
   Felix Luginbuhl:
     href: "https://felixluginbuhl.com"
 
+# Footer: the package family (the honeycomb of felixluginbuhl.com, in small)
+# and the site signature. Styles in pkgdown/extra.css.
+footer:
+  structure:
+    left: [family, signature]
+    right: built_with
+  components:
+    family: '<nav class="hexfamily" aria-label="R packages by Felix Luginbuhl"><a class="current" href="https://felixluginbuhl.com/BFS/" title="BFS"><img src="https://felixluginbuhl.com/BFS/logo.png" alt="BFS"></a><a href="https://felixluginbuhl.com/I14Y/" title="I14Y"><img src="https://felixluginbuhl.com/assets/I14Y-logo.png" alt="I14Y"></a><a href="https://felixluginbuhl.com/muiMaterial/" title="muiMaterial"><img src="https://felixluginbuhl.com/assets/muiMaterial-logo.png" alt="muiMaterial"></a><a href="https://felixluginbuhl.com/muiChat/" title="muiChat"><img src="https://felixluginbuhl.com/muiChat/logo.png" alt="muiChat"></a><a href="https://felixluginbuhl.com/reactRouter/" title="reactRouter"><img src="https://felixluginbuhl.com/assets/reactRouter-logo.png" alt="reactRouter"></a><a href="https://felixluginbuhl.com/xlcharts/" title="xlcharts"><img src="https://felixluginbuhl.com/assets/xlcharts-logo.png" alt="xlcharts"></a><a href="https://felixluginbuhl.com/colornames/" title="colornames"><img src="https://felixluginbuhl.com/assets/colornames-logo.png" alt="colornames"></a><a href="https://felixluginbuhl.com/gotop/" title="gotop"><img src="https://felixluginbuhl.com/assets/gotop-logo.png" alt="gotop"></a><a href="https://felixluginbuhl.com/aos/" title="aos"><img src="https://felixluginbuhl.com/assets/aos-logo.png" alt="aos"></a><a href="https://felixluginbuhl.com/scroller/" title="scroller"><img src="https://felixluginbuhl.com/assets/scroller-logo.png" alt="scroller"></a><a href="https://felixluginbuhl.com/aniview/" title="aniview"><img src="https://felixluginbuhl.com/assets/aniview-logo.png" alt="aniview"></a><a href="https://felixluginbuhl.com/polyglot/" title="polyglot"><img src="https://felixluginbuhl.com/assets/polyglot-logo.png" alt="polyglot"></a></nav>'
+    signature: '<a class="wordmark" href="https://felixluginbuhl.com">felix luginbühl</a> &middot; Data scientist and R developer'
+
 llm-docs: true
 
 navbar:
-  left:
-  - text: Home
-    href: index.html
-  - text: Reference
-    href: reference/index.html
-  - text: News
-    href: news/index.html
-  right:
-   - icon: fa-linkedin
-     href: https://www.linkedin.com/in/felixluginbuhl
-   - icon: fa-twitter
-     href: https://twitter.com/FelixLuginbuhl
-   - icon: fa-github
-     href: https://github.com/lgnbhl/BFS
-   - icon: fa-home
-     href: http://felixluginbuhl.com
+  structure:
+    left: [intro, data, files, reference, news]
+    right: [search, lightswitch, github, homepage]
+  components:
+    intro:
+      text: Get started
+      href: articles/introduction.html
+    data:
+      text: Data
+      menu:
+      - text: Swiss Stats Explorer
+        href: articles/swiss-stats-explorer.html
+      - text: Data catalog and PXWeb datasets
+        href: articles/pxweb.html
+    files:
+      text: Files & maps
+      menu:
+      - text: Tables and files
+        href: articles/tables-and-files.html
+      - text: Geodata and base maps
+        href: articles/geodata.html
+      - text: -------
+      - text: Help
+      - text: API errors and rate limits
+        href: articles/troubleshooting.html
+      - text: llms.txt
+        href: llms.txt
+    news:
+      text: News
+      href: news/index.html
+    github:
+      icon: fa-github
+      href: https://github.com/lgnbhl/BFS
+      aria-label: GitHub
+    homepage:
+      icon: fa-home
+      href: https://felixluginbuhl.com
+      aria-label: Felix Luginbuhl's website
+
+articles:
+- title: Get started
+  navbar: ~
+  contents:
+  - introduction
+  - articles/troubleshooting
+- title: Data
+  contents:
+  - articles/swiss-stats-explorer
+  - articles/pxweb
+- title: Files and maps
+  contents:
+  - articles/tables-and-files
+  - articles/geodata
 
 reference:
-  - title: "Swiss Stats Explorer API"
-    desc: >
-      The Swiss Stats Explorer is the new official API of the Swiss Federal Statistical Office.
-    contents:
-    - bfs_get_sse_data
-    - bfs_get_sse_metadata
-    - bfs_get_sse_url
-    - get_xml_name
-  - title: "PXWeb API"
-    desc: >
-      PXWEB is an API structure developed to disseminate public statistics.
-    contents:
-    - bfs_get_catalog
-    - bfs_get_catalog_data
-    - bfs_get_catalog_tables
-    - bfs_get_data
-    - bfs_get_metadata
-    - bfs_get_data_comments
-  - title: "DAM API"
-    contents:
-    - bfs_download_asset
-    - bfs_get_asset_metadata
-  - title: "STAC API"
-    desc: >
-      STAC is a specification of files and web services used to describe 
-      geospatial information assets.
-    contents:
-    - bfs_get_catalog_geodata
-    - bfs_download_geodata
-  - title: "ThemaKart Project"
-    contents:
-    - bfs_get_base_maps
-    - bfs_clear_cache
-  - title: "Commune Register"
-    desc: >
-      The Swiss official commune register is structured according to cantons and 
-      districts or comparable administrative entities. Various federal, cantonal 
-      and communal governments and private businesses use this register when 
-      identifying and referring to communes.
-    contents:
-    - register_dic
-    - register_bzn
-    - register_gde
-    - register_gde_other
-    - register_kt
-    - register_kt_seeanteile
+- title: Swiss Stats Explorer
+  desc: >
+    The Swiss Stats Explorer (<https://stats.swiss/>) is the newer data API
+    of the BFS, based on the SDMX standard.
+  contents:
+  - bfs_get_sse_metadata
+  - bfs_get_sse_data
+- title: Data catalog and PXWeb datasets
+  desc: >
+    Search the BFS data catalog, then download a dataset from the PXWeb API
+    with its BFS number.
+  contents:
+  - bfs_get_catalog_data
+  - bfs_get_metadata
+  - bfs_get_data
+  - bfs_get_data_comments
+- title: Tables and files
+  desc: >
+    Search the BFS tables catalog and download any BFS file (Excel, CSV, PX,
+    ...) from the DAM API.
+  contents:
+  - bfs_get_catalog_tables
+  - bfs_get_asset_metadata
+  - bfs_download_asset
+- title: Geodata and base maps
+  desc: >
+    Geodata of the Swiss geo-portal (STAC API) and the cartographic base maps
+    of the BFS ThemaKart project.
+  contents:
+  - bfs_get_catalog_geodata
+  - bfs_download_geodata
+  - bfs_get_base_maps
+  - bfs_clear_cache
+- title: Swiss official commune register
+  desc: >
+    The register of the Swiss communes, districts and cantons on
+    1 January 2023, included in the package.
+  contents:
+  - starts_with("register_")
+- title: Deprecated
+  contents:
+  - bfs_get_catalog

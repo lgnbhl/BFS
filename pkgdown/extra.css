@@ -1,0 +1,227 @@
+/* BFS site styles, on top of the bslib variables of _pkgdown.yml. */
+
+/* The --site-* names and values are those of felixluginbuhl.com (R/theme.R of
+   muiPersonalWebsite), as in muiChat, so the sites can later share one file.
+   Only the primary is BFS's own: the red of the hex logo (Swiss red). */
+:root {
+  --site-ink-strong: #1C1917;
+  --site-ink-rgb: 28, 25, 23;
+  --site-muted: #6B5D4D;
+  --site-bg-rgb: 250, 246, 241;
+  --site-primary: #D52B1E;
+  --site-primary-rgb: 213, 43, 30;
+  --site-accent: #8B5A2B;
+  --site-heading: "Space Grotesk", "DM Sans", system-ui, sans-serif;
+
+  --site-line: rgba(var(--site-ink-rgb), 0.12);
+  /* The warning callouts. */
+  --site-amber: #B26A00;
+  --site-amber-soft: rgba(178, 106, 0, 0.08);
+}
+
+/* Dark: the dark scheme of felixluginbuhl.com, switched by pkgdown's
+   light-switch. Bootstrap's own dark colours are the *-dark bslib variables
+   in _pkgdown.yml; these are the ones the rules below use. */
+[data-bs-theme="dark"] {
+  --site-ink-strong: #F5F1EC;
+  --site-ink-rgb: 232, 226, 220;
+  --site-muted: #AFA294;
+  --site-bg-rgb: 20, 18, 15;
+  --site-primary: #FF8A80;
+  --site-primary-rgb: 255, 138, 128;
+  --site-accent: #D9B68C;
+  --site-amber: #FFB74D;
+}
+
+/* --- felixluginbuhl.com look --------------------------------------------- */
+
+/* The app bar of felixluginbuhl.com, to the same numbers. */
+.navbar {
+  background: rgba(var(--site-bg-rgb), 0.82) !important;
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid rgba(var(--site-ink-rgb), 0.11);
+}
+h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.02em; color: var(--site-ink-strong); }
+main h1 { letter-spacing: -0.03em; }
+main pre, main div.sourceCode { background: #1C1917; color: #E8E2DC; border: 0; }
+[data-bs-theme="dark"] main :is(pre, div.sourceCode) { background: #26221E; }
+footer { border-top: 1px solid var(--site-line); }
+
+/* --- small touches ---------------------------------------------------------- */
+
+/* Paper grain: an inline SVG noise at ~3%, so the cream reads as paper. */
+body {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+}
+[data-bs-theme="dark"] body { background-blend-mode: screen; }
+
+main li::marker { color: var(--site-accent); }
+
+/* Highlighter links: a 2px line that fills like a marker on hover. Only on
+   prose links; links on code, buttons and images keep their own look. */
+main :is(p, li, td):not(.buttons) > a:not(.anchor):not(:has(img)) {
+  text-decoration: none;
+  background: linear-gradient(rgba(var(--site-primary-rgb), 0.16), rgba(var(--site-primary-rgb), 0.16))
+    0 100% / 100% 2px no-repeat;
+  transition: background-size 0.2s ease;
+}
+main :is(p, li, td):not(.buttons) > a:not(.anchor):not(:has(img)):hover {
+  background-size: 100% 100%;
+}
+
+::selection { background: var(--site-primary); color: #fff; }
+
+:focus-visible {
+  outline: 2px solid var(--site-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* The hex logo lifts like a sticker of the felixluginbuhl.com honeycomb.
+   Scale only: a turned hexagon reads as lopsided. */
+.page-header img.logo { transition: transform 0.18s ease; }
+.page-header img.logo:hover { transform: translateY(-5px) scale(1.18); }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* A soft fade between pages (Chrome and Edge; ignored elsewhere). */
+  @view-transition { navigation: auto; }
+
+  /* Reading progress under the navbar, on articles and reference pages
+     (the ones with a "Source:" line). CSS only, no JavaScript. */
+  @supports (animation-timeline: scroll()) {
+    body:has(.page-header > .dont-index) .navbar::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background: var(--site-primary);
+      transform-origin: 0 50%;
+      animation: site-progress linear both;
+      animation-timeline: scroll(root);
+    }
+    @keyframes site-progress {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-header img.logo, main a { transition: none; }
+}
+
+/* --- footer: signature and package family ---------------------------------- */
+/* The components are in _pkgdown.yml (footer: components:). */
+
+footer .pkgdown-footer-left { flex: 1 1 100%; }
+.wordmark {
+  font-family: var(--site-heading);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+  color: var(--site-ink-strong);
+  text-decoration: none;
+}
+.wordmark:hover { color: var(--site-primary); }
+.hexfamily { display: flex; flex-wrap: wrap; gap: 6px; margin: 0.4rem 0 1rem; }
+.hexfamily a { display: block; }
+.hexfamily img {
+  width: 40px;
+  height: auto;
+  display: block;
+  filter: grayscale(0.75);
+  opacity: 0.6;
+  transition: filter 0.18s ease, opacity 0.18s ease, transform 0.18s ease;
+}
+/* Pointing at the row pushes the rest back; the package you are on stays in
+   colour, the one under the pointer lifts. */
+.hexfamily:hover img { filter: grayscale(1); opacity: 0.35; }
+.hexfamily .current img { filter: none; opacity: 1; }
+.hexfamily a:is(:hover, :focus-visible) img {
+  filter: none;
+  opacity: 1;
+  transform: translateY(-5px) scale(1.18);
+}
+
+/* --- reading ------------------------------------------------------------- */
+
+/* Body text at the pkgdown default size (1rem): documentation, not a blog. */
+main p, main li { line-height: 1.6; }
+main p { margin-bottom: 1em; }
+main li { margin-bottom: 0.25em; }
+main h1 { font-size: 2rem; }
+main h2 { font-size: 1.5rem; margin-top: 2em; }
+main h3 { font-size: 1.2rem; margin-top: 1.6em; }
+main h4 { font-size: 1.05rem; }
+
+/* Inline code on a light pill, code blocks with round corners. Fira Code
+   is wide, so code sits at ~85% of the body text to read as secondary. */
+main :not(pre) > code {
+  background: rgba(var(--site-ink-rgb), 0.04);
+  padding: 0.12em 0.4em;
+  border-radius: 5px;
+  font-size: 0.85em;
+}
+main pre, main div.sourceCode {
+  border-radius: 12px;
+}
+main pre { padding: 14px 16px; font-size: 0.8125rem; line-height: 1.5; }
+
+main blockquote {
+  border-left: 3px solid var(--site-primary);
+  padding: 4px 0 4px 18px;
+  color: var(--site-muted);
+}
+
+main table { margin-bottom: 1.5rem; }
+main table th { white-space: nowrap; }
+
+/* --- callouts ------------------------------------------------------------ */
+/* In articles: ::: {.callout .callout-tip}  ...  :::
+   In README.md (GitHub has no fenced divs): <div class="callout callout-tip"> */
+
+.callout {
+  margin: 1.5rem 0;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--site-line);
+  border-left: 4px solid var(--site-muted);
+  border-radius: 10px;
+  background: rgba(var(--site-ink-rgb), 0.04);
+}
+.callout > :last-child { margin-bottom: 0; }
+.callout-tip { border-left-color: var(--site-primary); background: rgba(var(--site-primary-rgb), 0.08); }
+.callout-warning { border-left-color: var(--site-amber); background: var(--site-amber-soft); }
+.callout-note { font-size: 0.95em; }
+
+/* --- home page link buttons -------------------------------------------- */
+/* README.md: <p class="buttons"><a>...</a></p>. GitHub drops the class and
+   shows plain links; the site shows buttons. */
+
+.buttons { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1.5rem 0; }
+.buttons a {
+  padding: 0.45rem 1.1rem;
+  border: 1px solid var(--site-primary);
+  border-radius: 999px;
+  color: var(--site-primary);
+  font-weight: 500;
+  text-decoration: none;
+}
+.buttons a:first-child { background: var(--site-primary); color: #fff; }
+.buttons a:hover { background: rgba(var(--site-primary-rgb), 0.08); }
+.buttons a:first-child:hover { background: #A81F15; }
+[data-bs-theme="dark"] .buttons a:first-child { color: #14120F; }
+[data-bs-theme="dark"] .buttons a:first-child:hover { background: #FFB3AB; }
+
+/* --- figures ------------------------------------------------------------- */
+/* Maps and screenshots: <p align="center" class="screenshot"><img></p>.
+   GitHub keeps the centering; the site also keeps them within the column on
+   small screens and lifts them off the page. */
+
+.screenshot { margin: 1.5rem 0 2rem; }
+.screenshot img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(28, 25, 23, 0.10);
+}
