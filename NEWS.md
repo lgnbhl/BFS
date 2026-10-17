@@ -16,8 +16,8 @@
   values for an argument, e.g. `prodima = c(900210, 900212)`, as documented.
 - `bfs_get_catalog_data()` and `bfs_get_catalog_tables()` return the same
   columns when no dataset is found as when datasets are found.
-- `bfs_get_asset_metadata()` checks the `language` argument and sends only one
-  language to the API.
+- `bfs_get_asset_metadata()` sends only one language to the API (by default
+  "de", which returns the same metadata as before).
 - `bfs_get_sse_metadata()` and `bfs_get_sse_data()` fall back to another
   language if a code has no name in the requested language, instead of
   failing. `bfs_get_sse_data()` sends one request fewer to the API.

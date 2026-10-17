@@ -65,7 +65,11 @@ test_that("bfs_get_asset_metadata() sends a single language", {
     bfs_get_asset_metadata(number_asset = "24367729")
   })
   expect_identical(last_req$headers[["accept-language"]], "de")
-  expect_error(bfs_get_asset_metadata(number_asset = "24367729", language = "xx"))
+  # values accepted before are still sent unchanged
+  httr2::with_mocked_responses(mock, {
+    bfs_get_asset_metadata(number_asset = "24367729", language = "EN")
+  })
+  expect_identical(last_req$headers[["accept-language"]], "EN")
 })
 
 sse_metadata_xml <- '<message:Structure
