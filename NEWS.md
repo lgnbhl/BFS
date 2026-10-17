@@ -5,8 +5,10 @@
   fields are kept, so existing error handlers still work, e.g.
   `tryCatch(..., httr2_http_429 = function(e) httr2::resp_retry_after(e$resp))`.
   The error message now starts with "The BFS API is not available.", followed
-  by the original message, and the first class is `bfs_http_error`: test the
-  class with `inherits()` instead of `class(e)[1]`.
+  by the original message and the original error ("Caused by error in ..."),
+  so it has several lines. The first class is `bfs_http_error`: test the
+  class with `inherits()` instead of `class(e)[1]`. `conditionCall(e)` is
+  `NULL`, the original call is in `conditionCall(e$parent)`.
 - skip all tests calling the BFS APIs on CRAN (`skip_on_cran()`), as the
   PXWeb API can rate-limit the CRAN check machines.
 - examples calling the BFS APIs are only run in interactive sessions.
