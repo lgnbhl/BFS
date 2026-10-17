@@ -65,14 +65,7 @@ query <- split(selection$value, selection$code)
 query
 ```
 
-A dimension not in the query keeps all its values. A name that isn't a
-dimension of the dataset is an error (it would otherwise be ignored and the
-data not filtered), and a value that isn't in the codelist gives a warning.
-Filter the time with `start_period` and `end_period`, not in the query.
-
-The codelist lists the values allowed in the dataset: some of them may have
-no data. A query with only such values gives the error "No records found for
-the specified query.".
+A dimension not in the query keeps all its values.
 
 ## Download the data
 
@@ -94,22 +87,3 @@ Use `column_name_type = "text"` for the dimension labels as column names,
 Without `query`, `bfs_get_sse_data()` downloads the whole dataset, which can
 be large and slow.
 :::
-
-## Use a fixed version in a data pipeline
-
-A dataset can be published in a new version, with other dimensions or
-codes. By default, `bfs_get_sse_metadata()` and `bfs_get_sse_data()` use the
-latest version, with a message if there are several. In a data pipeline, set
-`version` to keep the same structure until you update your code:
-
-```{r, eval = FALSE}
-bfs_get_sse_data(
-  number_bfs = "DF_LWZ_1",
-  version = "1.1.0",
-  query = query
-)
-```
-
-The version is the last part of the dataflow in the API query URL of the
-dataset on stats.swiss, e.g. `1.1.0` in `CH1.LWZ,DF_LWZ_1,1.1.0`. An
-unknown `version` gives an error listing the available versions.

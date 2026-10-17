@@ -4,7 +4,7 @@
 \alias{bfs_get_sse_metadata}
 \title{Get the codelists of a Swiss Stats Explorer dataset}
 \usage{
-bfs_get_sse_metadata(number_bfs, language = "de", version = NULL)
+bfs_get_sse_metadata(number_bfs, language = "de")
 }
 \arguments{
 \item{number_bfs}{The id of an SSE dataset (dataflow), e.g. `"DF_LWZ_1"`.
@@ -13,15 +13,9 @@ It is shown in the URL of the dataset on <https://stats.swiss/>.}
 \item{language}{Language of the labels: `"de"` (default), `"fr"`, `"it"`
 or `"en"`. A label missing in this language falls back to another
 language.}
-
-\item{version}{Version of the dataflow, e.g. `"1.1.0"`. If `NULL`
-(default), the latest version is used. Set it to keep the same version
-when a new one is published.}
 }
 \value{
-A tibble with one row per value allowed in the dataset for each
-  dimension (some values may have no data: a query with only such values
-  gives the error "No records found for the specified query."):
+A tibble with one row per value of each dimension:
 \describe{
   \item{code}{The dimension code, to use as a name in `query`.}
   \item{text}{The dimension label.}

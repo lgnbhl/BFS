@@ -12,8 +12,7 @@ bfs_get_sse_data(
   query = NULL,
   column_name_type = "code",
   variable_value_type = "text",
-  clean_names = FALSE,
-  version = NULL
+  clean_names = FALSE
 )
 }
 \arguments{
@@ -30,10 +29,7 @@ e.g. `"2020"`.}
 [bfs_get_sse_metadata()]) and the values are value codes (column
 `value`), e.g. `list(FREQ = "M", COUNTRY_ORIGIN = c("CH", "AUSL"))`.
 A dimension not in `query` keeps all its values. If `NULL` (default),
-the whole dataset is downloaded, which can be large and slow. A name
-that isn't a dimension of the dataset (e.g. a typo, or `TIME_PERIOD`:
-use `start_period` and `end_period`) is an error, a value not in the
-codelist a warning.}
+the whole dataset is downloaded, which can be large and slow.}
 
 \item{column_name_type}{Column names as dimension `"code"` (default) or
 `"text"` (label).}
@@ -42,16 +38,10 @@ codelist a warning.}
 
 \item{clean_names}{If `TRUE`, clean the column names with
 [janitor::clean_names()].}
-
-\item{version}{Version of the dataflow, e.g. `"1.1.0"`. If `NULL`
-(default), the latest version is used. Set it in a data pipeline to keep
-the same structure when a new version is published.}
 }
 \value{
 A tibble with one column per dimension and the observations in
   the `value` column. Returns `NULL` if there is no internet connection.
-  If no data matches the query, an error of class `bfs_no_records` is
-  signalled.
 }
 \description{
 Download a dataset of the Swiss Stats Explorer (SSE) API
