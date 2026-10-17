@@ -3,31 +3,33 @@
 \docType{data}
 \name{register_gde_other}
 \alias{register_gde_other}
-\title{Swiss official commune register GDE Other}
+\title{Swiss official commune register: areas without a commune}
 \format{
-## `register_gde_other`
 A data frame with 3 rows and 4 columns:
 \describe{
-  \item{GDENR}{BFS-Gemeindenummer}
-  \item{GDENAME}{Amtlicher Gemeindename}
-  \item{KTNR}{Kantonsnummer}
-  \item{GDEBZNR}{Bezirksnummer}
+  \item{GDENR}{BFS number of the area.}
+  \item{GDENAME}{Name of the area.}
+  \item{KTNR}{Canton number.}
+  \item{GDEBZNR}{District number.}
 }
 }
 \source{
-<https://www.bfs.admin.ch/bfs/fr/home/bases-statistiques/repertoire-officiel-communes-suisse.html>
+<https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html>
 }
 \usage{
 register_gde_other
 }
 \description{
-The official commune register is structured according to cantons and
-districts or comparable administrative entities. Various federal, cantonal
-and communal governments and private businesses use this register when
-identifying and referring to communes.
+The areas of Switzerland that belong to no commune (e.g. the Staatswald
+Galm), on 1 January 2023.
 }
-\details{
-The Federal Statistical Office assigns a number to each commune and creates,
-administers and publishes the Swiss official commune register.
+\seealso{
+Other commune register: 
+\code{\link{register_bzn}},
+\code{\link{register_dic}},
+\code{\link{register_gde}},
+\code{\link{register_kt}},
+\code{\link{register_kt_seeanteile}}
 }
+\concept{commune register}
 \keyword{datasets}

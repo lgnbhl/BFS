@@ -2,7 +2,7 @@
 % Please edit documentation in R/bfs_get_catalog_tables.R
 \name{bfs_get_catalog_tables}
 \alias{bfs_get_catalog_tables}
-\title{Get the BFS tables catalog}
+\title{Search the BFS tables catalog}
 \usage{
 bfs_get_catalog_tables(
   language = "de",
@@ -22,54 +22,75 @@ bfs_get_catalog_tables(
 )
 }
 \arguments{
-\item{language}{character The language of a BFS catalog, i.e. "de", "fr", "it" or "en".}
+\item{language}{Language of the catalog: `"de"` (default), `"fr"`, `"it"`
+or `"en"`.}
 
-\item{title}{character String to search in (sub/super)title}
+\item{title}{Text to search in the titles.}
 
-\item{extended_search}{character String for an extended search in (sub/super)title, orderNr, summary, shortSummary, shortTextGNP}
+\item{extended_search}{Text to search in the titles, BFS number and
+summaries.}
 
-\item{spatial_division}{BFS datasets by spatial division, choose between "Switzerland", "Cantons", "Districts", "Communes", "Other spatial divisions" or "International"}
+\item{spatial_division}{Spatial division of the datasets: `"Switzerland"`,
+`"Cantons"`, `"Districts"`, `"Communes"`, `"Other spatial divisions"` or
+`"International"`.}
 
-\item{prodima}{numeric Get only specific BFS themes using one or multiple prodima numbers}
+\item{prodima}{Theme number(s) of the BFS, e.g. `900212` for "Education
+and science". See the "Data catalog and PXWeb datasets" article for the
+list.}
 
-\item{inquiry}{character BFS datasets for an inquiry}
+\item{inquiry}{Inquiry (survey) id.}
 
-\item{institution}{character BFS datasets for an institution}
+\item{institution}{Institution id.}
 
-\item{publishing_year_start}{character BFS datasets for a publishing year start}
+\item{publishing_year_start, publishing_year_end}{First and last publishing
+year.}
 
-\item{publishing_year_end}{character BFS datasets for a publishing year end}
+\item{order_nr}{BFS number, e.g. `"px-x-1502040100_131"`.}
 
-\item{order_nr}{character Filter by BFS Number (FSO number)}
+\item{limit}{Maximum number of results (1000 by default). A message tells
+you when the catalog has as many results as `limit`.}
 
-\item{limit}{integer limit of query results (1000 by default)}
+\item{article_model, article_model_group}{Article type ids of the DAM API.
+The defaults select the "Data" (or "Tables") article type; you don't
+need to change them.}
 
-\item{article_model}{integer articleModel parameter query}
-
-\item{article_model_group}{integer articleModel parameter query}
-
-\item{return_raw}{boolean Return raw data from json structure as a tibble data.frame}
+\item{return_raw}{If `TRUE`, return the catalog as returned by the API,
+with all its metadata in nested data frames.}
 }
 \value{
-A tbl_df (a type of data frame; see tibble or
-dplyr packages) with the columns:
+A tibble with the columns:
 \describe{
-  \item{title}{A character column with the title of the BFS table}
-  \item{language}{A character column with the language of the BFS table}
-  \item{number_asset}{The BFS asset number}
-  \item{publication_date}{The published date of the BFS table in the data catalog}
-  \item{order_nr}{The BFS number (FSO number), named orderNr in the API}
+  \item{title}{Title of the table.}
+  \item{language}{Language of the catalog.}
+  \item{number_asset}{Asset number, to use in [bfs_download_asset()].}
+  \item{publication_date}{Publication date.}
+  \item{order_nr}{BFS number.}
 }
-Returns NULL if no connection.
+Returns `NULL` if there is no internet connection.
 }
 \description{
-Get the list of the tables available in the official DAM-API of the Swiss Federal Statistical Office asset catalog.
+Search the tables of the BFS catalog
+(<https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html>, article
+type "Tables"). Tables are mostly Excel or CSV files, not available in the
+PXWeb API: download them with [bfs_download_asset()].
+}
+\details{
+The English and Italian catalogs have fewer tables than the German and
+French ones. Arguments accept several values, e.g.
+`prodima = c(900210, 900212)`.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
-bfs_get_catalog_tables(language = "en", title = "students", prodima = c(900212))
+tables <- bfs_get_catalog_tables(language = "en", extended_search = "students")
+tables
+
+# download the first table
+bfs_download_asset(
+  number_asset = tables$number_asset[1],
+  destfile = file.path(tempdir(), "table.xlsx")
+)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link{bfs_get_data}}
+[bfs_download_asset()], [bfs_get_catalog_data()]
 }

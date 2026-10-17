@@ -1,24 +1,36 @@
-#' Download a geographic file from the Swiss geo-portal
+#' Download geodata from the Swiss geo-portal
 #'
-#' Download assets from the STAC API on the geodata catalog
-#' of the Swiss Confederation (\url{https://data.geo.admin.ch/api/stac/v0.9/}).
+#' Download the files of a geodata collection from the STAC API of the Swiss
+#' geo-portal (<https://data.geo.admin.ch/api/stac/v0.9/>). Requires the
+#' rstac package.
 #'
-#' @details The use of the data and services is free but
-#' subject to the provisions on fair use (see \url{https://www.geo.admin.ch/terms-of-use}).
+#' The use of the data is free but subject to the terms of use of the Swiss
+#' geo-portal (<https://www.geo.admin.ch/terms-of-use>).
 #'
-#' @param collection_id The STAC collection id, see the `collection_id` column
-#'  of [bfs_get_catalog_geodata()].
-#' @param output_dir The directory where the files are downloaded.
-#' @param overwrite If TRUE, overwrite existing files.
-#' @param create_json If TRUE, also save the STAC items as a json file.
-#' @param bbox Optional bounding box to filter the items, see `rstac::items()`.
-#' @param asset_names Optional names of the assets to download, see `rstac::assets_download()`.
-#' @param datetime Optional date-time or interval to filter the items, see `rstac::items()`.
-#' @param feature_id Optional id of a single item, see `rstac::items()`.
+#' @param collection_id The collection id, i.e. the `collection_id` column of
+#'   [bfs_get_catalog_geodata()], e.g.
+#'   `"ch.bfs.generalisierte-grenzen_agglomerationen_g1"`.
+#' @param output_dir Folder of the downloaded files, a temporary folder by
+#'   default.
+#' @param overwrite If `TRUE`, overwrite existing files.
+#' @param create_json If `TRUE`, also save the STAC items as a JSON file.
+#' @param bbox,datetime,feature_id Optional filters of the items: bounding
+#'   box, date-time or interval, and item id. See [rstac::items()].
+#' @param asset_names Optional names of the assets to download. See
+#'   [rstac::assets_download()].
 #'
 #' @importFrom magrittr %>%
 #'
-#' @return Returns the file path where the file has been downloaded. Returns NULL if no connection.
+#' @return The paths of the downloaded files. Zip files are not extracted.
+#'   Returns `NULL` if there is no internet connection.
+#'
+#' @seealso [bfs_get_catalog_geodata()]
+#'
+#' @examplesIf interactive()
+#' files <- bfs_download_geodata(
+#'   collection_id = "ch.bfs.generalisierte-grenzen_agglomerationen_g1"
+#' )
+#' files
 #'
 #' @export
 bfs_download_geodata <- function(

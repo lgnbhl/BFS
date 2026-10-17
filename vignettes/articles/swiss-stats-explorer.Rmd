@@ -1,0 +1,89 @@
+---
+title: "Swiss Stats Explorer"
+description: "Build a query from the codelists of a dataset and download the data."
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", message = FALSE, warning = FALSE)
+```
+
+The [Swiss Stats Explorer](https://stats.swiss/) (SSE) is the new data
+platform of the BFS, based on the SDMX standard. It replaces STAT-TAB and
+its PXWeb API (see
+[Get started](introduction.html#from-stat-tab-to-the-swiss-stats-explorer)).
+
+Each dataset has dimensions
+(e.g. the commune, the year, the number of rooms), and each dimension has a
+codelist: the codes of its values. You download data in two steps:
+
+1. get the codelists with `bfs_get_sse_metadata()`,
+2. select the codes you need and pass them to `bfs_get_sse_data()`.
+
+```{r}
+library(BFS)
+library(dplyr)
+```
+
+## Find the dataset id
+
+The dataset id (e.g. `DF_LWZ_1`, the vacant dwellings) is in the URL of the
+dataset on [stats.swiss](https://stats.swiss/), after `df[id]=`.
+
+## Get the codelists
+
+```{r}
+codelist <- bfs_get_sse_metadata("DF_LWZ_1", language = "en")
+codelist
+```
+
+There is one row per value of each dimension:
+
+- `code` and `text`: the dimension code and its label,
+- `value` and `valueText`: the value code and its label.
+
+List the dimensions with:
+
+```{r}
+distinct(codelist, code, text)
+```
+
+## Build the query
+
+The query is a named list: the dimension codes as names, the value codes as
+values. Filter the codelist on the labels you want:
+
+```{r}
+selection <- codelist |>
+  filter(
+    (code == "GR_KT_GDE" & valueText %in% c("Aarau", "Olten")) |
+      (code == "WOHN_ANZAHL" & valueText == "Total") |
+      (code == "LEERWOHN_TYP" & valueText == "Vacant dwelling for rent") |
+      (code == "MEASURE_DIMENSION" & valueText == "Observed Value")
+  )
+
+query <- split(selection$value, selection$code)
+query
+```
+
+A dimension not in the query keeps all its values.
+
+## Download the data
+
+```{r}
+bfs_get_sse_data(
+  number_bfs = "DF_LWZ_1",
+  language = "en",
+  query = query,
+  start_period = "2020",
+  end_period = "2023"
+)
+```
+
+Use `column_name_type = "text"` for the dimension labels as column names,
+`variable_value_type = "code"` for the codes instead of the labels, and
+`clean_names = TRUE` for snake_case column names.
+
+::: {.callout .callout-warning}
+Without `query`, `bfs_get_sse_data()` downloads the whole dataset, which can
+be large and slow.
+:::

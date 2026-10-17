@@ -3,30 +3,32 @@
 \docType{data}
 \name{register_kt_seeanteile}
 \alias{register_kt_seeanteile}
-\title{Swiss official commune register KT Seeanteile}
+\title{Swiss official commune register: cantonal shares of lakes}
 \format{
-## `register_kt_seeanteile`
-A data frame with 9 rows and 5 columns:
+A data frame with 41 rows and 3 columns:
 \describe{
-  \item{GDENR}{BFS-Gemeindenummer}
-  \item{GDENAME}{Amtlicher Gemeindename}
-  \item{KTNR}{Kantonsnummer}
+  \item{GDENR}{BFS number of the lake share.}
+  \item{GDENAME}{Name of the lake share.}
+  \item{KTNR}{Canton number.}
 }
 }
 \source{
-<https://www.bfs.admin.ch/bfs/fr/home/bases-statistiques/repertoire-officiel-communes-suisse.html>
+<https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html>
 }
 \usage{
 register_kt_seeanteile
 }
 \description{
-The official commune register is structured according to cantons and
-districts or comparable administrative entities. Various federal, cantonal
-and communal governments and private businesses use this register when
-identifying and referring to communes.
+The lakes of Switzerland, split by canton (e.g. "Zürichsee (ZH)" and
+"Zürichsee (SZ)"), on 1 January 2023.
 }
-\details{
-The Federal Statistical Office assigns a number to each commune and creates,
-administers and publishes the Swiss official commune register.
+\seealso{
+Other commune register: 
+\code{\link{register_bzn}},
+\code{\link{register_dic}},
+\code{\link{register_gde}},
+\code{\link{register_gde_other}},
+\code{\link{register_kt}}
 }
+\concept{commune register}
 \keyword{datasets}

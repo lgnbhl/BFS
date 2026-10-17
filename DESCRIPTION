@@ -45,6 +45,8 @@ Imports:
     rlang,
     tidyr
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0),
     rstac,
     sf
@@ -54,3 +56,4 @@ URL: https://felixluginbuhl.com/BFS/, https://github.com/lgnbhl/BFS/
 BugReports: https://github.com/lgnbhl/BFS/issues
 Config/testthat/edition: 3
 LazyData: true
+VignetteBuilder: knitr

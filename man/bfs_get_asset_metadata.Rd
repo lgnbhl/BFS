@@ -2,7 +2,7 @@
 % Please edit documentation in R/bfs_get_asset_metadata.R
 \name{bfs_get_asset_metadata}
 \alias{bfs_get_asset_metadata}
-\title{Get asset metadata in a given language}
+\title{Get the metadata of a BFS file}
 \usage{
 bfs_get_asset_metadata(
   number_asset = NULL,
@@ -11,18 +11,32 @@ bfs_get_asset_metadata(
 )
 }
 \arguments{
-\item{number_asset}{The asset number of a dataset}
+\item{number_asset}{The asset number of the file, e.g. `"24025646"`. It
+is the `number_asset` column of [bfs_get_catalog_tables()] and
+[bfs_get_catalog_data()], and the number at the end of the "assetdetail"
+URLs of the BFS website.}
 
-\item{number_bfs}{The BFS number of a dataset.}
+\item{number_bfs}{The BFS number of the file, e.g.
+`"px-x-1502040100_131"`. Use either `number_asset` or `number_bfs`.}
 
-\item{language}{character The language of a BFS catalog, i.e. "de", "fr", "it" or "en".}
+\item{language}{Language of the metadata: `"de"` (default), `"fr"`, `"it"`
+or `"en"`.}
 }
 \value{
-list Returns a list containing asset metadata information. Returns NULL if no connection.
+A nested list with the metadata. Returns `NULL` if there is no
+  internet connection.
 }
 \description{
-This function uses the DAM API \url{https://dam-api.bfs.admin.ch/hub/swagger-ui/index.html}
-to get the metadata of a BFS file by asset number or BFS number in a given language.
+Get the metadata of a BFS file from the DAM API
+(<https://dam-api.bfs.admin.ch/hub/swagger-ui/index.html>) with its asset
+number or its BFS number: title, description, publication date, contact,
+links, ...
+}
+\examples{
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
+metadata <- bfs_get_asset_metadata(number_bfs = "px-x-1502040100_131", language = "en")
+metadata$description$titles$main
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 [bfs_download_asset()]

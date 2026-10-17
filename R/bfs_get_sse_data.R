@@ -1,26 +1,43 @@
-#' Get Data from Swiss Stats Explorer (SSE) API
+#' Get data from the Swiss Stats Explorer
 #'
-#' @param number_bfs The BFS number (FSO number) of a dataset.
-#' @param language Language of the dataset to be translated if exists, i.e. "de", "fr", "it" or "en".
-#' @param start_period Start year of the requested data
-#' @param end_period End year of the requested data
-#' @param query A named list with dimension codes as names and desired values as values.
-#' @param column_name_type Column name type as "text" or as "code".
-#' @param variable_value_type Variable value type as "text" or as "code".
-#' @param clean_names Logical, if TRUE, the column names are cleaned using janitor::clean_names().
+#' Download a dataset of the Swiss Stats Explorer (SSE) API
+#' (<https://stats.swiss/>). Select the data you need with `query`, built
+#' from the codelists of [bfs_get_sse_metadata()].
 #'
-#' @returns A tibble with the requested data.
+#' @inheritParams bfs_get_sse_metadata
+#' @param language Language of the labels: `"de"` (default), `"fr"`, `"it"`
+#'   or `"en"`.
+#' @param start_period,end_period Optional first and last period of the data,
+#'   e.g. `"2020"`.
+#' @param query A named list: the names are dimension codes (column `code` of
+#'   [bfs_get_sse_metadata()]) and the values are value codes (column
+#'   `value`), e.g. `list(FREQ = "M", COUNTRY_ORIGIN = c("CH", "AUSL"))`.
+#'   A dimension not in `query` keeps all its values. If `NULL` (default),
+#'   the whole dataset is downloaded, which can be large and slow.
+#' @param column_name_type Column names as dimension `"code"` (default) or
+#'   `"text"` (label).
+#' @param variable_value_type Values as `"text"` (label, default) or `"code"`.
+#' @param clean_names If `TRUE`, clean the column names with
+#'   [janitor::clean_names()].
+#'
+#' @returns A tibble with one column per dimension and the observations in
+#'   the `value` column. Returns `NULL` if there is no internet connection.
+#'
+#' @seealso [bfs_get_sse_metadata()]
 #' @export
 #'
 #' @examplesIf interactive()
 #' bfs_get_sse_data(
 #'   number_bfs = "DF_PASTA_552_MONTHLY",
 #'   language = "en",
-#'   query =  list("FREQ" = "M", "ACCOMMODATION_TYPE" = c("552001"),
-#'                 "COUNTRY_ORIGIN" = c("CH", "AUSL")),
+#'   query = list(
+#'     FREQ = "M",
+#'     ACCOMMODATION_TYPE = "552001",
+#'     COUNTRY_ORIGIN = c("CH", "AUSL")
+#'   ),
 #'   start_period = "2020",
 #'   end_period = "2023"
-#'   )
+#' )
 bfs_get_sse_data <- 
   function(number_bfs, language = "de", start_period = NULL, end_period = NULL, 
            query = NULL, column_name_type = "code", variable_value_type = "text", 

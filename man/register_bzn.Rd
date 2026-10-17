@@ -3,30 +3,32 @@
 \docType{data}
 \name{register_bzn}
 \alias{register_bzn}
-\title{Swiss official commune register BZN}
+\title{Swiss official commune register: districts}
 \format{
-## `register_bzn`
 A data frame with 143 rows and 3 columns:
 \describe{
-  \item{GDEKT}{Kantonskuerzel}
-  \item{GDEBZNR}{Bezirksnummer}
-  \item{GDEBZNA}{Bezirksname}
+  \item{GDEKT}{Canton abbreviation, e.g. "ZH".}
+  \item{GDEBZNR}{District number.}
+  \item{GDEBZNA}{District name.}
 }
 }
 \source{
-<https://www.bfs.admin.ch/bfs/fr/home/bases-statistiques/repertoire-officiel-communes-suisse.html>
+<https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html>
 }
 \usage{
 register_bzn
 }
 \description{
-The official commune register is structured according to cantons and
-districts or comparable administrative entities. Various federal, cantonal
-and communal governments and private businesses use this register when
-identifying and referring to communes.
+The districts of Switzerland (or comparable administrative entities) on
+1 January 2023.
 }
-\details{
-The Federal Statistical Office assigns a number to each commune and creates,
-administers and publishes the Swiss official commune register.
+\seealso{
+Other commune register: 
+\code{\link{register_dic}},
+\code{\link{register_gde}},
+\code{\link{register_gde_other}},
+\code{\link{register_kt}},
+\code{\link{register_kt_seeanteile}}
 }
+\concept{commune register}
 \keyword{datasets}

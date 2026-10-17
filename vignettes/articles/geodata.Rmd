@@ -1,0 +1,152 @@
+---
+title: "Geodata and base maps"
+description: "Maps of Switzerland, its cantons, districts and communes, and the geodata of the Swiss geo-portal."
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", message = FALSE, warning = FALSE)
+```
+
+```r
+library(BFS)
+library(dplyr)
+library(ggplot2)
+library(sf) # install.packages("sf")
+```
+
+## Base maps
+
+`bfs_get_base_maps()` returns the
+[cartographic base maps](https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.html)
+of the BFS ThemaKart project as sf objects. The first call downloads the
+base maps (a zip file of several hundred files) and caches them;
+`bfs_clear_cache()` deletes the cache.
+
+```r
+switzerland <- bfs_get_base_maps(geom = "suis")
+cantons <- bfs_get_base_maps(geom = "kant")
+districts <- bfs_get_base_maps(geom = "bezk")
+communes <- bfs_get_base_maps(geom = "polg")
+capitals <- bfs_get_base_maps(geom = "stkt", type = "Pnts", category = "kk")
+lakes <- bfs_get_base_maps(geom = "seen", category = "11")
+rivers <- bfs_get_base_maps(geom = "flus", category = "22", type = "") # rivers have no type
+
+ggplot() +
+  geom_sf(data = communes, fill = "snow", color = "grey45") +
+  geom_sf(data = lakes, fill = "lightblue2", color = "black") +
+  geom_sf(data = districts, fill = "transparent", color = "grey65") +
+  geom_sf(data = cantons, fill = "transparent", color = "black") +
+  geom_sf(data = rivers, color = "lightblue2", linewidth = 1) +
+  geom_sf(data = capitals, shape = 18, size = 3) +
+  theme_void() +
+  labs(caption = "Source: ThemaKart, © BFS")
+```
+
+<p align="center" class="screenshot"><img src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/base_maps.png" alt="Map of Switzerland with its communes, districts, cantons, lakes, rivers and cantonal capitals" width="700"></p>
+
+### Choose a file
+
+Each file name combines the arguments of `bfs_get_base_maps()`, e.g.
+`K4kant20220101gf_ch2007Poly.shp`: geometry `kant`, date `20220101`, category
+`gf` (total area), type `Poly`, format `shp`.
+
+<p align="center" class="screenshot"><img src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/base_maps_file.png" alt="Structure of a ThemaKart file name" width="600"></p>
+
+By default you get the most recent file; use `date` for another date of
+validity, e.g. `date = "20230101"`. With `return_sf = FALSE` you get the
+file path instead of an sf object. An argument set to `""` matches any
+value, so to list all the river files:
+
+```r
+bfs_get_base_maps(geom = "flus", category = "", type = "", date = "", return_sf = FALSE)
+```
+
+The default `asset_number` is the 2024 edition of ThemaKart. Pass another
+asset number for another edition, e.g. `"11927607"` for 2020.
+
+### Interactive maps
+
+```r
+library(mapview)
+
+bfs_get_base_maps(geom = "bezk") |>
+  mapview(zcol = "name", legend = FALSE)
+```
+
+<p align="center" class="screenshot"><img src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/mapview.png" alt="Interactive map of the Swiss districts" width="700"></p>
+
+### Join statistics
+
+The communes have their BFS number in the `id` column. Join it with the
+commune register included in the package (`register_gde`) or with any BFS
+dataset by commune:
+
+```r
+communes_ge <- bfs_get_base_maps(geom = "polg", date = "20230101") |>
+  inner_join(filter(register_gde, GDEKT == "GE"), by = c("id" = "GDENR"))
+
+lake_leman <- bfs_get_base_maps(geom = "seen", category = "11") |>
+  filter(name == "Lac Léman")
+
+bbox_ge <- st_bbox(communes_ge)
+
+ggplot(communes_ge) +
+  geom_sf(data = lake_leman, fill = "lightblue2", color = "grey65") +
+  geom_sf(fill = "snow", color = "grey65") +
+  geom_sf_text(aes(label = name), size = 3, check_overlap = TRUE) +
+  coord_sf(xlim = bbox_ge[c("xmin", "xmax")], ylim = bbox_ge[c("ymin", "ymax")]) +
+  theme_void() +
+  labs(title = "Communes du canton de Genève", caption = "Source: ThemaKart, © BFS")
+```
+
+<p align="center" class="screenshot"><img src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/base_maps_ge.png" alt="Map of the communes of the canton of Geneva" width="700"></p>
+
+For the communes at another date, or their history (mergers, renamings),
+see the [swissMunicipalities](https://github.com/SwissStatsR/swissMunicipalities)
+package.
+
+## Geodata of the Swiss geo-portal
+
+The [Swiss geo-portal](https://data.geo.admin.ch/) publishes the geodata of
+the BFS and other federal offices in a STAC API. `bfs_get_catalog_geodata()`
+lists its collections. With their metadata, it sends one request per
+collection and takes a few minutes, so save the result:
+
+```r
+catalog_geodata <- bfs_get_catalog_geodata()
+
+catalog_geodata |>
+  filter(grepl("^ch.bfs", collection_id)) |>
+  select(collection_id, title)
+```
+
+Download the files of a collection with `bfs_download_geodata()` (requires
+the rstac package). Zip files are not extracted:
+
+```r
+files <- bfs_download_geodata(
+  collection_id = "ch.bfs.generalisierte-grenzen_agglomerationen_g1",
+  output_dir = "borders_g1"
+)
+files
+```
+
+Some layers are also available as a Web Map Service (WMS), e.g. with leaflet:
+
+```r
+library(leaflet)
+
+leaflet() |>
+  setView(lng = 8, lat = 46.8, zoom = 8) |>
+  addWMSTiles(
+    baseUrl = "https://wms.geo.admin.ch/?",
+    layers = "ch.bfs.generalisierte-grenzen_agglomerationen_g2",
+    options = WMSTileOptions(format = "image/png", transparent = TRUE),
+    attribution = "Generalised borders G2 © BFS"
+  )
+```
+
+<p align="center" class="screenshot"><img src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/leaflet_g1.png" alt="Leaflet map with the generalised borders of the BFS" width="700"></p>
+
+The use of the geodata is free but subject to the
+[terms of use](https://www.geo.admin.ch/terms-of-use) of the Swiss geo-portal.

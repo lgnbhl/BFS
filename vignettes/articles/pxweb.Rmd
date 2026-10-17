@@ -1,0 +1,157 @@
+---
+title: "Data catalog and PXWeb datasets"
+description: "Search the BFS data catalog and download all or part of a dataset."
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", message = FALSE, warning = FALSE)
+```
+
+The datasets of the
+[BFS catalog](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html)
+(article type "Data") are available in the PXWeb API. Each dataset has a BFS
+number, e.g. `px-x-1502040100_131`.
+
+::: {.callout .callout-warning}
+The PXWeb API is the API of STAT-TAB, which the BFS is replacing with the
+[Swiss Stats Explorer](swiss-stats-explorer.html). Check first if your
+statistic is on [stats.swiss](https://stats.swiss/). See
+[Get started](introduction.html#from-stat-tab-to-the-swiss-stats-explorer).
+:::
+
+```{r}
+library(BFS)
+library(dplyr)
+```
+
+## Search the catalog
+
+```{r}
+catalog <- bfs_get_catalog_data(language = "en", extended_search = "student")
+catalog
+```
+
+`title` searches in the titles only, `extended_search` also in the
+summaries. You can filter the catalog by:
+
+- `spatial_division`: `"Switzerland"`, `"Cantons"`, `"Districts"`,
+  `"Communes"`, `"Other spatial divisions"` or `"International"`,
+- `prodima`: the theme (see below),
+- `publishing_year_start` and `publishing_year_end`,
+- `inquiry`, `institution` or `order_nr` (BFS number).
+
+The English and Italian catalogs have fewer datasets than the German and
+French ones.
+
+### Themes
+
+| Theme | `prodima` |
+|---|---|
+| 00 Statistical basis and overviews | 900001 |
+| 01 Population | 900010 |
+| 02 Territory and environment | 900035 |
+| 03 Work and income | 900051 |
+| 04 National economy | 900075 |
+| 05 Prices | 900084 |
+| 06 Industry and services | 900092 |
+| 07 Agriculture and forestry | 900104 |
+| 08 Energy | 900127 |
+| 09 Construction and housing | 900140 |
+| 10 Tourism | 900160 |
+| 11 Mobility and transport | 900169 |
+| 12 Money, banks and insurance | 900191 |
+| 13 Social security | 900198 |
+| 14 Health | 900210 |
+| 15 Education and science | 900212 |
+| 16 Culture, media, information society, sports | 900214 |
+| 17 Politics | 900226 |
+| 18 General government and finance | 900239 |
+| 19 Crime and criminal justice | 900257 |
+| 20 Economic and social situation of the population | 900269 |
+| 21 Sustainable development, regional and international disparities | 900276 |
+
+```{r}
+bfs_get_catalog_data(language = "en", prodima = 900212) # Education and science
+```
+
+### The whole catalog
+
+A catalog request returns at most `limit` results (1000 by default). To get
+the whole catalog, loop over the themes. Run it only when needed and save the
+result, to not overload the API:
+
+```r
+themes_prodima <- c(
+  900001, 900010, 900035, 900051, 900075, 900084, 900092, 900104, 900127,
+  900140, 900160, 900169, 900191, 900198, 900210, 900212, 900214, 900226,
+  900239, 900257, 900269, 900276
+)
+
+catalog_all <- themes_prodima |>
+  purrr::map(function(x) bfs_get_catalog_data(language = "de", prodima = x)) |>
+  purrr::list_rbind() |>
+  distinct()
+
+readr::write_csv(catalog_all, "catalog_all.csv")
+```
+
+### All the metadata
+
+`return_raw = TRUE` returns the catalog as returned by the API, with all its
+metadata in nested data frames:
+
+```{r}
+catalog_raw <- bfs_get_catalog_data(language = "en", extended_search = "student", return_raw = TRUE)
+
+as_tibble(catalog_raw$description)
+```
+
+## Download a dataset
+
+```{r}
+bfs_get_data(number_bfs = "px-x-1502040100_131", language = "en")
+```
+
+`bfs_get_data_comments()` returns the comments (footnotes) of the dataset.
+
+## Download only part of a dataset
+
+Large datasets can exceed the limits of the API. Select only the data you
+need with `query`. First get the variables of the dataset and their values:
+
+```{r}
+metadata <- bfs_get_metadata(number_bfs = "px-x-1502040100_131", language = "en")
+
+metadata_values <- metadata |>
+  tidyr::unnest_longer(c(values, valueTexts)) |>
+  select(code, text, values, valueTexts)
+metadata_values
+```
+
+The query is a named list: the variable codes (`code`) as names, the value
+codes (`values`) as values. `"*"` selects all the values of a variable.
+
+```{r}
+filter(metadata_values, text == "Year", valueTexts %in% c("2020/21", "2021/22"))
+filter(metadata_values, text == "Level of study")
+
+bfs_get_data(
+  number_bfs = "px-x-1502040100_131",
+  language = "en",
+  query = list(
+    Jahr = c("40", "41"),       # 2020/21 and 2021/22
+    Studienstufe = c("2", "3"), # Master and Doctorate
+    "ISCED Fach" = "0",         # Education science
+    Geschlecht = "*"            # all sexes
+  )
+)
+```
+
+A variable not in the query is left out of the result (the data is summed up
+over it), if the dataset allows it.
+
+::: {.callout .callout-tip}
+For a very large dataset, you can also download the whole PX file with
+`bfs_download_asset()` and read it with the pxR package. See
+[Tables and files](tables-and-files.html).
+:::

@@ -3,30 +3,31 @@
 \docType{data}
 \name{register_kt}
 \alias{register_kt}
-\title{Swiss official commune register KT}
+\title{Swiss official commune register: cantons}
 \format{
-## `register_kt`
 A data frame with 26 rows and 3 columns:
 \describe{
-  \item{KTNR}{Kantonsnummer}
-  \item{GDEKT}{Kantonskuerzel}
-  \item{GDEKTNA}{Kantonsname}
+  \item{KTNR}{Canton number.}
+  \item{GDEKT}{Canton abbreviation, e.g. "ZH".}
+  \item{GDEKTNA}{Canton name.}
 }
 }
 \source{
-<https://www.bfs.admin.ch/bfs/fr/home/bases-statistiques/repertoire-officiel-communes-suisse.html>
+<https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html>
 }
 \usage{
 register_kt
 }
 \description{
-The official commune register is structured according to cantons and
-districts or comparable administrative entities. Various federal, cantonal
-and communal governments and private businesses use this register when
-identifying and referring to communes.
+The 26 cantons of Switzerland.
 }
-\details{
-The Federal Statistical Office assigns a number to each commune and creates,
-administers and publishes the Swiss official commune register.
+\seealso{
+Other commune register: 
+\code{\link{register_bzn}},
+\code{\link{register_dic}},
+\code{\link{register_gde}},
+\code{\link{register_gde_other}},
+\code{\link{register_kt_seeanteile}}
 }
+\concept{commune register}
 \keyword{datasets}

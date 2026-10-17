@@ -1,12 +1,28 @@
-#' Get metadata of a BFS data in a given language
+#' Get the variables of a BFS dataset
 #'
-#' Get the metadata of a BFS dataset using the PXWEB API v1.
-#' You should choose either the bfs number of the bfs offical url of a given dataset.
+#' Get the variables of a dataset of the PXWeb API and the values each
+#' variable can take. Use them to build the `query` of [bfs_get_data()].
 #'
-#' @param number_bfs The BFS number of a dataset.
-#' @param language Language of the dataset to be translated if exists.
+#' The PXWeb API is the API of STAT-TAB, which the BFS is replacing with the
+#' Swiss Stats Explorer (see [bfs_get_sse_metadata()]).
 #'
-#' @return A tbl_df (a type of data frame; see tibble or dplyr packages). Returns NULL if no connection.
+#' @inheritParams bfs_get_data
+#'
+#' @return A tibble with one row per variable and the columns `code` and
+#'   `text` (variable code and label), `values` and `valueTexts` (list
+#'   columns with the value codes and labels) and `title` (title of the
+#'   dataset). Use `tidyr::unnest_longer(metadata, c(values, valueTexts))` to
+#'   get one row per value. Returns `NULL` if there is no internet
+#'   connection.
+#'
+#' @seealso [bfs_get_data()]
+#'
+#' @examplesIf interactive()
+#' metadata <- bfs_get_metadata(number_bfs = "px-x-1502040100_131", language = "en")
+#' metadata
+#'
+#' # one row per value
+#' tidyr::unnest_longer(metadata, c(values, valueTexts))
 #'
 #' @importFrom magrittr %>%
 #' @importFrom tibble as_tibble

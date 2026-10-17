@@ -4,9 +4,9 @@
 #' @param metadata Logical; if TRUE, returns the URL for metadata instead of data.
 #'
 #' @returns A character string containing the URL for the API of the specified BFS number.
-#' 
-#' @importFrom magrittr %>%
 #'
+#' @importFrom magrittr %>%
+#' @noRd
 bfs_get_sse_url <- function(number_bfs, metadata = FALSE) {
 
   url_sse <- "https://disseminate.stats.swiss/rest"
@@ -75,6 +75,7 @@ sse_part_url <- function(urns, number_bfs) {
 #' @importFrom magrittr %>%
 #'
 #' @returns A character string containing the name in the specified language or the first available name.
+#' @noRd
 get_xml_name <- function(node, language) {
   
   # Try to find the requested language

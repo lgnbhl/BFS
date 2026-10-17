@@ -1,17 +1,20 @@
-#' Get the comments/footnotes of a BFS dataset in a given language
+#' Get the comments of a BFS dataset
 #'
-#' Get the comments/footnotes of a BFS dataset using PXWEB BFS API v1.
+#' Get the comments (footnotes) of a dataset of the PXWeb API, e.g. on
+#' provisional values or changes of definition.
 #'
-#' @param number_bfs The BFS number of a dataset.
-#' @param language Language of the dataset to be translated if exists, i.e. "de", "fr", "it" or "en".
-#' @param query a list with named values, a json query file or json query string using \code{pxweb::pxweb_query()}.
-#' @param clean_names Clean column names using \code{janitor::clean_names()}
-#' @param delay Integer Number of seconds to wait before query using \code{Sys.sleep()}.
+#' The PXWeb API is the API of STAT-TAB, which the BFS is replacing with the
+#' Swiss Stats Explorer.
 #'
-#' @seealso \code{\link{bfs_get_data}}
+#' @inheritParams bfs_get_data
 #'
-#' @return A tbl_df (a type of data frame; see tibble or
-#' dplyr packages). Returns NULL if no connection.
+#' @seealso [bfs_get_data()]
+#'
+#' @return A tibble with one row per comment. Returns `NULL` if there is no
+#'   internet connection.
+#'
+#' @examplesIf interactive()
+#' bfs_get_data_comments(number_bfs = "px-x-1502040100_131", language = "en")
 #'
 #' @importFrom magrittr %>%
 #'

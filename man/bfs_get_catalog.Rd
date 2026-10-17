@@ -2,21 +2,22 @@
 % Please edit documentation in R/bfs_get_catalog.R
 \name{bfs_get_catalog}
 \alias{bfs_get_catalog}
-\title{Get the BFS data or table catalog}
+\title{Get the BFS data or tables catalog (deprecated)}
 \usage{
 bfs_get_catalog(language = "de", type = "data")
 }
 \arguments{
-\item{language}{character The language of a BFS catalog.}
+\item{language}{Language of the catalog: `"de"` (default), `"fr"`, `"it"`
+or `"en"`.}
 
-\item{type}{character A BFS catalog}
+\item{type}{`"data"` (default) or `"tables"`.}
 }
 \value{
-A data frame. Returns NULL if no connection.
+The result of [bfs_get_catalog_data()] or
+  [bfs_get_catalog_tables()].
 }
 \description{
-This function scraps a given RSS Feed of the Swiss Federal Statistical Office.
+Deprecated since BFS 0.5.6: use [bfs_get_catalog_data()] or
+[bfs_get_catalog_tables()] instead.
 }
-\seealso{
-\code{\link{bfs_get_data}}
-}
+\keyword{internal}

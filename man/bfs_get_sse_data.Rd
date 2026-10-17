@@ -2,7 +2,7 @@
 % Please edit documentation in R/bfs_get_sse_data.R
 \name{bfs_get_sse_data}
 \alias{bfs_get_sse_data}
-\title{Get Data from Swiss Stats Explorer (SSE) API}
+\title{Get data from the Swiss Stats Explorer}
 \usage{
 bfs_get_sse_data(
   number_bfs,
@@ -16,37 +16,53 @@ bfs_get_sse_data(
 )
 }
 \arguments{
-\item{number_bfs}{The BFS number (FSO number) of a dataset.}
+\item{number_bfs}{The id of an SSE dataset (dataflow), e.g. `"DF_LWZ_1"`.
+It is shown in the URL of the dataset on <https://stats.swiss/>.}
 
-\item{language}{Language of the dataset to be translated if exists, i.e. "de", "fr", "it" or "en".}
+\item{language}{Language of the labels: `"de"` (default), `"fr"`, `"it"`
+or `"en"`.}
 
-\item{start_period}{Start year of the requested data}
+\item{start_period, end_period}{Optional first and last period of the data,
+e.g. `"2020"`.}
 
-\item{end_period}{End year of the requested data}
+\item{query}{A named list: the names are dimension codes (column `code` of
+[bfs_get_sse_metadata()]) and the values are value codes (column
+`value`), e.g. `list(FREQ = "M", COUNTRY_ORIGIN = c("CH", "AUSL"))`.
+A dimension not in `query` keeps all its values. If `NULL` (default),
+the whole dataset is downloaded, which can be large and slow.}
 
-\item{query}{A named list with dimension codes as names and desired values as values.}
+\item{column_name_type}{Column names as dimension `"code"` (default) or
+`"text"` (label).}
 
-\item{column_name_type}{Column name type as "text" or as "code".}
+\item{variable_value_type}{Values as `"text"` (label, default) or `"code"`.}
 
-\item{variable_value_type}{Variable value type as "text" or as "code".}
-
-\item{clean_names}{Logical, if TRUE, the column names are cleaned using janitor::clean_names().}
+\item{clean_names}{If `TRUE`, clean the column names with
+[janitor::clean_names()].}
 }
 \value{
-A tibble with the requested data.
+A tibble with one column per dimension and the observations in
+  the `value` column. Returns `NULL` if there is no internet connection.
 }
 \description{
-Get Data from Swiss Stats Explorer (SSE) API
+Download a dataset of the Swiss Stats Explorer (SSE) API
+(<https://stats.swiss/>). Select the data you need with `query`, built
+from the codelists of [bfs_get_sse_metadata()].
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 bfs_get_sse_data(
   number_bfs = "DF_PASTA_552_MONTHLY",
   language = "en",
-  query =  list("FREQ" = "M", "ACCOMMODATION_TYPE" = c("552001"),
-                "COUNTRY_ORIGIN" = c("CH", "AUSL")),
+  query = list(
+    FREQ = "M",
+    ACCOMMODATION_TYPE = "552001",
+    COUNTRY_ORIGIN = c("CH", "AUSL")
+  ),
   start_period = "2020",
   end_period = "2023"
-  )
+)
 \dontshow{\}) # examplesIf}
+}
+\seealso{
+[bfs_get_sse_metadata()]
 }

@@ -3,32 +3,34 @@
 \docType{data}
 \name{register_dic}
 \alias{register_dic}
-\title{Swiss official commune register Dictionary}
+\title{Swiss official commune register: dictionary}
 \format{
-## `register_dic`
 A data frame with 27 rows and 5 columns:
 \describe{
-  \item{language}{Language}
-  \item{abbreviation}{Abbreviation}
-  \item{title}{Title}
-  \item{spec}{Specifications}
-  \item{notes}{General notes}
+  \item{language}{Language: "de", "fr" or "it".}
+  \item{abbreviation}{Variable name, e.g. "GDENR".}
+  \item{title}{Variable label.}
+  \item{spec}{Specifications.}
+  \item{notes}{General notes.}
 }
 }
 \source{
-<https://www.bfs.admin.ch/bfs/fr/home/bases-statistiques/repertoire-officiel-communes-suisse.html>
+<https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html>
 }
 \usage{
 register_dic
 }
 \description{
-The official commune register is structured according to cantons and
-districts or comparable administrative entities. Various federal, cantonal
-and communal governments and private businesses use this register when
-identifying and referring to communes.
+The variables of the commune register datasets, in German, French and
+Italian.
 }
-\details{
-The Federal Statistical Office assigns a number to each commune and creates,
-administers and publishes the Swiss official commune register.
+\seealso{
+Other commune register: 
+\code{\link{register_bzn}},
+\code{\link{register_gde}},
+\code{\link{register_gde_other}},
+\code{\link{register_kt}},
+\code{\link{register_kt_seeanteile}}
 }
+\concept{commune register}
 \keyword{datasets}

@@ -1,41 +1,41 @@
-#' Get the BFS tables catalog
+#' Search the BFS tables catalog
 #'
-#' Get the list of the tables available in the official DAM-API of the Swiss Federal Statistical Office asset catalog.
+#' Search the tables of the BFS catalog
+#' (<https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html>, article
+#' type "Tables"). Tables are mostly Excel or CSV files, not available in the
+#' PXWeb API: download them with [bfs_download_asset()].
 #'
-#' @param language character The language of a BFS catalog, i.e. "de", "fr", "it" or "en".
-#' @param title character String to search in (sub/super)title
-#' @param extended_search character String for an extended search in (sub/super)title, orderNr, summary, shortSummary, shortTextGNP
-#' @param spatial_division BFS datasets by spatial division, choose between "Switzerland", "Cantons", "Districts", "Communes", "Other spatial divisions" or "International"
-#' @param prodima numeric Get only specific BFS themes using one or multiple prodima numbers
-#' @param inquiry character BFS datasets for an inquiry
-#' @param institution character BFS datasets for an institution
-#' @param publishing_year_start character BFS datasets for a publishing year start
-#' @param publishing_year_end character BFS datasets for a publishing year end
-#' @param order_nr character Filter by BFS Number (FSO number)
-#' @param limit integer limit of query results (1000 by default)
-#' @param article_model_group integer articleModel parameter query
-#' @param article_model integer articleModel parameter query
-#' @param return_raw boolean Return raw data from json structure as a tibble data.frame
+#' The English and Italian catalogs have fewer tables than the German and
+#' French ones. Arguments accept several values, e.g.
+#' `prodima = c(900210, 900212)`.
 #'
-#' @return A tbl_df (a type of data frame; see tibble or
-#' dplyr packages) with the columns:
+#' @inheritParams bfs_get_catalog_data
+#'
+#' @return A tibble with the columns:
 #' \describe{
-#'   \item{title}{A character column with the title of the BFS table}
-#'   \item{language}{A character column with the language of the BFS table}
-#'   \item{number_asset}{The BFS asset number}
-#'   \item{publication_date}{The published date of the BFS table in the data catalog}
-#'   \item{order_nr}{The BFS number (FSO number), named orderNr in the API}
+#'   \item{title}{Title of the table.}
+#'   \item{language}{Language of the catalog.}
+#'   \item{number_asset}{Asset number, to use in [bfs_download_asset()].}
+#'   \item{publication_date}{Publication date.}
+#'   \item{order_nr}{BFS number.}
 #' }
-#' Returns NULL if no connection.
+#' Returns `NULL` if there is no internet connection.
 #'
 #' @importFrom httr2 req_headers req_url_path_append req_url_query req_retry req_perform resp_body_json
 #' @importFrom dplyr filter pull as_tibble left_join select
 #' @importFrom curl has_internet
 #'
-#' @seealso \code{\link{bfs_get_data}}
+#' @seealso [bfs_download_asset()], [bfs_get_catalog_data()]
 #'
 #' @examplesIf interactive()
-#' bfs_get_catalog_tables(language = "en", title = "students", prodima = c(900212))
+#' tables <- bfs_get_catalog_tables(language = "en", extended_search = "students")
+#' tables
+#'
+#' # download the first table
+#' bfs_download_asset(
+#'   number_asset = tables$number_asset[1],
+#'   destfile = file.path(tempdir(), "table.xlsx")
+#' )
 #'
 #' @export
 bfs_get_catalog_tables <- function(language = "de", title = NULL, extended_search = NULL, spatial_division = NULL, prodima = NULL, inquiry = NULL, institution = NULL, publishing_year_start = NULL, publishing_year_end = NULL, order_nr = NULL, limit = 1000, article_model = 900030, article_model_group = 900029, return_raw = FALSE) {

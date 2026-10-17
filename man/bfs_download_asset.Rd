@@ -2,7 +2,7 @@
 % Please edit documentation in R/bfs_download_asset.R
 \name{bfs_download_asset}
 \alias{bfs_download_asset}
-\title{Download a BFS asset file}
+\title{Download a BFS file}
 \usage{
 bfs_download_asset(
   number_asset = NULL,
@@ -14,24 +14,40 @@ bfs_download_asset(
 )
 }
 \arguments{
-\item{number_asset}{The asset number of a dataset}
+\item{number_asset}{The asset number of the file, e.g. `"24025646"`. It
+is the `number_asset` column of [bfs_get_catalog_tables()] and
+[bfs_get_catalog_data()], and the number at the end of the "assetdetail"
+URLs of the BFS website.}
 
-\item{number_bfs}{The BFS number of a dataset.}
+\item{number_bfs}{The BFS number of the file, e.g.
+`"px-x-1502040100_131"`. Use either `number_asset` or `number_bfs`.}
 
-\item{destfile}{A character string with the name where the downloaded file is saved. Tilde-expansion is performed.}
+\item{destfile}{Path of the downloaded file.}
 
-\item{quiet}{If TRUE, suppress status messages (if any), and the progress bar.}
+\item{quiet}{If `FALSE`, show the download progress.}
 
-\item{mode}{A character string specifying the mode with which to write the file. Useful values are "w", "wb" (binary), "a" (append) and "ab".}
-
-\item{handle}{a curl handle object}
+\item{mode, handle}{Passed to [curl::curl_download()].}
 }
 \value{
-Returns the file path where the file has been downloaded. Returns NULL if no connection.
+The path of the downloaded file. Returns `NULL` if there is no
+  internet connection.
 }
 \description{
-This function uses the DAM API
-\url{https://dam-api.bfs.admin.ch/hub/swagger-ui/index.html}
-to download a BFS file by asset number or BFS number. The file is downloaded
-using `curl::curl_download()` under the hood.
+Download any file of the BFS (Excel, CSV, PX, PDF, zip, ...) from the DAM
+API (<https://dam-api.bfs.admin.ch/hub/swagger-ui/index.html>) with its
+asset number or its BFS number. Use it for the tables of
+[bfs_get_catalog_tables()], or for datasets too large for
+[bfs_get_data()].
+}
+\examples{
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
+# a PX file, read it with pxR::read.px()
+bfs_download_asset(
+  number_bfs = "px-x-1502040100_131",
+  destfile = file.path(tempdir(), "px-x-1502040100_131.px")
+)
+\dontshow{\}) # examplesIf}
+}
+\seealso{
+[bfs_get_asset_metadata()], [bfs_get_catalog_tables()]
 }

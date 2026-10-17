@@ -1,0 +1,133 @@
+---
+title: "Get started"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Get started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+# The examples call the BFS APIs: they run on the pkgdown site only, not on
+# CRAN, where the APIs can be unavailable or rate-limit the check machines.
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  message = FALSE,
+  warning = FALSE,
+  eval = identical(Sys.getenv("IN_PKGDOWN"), "true")
+)
+```
+
+BFS gives you the open data of the
+[Swiss Federal Statistical Office](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html)
+(BFS, *Bundesamt für Statistik*) in R, as tidy data frames, in German,
+French, Italian or English.
+
+This page shows which API to use for which data, where the BFS is moving its
+data, and a first download from each API.
+
+## Which API for which data
+
+The BFS publishes its data through four APIs. BFS has functions for each:
+
+| You want | Use | API |
+|---|---|---|
+| Statistics of the Swiss Stats Explorer | `bfs_get_sse_metadata()`, `bfs_get_sse_data()` | [Swiss Stats Explorer](https://stats.swiss/) (SDMX) |
+| Datasets of the BFS data catalog | `bfs_get_catalog_data()`, `bfs_get_metadata()`, `bfs_get_data()` | [STAT-TAB](https://www.pxweb.bfs.admin.ch/pxweb/en/) (PXWeb) |
+| Tables and files (Excel, CSV, PX, ...) | `bfs_get_catalog_tables()`, `bfs_download_asset()` | DAM |
+| Maps and geodata | `bfs_get_base_maps()`, `bfs_get_catalog_geodata()`, `bfs_download_geodata()` | ThemaKart, STAC |
+
+- The **Swiss Stats Explorer** (SSE) is the new data platform of the BFS. Its
+  datasets have an id such as `DF_LWZ_1`.
+- **STAT-TAB** is the older platform. Its datasets (data cubes) have a BFS
+  number such as `px-x-1502040100_131`.
+- The **DAM** API serves every file published by the BFS, e.g. the Excel
+  tables of the website.
+- The **geodata** come from the Swiss geo-portal and from the cartographic
+  base maps of the BFS.
+
+## From STAT-TAB to the Swiss Stats Explorer
+
+The BFS is replacing STAT-TAB with the Swiss Stats Explorer: it moves most
+of its data cubes to the new platform, one statistic at a time, and will then
+switch off STAT-TAB. See the
+[BFS announcement](https://www.bfs.admin.ch/bfs/en/home/services/research/stat-tab-online-data-search.html)
+for the current timeline.
+
+For your code, this means:
+
+- `bfs_get_data()`, `bfs_get_metadata()` and `bfs_get_data_comments()` use the
+  STAT-TAB API. They will stop working when STAT-TAB is switched off.
+- During the migration, a statistic can be on STAT-TAB only, on both
+  platforms, or on the Swiss Stats Explorer only.
+- If a BFS number no longer works, look for the statistic by name on
+  [stats.swiss](https://stats.swiss/).
+- The tables and files (DAM) and the geodata functions are not affected.
+
+::: {.callout .callout-tip}
+For new code, use the Swiss Stats Explorer when the statistic is there, and
+STAT-TAB only for the data not yet migrated.
+:::
+
+## A first download
+
+```{r}
+library(BFS)
+```
+
+### Swiss Stats Explorer
+
+The dataset id (here `DF_LWZ_1`, the vacant dwellings) is in the URL of the
+dataset on [stats.swiss](https://stats.swiss/). Get its codelists, the codes
+of the values of each dimension:
+
+```{r}
+codelist <- bfs_get_sse_metadata("DF_LWZ_1", language = "en")
+codelist
+```
+
+Then download the data you need, with a query of codes for each dimension:
+
+```{r}
+bfs_get_sse_data(
+  number_bfs = "DF_LWZ_1",
+  language = "en",
+  query = list(
+    GR_KT_GDE = c("4001", "2581"), # Aarau and Olten
+    WOHN_ANZAHL = "_T",            # all numbers of rooms
+    LEERWOHN_TYP = "4",            # vacant dwellings for rent
+    MEASURE_DIMENSION = "OBS"      # number of dwellings (not the rate)
+  ),
+  start_period = "2020",
+  end_period = "2023"
+)
+```
+
+[Swiss Stats Explorer](https://felixluginbuhl.com/BFS/articles/swiss-stats-explorer.html) shows how to build
+the query from the labels of the codelist.
+
+### STAT-TAB
+
+Search the BFS data catalog, then download a dataset with its BFS number:
+
+```{r}
+bfs_get_catalog_data(language = "en", extended_search = "university students")
+
+bfs_get_data(number_bfs = "px-x-1502040100_131", language = "en")
+```
+
+[Data catalog and PXWeb datasets](https://felixluginbuhl.com/BFS/articles/pxweb.html) shows how to search
+the catalog and download only part of a dataset.
+
+## Next steps
+
+- [Swiss Stats Explorer](https://felixluginbuhl.com/BFS/articles/swiss-stats-explorer.html): build a query
+  from the codelists.
+- [Data catalog and PXWeb datasets](https://felixluginbuhl.com/BFS/articles/pxweb.html): search the catalog
+  and download all or part of a dataset.
+- [Tables and files](https://felixluginbuhl.com/BFS/articles/tables-and-files.html): download any BFS file.
+- [Geodata and base maps](https://felixluginbuhl.com/BFS/articles/geodata.html): maps of Switzerland and
+  geodata of the Swiss geo-portal.
+- [API errors and rate limits](https://felixluginbuhl.com/BFS/articles/troubleshooting.html): what to do
+  when an API is not available.

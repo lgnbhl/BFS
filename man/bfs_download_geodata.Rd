@@ -2,7 +2,7 @@
 % Please edit documentation in R/bfs_download_geodata.R
 \name{bfs_download_geodata}
 \alias{bfs_download_geodata}
-\title{Download a geographic file from the Swiss geo-portal}
+\title{Download geodata from the Swiss geo-portal}
 \usage{
 bfs_download_geodata(
   collection_id,
@@ -16,31 +16,44 @@ bfs_download_geodata(
 )
 }
 \arguments{
-\item{collection_id}{The STAC collection id, see the `collection_id` column
-of [bfs_get_catalog_geodata()].}
+\item{collection_id}{The collection id, i.e. the `collection_id` column of
+[bfs_get_catalog_geodata()], e.g.
+`"ch.bfs.generalisierte-grenzen_agglomerationen_g1"`.}
 
-\item{output_dir}{The directory where the files are downloaded.}
+\item{output_dir}{Folder of the downloaded files, a temporary folder by
+default.}
 
-\item{overwrite}{If TRUE, overwrite existing files.}
+\item{overwrite}{If `TRUE`, overwrite existing files.}
 
-\item{create_json}{If TRUE, also save the STAC items as a json file.}
+\item{create_json}{If `TRUE`, also save the STAC items as a JSON file.}
 
-\item{bbox}{Optional bounding box to filter the items, see `rstac::items()`.}
+\item{bbox, datetime, feature_id}{Optional filters of the items: bounding
+box, date-time or interval, and item id. See [rstac::items()].}
 
-\item{asset_names}{Optional names of the assets to download, see `rstac::assets_download()`.}
-
-\item{datetime}{Optional date-time or interval to filter the items, see `rstac::items()`.}
-
-\item{feature_id}{Optional id of a single item, see `rstac::items()`.}
+\item{asset_names}{Optional names of the assets to download. See
+[rstac::assets_download()].}
 }
 \value{
-Returns the file path where the file has been downloaded. Returns NULL if no connection.
+The paths of the downloaded files. Zip files are not extracted.
+  Returns `NULL` if there is no internet connection.
 }
 \description{
-Download assets from the STAC API on the geodata catalog
-of the Swiss Confederation (\url{https://data.geo.admin.ch/api/stac/v0.9/}).
+Download the files of a geodata collection from the STAC API of the Swiss
+geo-portal (<https://data.geo.admin.ch/api/stac/v0.9/>). Requires the
+rstac package.
 }
 \details{
-The use of the data and services is free but
-subject to the provisions on fair use (see \url{https://www.geo.admin.ch/terms-of-use}).
+The use of the data is free but subject to the terms of use of the Swiss
+geo-portal (<https://www.geo.admin.ch/terms-of-use>).
+}
+\examples{
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
+files <- bfs_download_geodata(
+  collection_id = "ch.bfs.generalisierte-grenzen_agglomerationen_g1"
+)
+files
+\dontshow{\}) # examplesIf}
+}
+\seealso{
+[bfs_get_catalog_geodata()]
 }

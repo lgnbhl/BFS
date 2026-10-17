@@ -2,7 +2,7 @@
 % Please edit documentation in R/bfs_get_catalog_data.R
 \name{bfs_get_catalog_data}
 \alias{bfs_get_catalog_data}
-\title{Get the BFS data catalog}
+\title{Search the BFS data catalog}
 \usage{
 bfs_get_catalog_data(
   language = "de",
@@ -22,55 +22,71 @@ bfs_get_catalog_data(
 )
 }
 \arguments{
-\item{language}{character The language of a BFS catalog, i.e. "de", "fr", "it" or "en".}
+\item{language}{Language of the catalog: `"de"` (default), `"fr"`, `"it"`
+or `"en"`.}
 
-\item{title}{character String to search in (sub/super)title}
+\item{title}{Text to search in the titles.}
 
-\item{extended_search}{character String for an extended search in (sub/super)title, orderNr, summary, shortSummary, shortTextGNP}
+\item{extended_search}{Text to search in the titles, BFS number and
+summaries.}
 
-\item{spatial_division}{BFS datasets by spatial division, choose between "Switzerland", "Cantons", "Districts", "Communes", "Other spatial divisions" or "International"}
+\item{spatial_division}{Spatial division of the datasets: `"Switzerland"`,
+`"Cantons"`, `"Districts"`, `"Communes"`, `"Other spatial divisions"` or
+`"International"`.}
 
-\item{prodima}{numeric Get only specific BFS themes using one or multiple prodima numbers}
+\item{prodima}{Theme number(s) of the BFS, e.g. `900212` for "Education
+and science". See the "Data catalog and PXWeb datasets" article for the
+list.}
 
-\item{inquiry}{character BFS datasets for an inquiry}
+\item{inquiry}{Inquiry (survey) id.}
 
-\item{institution}{character BFS datasets for an institution}
+\item{institution}{Institution id.}
 
-\item{publishing_year_start}{character BFS datasets for a publishing year start}
+\item{publishing_year_start, publishing_year_end}{First and last publishing
+year.}
 
-\item{publishing_year_end}{character BFS datasets for a publishing year end}
+\item{order_nr}{BFS number, e.g. `"px-x-1502040100_131"`.}
 
-\item{order_nr}{character Filter by BFS Number (FSO number)}
+\item{limit}{Maximum number of results (1000 by default). A message tells
+you when the catalog has as many results as `limit`.}
 
-\item{limit}{integer limit of query results (1000 by default)}
+\item{article_model, article_model_group}{Article type ids of the DAM API.
+The defaults select the "Data" (or "Tables") article type; you don't
+need to change them.}
 
-\item{article_model}{integer articleModel parameter query}
-
-\item{article_model_group}{integer articleModel parameter query}
-
-\item{return_raw}{boolean Return raw data from json structure as a tibble data.frame}
+\item{return_raw}{If `TRUE`, return the catalog as returned by the API,
+with all its metadata in nested data frames.}
 }
 \value{
-A tbl_df (a type of data frame; see tibble or
-dplyr packages) with the columns:
+A tibble with the columns:
 \describe{
-  \item{title}{A character column with the title of the BFS dataset}
-  \item{language}{A character column with the language of the BFS dataset}
-  \item{number_bfs}{The BFS number (FSO number), named orderNr in the API}
-  \item{number_asset}{The BFS asset number}
-  \item{publication_date}{The published date of the BFS dataset, named embargo in the API}
-  \item{url_px}{A character column with the URL of the PX file}
+  \item{title}{Title of the dataset.}
+  \item{language}{Language of the catalog.}
+  \item{number_bfs}{BFS number, to use in [bfs_get_data()].}
+  \item{number_asset}{Asset number, to use in [bfs_download_asset()].}
+  \item{publication_date}{Publication date.}
+  \item{url_px}{URL of the dataset in the PXWeb API.}
 }
-Returns NULL if no connection.
+Returns `NULL` if there is no internet connection.
 }
 \description{
-Get the list of the data available in the official DAM-API of the Swiss Federal Statistical Office asset catalog.
+Search the datasets of the BFS catalog
+(<https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html>, article
+type "Data") that can be downloaded with [bfs_get_data()].
+}
+\details{
+The English and Italian catalogs have fewer datasets than the German and
+French ones. Arguments accept several values, e.g.
+`prodima = c(900210, 900212)`.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
-bfs_get_catalog_data(language = "en", title = "students", prodima = c(900212))
+bfs_get_catalog_data(language = "en", extended_search = "student")
+
+# by theme ("Education and science")
+bfs_get_catalog_data(language = "en", prodima = 900212)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link{bfs_get_data}}
+[bfs_get_data()], [bfs_get_catalog_tables()]
 }

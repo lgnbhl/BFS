@@ -3,35 +3,40 @@
 \docType{data}
 \name{register_gde}
 \alias{register_gde}
-\title{Swiss official commune register GDE}
+\title{Swiss official commune register: communes}
 \format{
-## `register_gde`
 A data frame with 2,136 rows and 8 columns:
 \describe{
-  \item{GDEKT}{Kantonskuerzel}
-  \item{GDEBZNR}{Bezirksnummer}
-  \item{GDENR}{BFS-Gemeindenummer}
-  \item{GDENAME}{Amtlicher Gemeindename}
-  \item{GDENAMK}{Gemeindename, kurz}
-  \item{GDEBZNA}{Bezirksname}
-  \item{GDEKTNA}{Kantonsname}
-  \item{GDEMUTDAT}{Datum der letzten Anderung}
+  \item{GDEKT}{Canton abbreviation, e.g. "ZH".}
+  \item{GDEBZNR}{District number.}
+  \item{GDENR}{BFS commune number.}
+  \item{GDENAME}{Official commune name.}
+  \item{GDENAMK}{Short commune name.}
+  \item{GDEBZNA}{District name.}
+  \item{GDEKTNA}{Canton name.}
+  \item{GDEMUTDAT}{Date of the last change, as "dd.mm.yyyy".}
 }
 }
 \source{
-<https://www.bfs.admin.ch/bfs/fr/home/bases-statistiques/repertoire-officiel-communes-suisse.html>
+<https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html>
 }
 \usage{
 register_gde
 }
 \description{
-The official commune register is structured according to cantons and
-districts or comparable administrative entities. Various federal, cantonal
-and communal governments and private businesses use this register when
-identifying and referring to communes.
+The communes of Switzerland on 1 January 2023, with their district and
+canton. The BFS assigns a number to each commune and publishes the Swiss
+official commune register, used by the federal, cantonal and communal
+administrations to identify communes. See [register_dic] for the
+variables in German, French and Italian.
 }
-\details{
-The Federal Statistical Office assigns a number to each commune and creates,
-administers and publishes the Swiss official commune register.
+\seealso{
+Other commune register: 
+\code{\link{register_bzn}},
+\code{\link{register_dic}},
+\code{\link{register_gde_other}},
+\code{\link{register_kt}},
+\code{\link{register_kt_seeanteile}}
 }
+\concept{commune register}
 \keyword{datasets}

@@ -1,127 +1,99 @@
-#' Swiss official commune register GDE
+#' Swiss official commune register: communes
 #'
-#' The official commune register is structured according to cantons and
-#' districts or comparable administrative entities. Various federal, cantonal
-#' and communal governments and private businesses use this register when
-#' identifying and referring to communes.
+#' The communes of Switzerland on 1 January 2023, with their district and
+#' canton. The BFS assigns a number to each commune and publishes the Swiss
+#' official commune register, used by the federal, cantonal and communal
+#' administrations to identify communes. See [register_dic] for the
+#' variables in German, French and Italian.
 #'
-#' The Federal Statistical Office assigns a number to each commune and creates,
-#' administers and publishes the Swiss official commune register.
-#'
-#' @format ## `register_gde`
-#' A data frame with 2,136 rows and 8 columns:
+#' @format A data frame with 2,136 rows and 8 columns:
 #' \describe{
-#'   \item{GDEKT}{Kantonskuerzel}
-#'   \item{GDEBZNR}{Bezirksnummer}
-#'   \item{GDENR}{BFS-Gemeindenummer}
-#'   \item{GDENAME}{Amtlicher Gemeindename}
-#'   \item{GDENAMK}{Gemeindename, kurz}
-#'   \item{GDEBZNA}{Bezirksname}
-#'   \item{GDEKTNA}{Kantonsname}
-#'   \item{GDEMUTDAT}{Datum der letzten Anderung}
+#'   \item{GDEKT}{Canton abbreviation, e.g. "ZH".}
+#'   \item{GDEBZNR}{District number.}
+#'   \item{GDENR}{BFS commune number.}
+#'   \item{GDENAME}{Official commune name.}
+#'   \item{GDENAMK}{Short commune name.}
+#'   \item{GDEBZNA}{District name.}
+#'   \item{GDEKTNA}{Canton name.}
+#'   \item{GDEMUTDAT}{Date of the last change, as "dd.mm.yyyy".}
 #' }
-#' @source <https://www.bfs.admin.ch/bfs/fr/home/bases-statistiques/repertoire-officiel-communes-suisse.html>
+#' @source <https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html>
+#' @family commune register
 "register_gde"
 
-#' Swiss official commune register GDE Other
+#' Swiss official commune register: areas without a commune
 #'
-#' The official commune register is structured according to cantons and
-#' districts or comparable administrative entities. Various federal, cantonal
-#' and communal governments and private businesses use this register when
-#' identifying and referring to communes.
+#' The areas of Switzerland that belong to no commune (e.g. the Staatswald
+#' Galm), on 1 January 2023.
 #'
-#' The Federal Statistical Office assigns a number to each commune and creates,
-#' administers and publishes the Swiss official commune register.
-#'
-#' @format ## `register_gde_other`
-#' A data frame with 3 rows and 4 columns:
+#' @format A data frame with 3 rows and 4 columns:
 #' \describe{
-#'   \item{GDENR}{BFS-Gemeindenummer}
-#'   \item{GDENAME}{Amtlicher Gemeindename}
-#'   \item{KTNR}{Kantonsnummer}
-#'   \item{GDEBZNR}{Bezirksnummer}
+#'   \item{GDENR}{BFS number of the area.}
+#'   \item{GDENAME}{Name of the area.}
+#'   \item{KTNR}{Canton number.}
+#'   \item{GDEBZNR}{District number.}
 #' }
-#' @source <https://www.bfs.admin.ch/bfs/fr/home/bases-statistiques/repertoire-officiel-communes-suisse.html>
+#' @source <https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html>
+#' @family commune register
 "register_gde_other"
 
-#' Swiss official commune register BZN
+#' Swiss official commune register: districts
 #'
-#' The official commune register is structured according to cantons and
-#' districts or comparable administrative entities. Various federal, cantonal
-#' and communal governments and private businesses use this register when
-#' identifying and referring to communes.
+#' The districts of Switzerland (or comparable administrative entities) on
+#' 1 January 2023.
 #'
-#' The Federal Statistical Office assigns a number to each commune and creates,
-#' administers and publishes the Swiss official commune register.
-#'
-#' @format ## `register_bzn`
-#' A data frame with 143 rows and 3 columns:
+#' @format A data frame with 143 rows and 3 columns:
 #' \describe{
-#'   \item{GDEKT}{Kantonskuerzel}
-#'   \item{GDEBZNR}{Bezirksnummer}
-#'   \item{GDEBZNA}{Bezirksname}
+#'   \item{GDEKT}{Canton abbreviation, e.g. "ZH".}
+#'   \item{GDEBZNR}{District number.}
+#'   \item{GDEBZNA}{District name.}
 #' }
-#' @source <https://www.bfs.admin.ch/bfs/fr/home/bases-statistiques/repertoire-officiel-communes-suisse.html>
+#' @source <https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html>
+#' @family commune register
 "register_bzn"
 
-#' Swiss official commune register KT
+#' Swiss official commune register: cantons
 #'
-#' The official commune register is structured according to cantons and
-#' districts or comparable administrative entities. Various federal, cantonal
-#' and communal governments and private businesses use this register when
-#' identifying and referring to communes.
+#' The 26 cantons of Switzerland.
 #'
-#' The Federal Statistical Office assigns a number to each commune and creates,
-#' administers and publishes the Swiss official commune register.
-#'
-#' @format ## `register_kt`
-#' A data frame with 26 rows and 3 columns:
+#' @format A data frame with 26 rows and 3 columns:
 #' \describe{
-#'   \item{KTNR}{Kantonsnummer}
-#'   \item{GDEKT}{Kantonskuerzel}
-#'   \item{GDEKTNA}{Kantonsname}
+#'   \item{KTNR}{Canton number.}
+#'   \item{GDEKT}{Canton abbreviation, e.g. "ZH".}
+#'   \item{GDEKTNA}{Canton name.}
 #' }
-#' @source <https://www.bfs.admin.ch/bfs/fr/home/bases-statistiques/repertoire-officiel-communes-suisse.html>
+#' @source <https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html>
+#' @family commune register
 "register_kt"
 
-#' Swiss official commune register KT Seeanteile
+#' Swiss official commune register: cantonal shares of lakes
 #'
-#' The official commune register is structured according to cantons and
-#' districts or comparable administrative entities. Various federal, cantonal
-#' and communal governments and private businesses use this register when
-#' identifying and referring to communes.
+#' The lakes of Switzerland, split by canton (e.g. "Zürichsee (ZH)" and
+#' "Zürichsee (SZ)"), on 1 January 2023.
 #'
-#' The Federal Statistical Office assigns a number to each commune and creates,
-#' administers and publishes the Swiss official commune register.
-#'
-#' @format ## `register_kt_seeanteile`
-#' A data frame with 9 rows and 5 columns:
+#' @format A data frame with 41 rows and 3 columns:
 #' \describe{
-#'   \item{GDENR}{BFS-Gemeindenummer}
-#'   \item{GDENAME}{Amtlicher Gemeindename}
-#'   \item{KTNR}{Kantonsnummer}
+#'   \item{GDENR}{BFS number of the lake share.}
+#'   \item{GDENAME}{Name of the lake share.}
+#'   \item{KTNR}{Canton number.}
 #' }
-#' @source <https://www.bfs.admin.ch/bfs/fr/home/bases-statistiques/repertoire-officiel-communes-suisse.html>
+#' @source <https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html>
+#' @family commune register
 "register_kt_seeanteile"
 
-#' Swiss official commune register Dictionary
+#' Swiss official commune register: dictionary
 #'
-#' The official commune register is structured according to cantons and
-#' districts or comparable administrative entities. Various federal, cantonal
-#' and communal governments and private businesses use this register when
-#' identifying and referring to communes.
+#' The variables of the commune register datasets, in German, French and
+#' Italian.
 #'
-#' The Federal Statistical Office assigns a number to each commune and creates,
-#' administers and publishes the Swiss official commune register.
-#'
-#' @format ## `register_dic`
-#' A data frame with 27 rows and 5 columns:
+#' @format A data frame with 27 rows and 5 columns:
 #' \describe{
-#'   \item{language}{Language}
-#'   \item{abbreviation}{Abbreviation}
-#'   \item{title}{Title}
-#'   \item{spec}{Specifications}
-#'   \item{notes}{General notes}
+#'   \item{language}{Language: "de", "fr" or "it".}
+#'   \item{abbreviation}{Variable name, e.g. "GDENR".}
+#'   \item{title}{Variable label.}
+#'   \item{spec}{Specifications.}
+#'   \item{notes}{General notes.}
 #' }
-#' @source <https://www.bfs.admin.ch/bfs/fr/home/bases-statistiques/repertoire-officiel-communes-suisse.html>
+#' @source <https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html>
+#' @family commune register
 "register_dic"

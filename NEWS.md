@@ -1,4 +1,10 @@
 # BFS 0.7.3
+- new "Get started" vignette: which API to use for which data, and the move
+  from STAT-TAB to the Swiss Stats Explorer. The BFS is replacing STAT-TAB,
+  and its PXWeb API used by `bfs_get_data()`, `bfs_get_metadata()` and
+  `bfs_get_data_comments()`.
+- the pkgdown site has a "Get started" tab, the articles in their own tabs,
+  and a link to its `llms.txt`.
 - functions using the BFS APIs now give an informative error of class
   `bfs_http_error` if the API is not available (e.g. HTTP 429 Too Many
   Requests, timeout, server error). The original httr2 error classes and
@@ -66,6 +72,14 @@
   and purrr >= 1.0.0.
 - add offline tests (mocked HTTP responses) that also run on CRAN, and skip
   a remaining base maps test calling the BFS API on CRAN.
+- rewrite the documentation: clearer help pages with examples for all
+  functions, a shorter README and new guides on the pkgdown site (Swiss Stats
+  Explorer, data catalog and PXWeb datasets, tables and files, geodata and
+  base maps, API errors and rate limits). Fix the size of
+  `register_kt_seeanteile` (41 rows, 3 columns) in its documentation.
+- the internal functions `bfs_get_sse_url()` and `get_xml_name()` no longer
+  have help pages.
+- new look of the pkgdown site, with a dark mode.
 
 # BFS 0.7.2
 - wrap the network-dependent examples of `bfs_get_sse_data()` and

@@ -1,18 +1,36 @@
-#' Get Metadata (Codelists) from Swiss Stats Explorer (SSE) API
-#' 
-#' Retrieve metadata codelists for a specified BFS dataset from the Swiss Stats Explorer (SSE) API.
-#' This function is required to built queries for \link{bfs_get_sse_data}.
+#' Get the codelists of a Swiss Stats Explorer dataset
 #'
-#' @param number_bfs The BFS number (FSO number) of a dataset.
-#' @param language Language of the codelists ("de", "fr", "it", "en").
+#' Get the dimensions of a dataset of the Swiss Stats Explorer (SSE) API
+#' (<https://stats.swiss/>) and the values each dimension can take. Use them
+#' to build the `query` of [bfs_get_sse_data()].
 #'
-#' @returns A tibble containing the codelists of the specified BFS dataset.
+#' @param number_bfs The id of an SSE dataset (dataflow), e.g. `"DF_LWZ_1"`.
+#'   It is shown in the URL of the dataset on <https://stats.swiss/>.
+#' @param language Language of the labels: `"de"` (default), `"fr"`, `"it"`
+#'   or `"en"`. A label missing in this language falls back to another
+#'   language.
+#'
+#' @returns A tibble with one row per value of each dimension:
+#' \describe{
+#'   \item{code}{The dimension code, to use as a name in `query`.}
+#'   \item{text}{The dimension label.}
+#'   \item{value}{The value code, to use as a value in `query`.}
+#'   \item{valueText}{The value label.}
+#'   \item{position_dimension}{The position of the dimension in the dataset.}
+#' }
+#' Returns `NULL` if there is no internet connection.
+#'
+#' @seealso [bfs_get_sse_data()]
 #' @export
-#' 
+#'
 #' @importFrom magrittr %>%
 #'
 #' @examplesIf interactive()
-#' bfs_get_sse_metadata("DF_SSV_POL_LEG", language = "de")
+#' codelist <- bfs_get_sse_metadata("DF_LWZ_1", language = "en")
+#' codelist
+#'
+#' # the dimensions and their codes
+#' unique(codelist[c("code", "text")])
 bfs_get_sse_metadata <- function(number_bfs, language = "de") {
   
   language <- match.arg(arg = language, choices = c("de", "fr", "it", "en"))

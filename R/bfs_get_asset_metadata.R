@@ -1,18 +1,25 @@
-#' Get asset metadata in a given language
+#' Get the metadata of a BFS file
 #'
-#' This function uses the DAM API \url{https://dam-api.bfs.admin.ch/hub/swagger-ui/index.html}
-#' to get the metadata of a BFS file by asset number or BFS number in a given language.
+#' Get the metadata of a BFS file from the DAM API
+#' (<https://dam-api.bfs.admin.ch/hub/swagger-ui/index.html>) with its asset
+#' number or its BFS number: title, description, publication date, contact,
+#' links, ...
 #'
-#' @seealso [bfs_download_asset()]
-#'
-#' @param number_bfs The BFS number of a dataset.
-#' @param number_asset The asset number of a dataset
-#' @param language character The language of a BFS catalog, i.e. "de", "fr", "it" or "en".
+#' @inheritParams bfs_download_asset
+#' @param language Language of the metadata: `"de"` (default), `"fr"`, `"it"`
+#'   or `"en"`.
 #'
 #' @importFrom httr2 request req_headers req_url_path_append req_perform resp_body_json
 #' @importFrom magrittr %>%
 #'
-#' @return list Returns a list containing asset metadata information. Returns NULL if no connection.
+#' @return A nested list with the metadata. Returns `NULL` if there is no
+#'   internet connection.
+#'
+#' @seealso [bfs_download_asset()]
+#'
+#' @examplesIf interactive()
+#' metadata <- bfs_get_asset_metadata(number_bfs = "px-x-1502040100_131", language = "en")
+#' metadata$description$titles$main
 #'
 #' @export
 bfs_get_asset_metadata <- function(number_asset = NULL, number_bfs = NULL, language = c("de", "fr", "it", "en")) {

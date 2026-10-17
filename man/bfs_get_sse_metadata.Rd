@@ -2,24 +2,43 @@
 % Please edit documentation in R/bfs_get_sse_metadata.R
 \name{bfs_get_sse_metadata}
 \alias{bfs_get_sse_metadata}
-\title{Get Metadata (Codelists) from Swiss Stats Explorer (SSE) API}
+\title{Get the codelists of a Swiss Stats Explorer dataset}
 \usage{
 bfs_get_sse_metadata(number_bfs, language = "de")
 }
 \arguments{
-\item{number_bfs}{The BFS number (FSO number) of a dataset.}
+\item{number_bfs}{The id of an SSE dataset (dataflow), e.g. `"DF_LWZ_1"`.
+It is shown in the URL of the dataset on <https://stats.swiss/>.}
 
-\item{language}{Language of the codelists ("de", "fr", "it", "en").}
+\item{language}{Language of the labels: `"de"` (default), `"fr"`, `"it"`
+or `"en"`. A label missing in this language falls back to another
+language.}
 }
 \value{
-A tibble containing the codelists of the specified BFS dataset.
+A tibble with one row per value of each dimension:
+\describe{
+  \item{code}{The dimension code, to use as a name in `query`.}
+  \item{text}{The dimension label.}
+  \item{value}{The value code, to use as a value in `query`.}
+  \item{valueText}{The value label.}
+  \item{position_dimension}{The position of the dimension in the dataset.}
+}
+Returns `NULL` if there is no internet connection.
 }
 \description{
-Retrieve metadata codelists for a specified BFS dataset from the Swiss Stats Explorer (SSE) API.
-This function is required to built queries for \link{bfs_get_sse_data}.
+Get the dimensions of a dataset of the Swiss Stats Explorer (SSE) API
+(<https://stats.swiss/>) and the values each dimension can take. Use them
+to build the `query` of [bfs_get_sse_data()].
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
-bfs_get_sse_metadata("DF_SSV_POL_LEG", language = "de")
+codelist <- bfs_get_sse_metadata("DF_LWZ_1", language = "en")
+codelist
+
+# the dimensions and their codes
+unique(codelist[c("code", "text")])
 \dontshow{\}) # examplesIf}
+}
+\seealso{
+[bfs_get_sse_data()]
 }

@@ -2,19 +2,42 @@
 % Please edit documentation in R/bfs_get_metadata.R
 \name{bfs_get_metadata}
 \alias{bfs_get_metadata}
-\title{Get metadata of a BFS data in a given language}
+\title{Get the variables of a BFS dataset}
 \usage{
 bfs_get_metadata(number_bfs, language = "de")
 }
 \arguments{
-\item{number_bfs}{The BFS number of a dataset.}
+\item{number_bfs}{The BFS number of a dataset, e.g.
+`"px-x-1502040100_131"`.}
 
-\item{language}{Language of the dataset to be translated if exists.}
+\item{language}{Language of the dataset: `"de"` (default), `"fr"`, `"it"`
+or `"en"`.}
 }
 \value{
-A tbl_df (a type of data frame; see tibble or dplyr packages). Returns NULL if no connection.
+A tibble with one row per variable and the columns `code` and
+  `text` (variable code and label), `values` and `valueTexts` (list
+  columns with the value codes and labels) and `title` (title of the
+  dataset). Use `tidyr::unnest_longer(metadata, c(values, valueTexts))` to
+  get one row per value. Returns `NULL` if there is no internet
+  connection.
 }
 \description{
-Get the metadata of a BFS dataset using the PXWEB API v1.
-You should choose either the bfs number of the bfs offical url of a given dataset.
+Get the variables of a dataset of the PXWeb API and the values each
+variable can take. Use them to build the `query` of [bfs_get_data()].
+}
+\details{
+The PXWeb API is the API of STAT-TAB, which the BFS is replacing with the
+Swiss Stats Explorer (see [bfs_get_sse_metadata()]).
+}
+\examples{
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
+metadata <- bfs_get_metadata(number_bfs = "px-x-1502040100_131", language = "en")
+metadata
+
+# one row per value
+tidyr::unnest_longer(metadata, c(values, valueTexts))
+\dontshow{\}) # examplesIf}
+}
+\seealso{
+[bfs_get_data()]
 }

@@ -1,0 +1,74 @@
+---
+title: "API errors and rate limits"
+description: "What to do when a BFS API is not available."
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", message = FALSE, warning = FALSE)
+```
+
+## The BFS API is not available
+
+If an API is not available, e.g. after too many requests (HTTP 429), a
+timeout or a server error, the functions give an error that starts with
+"The BFS API is not available.":
+
+```
+Error:
+! The BFS API is not available.
+ℹ HTTP 429 Too Many Requests.
+Caused by error in `httr2::req_perform()`:
+! HTTP 429 Too Many Requests.
+```
+
+Without internet connection, the functions give the message "No internet
+connection" and return `NULL`.
+
+## Too many requests
+
+The PXWeb API limits the number of requests per IP address in a time window
+(see its [configuration](https://www.pxweb.bfs.admin.ch/api/v1/de/?config)).
+`bfs_get_data()` sends two requests: one for the variables of the dataset,
+one for the data. If you call it in a loop:
+
+- wait between the calls, e.g. with `delay = 10` (seconds) or
+  `Sys.sleep()`,
+- save the results rather than downloading them again.
+
+If the error remains, the dataset may be too large for the API. Download
+only part of it with `query` (see
+[Data catalog and PXWeb datasets](pxweb.html)), or the whole PX file with
+`bfs_download_asset()` (see [Tables and files](tables-and-files.html)).
+
+## Handle the errors in your code
+
+The errors have the class `bfs_http_error`, so you can handle them, e.g. to
+retry later or skip a dataset:
+
+```r
+data <- tryCatch(
+  bfs_get_data(number_bfs = "px-x-1502040100_131", language = "en"),
+  bfs_http_error = function(e) {
+    message("Skipped: ", conditionMessage(e))
+    NULL
+  }
+)
+```
+
+The original error classes and fields are kept, e.g. `httr2_http_429` with
+the response in `e$resp`, or `http_429` for the errors of pxweb:
+
+```r
+tryCatch(
+  bfs_get_sse_metadata("DF_LWZ_1"),
+  httr2_http_429 = function(e) httr2::resp_retry_after(e$resp)
+)
+```
+
+The original error is also in `e$parent`.
+
+## Caches
+
+The base maps of `bfs_get_base_maps()` are cached on disk, and the list of
+the Swiss Stats Explorer datasets for the R session. If a base map or a new
+dataset seems missing, clear the cache with `bfs_clear_cache()`.

@@ -1,0 +1,64 @@
+---
+title: "Tables and files"
+description: "Search the BFS tables and download any BFS file."
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", message = FALSE, warning = FALSE)
+```
+
+Many statistics are not in the PXWeb API but published as files: Excel or
+CSV tables, PX files, PDFs, zip files, ... They are listed in the
+[BFS catalog](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html)
+as article type "Tables". Each file has an asset number, also shown at the
+end of the "assetdetail" URLs of the BFS website.
+
+```{r}
+library(BFS)
+library(dplyr)
+```
+
+## Search the tables
+
+`bfs_get_catalog_tables()` has the same arguments as `bfs_get_catalog_data()`
+(see [Data catalog and PXWeb datasets](pxweb.html)).
+
+```{r}
+tables <- bfs_get_catalog_tables(language = "en", extended_search = "students")
+tables
+```
+
+## Download a file
+
+```r
+asset <- tables |>
+  filter(title == "Students at universities and institutes of technology: Basistables") |>
+  pull(number_asset)
+
+bfs_download_asset(number_asset = asset, destfile = "students.xlsx")
+
+readxl::read_excel("students.xlsx")
+```
+
+`bfs_download_asset()` also takes a BFS number. For a PXWeb dataset too
+large for the API, download its PX file and read it with the pxR package:
+
+```r
+bfs_download_asset(number_bfs = "px-x-1502040100_131", destfile = "students.px")
+
+students <- pxR::read.px("students.px") |>
+  as.data.frame()
+```
+
+The PX file is read in German only.
+
+## Metadata of a file
+
+`bfs_get_asset_metadata()` returns the metadata of a file as a nested list:
+title, description, publication date, contact, links, ...
+
+```{r}
+metadata <- bfs_get_asset_metadata(number_bfs = "px-x-1502040100_131", language = "en")
+names(metadata)
+metadata$description$titles$main
+```
