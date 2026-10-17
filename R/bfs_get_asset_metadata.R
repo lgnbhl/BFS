@@ -16,8 +16,9 @@
 #'
 #' @export
 bfs_get_asset_metadata <- function(number_asset = NULL, number_bfs = NULL, language = c("de", "fr", "it", "en")) {
-  # the API only uses one language; single values it accepts (e.g. "EN") still work
-  if (!missing(language) && length(language) > 1) {
+  # the API only uses one language; single values it accepts (e.g. "EN") still work,
+  # and so does the default vector forwarded by a wrapper function
+  if (length(language) > 1 && !identical(language, c("de", "fr", "it", "en"))) {
     stop("Please specify only one language, i.e. \"de\", \"fr\", \"it\" or \"en\".", call. = FALSE)
   }
   language <- language[1]

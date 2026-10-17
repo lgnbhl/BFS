@@ -70,6 +70,12 @@ test_that("bfs_get_asset_metadata() sends a single language", {
     bfs_get_asset_metadata(number_asset = "24367729", language = "EN")
   })
   expect_identical(last_req$headers[["accept-language"]], "EN")
+  # a wrapper forwarding the default language vector still works
+  wrapper <- function(language = c("de", "fr", "it", "en")) {
+    bfs_get_asset_metadata(number_asset = "24367729", language = language)
+  }
+  httr2::with_mocked_responses(mock, wrapper())
+  expect_identical(last_req$headers[["accept-language"]], "de")
   expect_error(
     bfs_get_asset_metadata(number_asset = "24367729", language = c("fr", "de")),
     "Please specify only one language", fixed = TRUE

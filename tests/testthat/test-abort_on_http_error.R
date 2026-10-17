@@ -13,3 +13,17 @@ test_that("an unavailable API gives an informative bfs_http_error", {
     expect_error(bfs_get_sse_metadata(number_bfs = "DF_LWZ_1"), class = "bfs_http_error")
   })
 })
+
+test_that("bfs_http_error keeps the fields of the original error", {
+  e <- tryCatch(
+    httr2::with_mocked_responses(mock_429, {
+      abort_on_http_error(httr2::req_perform(httr2::request("https://example.com")))
+    }),
+    error = function(e) e
+  )
+  expect_s3_class(e, "bfs_http_error")
+  expect_s3_class(e, "httr2_http_429")
+  expect_identical(httr2::resp_status(e$resp), 429L)
+  expect_identical(e$status, 429L)
+  expect_match(conditionMessage(e), "The BFS API is not available")
+})
