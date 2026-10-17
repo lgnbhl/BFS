@@ -19,7 +19,9 @@ language.}
 when a new one is published.}
 }
 \value{
-A tibble with one row per value of each dimension:
+A tibble with one row per value allowed in the dataset for each
+  dimension (some values may have no data: a query with only such values
+  gives the error "No records found for the specified query."):
 \describe{
   \item{code}{The dimension code, to use as a name in `query`.}
   \item{text}{The dimension label.}

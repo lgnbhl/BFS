@@ -13,7 +13,9 @@
 #'   (default), the latest version is used. Set it to keep the same version
 #'   when a new one is published.
 #'
-#' @returns A tibble with one row per value of each dimension:
+#' @returns A tibble with one row per value allowed in the dataset for each
+#'   dimension (some values may have no data: a query with only such values
+#'   gives the error "No records found for the specified query."):
 #' \describe{
 #'   \item{code}{The dimension code, to use as a name in `query`.}
 #'   \item{text}{The dimension label.}
@@ -123,25 +125,26 @@ sse_metadata_from_url <- function(meta_url, language) {
   
   all_codes <- dplyr::bind_rows(all_codes)
   
-  # Options that are actually present in the dataset
-  # ................................................
-  
+  # Options allowed in the dataset
+  # ..............................
+
   # a region with include="false" lists values excluded from the dataset
   rel_options <-
     xml2::xml_find_all(res_xml, ".//structure:CubeRegion[not(@include='false')]")
-  
-  # Extract KeyValue nodes
+
+  # Extract KeyValue nodes. A dimension can be in several constraints (e.g.
+  # "Allowed" and "Actual"): the values of all of them are kept, whatever
+  # their order in the response
   kv_nodes <- xml2::xml_find_all(rel_options, ".//common:KeyValue")
-  names(kv_nodes) <- xml2::xml_attr(kv_nodes, "id")
-  
+
   # Extract codes for all dimensions
-  rel_codes <- purrr::map(names(kv_nodes), function(kv_id) {
-    
-    kv_node <- kv_nodes[[kv_id]]
+  rel_codes <- purrr::map(seq_along(kv_nodes), function(i) {
+
+    kv_node <- kv_nodes[[i]]
     values <- xml2::xml_find_all(kv_node, ".//common:Value")
-    
+
     tibble::tibble(
-      codelist_id = kv_id,
+      codelist_id = xml2::xml_attr(kv_node, "id"),
       code = xml2::xml_text(values)
     )
   })

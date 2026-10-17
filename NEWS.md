@@ -9,6 +9,10 @@
 - `bfs_get_sse_metadata()` takes the labels from the codelist referenced by
   the data structure (agency, id and version), and leaves out the values
   excluded by the dataset constraint.
+- `bfs_get_sse_metadata()` lists the values of all the constraints of a
+  dataset ("Allowed" and "Actual"). Before, a dimension in several
+  constraints only had the values of the first one in the API response.
+  Some values may have no data, as documented.
 - the SSE requests explicitly ask for the SDMX generic data format, are
   retried once if the API is temporarily unavailable, and identify the
   package in their user agent.

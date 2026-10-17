@@ -439,6 +439,7 @@ test_that("bfs_get_sse_data() sends the time period only if given", {with_empty_
 # - a codelist CL_AGE of another agency, listed first, with other labels
 # - a dimension (SEX) missing from the constraint
 # - a region excluding the value Y99 of AGE
+# - a second constraint with another value of AGE
 sse_versions_json <- '{"references": {
   "urn:sdmx:org.sdmx.infomodel.datastructure.Dataflow=CH1:DF_V(1.2.0)": {},
   "urn:sdmx:org.sdmx.infomodel.datastructure.Dataflow=CH1:DF_V(1.10.0)": {},
@@ -462,6 +463,7 @@ sse_structure_xml <- '<message:Structure
       <structure:Codelist id="CL_AGE" agencyID="CH1" version="1.0.0">
         <common:Name xml:lang="en">Age</common:Name>
         <structure:Code id="Y0"><common:Name xml:lang="en">0 years</common:Name></structure:Code>
+        <structure:Code id="Y1"><common:Name xml:lang="en">1 year</common:Name></structure:Code>
         <structure:Code id="Y99"><common:Name xml:lang="en">99 years</common:Name></structure:Code>
       </structure:Codelist>
     </structure:Codelists>
@@ -492,6 +494,11 @@ sse_structure_xml <- '<message:Structure
         </structure:CubeRegion>
         <structure:CubeRegion include="false">
           <common:KeyValue id="AGE"><common:Value>Y99</common:Value></common:KeyValue>
+        </structure:CubeRegion>
+      </structure:ContentConstraint>
+      <structure:ContentConstraint id="CC2">
+        <structure:CubeRegion include="true">
+          <common:KeyValue id="AGE"><common:Value>Y1</common:Value></common:KeyValue>
         </structure:CubeRegion>
       </structure:ContentConstraint>
     </structure:Constraints>
@@ -527,9 +534,10 @@ test_that("SSE metadata uses the referenced codelist and skips excluded values",
   httr2::with_mocked_responses(mock_sse_versions, {
     meta <- bfs_get_sse_metadata("DF_V", language = "en", version = "1.0.0")
   })
-  expect_identical(meta$value, "Y0")
-  expect_identical(meta$valueText, "0 years")
-  expect_identical(meta$text, "Age")
+  # the values of both constraints, without the excluded one
+  expect_identical(meta$value, c("Y0", "Y1"))
+  expect_identical(meta$valueText, c("0 years", "1 year"))
+  expect_identical(meta$text, c("Age", "Age"))
   sse_meta <- httr2::with_mocked_responses(mock_sse_versions, {
     sse_metadata_from_url("https://disseminate.stats.swiss/rest/dataflow/x?references=all", language = "en")
   })
