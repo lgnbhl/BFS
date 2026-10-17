@@ -62,7 +62,8 @@
   after the first call.
 - new `bfs_clear_cache()` to delete the cached base maps and SSE dataflows.
   `bfs_get_base_maps()` no longer keeps the zip file once extracted.
-- require httr2 >= 1.0.0 and purrr >= 1.0.0.
+- require R >= 4.0.0 (needed by `tools::R_user_dir()` and httr2), httr2 >= 1.0.0
+  and purrr >= 1.0.0.
 - add offline tests (mocked HTTP responses) that also run on CRAN, and skip
   a remaining base maps test calling the BFS API on CRAN.
 
