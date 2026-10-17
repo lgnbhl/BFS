@@ -5,6 +5,8 @@
   `bfs_get_data_comments()`.
 - the pkgdown site has a "Get started" tab, the articles in their own tabs,
   and a link to its `llms.txt`.
+- the pkgdown site is built and published by GitHub Actions on each release;
+  the built site (`docs/`) is no longer tracked in git.
 - functions using the BFS APIs now give an informative error of class
   `bfs_http_error` if the API is not available (e.g. HTTP 429 Too Many
   Requests, timeout, server error). The original httr2 error classes and
