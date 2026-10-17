@@ -378,6 +378,13 @@ with_empty_sse_cache <- function(code) {
   code
 }
 
+# SSE response with the content type of the API for a structure or a data
+# message
+sse_response <- function(req, body, data_type = "application/vnd.sdmx.genericdata+xml; charset=utf-8; version=2.1") {
+  type <- if (identical(body, sse_data_xml)) data_type else "application/xml"
+  httr2::response(status_code = 200, url = req$url, headers = paste0("Content-Type: ", type), body = charToRaw(body))
+}
+
 # mocked SSE API, counting the requests of the dataflow list and keeping the
 # URL of the last request
 sse_requests <- new.env()
@@ -388,7 +395,7 @@ mock_sse <- function(req) {
     return(mock_json(sse_dataflows_json)(req))
   }
   body <- if (grepl("references=all", req$url, fixed = TRUE)) sse_metadata_xml else sse_data_xml
-  httr2::response(status_code = 200, url = req$url, headers = "Content-Type: application/xml", body = charToRaw(body))
+  sse_response(req, body)
 }
 
 test_that("bfs_get_sse_data() keeps values on the right observation", {with_empty_sse_cache({
@@ -511,7 +518,7 @@ mock_sse_versions <- function(req) {
     return(mock_json(sse_versions_json)(req))
   }
   body <- if (grepl("references=all", req$url, fixed = TRUE)) sse_structure_xml else sse_data_xml
-  httr2::response(status_code = 200, url = req$url, headers = "Content-Type: application/xml", body = charToRaw(body))
+  sse_response(req, body)
 }
 
 test_that("the latest SSE dataflow version is used, unless one is given", {with_empty_sse_cache({
@@ -552,6 +559,81 @@ test_that("the SSE key has one part per dimension of the data structure", {with_
     expect_identical(
       sse_requests$last_url,
       "https://disseminate.stats.swiss/rest/data/CH1,DF_V,1.0.0/M.Y0?dimensionAtObservation=AllDimensions"
+    )
+  })
+})})
+
+test_that("bfs_get_sse_data() errors on a query that would be ignored", {with_empty_sse_cache({
+  local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  httr2::with_mocked_responses(mock_sse, {
+    expect_error(
+      bfs_get_sse_data("DF_TEST", query = list(SXE = "M")),
+      "Unknown dimension in `query`: SXE",
+      class = "bfs_sse_query_error"
+    )
+    expect_error(
+      bfs_get_sse_data("DF_TEST", query = list(SEX = "M", TIME_PERIOD = "2023")),
+      "start_period",
+      class = "bfs_sse_query_error"
+    )
+    expect_error(
+      bfs_get_sse_data("DF_TEST", query = list("M")),
+      "must be named",
+      class = "bfs_sse_query_error"
+    )
+  })
+})})
+
+test_that("bfs_get_sse_data() warns on a value not in the dataset", {with_empty_sse_cache({
+  local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  httr2::with_mocked_responses(mock_sse, {
+    expect_warning(
+      df <- bfs_get_sse_data("DF_TEST", query = list(SEX = c("M", "X"))),
+      "Value not in the dataset for `SEX` in `query`: X"
+    )
+  })
+  expect_s3_class(df, "tbl_df")
+})})
+
+test_that("bfs_get_sse_data() warns on an invalid type and returns codes", {with_empty_sse_cache({
+  local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  httr2::with_mocked_responses(mock_sse, {
+    expect_warning(
+      df <- bfs_get_sse_data("DF_TEST", query = list(SEX = "M"), variable_value_type = "label"),
+      "`variable_value_type` must be \"code\" or \"text\""
+    )
+  })
+  expect_identical(df$SEX, c("M", "F", NA))
+})})
+
+test_that("bfs_get_sse_data() errors on data in an unexpected format", {with_empty_sse_cache({
+  local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  mock <- function(req) {
+    if (grepl("/rest/dataflow$", req$url)) return(mock_json(sse_dataflows_json)(req))
+    body <- if (grepl("references=all", req$url, fixed = TRUE)) sse_metadata_xml else sse_data_xml
+    sse_response(req, body, data_type = "application/vnd.sdmx.structurespecificdata+xml")
+  }
+  httr2::with_mocked_responses(mock, {
+    expect_error(
+      bfs_get_sse_data("DF_TEST", query = list(SEX = "M")),
+      "unexpected format",
+      class = "bfs_sse_format_error"
+    )
+  })
+})})
+
+test_that("bfs_get_sse_data() gives a classed error if there are no records", {with_empty_sse_cache({
+  local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  mock <- function(req) {
+    if (grepl("/rest/dataflow$", req$url)) return(mock_json(sse_dataflows_json)(req))
+    if (grepl("references=all", req$url, fixed = TRUE)) return(sse_response(req, sse_metadata_xml))
+    httr2::response(status_code = 404, url = req$url, body = charToRaw("NoRecordsFound"))
+  }
+  httr2::with_mocked_responses(mock, {
+    expect_error(
+      bfs_get_sse_data("DF_TEST", query = list(SEX = "M")),
+      "No records found for the specified query.",
+      class = "bfs_no_records"
     )
   })
 })})

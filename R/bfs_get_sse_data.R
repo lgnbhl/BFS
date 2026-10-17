@@ -16,7 +16,10 @@
 #'   [bfs_get_sse_metadata()]) and the values are value codes (column
 #'   `value`), e.g. `list(FREQ = "M", COUNTRY_ORIGIN = c("CH", "AUSL"))`.
 #'   A dimension not in `query` keeps all its values. If `NULL` (default),
-#'   the whole dataset is downloaded, which can be large and slow.
+#'   the whole dataset is downloaded, which can be large and slow. A name
+#'   that isn't a dimension of the dataset (e.g. a typo, or `TIME_PERIOD`:
+#'   use `start_period` and `end_period`) is an error, a value not in the
+#'   codelist a warning.
 #' @param column_name_type Column names as dimension `"code"` (default) or
 #'   `"text"` (label).
 #' @param variable_value_type Values as `"text"` (label, default) or `"code"`.
@@ -25,6 +28,8 @@
 #'
 #' @returns A tibble with one column per dimension and the observations in
 #'   the `value` column. Returns `NULL` if there is no internet connection.
+#'   If no data matches the query, an error of class `bfs_no_records` is
+#'   signalled.
 #'
 #' @seealso [bfs_get_sse_metadata()]
 #' @export
@@ -47,7 +52,23 @@ bfs_get_sse_data <-
            clean_names = FALSE, version = NULL) {
     
     language <- match.arg(arg = language, choices = c("de", "fr", "it", "en"))
-    
+
+    # an invalid value falls back to codes, as in previous versions
+    for (arg in c("column_name_type", "variable_value_type")) {
+      value <- get(arg)
+      if (!(is.character(value) && length(value) == 1 && value %in% c("code", "text"))) {
+        rlang::warn(paste0("`", arg, "` must be \"code\" or \"text\": codes are returned."))
+      }
+    }
+
+    if (length(query) > 0 && (is.null(names(query)) || any(names(query) == ""))) {
+      rlang::abort(
+        "All the elements of `query` must be named with a dimension code.",
+        class = "bfs_sse_query_error",
+        call = NULL
+      )
+    }
+
     if (is.null(query)) {
       message(paste("Parameter 'query' is NULL. This will return all data for the specified BFS number,", 
                     "which may take a long time and result in a large dataset."))
@@ -69,6 +90,10 @@ bfs_get_sse_data <-
     # Construct part of URL for filtering in the API request: one part per
     # dimension of the data structure, in the order of the SDMX key
     ordered_codes <- sse_meta$dimensions
+
+    # a name of `query` that isn't a dimension would be ignored, returning
+    # unfiltered data
+    sse_check_query(query, ordered_codes, metadata)
 
     url_parts <-
       sapply(ordered_codes, function(dim) {
@@ -106,7 +131,11 @@ bfs_get_sse_data <-
     if (status != 200) {
       body <- httr2::resp_body_string(resp)
       if (body == "NoRecordsFound") {
-        stop("No records found for the specified query.")
+        rlang::abort(
+          "No records found for the specified query.",
+          class = "bfs_no_records",
+          call = NULL
+        )
       }
       rlang::abort(
         c("The BFS API is not available.", i = paste0("HTTP error: ", status, " ", body)),
@@ -115,6 +144,17 @@ bfs_get_sse_data <-
       )
     }
     
+    # Any other format would be parsed as a dataset without observations
+    content_type <- httr2::resp_content_type(resp)
+    if (!identical(content_type, "application/vnd.sdmx.genericdata+xml")) {
+      rlang::abort(
+        c("The SSE API returned data in an unexpected format.",
+          i = paste0("Content type: ", content_type, ", expected SDMX generic data.")),
+        class = "bfs_sse_format_error",
+        call = NULL
+      )
+    }
+
     # Parse XML response
     res_xml <- httr2::resp_body_xml(resp)
     

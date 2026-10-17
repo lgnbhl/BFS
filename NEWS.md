@@ -1,4 +1,27 @@
-# BFS 0.7.3
+# BFS 0.8.0
+
+## Breaking changes
+
+`bfs_get_sse_data()` now stops instead of silently returning data that
+doesn't match the query:
+
+- a name in `query` that isn't a dimension of the dataset (e.g. a typo) is an
+  error of class `bfs_sse_query_error`. Before, it was ignored and the data
+  was not filtered on it.
+- `TIME_PERIOD` in `query` is an error of class `bfs_sse_query_error`: use
+  `start_period` and `end_period`. Before, it was ignored.
+- an unnamed element in `query` is an error of class `bfs_sse_query_error`.
+- data in a format other than SDMX generic data is an error of class
+  `bfs_sse_format_error`, instead of an empty tibble.
+
+## Other changes
+
+- `bfs_get_sse_data()` warns on a value in `query` that isn't in the
+  codelist of the dataset (the API returns the data of the other values
+  only), and on an invalid `column_name_type` or `variable_value_type`
+  (codes are returned, as before).
+- "No records found for the specified query." in `bfs_get_sse_data()` is now
+  an error of class `bfs_no_records`, with the same message.
 - `bfs_get_sse_data()` and `bfs_get_sse_metadata()` have a new `version`
   argument to choose the version of an SSE dataflow, e.g. to keep the same
   structure in a data pipeline. By default the latest version is used, with

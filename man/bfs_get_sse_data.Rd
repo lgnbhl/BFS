@@ -30,7 +30,10 @@ e.g. `"2020"`.}
 [bfs_get_sse_metadata()]) and the values are value codes (column
 `value`), e.g. `list(FREQ = "M", COUNTRY_ORIGIN = c("CH", "AUSL"))`.
 A dimension not in `query` keeps all its values. If `NULL` (default),
-the whole dataset is downloaded, which can be large and slow.}
+the whole dataset is downloaded, which can be large and slow. A name
+that isn't a dimension of the dataset (e.g. a typo, or `TIME_PERIOD`:
+use `start_period` and `end_period`) is an error, a value not in the
+codelist a warning.}
 
 \item{column_name_type}{Column names as dimension `"code"` (default) or
 `"text"` (label).}
@@ -47,6 +50,8 @@ the same structure when a new version is published.}
 \value{
 A tibble with one column per dimension and the observations in
   the `value` column. Returns `NULL` if there is no internet connection.
+  If no data matches the query, an error of class `bfs_no_records` is
+  signalled.
 }
 \description{
 Download a dataset of the Swiss Stats Explorer (SSE) API

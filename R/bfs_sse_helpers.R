@@ -98,6 +98,45 @@ sse_parse_urns <- function(urns, number_bfs) {
   flows[flows$dataflow_id == number_bfs, ]
 }
 
+# Check the `query` of bfs_get_sse_data() against the dimensions and
+# codelists of the dataset: an unknown dimension is an error (it would be
+# ignored, so the data wouldn't be filtered), an unknown value a warning (the
+# API returns the data of the other values only)
+sse_check_query <- function(query, dimensions, codelist) {
+  if ("TIME_PERIOD" %in% names(query)) {
+    rlang::abort(
+      c("`query` can't filter `TIME_PERIOD`.",
+        i = "Use `start_period` and `end_period` instead."),
+      class = "bfs_sse_query_error",
+      call = NULL
+    )
+  }
+
+  unknown <- setdiff(names(query), dimensions)
+  if (length(unknown) > 0) {
+    rlang::abort(
+      c(paste0("Unknown dimension in `query`: ", paste(unknown, collapse = ", "), "."),
+        i = paste0("The dimensions of the dataset are: ", paste(dimensions, collapse = ", "), "."),
+        i = "See the column `code` of `bfs_get_sse_metadata()`."),
+      class = "bfs_sse_query_error",
+      call = NULL
+    )
+  }
+
+  for (dim in names(query)) {
+    known <- codelist$value[codelist$code == dim]
+    unknown <- setdiff(as.character(query[[dim]]), known)
+    # a dimension missing from the dataset constraint has no known values
+    if (length(known) > 0 && length(unknown) > 0) {
+      rlang::warn(c(
+        paste0("Value not in the dataset for `", dim, "` in `query`: ",
+               paste(unknown, collapse = ", "), "."),
+        i = "See the column `value` of `bfs_get_sse_metadata()`."
+      ))
+    }
+  }
+}
+
 # "agency:id:version" of SDMX nodes (e.g. a Codelist or a Ref to a codelist)
 sse_ref_key <- function(nodes) {
   paste(xml2::xml_attr(nodes, "agencyID"), xml2::xml_attr(nodes, "id"),
