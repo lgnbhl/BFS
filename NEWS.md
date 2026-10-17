@@ -1,3 +1,15 @@
+# BFS 0.7.3
+- functions using the BFS APIs now give an informative error of class
+  `bfs_http_error` if the API is not available (e.g. HTTP 429 Too Many
+  Requests, timeout, server error). The original httr2 error classes are
+  kept, so existing error handlers still work.
+- skip all tests calling the BFS APIs on CRAN (`skip_on_cran()`), as the
+  PXWeb API can rate-limit the CRAN check machines.
+- examples calling the BFS APIs are only run in interactive sessions.
+- `bfs_get_base_maps()` no longer leaves an empty cache folder if the
+  download of the base maps fails.
+- fix the example of `bfs_get_catalog_tables()`.
+
 # BFS 0.7.2
 - wrap the network-dependent examples of `bfs_get_sse_data()` and
   `bfs_get_sse_metadata()` in `\donttest{}` to avoid CRAN/CI check failures
