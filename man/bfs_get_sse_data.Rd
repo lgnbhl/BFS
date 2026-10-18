@@ -2,7 +2,7 @@
 % Please edit documentation in R/bfs_get_sse_data.R
 \name{bfs_get_sse_data}
 \alias{bfs_get_sse_data}
-\title{Get data from the Swiss Stats Explorer}
+\title{Get data from the Swiss Stats Explorer (deprecated)}
 \usage{
 bfs_get_sse_data(
   number_bfs,
@@ -16,37 +16,45 @@ bfs_get_sse_data(
 )
 }
 \arguments{
-\item{number_bfs}{The id of an SSE dataset (dataflow), e.g. `"DF_LWZ_1"`.
-It is shown in the URL of the dataset on <https://stats.swiss/>.}
+\item{number_bfs}{The id of an SSE dataset (dataflow), e.g. \code{"DF_LWZ_1"}.
+It is shown in the URL of the dataset on \url{https://stats.swiss/}.}
 
-\item{language}{Language of the labels: `"de"` (default), `"fr"`, `"it"`
-or `"en"`.}
+\item{language}{Language of the labels: \code{"de"} (default), \code{"fr"}, \code{"it"}
+or \code{"en"}.}
 
 \item{start_period, end_period}{Optional first and last period of the data,
-e.g. `"2020"`.}
+e.g. \code{"2020"}.}
 
-\item{query}{A named list: the names are dimension codes (column `code` of
-[bfs_get_sse_metadata()]) and the values are value codes (column
-`value`), e.g. `list(FREQ = "M", COUNTRY_ORIGIN = c("CH", "AUSL"))`.
-A dimension not in `query` keeps all its values. If `NULL` (default),
+\item{query}{A named list: the names are dimension codes (column \code{code} of
+\code{\link[=bfs_get_sse_metadata]{bfs_get_sse_metadata()}}) and the values are value codes (column
+\code{value}), e.g. \code{list(FREQ = "M", COUNTRY_ORIGIN = c("CH", "AUSL"))}.
+A dimension not in \code{query} keeps all its values. If \code{NULL} (default),
 the whole dataset is downloaded, which can be large and slow.}
 
-\item{column_name_type}{Column names as dimension `"code"` (default) or
-`"text"` (label).}
+\item{column_name_type}{Column names as dimension \code{"code"} (default) or
+\code{"text"} (label).}
 
-\item{variable_value_type}{Values as `"text"` (label, default) or `"code"`.}
+\item{variable_value_type}{Values as \code{"text"} (label, default) or \code{"code"}.}
 
-\item{clean_names}{If `TRUE`, clean the column names with
-[janitor::clean_names()].}
+\item{clean_names}{If \code{TRUE}, clean the column names with
+\code{\link[janitor:clean_names]{janitor::clean_names()}}.}
 }
 \value{
 A tibble with one column per dimension and the observations in
-  the `value` column. Returns `NULL` if there is no internet connection.
+the \code{value} column. Returns \code{NULL} if there is no internet connection.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+Deprecated since BFS 0.8.0: use \code{\link[=bfs_sse_data]{bfs_sse_data()}} instead. It downloads the
+data faster and stops on a query that wouldn't filter the data. This
+function still works and gets only bug fixes, e.g. the labels of codes
+with no name in \code{language} (see NEWS). To move your code, see the article
+\href{https://felixluginbuhl.com/BFS/articles/sse-migration.html}{Moving to the new Swiss Stats Explorer functions}.
+
 Download a dataset of the Swiss Stats Explorer (SSE) API
-(<https://stats.swiss/>). Select the data you need with `query`, built
-from the codelists of [bfs_get_sse_metadata()].
+(\url{https://stats.swiss/}). Select the data you need with \code{query}, built
+from the codelists of \code{\link[=bfs_get_sse_metadata]{bfs_get_sse_metadata()}}.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
@@ -64,5 +72,8 @@ bfs_get_sse_data(
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-[bfs_get_sse_metadata()]
+\code{\link[=bfs_sse_data]{bfs_sse_data()}}, \code{\link[=bfs_get_sse_metadata]{bfs_get_sse_metadata()}}
+}
+\author{
+Marius Hodel
 }

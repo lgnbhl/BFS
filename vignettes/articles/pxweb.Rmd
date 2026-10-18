@@ -9,12 +9,15 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>", message = FALSE, warning 
 
 The datasets of the
 [BFS catalog](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html)
-(article type "Data") are available in the PXWeb API. Each dataset has a BFS
-number, e.g. `px-x-1502040100_131`.
+(article type "Data") are in the PXWeb API. Each dataset has a BFS number,
+for example `px-x-1502040100_131`.
+
+In this article, we search the catalog and download the number of
+university students.
 
 ::: {.callout .callout-warning}
-The PXWeb API is the API of STAT-TAB, which the BFS is replacing with the
-[Swiss Stats Explorer](swiss-stats-explorer.html). Check first if your
+The PXWeb API is the API of STAT-TAB. The BFS is replacing STAT-TAB with
+the [Swiss Stats Explorer](swiss-stats-explorer.html). First, check if your
 statistic is on [stats.swiss](https://stats.swiss/). See
 [Get started](introduction.html#from-stat-tab-to-the-swiss-stats-explorer).
 :::
@@ -31,17 +34,17 @@ catalog <- bfs_get_catalog_data(language = "en", extended_search = "student")
 catalog
 ```
 
-`title` searches in the titles only, `extended_search` also in the
-summaries. You can filter the catalog by:
+`title` searches only in the titles. `extended_search` also searches in
+the summaries. You can also filter the catalog with:
 
 - `spatial_division`: `"Switzerland"`, `"Cantons"`, `"Districts"`,
-  `"Communes"`, `"Other spatial divisions"` or `"International"`,
-- `prodima`: the theme (see below),
-- `publishing_year_start` and `publishing_year_end`,
-- `inquiry`, `institution` or `order_nr` (BFS number).
+  `"Communes"`, `"Other spatial divisions"` or `"International"`.
+- `prodima`: the theme (see below).
+- `publishing_year_start` and `publishing_year_end`.
+- `inquiry`, `institution` or `order_nr` (the BFS number).
 
 The English and Italian catalogs have fewer datasets than the German and
-French ones.
+French catalogs.
 
 ### Themes
 
@@ -76,9 +79,9 @@ bfs_get_catalog_data(language = "en", prodima = 900212) # Education and science
 
 ### The whole catalog
 
-A catalog request returns at most `limit` results (1000 by default). To get
-the whole catalog, loop over the themes. Run it only when needed and save the
-result, to not overload the API:
+One request gives at most `limit` results (1000 by default). To get the
+whole catalog, make one request for each theme. Do this only when you need
+it, and save the result. This way, you don't overload the API:
 
 ```r
 themes_prodima <- c(
@@ -97,8 +100,8 @@ readr::write_csv(catalog_all, "catalog_all.csv")
 
 ### All the metadata
 
-`return_raw = TRUE` returns the catalog as returned by the API, with all its
-metadata in nested data frames:
+With `return_raw = TRUE`, you get the catalog exactly as the API returns
+it, with all the metadata in nested data frames:
 
 ```{r}
 catalog_raw <- bfs_get_catalog_data(language = "en", extended_search = "student", return_raw = TRUE)
@@ -112,12 +115,12 @@ as_tibble(catalog_raw$description)
 bfs_get_data(number_bfs = "px-x-1502040100_131", language = "en")
 ```
 
-`bfs_get_data_comments()` returns the comments (footnotes) of the dataset.
+`bfs_get_data_comments()` gives the comments (footnotes) of the dataset.
 
 ## Download only part of a dataset
 
-Large datasets can exceed the limits of the API. Select only the data you
-need with `query`. First get the variables of the dataset and their values:
+A large dataset can be too big for the API. Then choose only the data you
+need with `query`. First, get the variables of the dataset and their values:
 
 ```{r}
 metadata <- bfs_get_metadata(number_bfs = "px-x-1502040100_131", language = "en")
@@ -128,8 +131,9 @@ metadata_values <- metadata |>
 metadata_values
 ```
 
-The query is a named list: the variable codes (`code`) as names, the value
-codes (`values`) as values. `"*"` selects all the values of a variable.
+The query is a named list. The names are the variable codes (`code`), and
+the values are the codes of the values you want (`values`). `"*"` selects
+all the values of a variable.
 
 ```{r}
 filter(metadata_values, text == "Year", valueTexts %in% c("2020/21", "2021/22"))
@@ -147,11 +151,11 @@ bfs_get_data(
 )
 ```
 
-A variable not in the query is left out of the result (the data is summed up
-over it), if the dataset allows it.
+If a variable is not in the query, it is not in the result: the data is
+summed over this variable, if the dataset allows it.
 
 ::: {.callout .callout-tip}
 For a very large dataset, you can also download the whole PX file with
-`bfs_download_asset()` and read it with the pxR package. See
+`bfs_download_asset()`, and read it with the pxR package. See
 [Tables and files](tables-and-files.html).
 :::

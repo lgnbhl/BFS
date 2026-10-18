@@ -27,24 +27,25 @@ knitr::opts_chunk$set(
 
 BFS gives you the open data of the
 [Swiss Federal Statistical Office](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html)
-(BFS, *Bundesamt für Statistik*) in R, as tidy data frames, in German,
-French, Italian or English. It covers the four APIs of the BFS:
+(BFS, *Bundesamt für Statistik*) in R. You get tidy data frames, in
+German, French, Italian or English. The package works with the four APIs of
+the BFS:
 
 | You want | Use | API |
 |---|---|---|
-| Statistics of the Swiss Stats Explorer | `bfs_get_sse_metadata()`, `bfs_get_sse_data()` | [Swiss Stats Explorer](https://stats.swiss/) |
+| Statistics of the Swiss Stats Explorer | `bfs_sse_datasets()`, `bfs_sse_dimensions()`, `bfs_sse_data()` | [Swiss Stats Explorer](https://stats.swiss/) |
 | Datasets of the BFS data catalog | `bfs_get_catalog_data()`, `bfs_get_data()` | [PXWeb](https://www.pxweb.bfs.admin.ch/pxweb/en/) |
 | Tables and files (Excel, CSV, PX, ...) | `bfs_get_catalog_tables()`, `bfs_download_asset()` | [DAM](https://dam-api.bfs.admin.ch/hub/swagger-ui/index.html) |
 | Maps and geodata | `bfs_get_base_maps()`, `bfs_get_catalog_geodata()`, `bfs_download_geodata()` | [ThemaKart](https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.html), [STAC](https://data.geo.admin.ch/api/stac/v0.9/) |
 
-The BFS is replacing STAT-TAB, the platform of the PXWeb API, with the Swiss
-Stats Explorer: see
+The BFS is replacing STAT-TAB (the platform of the PXWeb API) with the
+Swiss Stats Explorer. See
 [Get started](https://felixluginbuhl.com/BFS/articles/introduction.html#from-stat-tab-to-the-swiss-stats-explorer).
 
 <p class="buttons">
 <a href="https://felixluginbuhl.com/BFS/articles/introduction.html">Get started</a>
-<a href="https://felixluginbuhl.com/BFS/reference/index.html">Reference</a>
-<a href="https://github.com/lgnbhl/BFS">GitHub</a>
+<a href="https://felixluginbuhl.com/BFS/articles/swiss-stats-explorer.html">Swiss Stats Explorer</a>
+<a href="https://felixluginbuhl.com/BFS/articles/tables-and-files.html">Tables and files</a>
 </p>
 
 ## Installation
@@ -65,31 +66,34 @@ library(BFS)
 
 ### Swiss Stats Explorer
 
-Get the codelists of a dataset, pick the codes you need, and download the
-data. The dataset id (here `DF_LWZ_1`, the vacant dwellings) is in the URL
-of the dataset on [stats.swiss](https://stats.swiss/).
+Let's get the vacancy rate (the share of empty homes, in %) of the cantons
+of Geneva, Zurich and Bern. The dataset is `DF_LWZ_1`, the vacant
+dwellings. You find this id with `bfs_sse_datasets()`, or in the URL of the
+dataset on [stats.swiss](https://stats.swiss/).
+
+First, see the dimensions of the dataset and the codes of their values.
+Then download the data with the codes you need:
 
 ```{r}
-codelist <- bfs_get_sse_metadata("DF_LWZ_1", language = "en")
-codelist
+dimensions <- bfs_sse_dimensions("DF_LWZ_1", language = "en")
+dimensions
 
-bfs_get_sse_data(
-  number_bfs = "DF_LWZ_1",
-  language = "en",
-  query = list(
-    GR_KT_GDE = c("4001", "2581"), # Aarau and Olten
-    WOHN_ANZAHL = "_T",            # all numbers of rooms
-    LEERWOHN_TYP = "4",            # vacant dwellings for rent
-    MEASURE_DIMENSION = "OBS"      # number of dwellings (not the rate)
+bfs_sse_data(
+  "DF_LWZ_1",
+  filters = list(
+    GR_KT_GDE = c("GE", "ZH", "BE"), # the cantons of Geneva, Zurich and Bern
+    WOHN_ANZAHL = "_T",              # all numbers of rooms
+    LEERWOHN_TYP = "_T",             # all types of vacant dwellings
+    MEASURE_DIMENSION = "RATE"       # the vacancy rate, in %
   ),
   start_period = "2020",
-  end_period = "2023"
+  language = "en"
 )
 ```
 
 ### Data catalog
 
-Search the BFS data catalog, then download a dataset with its BFS number.
+Search the BFS data catalog. Then download a dataset with its BFS number.
 
 ```{r}
 bfs_get_catalog_data(language = "en", extended_search = "university students")
@@ -99,8 +103,8 @@ bfs_get_data(number_bfs = "px-x-1502040100_131", language = "en")
 
 ### Tables and files
 
-Many statistics are published as Excel or CSV tables. Search them, then
-download the file with its asset number.
+The BFS publishes many statistics as Excel or CSV tables. Search them.
+Then download a file with its asset number.
 
 ```{r}
 tables <- bfs_get_catalog_tables(language = "en", extended_search = "students")
@@ -113,8 +117,8 @@ bfs_download_asset(number_asset = tables$number_asset[1], destfile = "students.x
 
 ### Maps
 
-Get the official borders of Switzerland, the cantons, districts or communes
-as sf objects.
+Get the official borders of Switzerland, the cantons, the districts or the
+communes as sf objects.
 
 ```r
 library(ggplot2)
@@ -127,7 +131,7 @@ ggplot(bfs_get_base_maps(geom = "kant")) +
 ## Learn more
 
 - [Get started](https://felixluginbuhl.com/BFS/articles/introduction.html): which API for which data, and the move from STAT-TAB to the Swiss Stats Explorer.
-- [Swiss Stats Explorer](https://felixluginbuhl.com/BFS/articles/swiss-stats-explorer.html): build a query from the codelists.
+- [Swiss Stats Explorer](https://felixluginbuhl.com/BFS/articles/swiss-stats-explorer.html): find a dataset, choose the data and download it, step by step.
 - [Data catalog and PXWeb datasets](https://felixluginbuhl.com/BFS/articles/pxweb.html): search the catalog and download all or part of a dataset.
 - [Tables and files](https://felixluginbuhl.com/BFS/articles/tables-and-files.html): download any BFS file.
 - [Geodata and base maps](https://felixluginbuhl.com/BFS/articles/geodata.html): maps of Switzerland and geodata of the Swiss geo-portal.

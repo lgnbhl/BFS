@@ -7,18 +7,18 @@
 \format{
 A data frame with 2,136 rows and 8 columns:
 \describe{
-  \item{GDEKT}{Canton abbreviation, e.g. "ZH".}
-  \item{GDEBZNR}{District number.}
-  \item{GDENR}{BFS commune number.}
-  \item{GDENAME}{Official commune name.}
-  \item{GDENAMK}{Short commune name.}
-  \item{GDEBZNA}{District name.}
-  \item{GDEKTNA}{Canton name.}
-  \item{GDEMUTDAT}{Date of the last change, as "dd.mm.yyyy".}
+\item{GDEKT}{Canton abbreviation, e.g. "ZH".}
+\item{GDEBZNR}{District number.}
+\item{GDENR}{BFS commune number.}
+\item{GDENAME}{Official commune name.}
+\item{GDENAMK}{Short commune name.}
+\item{GDEBZNA}{District name.}
+\item{GDEKTNA}{Canton name.}
+\item{GDEMUTDAT}{Date of the last change, as "dd.mm.yyyy".}
 }
 }
 \source{
-<https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html>
+\url{https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html}
 }
 \usage{
 register_gde
@@ -27,7 +27,7 @@ register_gde
 The communes of Switzerland on 1 January 2023, with their district and
 canton. The BFS assigns a number to each commune and publishes the Swiss
 official commune register, used by the federal, cantonal and communal
-administrations to identify communes. See [register_dic] for the
+administrations to identify communes. See \link{register_dic} for the
 variables in German, French and Italian.
 }
 \seealso{

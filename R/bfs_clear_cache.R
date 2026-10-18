@@ -2,8 +2,10 @@
 #'
 #' Delete the base maps cached by [bfs_get_base_maps()] in
 #' `tools::R_user_dir(package = "BFS")` and the list of Swiss Stats Explorer
-#' dataflows cached for the R session by [bfs_get_sse_data()] and
+#' datasets cached for the R session by [bfs_get_sse_data()] and
 #' [bfs_get_sse_metadata()]. The cached data is downloaded again when needed.
+#' [bfs_sse_datasets()], [bfs_sse_dimensions()] and [bfs_sse_data()] don't
+#' cache anything.
 #'
 #' @return Invisibly, the path of the deleted cache folder.
 #'

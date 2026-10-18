@@ -2,8 +2,9 @@
 #' The BFS package downloads the open data of the Swiss Federal Statistical
 #' Office (BFS, *Bundesamt für Statistik*) from its APIs:
 #'
-#' - **Swiss Stats Explorer**: [bfs_get_sse_metadata()] and
-#'   [bfs_get_sse_data()].
+#' - **Swiss Stats Explorer**: [bfs_sse_datasets()], [bfs_sse_dimensions()]
+#'   and [bfs_sse_data()]. They replace the deprecated
+#'   [bfs_get_sse_metadata()] and [bfs_get_sse_data()].
 #' - **Data catalog and PXWeb datasets**: [bfs_get_catalog_data()],
 #'   [bfs_get_metadata()], [bfs_get_data()] and [bfs_get_data_comments()].
 #' - **Tables and files**: [bfs_get_catalog_tables()],
@@ -24,6 +25,7 @@
 "_PACKAGE"
 
 ## usethis namespace: start
+#' @importFrom lifecycle deprecated
 #' @importFrom rlang .data
 ## usethis namespace: end
 NULL

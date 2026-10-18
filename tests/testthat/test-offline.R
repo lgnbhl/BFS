@@ -391,6 +391,7 @@ mock_sse <- function(req) {
 
 test_that("bfs_get_sse_data() keeps values on the right observation", {with_empty_sse_cache({
   local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  rlang::local_options(lifecycle_verbosity = "quiet")
   sse_requests$dataflow <- 0
   httr2::with_mocked_responses(mock_sse, {
     df <- bfs_get_sse_data("DF_TEST", language = "en", query = list(SEX = c("M", "F")))
@@ -404,6 +405,7 @@ test_that("bfs_get_sse_data() keeps values on the right observation", {with_empt
 
 test_that("the SSE dataflow list is requested once per session", {with_empty_sse_cache({
   local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  rlang::local_options(lifecycle_verbosity = "quiet")
   sse_requests$dataflow <- 0
   httr2::with_mocked_responses(mock_sse, {
     bfs_get_sse_data("DF_TEST", language = "en", query = list(SEX = "M"))
@@ -414,6 +416,418 @@ test_that("the SSE dataflow list is requested once per session", {with_empty_sse
     expect_equal(sse_requests$dataflow, 2)
   })
 })})
+
+test_that("bfs_get_sse_data() gives a bfs_http_error only if the API is not available", {with_empty_sse_cache({
+  local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  rlang::local_options(lifecycle_verbosity = "quiet")
+  sse_requests$dataflow <- 0
+  mock_sse_status <- function(status, body) function(req) {
+    if (grepl("/rest/dataflow$", req$url) || grepl("references=all", req$url, fixed = TRUE)) {
+      return(mock_sse(req))
+    }
+    httr2::response(status_code = status, url = req$url, body = charToRaw(body))
+  }
+  httr2::with_mocked_responses(mock_sse_status(503, "Service Unavailable"), {
+    e <- expect_error(bfs_get_sse_data("DF_TEST", query = list(SEX = "M")), class = "bfs_http_error")
+  })
+  expect_s3_class(e, "httr2_http_503")
+  expect_s3_class(e$resp, "httr2_response")
+  httr2::with_mocked_responses(mock_sse_status(400, "Semantic error"), {
+    e <- expect_error(bfs_get_sse_data("DF_TEST", query = list(SEX = "M")), "HTTP error: 400 Semantic error")
+  })
+  expect_false(inherits(e, "bfs_http_error"))
+  httr2::with_mocked_responses(mock_sse_status(404, "NoRecordsFound"), {
+    expect_error(bfs_get_sse_data("DF_TEST", query = list(SEX = "M")), "No records found")
+  })
+})})
+
+# ---- Swiss Stats Explorer: bfs_sse_*() ---------------------------------------
+
+# DF_V has several versions, listed in no particular order
+sse_dataflows_all_json <- '{"data": {"dataflows": [
+  {"id": "DF_V", "version": "1.2.0", "agencyID": "CH1", "name": "Population 1.2",
+   "description": "The population by age and sex."},
+  {"id": "DF_V", "version": "1.10.0", "agencyID": "CH1", "name": "Population 1.10"},
+  {"id": "DF_V", "version": "1.0.0", "agencyID": "CH1", "name": "Population 1.0"},
+  {"id": "DF_ONE", "version": "1.0.0", "agencyID": "CH1.SUB", "name": "One"}
+]}}'
+
+# the structure of DF_V has:
+# - a codelist CL_AGE of another agency, listed first, with other labels
+# - a concept for AGE, but not for SEX, labelled with its codelist name
+# - a dimension (SEX) missing from the constraints
+# - a region excluding the value Y99 of AGE
+# - a second constraint with another value of AGE
+# - a code (Y1) with a parent (Y0)
+sse_structure_xml <- '<message:Structure
+  xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message"
+  xmlns:structure="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/structure"
+  xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common">
+  <message:Structures>
+    <structure:Codelists>
+      <structure:Codelist id="CL_AGE" agencyID="OTHER" version="2.0.0">
+        <common:Name xml:lang="en">Wrong</common:Name>
+        <structure:Code id="Y0"><common:Name xml:lang="en">Wrong</common:Name></structure:Code>
+      </structure:Codelist>
+      <structure:Codelist id="CL_SEX" agencyID="CH1" version="1.0.0">
+        <common:Name xml:lang="en">Sex</common:Name>
+        <structure:Code id="M"><common:Name xml:lang="en">Man</common:Name></structure:Code>
+      </structure:Codelist>
+      <structure:Codelist id="CL_AGE" agencyID="CH1" version="1.0.0">
+        <common:Name xml:lang="en">Age codelist</common:Name>
+        <structure:Code id="Y0"><common:Name xml:lang="en">0 years</common:Name></structure:Code>
+        <structure:Code id="Y1"><common:Name xml:lang="en">1 year</common:Name><structure:Parent><Ref id="Y0"/></structure:Parent></structure:Code>
+        <structure:Code id="Y99"><common:Name xml:lang="en">99 years</common:Name></structure:Code>
+      </structure:Codelist>
+    </structure:Codelists>
+    <structure:Concepts>
+      <structure:ConceptScheme id="CS" agencyID="CH1" version="1.0.0">
+        <structure:Concept id="AGE">
+          <common:Name xml:lang="de">Alter</common:Name>
+          <common:Name xml:lang="en">Age</common:Name>
+        </structure:Concept>
+      </structure:ConceptScheme>
+    </structure:Concepts>
+    <structure:DataStructures>
+      <structure:DataStructure id="DSD">
+        <structure:DataStructureComponents>
+          <structure:DimensionList id="DimensionDescriptor">
+            <structure:Dimension id="AGE" position="2">
+              <structure:ConceptIdentity>
+                <Ref id="AGE" maintainableParentID="CS" maintainableParentVersion="1.0.0" agencyID="CH1"/>
+              </structure:ConceptIdentity>
+              <structure:LocalRepresentation>
+                <structure:Enumeration><Ref id="CL_AGE" agencyID="CH1" version="1.0.0"/></structure:Enumeration>
+              </structure:LocalRepresentation>
+            </structure:Dimension>
+            <structure:Dimension id="SEX" position="1">
+              <structure:LocalRepresentation>
+                <structure:Enumeration><Ref id="CL_SEX" agencyID="CH1" version="1.0.0"/></structure:Enumeration>
+              </structure:LocalRepresentation>
+            </structure:Dimension>
+            <structure:TimeDimension id="TIME_PERIOD" position="3"/>
+          </structure:DimensionList>
+        </structure:DataStructureComponents>
+      </structure:DataStructure>
+    </structure:DataStructures>
+    <structure:Constraints>
+      <structure:ContentConstraint id="CC">
+        <structure:CubeRegion include="true">
+          <common:KeyValue id="AGE"><common:Value>Y0</common:Value></common:KeyValue>
+          <common:KeyValue id="TIME_PERIOD"/>
+        </structure:CubeRegion>
+        <structure:CubeRegion include="false">
+          <common:KeyValue id="AGE"><common:Value>Y99</common:Value></common:KeyValue>
+        </structure:CubeRegion>
+      </structure:ContentConstraint>
+      <structure:ContentConstraint id="CC2">
+        <structure:CubeRegion include="true">
+          <common:KeyValue id="AGE"><common:Value>Y1</common:Value></common:KeyValue>
+        </structure:CubeRegion>
+      </structure:ContentConstraint>
+    </structure:Constraints>
+  </message:Structures>
+</message:Structure>'
+
+# real responses of the SSE API for DF_LWZ_1, see fixtures/sse/README.md
+sse_fixture <- function(file) {
+  path <- test_path("fixtures", "sse", file)
+  readChar(path, file.size(path), useBytes = TRUE)
+}
+
+# mocked SSE API, recording the requests: DF_V has the structure
+# `sse_structure_xml`, DF_LWZ_1 the real structure and data, another dataset
+# doesn't exist. `data_*` replace the response to the data request
+mock_sse_api <- function(data_status = 200, data_body = NULL,
+                         data_type = "application/vnd.sdmx.data+csv; charset=utf-8") {
+  function(req) {
+    sse_requests$urls <- c(sse_requests$urls, req$url)
+    sse_requests$last_req <- req
+    response <- function(status, type, body) {
+      httr2::response(status_code = status, url = req$url,
+                      headers = paste0("Content-Type: ", type), body = charToRaw(body))
+    }
+    if (grepl("/rest/dataflow/all/all/all$", req$url)) {
+      return(response(200, "application/vnd.sdmx.structure+json; charset=utf-8; version=1.0",
+                      sse_dataflows_all_json))
+    }
+    if (grepl("/rest/dataflow/all/DF_V/", req$url, fixed = TRUE)) {
+      return(response(200, "application/xml", sse_structure_xml))
+    }
+    if (grepl("/rest/dataflow/all/DF_LWZ_1/", req$url, fixed = TRUE)) {
+      return(response(200, "application/xml", sse_fixture("structure-DF_LWZ_1.xml")))
+    }
+    if (grepl("/rest/dataflow/", req$url, fixed = TRUE)) {
+      return(response(404, "text/plain", "Could not find requested structures"))
+    }
+    labels <- grepl("labels=both", req$headers$accept, fixed = TRUE)
+    body <- data_body %||% sse_fixture(if (labels) "data-DF_LWZ_1-both.csv" else "data-DF_LWZ_1-code.csv")
+    response(data_status, data_type, body)
+  }
+}
+
+# evaluate code with the requests to the mocked SSE API recorded from scratch
+with_sse_api <- function(code, ...) {
+  sse_requests$urls <- NULL
+  sse_requests$last_req <- NULL
+  local_mocked_bindings(has_internet = function() TRUE, .package = "curl")
+  httr2::with_mocked_responses(mock_sse_api(...), code)
+}
+
+test_that("bfs_sse_datasets() lists all the versions, the latest first", {
+  with_sse_api({
+    datasets <- bfs_sse_datasets(language = "en")
+  })
+  expect_named(datasets, c("dataset", "name", "version", "agency", "description"))
+  expect_identical(datasets$dataset, c("DF_ONE", "DF_V", "DF_V", "DF_V"))
+  expect_identical(datasets$version, c("1.0.0", "1.10.0", "1.2.0", "1.0.0"))
+  # a dataset without description has NA
+  expect_identical(datasets$description, c(NA, NA, "The population by age and sex.", NA))
+  expect_identical(sse_requests$last_req$headers[["Accept-Language"]], "en")
+})
+
+test_that("bfs_sse_dimensions() uses the concepts, codelists and constraints", {
+  with_sse_api({
+    dims <- bfs_sse_dimensions("DF_V", language = "en", version = "1.0.0")
+  })
+  expect_identical(
+    sse_requests$urls,
+    "https://disseminate.stats.swiss/rest/dataflow/all/DF_V/1.0.0?references=all"
+  )
+  # the values of both constraints, without the excluded one, labelled from
+  # the referenced codelist
+  expect_identical(dims, tibble::tibble(
+    dimension = c("AGE", "AGE"),
+    dimension_label = c("Age", "Age"),
+    value = c("Y0", "Y1"),
+    value_label = c("0 years", "1 year"),
+    position = c(2L, 2L),
+    parent = c(NA, "Y0")
+  ))
+  # the API chooses the latest version
+  with_sse_api(bfs_sse_dimensions("DF_V"))
+  expect_identical(
+    sse_requests$urls,
+    "https://disseminate.stats.swiss/rest/dataflow/all/DF_V/latest?references=all"
+  )
+})
+
+test_that("dimensions sharing a codelist are labelled with it", {
+  # a second dimension without concept using CL_SEX, as the two partners of a
+  # couple, listed before the codelist of AGE
+  xml <- sub(
+    '<structure:Dimension id="SEX" position="1">',
+    paste0(
+      '<structure:Dimension id="SEX2" position="0">',
+      '<structure:LocalRepresentation><structure:Enumeration>',
+      '<Ref id="CL_SEX" agencyID="CH1" version="1.0.0"/>',
+      '</structure:Enumeration></structure:LocalRepresentation>',
+      '</structure:Dimension>',
+      '<structure:Dimension id="SEX" position="1">'
+    ),
+    sse_structure_xml,
+    fixed = TRUE
+  )
+  xml <- sub(
+    '<common:KeyValue id="TIME_PERIOD"/>',
+    paste0('<common:KeyValue id="TIME_PERIOD"/>',
+           '<common:KeyValue id="SEX"><common:Value>M</common:Value></common:KeyValue>',
+           '<common:KeyValue id="SEX2"><common:Value>M</common:Value></common:KeyValue>'),
+    xml,
+    fixed = TRUE
+  )
+  xml <- xml2::read_xml(xml)
+  expect_identical(sse_dimension_ids(xml), c("SEX2", "SEX", "AGE"))
+  expect_identical(
+    dplyr::distinct(sse_structure(xml, language = "en"), dimension, dimension_label, value_label),
+    tibble::tibble(
+      dimension = c("SEX2", "SEX", "AGE", "AGE"),
+      dimension_label = c("Sex", "Sex", "Age", "Age"),
+      value_label = c("Man", "Man", "0 years", "1 year")
+    )
+  )
+})
+
+test_that("an unknown dataset or version gives a classed error", {
+  with_sse_api({
+    expect_error(bfs_sse_dimensions("DF_UNKNOWN"), "Dataset \"DF_UNKNOWN\" doesn't exist",
+                 class = "bfs_sse_dataset_error")
+    expect_error(bfs_sse_data("DF_UNKNOWN", version = "1.0.0"),
+                 "Version \"1.0.0\" of dataset \"DF_UNKNOWN\" doesn't exist",
+                 class = "bfs_sse_dataset_error")
+  })
+})
+
+test_that("bfs_sse_data() requests the version of the structure, with one key part per dimension", {
+  with_sse_api({
+    bfs_sse_data("DF_LWZ_1", filters = list(GR_KT_GDE = c("ZH", "ZG"), MEASURE_DIMENSION = "OBS"),
+                 start_period = 2025, language = "en")
+  })
+  expect_identical(sse_requests$urls, c(
+    "https://disseminate.stats.swiss/rest/dataflow/all/DF_LWZ_1/latest?references=datastructure",
+    "https://disseminate.stats.swiss/rest/data/CH1.LWZ,DF_LWZ_1,1.1.0/ZH+ZG...OBS.?startPeriod=2025"
+  ))
+  headers <- sse_requests$last_req$headers
+  expect_identical(headers$Accept, "application/vnd.sdmx.data+csv;version=1.0.0;labels=both")
+  expect_identical(headers[["Accept-Language"]], "en")
+
+  with_sse_api({
+    bfs_sse_data("DF_LWZ_1", version = "1.1.0", end_period = "2023", labels = "code")
+  })
+  expect_identical(sse_requests$urls, c(
+    "https://disseminate.stats.swiss/rest/dataflow/all/DF_LWZ_1/1.1.0?references=datastructure",
+    "https://disseminate.stats.swiss/rest/data/CH1.LWZ,DF_LWZ_1,1.1.0/all?endPeriod=2023"
+  ))
+  expect_identical(sse_requests$last_req$headers$Accept, "application/vnd.sdmx.data+csv;version=1.0.0")
+
+  # the numbers of observations are sent as SDMX parameters
+  with_sse_api({
+    bfs_sse_data("DF_LWZ_1", start_period = "2020", last_n = 1)
+  })
+  expect_identical(
+    sse_requests$urls[2],
+    "https://disseminate.stats.swiss/rest/data/CH1.LWZ,DF_LWZ_1,1.1.0/all?startPeriod=2020&lastNObservations=1"
+  )
+  with_sse_api({
+    bfs_sse_data("DF_LWZ_1", first_n = 1e5)
+  })
+  expect_identical(
+    sse_requests$urls[2],
+    "https://disseminate.stats.swiss/rest/data/CH1.LWZ,DF_LWZ_1,1.1.0/all?firstNObservations=100000"
+  )
+})
+
+test_that("bfs_sse_data() returns the codes and labels given by the API", {
+  with_sse_api({
+    code <- bfs_sse_data("DF_LWZ_1", labels = "code")
+    both <- bfs_sse_data("DF_LWZ_1", attributes = TRUE)
+    label <- bfs_sse_data("DF_LWZ_1", labels = "label", attributes = TRUE)
+  })
+  expect_identical(code, tibble::tibble(
+    GR_KT_GDE = c("ZH", "ZH", "ZG", "ZG"),
+    WOHN_ANZAHL = "_T",
+    LEERWOHN_TYP = "_T",
+    MEASURE_DIMENSION = "OBS",
+    FREQ = "A",
+    TIME_PERIOD = c("2025", "2026", "2025", "2026"),
+    value = c(3815, 4189, 261, 126)
+  ))
+  # the attribute DATAFLOW, empty, has the same id as the first column: it's
+  # not mixed up with it and not returned
+  expect_named(both, c(
+    "GR_KT_GDE", "GR_KT_GDE_label", "WOHN_ANZAHL", "WOHN_ANZAHL_label",
+    "LEERWOHN_TYP", "LEERWOHN_TYP_label", "MEASURE_DIMENSION", "MEASURE_DIMENSION_label",
+    "FREQ", "FREQ_label", "TIME_PERIOD", "value",
+    "DECIMALS", "DECIMALS_label", "OBS_STATUS", "OBS_STATUS_label"
+  ))
+  expect_identical(both$GR_KT_GDE, code$GR_KT_GDE)
+  expect_identical(both$GR_KT_GDE_label, c("Zurich", "Zurich", "Zug", "Zug"))
+  expect_identical(both$TIME_PERIOD, code$TIME_PERIOD)
+  expect_identical(both$value, code$value)
+  expect_identical(both$OBS_STATUS_label, rep("Normal value", 4))
+  expect_identical(label$GR_KT_GDE, both$GR_KT_GDE_label)
+  expect_identical(label$OBS_STATUS, both$OBS_STATUS_label)
+})
+
+test_that("SDMX-CSV values are split into codes and labels", {
+  x <- c("ZH: Zurich", "552001: Holiday homes: apartments", "2024", "_T", NA)
+  expect_identical(sse_csv_code(x), c("ZH", "552001", "2024", "_T", NA))
+  expect_identical(sse_csv_label(x), c("Zurich", "Holiday homes: apartments", NA, NA, NA))
+})
+
+test_that("the codes \"NA\" and empty values are kept apart", {
+  csv <- paste(
+    "DATAFLOW,GR_KT_GDE,WOHN_ANZAHL,LEERWOHN_TYP,MEASURE_DIMENSION,FREQ,TIME_PERIOD,OBS_VALUE,DATAFLOW,DECIMALS,OBS_STATUS",
+    "CH1.LWZ:DF_LWZ_1(1.1.0),NA,_T,_T,OBS,A,2025,,,0,",
+    sep = "\n"
+  )
+  with_sse_api(df <- bfs_sse_data("DF_LWZ_1", labels = "code", attributes = TRUE), data_body = csv)
+  expect_identical(df$GR_KT_GDE, "NA")
+  expect_identical(df$value, NA_real_)
+  expect_identical(df$OBS_STATUS, NA_character_)
+})
+
+test_that("bfs_sse_data() checks its arguments before sending a request", {
+  with_sse_api({
+    expect_error(bfs_sse_data("DF_LWZ_1", filters = list("ZH")), "must be named",
+                 class = "bfs_sse_filter_error")
+    expect_error(bfs_sse_data("DF_LWZ_1", filters = c(GR_KT_GDE = "ZH")), "must be a named list",
+                 class = "bfs_sse_filter_error")
+    expect_error(bfs_sse_data("DF_LWZ_1", filters = list(GR_KT_GDE = "ZH", GR_KT_GDE = "ZG")),
+                 "more than once in `filters`: GR_KT_GDE", class = "bfs_sse_filter_error")
+    # a filter that would be ignored, so the data would not be filtered
+    expect_error(bfs_sse_data("DF_LWZ_1", filters = list(GR_KT_GDE = character(0))),
+                 "`filters\\$GR_KT_GDE` must be a vector", class = "bfs_sse_filter_error")
+    expect_error(bfs_sse_data("DF_LWZ_1", filters = list(GR_KT_GDE = NA)),
+                 class = "bfs_sse_filter_error")
+    expect_error(bfs_sse_data("DF_LWZ_1", filters = list(TIME_PERIOD = "2023")), "start_period",
+                 class = "bfs_sse_filter_error")
+    expect_error(bfs_sse_data(c("DF_LWZ_1", "DF_LWZ_2")), "`dataset` must be a single string",
+                 class = "bfs_sse_argument_error")
+    expect_error(bfs_sse_data(NA), class = "bfs_sse_argument_error")
+    expect_error(bfs_sse_data("DF_LWZ_1", start_period = c("2020", "2021")),
+                 "`start_period` must be a single string", class = "bfs_sse_argument_error")
+    for (n in list(0, 1.5, -1, NA, Inf, "1", c(1, 2))) {
+      expect_error(bfs_sse_data("DF_LWZ_1", last_n = n), "`last_n` must be a whole number",
+                   class = "bfs_sse_argument_error")
+    }
+    expect_error(bfs_sse_data("DF_LWZ_1", first_n = 0), "`first_n` must be a whole number",
+                 class = "bfs_sse_argument_error")
+    expect_error(bfs_sse_data("DF_LWZ_1", version = 1), NA)
+    expect_error(bfs_sse_data("DF_LWZ_1", labels = "text"), "must be one of")
+    expect_error(bfs_sse_data("DF_LWZ_1", language = "EN"), "must be one of")
+  })
+  # only the call with valid arguments sent requests
+  expect_length(sse_requests$urls, 2)
+})
+
+test_that("an unknown dimension in `filters` is an error", {
+  with_sse_api({
+    expect_error(
+      bfs_sse_data("DF_LWZ_1", filters = list(GR_KT_GED = "ZH")),
+      "Unknown dimension in `filters`: GR_KT_GED",
+      class = "bfs_sse_filter_error"
+    )
+  })
+  # the data is not requested
+  expect_length(sse_requests$urls, 1)
+})
+
+test_that("the errors of the API are classed", {
+  # the API answers either, depending on the dataset
+  for (body in c("NoRecordsFound", "NoResultsFound")) {
+    with_sse_api(
+      expect_error(bfs_sse_data("DF_LWZ_1"), "No records found for the specified query.",
+                   class = "bfs_no_records"),
+      data_status = 404, data_body = body, data_type = "text/plain"
+    )
+  }
+  # a query rejected by the API, with its message
+  with_sse_api(
+    expect_error(bfs_sse_data("DF_LWZ_1", start_period = "foo"),
+                 "HTTP 422 Unprocessable Entity: Semantic Error - Invalid Date Format `foo`",
+                 class = "bfs_sse_query_error"),
+    data_status = 422, data_body = "Semantic Error - Invalid Date Format `foo`", data_type = "text/plain"
+  )
+  # a too long URL, answered without body
+  with_sse_api(
+    expect_error(bfs_sse_data("DF_LWZ_1"), "split `filters`", class = "bfs_sse_query_error"),
+    data_status = 414, data_body = "", data_type = "text/plain"
+  )
+  with_sse_api(
+    expect_error(bfs_sse_data("DF_LWZ_1"), "HTTP 500", class = "bfs_http_error"),
+    data_status = 500, data_body = "Error", data_type = "text/plain"
+  )
+  # the classes and the response of the httr2 error are kept
+  with_sse_api(
+    expect_error(bfs_sse_data("DF_LWZ_1"), class = "httr2_http_500"),
+    data_status = 500, data_body = "Error", data_type = "text/plain"
+  )
+  with_sse_api(
+    expect_error(bfs_sse_data("DF_LWZ_1"), "unexpected format", class = "bfs_sse_format_error"),
+    data_type = "application/vnd.sdmx.genericdata+xml"
+  )
+})
 
 # ---- cache -------------------------------------------------------------------
 
@@ -426,3 +840,40 @@ test_that("bfs_clear_cache() deletes the cached base maps and SSE dataflows", {w
   expect_false(dir.exists(cache_dir))
   expect_null(sse_cache$urns)
 })})})
+
+test_that("the old SSE functions are deprecated", {
+  local_mocked_bindings(has_internet = function() FALSE, .package = "curl")
+  rlang::local_options(lifecycle_verbosity = "warning")
+  expect_message(
+    lifecycle::expect_deprecated(bfs_get_sse_data("DF_TEST", query = list(SEX = "M")), "bfs_sse_data"),
+    "No internet connection"
+  )
+  expect_message(
+    lifecycle::expect_deprecated(bfs_get_sse_metadata("DF_TEST"), "bfs_sse_dimensions"),
+    "No internet connection"
+  )
+})
+
+test_that("the arguments of the old SSE functions give their new name", {
+  # no request is sent: the arguments are checked first
+  expect_error(
+    bfs_sse_data(number_bfs = "DF_TEST", query = list(SEX = "M")),
+    "`number_bfs` is now `dataset`.*`query` is now `filters`",
+    class = "bfs_sse_argument_error"
+  )
+  expect_error(
+    bfs_sse_data("DF_TEST", variable_value_type = "code", clean_names = TRUE),
+    "`variable_value_type` is now `labels`.*`clean_names` is removed",
+    class = "bfs_sse_argument_error"
+  )
+  expect_error(
+    bfs_sse_dimensions(number_bfs = "DF_TEST"),
+    "`number_bfs` is now `dataset`",
+    class = "bfs_sse_argument_error"
+  )
+  # an old positional call, e.g. bfs_get_sse_data("DF_TEST", "en")
+  expect_error(bfs_sse_data("DF_TEST", "en"), class = "rlib_error_dots_nonempty")
+  expect_error(bfs_sse_dimensions("DF_TEST", "en"), class = "rlib_error_dots_nonempty")
+  # a typo in an argument name
+  expect_error(bfs_sse_data("DF_TEST", filter = list(SEX = "M")), class = "rlib_error_dots_nonempty")
+})

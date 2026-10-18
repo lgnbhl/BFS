@@ -12,23 +12,25 @@ Search and download data from the Swiss Federal Statistical Office (BFS) APIs \u
 }
 \details{
 The BFS package downloads the open data of the Swiss Federal Statistical
-Office (BFS, *Bundesamt für Statistik*) from its APIs:
-
-- **Swiss Stats Explorer**: [bfs_get_sse_metadata()] and
-  [bfs_get_sse_data()].
-- **Data catalog and PXWeb datasets**: [bfs_get_catalog_data()],
-  [bfs_get_metadata()], [bfs_get_data()] and [bfs_get_data_comments()].
-- **Tables and files**: [bfs_get_catalog_tables()],
-  [bfs_get_asset_metadata()] and [bfs_download_asset()].
-- **Geodata and base maps**: [bfs_get_catalog_geodata()],
-  [bfs_download_geodata()] and [bfs_get_base_maps()].
+Office (BFS, \emph{Bundesamt für Statistik}) from its APIs:
+\itemize{
+\item \strong{Swiss Stats Explorer}: \code{\link[=bfs_sse_datasets]{bfs_sse_datasets()}}, \code{\link[=bfs_sse_dimensions]{bfs_sse_dimensions()}}
+and \code{\link[=bfs_sse_data]{bfs_sse_data()}}. They replace the deprecated
+\code{\link[=bfs_get_sse_metadata]{bfs_get_sse_metadata()}} and \code{\link[=bfs_get_sse_data]{bfs_get_sse_data()}}.
+\item \strong{Data catalog and PXWeb datasets}: \code{\link[=bfs_get_catalog_data]{bfs_get_catalog_data()}},
+\code{\link[=bfs_get_metadata]{bfs_get_metadata()}}, \code{\link[=bfs_get_data]{bfs_get_data()}} and \code{\link[=bfs_get_data_comments]{bfs_get_data_comments()}}.
+\item \strong{Tables and files}: \code{\link[=bfs_get_catalog_tables]{bfs_get_catalog_tables()}},
+\code{\link[=bfs_get_asset_metadata]{bfs_get_asset_metadata()}} and \code{\link[=bfs_download_asset]{bfs_download_asset()}}.
+\item \strong{Geodata and base maps}: \code{\link[=bfs_get_catalog_geodata]{bfs_get_catalog_geodata()}},
+\code{\link[=bfs_download_geodata]{bfs_download_geodata()}} and \code{\link[=bfs_get_base_maps]{bfs_get_base_maps()}}.
+}
 
 The BFS is replacing STAT-TAB, and its PXWeb API, with the Swiss Stats
 Explorer.
 
 If an API is not available (e.g. too many requests, timeout or server
-error), the functions give an error of class `bfs_http_error`. Without
-internet connection, they give a message and return `NULL`.
+error), the functions give an error of class \code{bfs_http_error}. Without
+internet connection, they give a message and return \code{NULL}.
 
 The package is not affiliated with the BFS.
 }

@@ -7,13 +7,13 @@
 \format{
 A data frame with 26 rows and 3 columns:
 \describe{
-  \item{KTNR}{Canton number.}
-  \item{GDEKT}{Canton abbreviation, e.g. "ZH".}
-  \item{GDEKTNA}{Canton name.}
+\item{KTNR}{Canton number.}
+\item{GDEKT}{Canton abbreviation, e.g. "ZH".}
+\item{GDEKTNA}{Canton name.}
 }
 }
 \source{
-<https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html>
+\url{https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html}
 }
 \usage{
 register_kt

@@ -7,14 +7,14 @@
 \format{
 A data frame with 3 rows and 4 columns:
 \describe{
-  \item{GDENR}{BFS number of the area.}
-  \item{GDENAME}{Name of the area.}
-  \item{KTNR}{Canton number.}
-  \item{GDEBZNR}{District number.}
+\item{GDENR}{BFS number of the area.}
+\item{GDENAME}{Name of the area.}
+\item{KTNR}{Canton number.}
+\item{GDEBZNR}{District number.}
 }
 }
 \source{
-<https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html>
+\url{https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html}
 }
 \usage{
 register_gde_other

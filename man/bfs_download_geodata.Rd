@@ -16,35 +16,35 @@ bfs_download_geodata(
 )
 }
 \arguments{
-\item{collection_id}{The collection id, i.e. the `collection_id` column of
-[bfs_get_catalog_geodata()], e.g.
-`"ch.bfs.generalisierte-grenzen_agglomerationen_g1"`.}
+\item{collection_id}{The collection id, i.e. the \code{collection_id} column of
+\code{\link[=bfs_get_catalog_geodata]{bfs_get_catalog_geodata()}}, e.g.
+\code{"ch.bfs.generalisierte-grenzen_agglomerationen_g1"}.}
 
 \item{output_dir}{Folder of the downloaded files, a temporary folder by
 default.}
 
-\item{overwrite}{If `TRUE`, overwrite existing files.}
+\item{overwrite}{If \code{TRUE}, overwrite existing files.}
 
-\item{create_json}{If `TRUE`, also save the STAC items as a JSON file.}
+\item{create_json}{If \code{TRUE}, also save the STAC items as a JSON file.}
 
 \item{bbox, datetime, feature_id}{Optional filters of the items: bounding
-box, date-time or interval, and item id. See [rstac::items()].}
+box, date-time or interval, and item id. See \code{\link[rstac:items]{rstac::items()}}.}
 
 \item{asset_names}{Optional names of the assets to download. See
-[rstac::assets_download()].}
+\code{\link[rstac:assets_functions]{rstac::assets_download()}}.}
 }
 \value{
 The paths of the downloaded files. Zip files are not extracted.
-  Returns `NULL` if there is no internet connection.
+Returns \code{NULL} if there is no internet connection.
 }
 \description{
 Download the files of a geodata collection from the STAC API of the Swiss
-geo-portal (<https://data.geo.admin.ch/api/stac/v0.9/>). Requires the
+geo-portal (\url{https://data.geo.admin.ch/api/stac/v0.9/}). Requires the
 rstac package.
 }
 \details{
 The use of the data is free but subject to the terms of use of the Swiss
-geo-portal (<https://www.geo.admin.ch/terms-of-use>).
+geo-portal (\url{https://www.geo.admin.ch/terms-of-use}).
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
@@ -55,5 +55,5 @@ files
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-[bfs_get_catalog_geodata()]
+\code{\link[=bfs_get_catalog_geodata]{bfs_get_catalog_geodata()}}
 }

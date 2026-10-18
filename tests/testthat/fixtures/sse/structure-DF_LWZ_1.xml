@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<message:Structure xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message" xmlns:structure="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/structure" xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common">
+  <message:Header>
+    <message:ID>IDREF25157</message:ID>
+    <message:Test>false</message:Test>
+    <message:Prepared>2026-10-18T11:24:03.4987644+00:00</message:Prepared>
+    <message:Sender id="Unknown" />
+    <message:Receiver id="Unknown" />
+  </message:Header>
+  <message:Structures>
+    <structure:Dataflows>
+      <structure:Dataflow id="DF_LWZ_1" agencyID="CH1.LWZ" version="1.1.0" isFinal="true">
+        <common:Annotations>
+          <common:Annotation>
+            <common:AnnotationType>NonProductionDataflow</common:AnnotationType>
+            <common:AnnotationText xml:lang="en">true</common:AnnotationText>
+          </common:Annotation>
+          <common:Annotation id="@SDMX">
+            <common:AnnotationTitle>TIME_PERIOD</common:AnnotationTitle>
+            <common:AnnotationType>LAYOUT_COLUMN</common:AnnotationType>
+          </common:Annotation>
+          <common:Annotation id="@SDMX">
+            <common:AnnotationTitle>GR_KT_GDE=8100,LASTNPERIODS=5,MEASURE_DIMENSION=V</common:AnnotationTitle>
+            <common:AnnotationType>DEFAULT</common:AnnotationType>
+          </common:Annotation>
+          <common:Annotation id="@SDMX">
+            <common:AnnotationTitle>OBS_STATUS=A</common:AnnotationTitle>
+            <common:AnnotationType>NOT_DISPLAYED</common:AnnotationType>
+          </common:Annotation>
+          <common:Annotation id="@SDMX">
+            <common:AnnotationTitle>GR_KT_GDE</common:AnnotationTitle>
+            <common:AnnotationType>LAYOUT_ROW_SECTION</common:AnnotationType>
+          </common:Annotation>
+          <common:Annotation id="@SDMX">
+            <common:AnnotationTitle>8500</common:AnnotationTitle>
+            <common:AnnotationType>MAX_TABLE_DATA</common:AnnotationType>
+          </common:Annotation>
+          <common:Annotation id="@SDMX">
+            <common:AnnotationTitle>EXT_RESOURCE</common:AnnotationTitle>
+            <common:AnnotationType>EXT_RESOURCE</common:AnnotationType>
+            <common:AnnotationText xml:lang="en">To the Topic Homepage|https://www.bfs.admin.ch/asset/en/DF_LWZ_1|https://www.bfs.admin.ch/bfsstatic/dam/assets/33415596/thumbnail</common:AnnotationText>
+            <common:AnnotationText xml:lang="de">Zur Themen-Homepage|https://www.bfs.admin.ch/asset/de/DF_LWZ_1|https://www.bfs.admin.ch/bfsstatic/dam/assets/33415596/thumbnail</common:AnnotationText>
+            <common:AnnotationText xml:lang="it">Alla pagina principale dell'argomento|https://www.bfs.admin.ch/asset/it/DF_LWZ_1|https://www.bfs.admin.ch/bfsstatic/dam/assets/33415596/thumbnail</common:AnnotationText>
+            <common:AnnotationText xml:lang="fr">Vers la page d'accueil du sujet|https://www.bfs.admin.ch/asset/fr/DF_LWZ_1|https://www.bfs.admin.ch/bfsstatic/dam/assets/33415596/thumbnail</common:AnnotationText>
+          </common:Annotation>
+        </common:Annotations>
+        <common:Name xml:lang="de">Leer stehende Wohnungen nach Grossregion, Kanton, Bezirk, Gemeinde, Anzahl Wohnräumen und Typ der Leerwohnung</common:Name>
+        <common:Name xml:lang="fr">Logements vacants selon la grande région, le canton, le district, la commune, le nombre de pièces d'habitation et le type de logement vacant</common:Name>
+        <common:Name xml:lang="en">Vacant dwellings by region, canton, district, commune, number of rooms and type of vacant dwelling</common:Name>
+        <common:Name xml:lang="it">Abitazioni vuote per regione, cantone, distretto, comune, numero di stanze e tipo di abitazione vuota</common:Name>
+        <common:Description xml:lang="de">Dieses Dataset präsentiert die jährlichen Zahlen der Erhebung über leer stehende Wohnungen nach Grossregion, Kanton, Bezirk, Gemeinde, Anzahl Wohnräumen und Typ der Leerwohnung seit 1995.&lt;br&gt;&lt;br&gt;&lt;b&gt;&lt;i&gt;Datenquelle: &lt;/i&gt;&lt;/b&gt;Kantone und Gemeinden</common:Description>
+        <common:Description xml:lang="fr">Ce dataset présente les chiffres annuels du dénombrement des logements vacants par grande région, canton, district, commune, nombre de pièces et type de logement vacant depuis 1995.&lt;br&gt;&lt;br&gt;&lt;b&gt;&lt;i&gt;Source des données: &lt;/i&gt;&lt;/b&gt;Cantons et communes</common:Description>
+        <common:Description xml:lang="en">This dataset presents annual figures on the number of vacant dwellings by great region, canton, district, commune, number of rooms, and type of vacant dwelling since 1995.&lt;br&gt;&lt;br&gt;&lt;b&gt;&lt;i&gt;Data source: &lt;/i&gt;&lt;/b&gt;Cantons and communes</common:Description>
+        <common:Description xml:lang="it">Questo dataset presenta i dati annuali relativi al censimento degli abitazione vuote per grande regione, cantone, distretto, comune, numero di locali e tipo di appartamento vuoto dal 1995.&lt;br&gt;&lt;br&gt;&lt;b&gt;&lt;i&gt;Fonte dei dati: &lt;/i&gt;&lt;/b&gt;Cantoni e communi</common:Description>
+        <structure:Structure>
+          <Ref id="DSD_DIFF_LWZ_1" version="1.1.0" agencyID="CH1.LWZ" package="datastructure" class="DataStructure" />
+        </structure:Structure>
+      </structure:Dataflow>
+    </structure:Dataflows>
+    <structure:DataStructures>
+      <structure:DataStructure id="DSD_DIFF_LWZ_1" agencyID="CH1.LWZ" version="1.1.0" isFinal="true">
+        <common:Annotations>
+          <common:Annotation id="@SDMX">
+            <common:AnnotationTitle>urn:sdmx:org.sdmx.infomodel.metadatastructure.MetadataStructure=CH1:MSD_REF_METADATA_2025(1.0.0)</common:AnnotationTitle>
+            <common:AnnotationType>METADATA</common:AnnotationType>
+          </common:Annotation>
+        </common:Annotations>
+        <common:Name xml:lang="fr">DSD 1 de diffusion pour le dénombrement des logements vacants (LWZ)</common:Name>
+        <structure:DataStructureComponents>
+          <structure:DimensionList id="DimensionDescriptor">
+            <structure:Dimension id="GR_KT_GDE" position="1">
+              <structure:ConceptIdentity>
+                <Ref id="GR_KT_GDE" maintainableParentID="CS_DIFF_LWZ_1" maintainableParentVersion="1.1.0" agencyID="CH1.LWZ" package="conceptscheme" class="Concept" />
+              </structure:ConceptIdentity>
+              <structure:LocalRepresentation>
+                <structure:Enumeration>
+                  <Ref id="CL_KT_BEZ_GDE_SNAP_2026__NUTS22021100" version="1.0.0" agencyID="CH1" package="codelist" class="Codelist" />
+                </structure:Enumeration>
+              </structure:LocalRepresentation>
+            </structure:Dimension>
+            <structure:Dimension id="WOHN_ANZAHL" position="2">
+              <structure:ConceptIdentity>
+                <Ref id="WOHN_ANZAHL" maintainableParentID="CS_DIFF_LWZ_1" maintainableParentVersion="1.1.0" agencyID="CH1.LWZ" package="conceptscheme" class="Concept" />
+              </structure:ConceptIdentity>
+              <structure:LocalRepresentation>
+                <structure:Enumeration>
+                  <Ref id="CL_DIFF_WAZIM__TOT" version="1.1.0" agencyID="CH1" package="codelist" class="Codelist" />
+                </structure:Enumeration>
+              </structure:LocalRepresentation>
+            </structure:Dimension>
+            <structure:Dimension id="LEERWOHN_TYP" position="3">
+              <structure:ConceptIdentity>
+                <Ref id="LEERWOHN_TYP" maintainableParentID="CS_DIFF_LWZ_1" maintainableParentVersion="1.1.0" agencyID="CH1.LWZ" package="conceptscheme" class="Concept" />
+              </structure:ConceptIdentity>
+              <structure:LocalRepresentation>
+                <structure:Enumeration>
+                  <Ref id="CL_LEERWOHN_TYP" version="1.0.0" agencyID="CH1" package="codelist" class="Codelist" />
+                </structure:Enumeration>
+              </structure:LocalRepresentation>
+            </structure:Dimension>
+            <structure:Dimension id="MEASURE_DIMENSION" position="4">
+              <structure:ConceptIdentity>
+                <Ref id="MEASURE_DIMENSION" maintainableParentID="CS_DIFF_LWZ_1" maintainableParentVersion="1.1.0" agencyID="CH1.LWZ" package="conceptscheme" class="Concept" />
+              </structure:ConceptIdentity>
+              <structure:LocalRepresentation>
+                <structure:Enumeration>
+                  <Ref id="CL_STATISTICAL_OPERATION" version="1.0.1" agencyID="CH1" package="codelist" class="Codelist" />
+                </structure:Enumeration>
+              </structure:LocalRepresentation>
+            </structure:Dimension>
+            <structure:Dimension id="FREQ" position="5">
+              <structure:ConceptIdentity>
+                <Ref id="FREQ" maintainableParentID="CS_GENERIC_DIFF_2025" maintainableParentVersion="1.0.0" agencyID="CH1" package="conceptscheme" class="Concept" />
+              </structure:ConceptIdentity>
+              <structure:LocalRepresentation>
+                <structure:Enumeration>
+                  <Ref id="CL_FREQ" version="2.1.0" agencyID="CH1" package="codelist" class="Codelist" />
+                </structure:Enumeration>
+              </structure:LocalRepresentation>
+            </structure:Dimension>
+            <structure:TimeDimension id="TIME_PERIOD" position="6">
+              <structure:ConceptIdentity>
+                <Ref id="TIME_PERIOD" maintainableParentID="CS_GENERIC_DIFF_2025" maintainableParentVersion="1.0.0" agencyID="CH1" package="conceptscheme" class="Concept" />
+              </structure:ConceptIdentity>
+              <structure:LocalRepresentation>
+                <structure:TextFormat textType="ObservationalTimePeriod" />
+              </structure:LocalRepresentation>
+            </structure:TimeDimension>
+          </structure:DimensionList>
+          <structure:AttributeList id="AttributeDescriptor">
+            <structure:Attribute id="DATAFLOW" assignmentStatus="Conditional">
+              <structure:ConceptIdentity>
+                <Ref id="DATAFLOW" maintainableParentID="CS_DIFF_LWZ_1" maintainableParentVersion="1.1.0" agencyID="CH1.LWZ" package="conceptscheme" class="Concept" />
+              </structure:ConceptIdentity>
+              <structure:LocalRepresentation>
+                <structure:TextFormat textType="String" />
+              </structure:LocalRepresentation>
+              <structure:AttributeRelationship>
+                <structure:PrimaryMeasure>
+                  <Ref id="OBS_VALUE" />
+                </structure:PrimaryMeasure>
+              </structure:AttributeRelationship>
+            </structure:Attribute>
+            <structure:Attribute id="DECIMALS" assignmentStatus="Conditional">
+              <structure:ConceptIdentity>
+                <Ref id="DECIMALS" maintainableParentID="CS_GENERIC_DIFF_2025" maintainableParentVersion="1.0.0" agencyID="CH1" package="conceptscheme" class="Concept" />
+              </structure:ConceptIdentity>
+              <structure:LocalRepresentation>
+                <structure:Enumeration>
+                  <Ref id="CL_DECIMALS" version="1.0.0" agencyID="CH1" package="codelist" class="Codelist" />
+                </structure:Enumeration>
+              </structure:LocalRepresentation>
+              <structure:AttributeRelationship>
+                <structure:PrimaryMeasure>
+                  <Ref id="OBS_VALUE" />
+                </structure:PrimaryMeasure>
+              </structure:AttributeRelationship>
+            </structure:Attribute>
+            <structure:Attribute id="OBS_STATUS" assignmentStatus="Conditional">
+              <structure:ConceptIdentity>
+                <Ref id="OBS_STATUS" maintainableParentID="CS_GENERIC_DIFF_2025" maintainableParentVersion="1.0.0" agencyID="CH1" package="conceptscheme" class="Concept" />
+              </structure:ConceptIdentity>
+              <structure:LocalRepresentation>
+                <structure:Enumeration>
+                  <Ref id="CL_OBS_STATUS" version="1.0.0" agencyID="CH1" package="codelist" class="Codelist" />
+                </structure:Enumeration>
+              </structure:LocalRepresentation>
+              <structure:AttributeRelationship>
+                <structure:PrimaryMeasure>
+                  <Ref id="OBS_VALUE" />
+                </structure:PrimaryMeasure>
+              </structure:AttributeRelationship>
+            </structure:Attribute>
+          </structure:AttributeList>
+          <structure:MeasureList id="MeasureDescriptor">
+            <structure:PrimaryMeasure id="OBS_VALUE">
+              <structure:ConceptIdentity>
+                <Ref id="OBS_VALUE" maintainableParentID="CS_GENERIC_DIFF_2025" maintainableParentVersion="1.0.0" agencyID="CH1" package="conceptscheme" class="Concept" />
+              </structure:ConceptIdentity>
+              <structure:LocalRepresentation>
+                <structure:TextFormat textType="Float" />
+              </structure:LocalRepresentation>
+            </structure:PrimaryMeasure>
+          </structure:MeasureList>
+        </structure:DataStructureComponents>
+      </structure:DataStructure>
+    </structure:DataStructures>
+  </message:Structures>
+</message:Structure>

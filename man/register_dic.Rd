@@ -7,15 +7,15 @@
 \format{
 A data frame with 27 rows and 5 columns:
 \describe{
-  \item{language}{Language: "de", "fr" or "it".}
-  \item{abbreviation}{Variable name, e.g. "GDENR".}
-  \item{title}{Variable label.}
-  \item{spec}{Specifications.}
-  \item{notes}{General notes.}
+\item{language}{Language: "de", "fr" or "it".}
+\item{abbreviation}{Variable name, e.g. "GDENR".}
+\item{title}{Variable label.}
+\item{spec}{Specifications.}
+\item{notes}{General notes.}
 }
 }
 \source{
-<https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html>
+\url{https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html}
 }
 \usage{
 register_dic

@@ -14,30 +14,30 @@ bfs_download_asset(
 )
 }
 \arguments{
-\item{number_asset}{The asset number of the file, e.g. `"24025646"`. It
-is the `number_asset` column of [bfs_get_catalog_tables()] and
-[bfs_get_catalog_data()], and the number at the end of the "assetdetail"
+\item{number_asset}{The asset number of the file, e.g. \code{"24025646"}. It
+is the \code{number_asset} column of \code{\link[=bfs_get_catalog_tables]{bfs_get_catalog_tables()}} and
+\code{\link[=bfs_get_catalog_data]{bfs_get_catalog_data()}}, and the number at the end of the "assetdetail"
 URLs of the BFS website.}
 
 \item{number_bfs}{The BFS number of the file, e.g.
-`"px-x-1502040100_131"`. Use either `number_asset` or `number_bfs`.}
+\code{"px-x-1502040100_131"}. Use either \code{number_asset} or \code{number_bfs}.}
 
 \item{destfile}{Path of the downloaded file.}
 
-\item{quiet}{If `FALSE`, show the download progress.}
+\item{quiet}{If \code{FALSE}, show the download progress.}
 
-\item{mode, handle}{Passed to [curl::curl_download()].}
+\item{mode, handle}{Passed to \code{\link[curl:curl_download]{curl::curl_download()}}.}
 }
 \value{
-The path of the downloaded file. Returns `NULL` if there is no
-  internet connection.
+The path of the downloaded file. Returns \code{NULL} if there is no
+internet connection.
 }
 \description{
 Download any file of the BFS (Excel, CSV, PX, PDF, zip, ...) from the DAM
-API (<https://dam-api.bfs.admin.ch/hub/swagger-ui/index.html>) with its
+API (\url{https://dam-api.bfs.admin.ch/hub/swagger-ui/index.html}) with its
 asset number or its BFS number. Use it for the tables of
-[bfs_get_catalog_tables()], or for datasets too large for
-[bfs_get_data()].
+\code{\link[=bfs_get_catalog_tables]{bfs_get_catalog_tables()}}, or for datasets too large for
+\code{\link[=bfs_get_data]{bfs_get_data()}}.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
@@ -49,5 +49,5 @@ bfs_download_asset(
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-[bfs_get_asset_metadata()], [bfs_get_catalog_tables()]
+\code{\link[=bfs_get_asset_metadata]{bfs_get_asset_metadata()}}, \code{\link[=bfs_get_catalog_tables]{bfs_get_catalog_tables()}}
 }

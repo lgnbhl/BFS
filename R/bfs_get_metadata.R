@@ -4,7 +4,7 @@
 #' variable can take. Use them to build the `query` of [bfs_get_data()].
 #'
 #' The PXWeb API is the API of STAT-TAB, which the BFS is replacing with the
-#' Swiss Stats Explorer (see [bfs_get_sse_metadata()]).
+#' Swiss Stats Explorer (see [bfs_sse_dimensions()]).
 #'
 #' @inheritParams bfs_get_data
 #'

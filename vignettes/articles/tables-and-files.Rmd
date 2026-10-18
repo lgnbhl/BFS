@@ -7,11 +7,13 @@ description: "Search the BFS tables and download any BFS file."
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>", message = FALSE, warning = FALSE)
 ```
 
-Many statistics are not in the PXWeb API but published as files: Excel or
-CSV tables, PX files, PDFs, zip files, ... They are listed in the
+Many statistics are not in an API. The BFS publishes them as files: Excel
+or CSV tables, PX files, PDFs, zip files, and more. You find them in the
 [BFS catalog](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html)
-as article type "Tables". Each file has an asset number, also shown at the
-end of the "assetdetail" URLs of the BFS website.
+with the article type "Tables". Each file has an asset number. You also see
+this number at the end of the "assetdetail" URLs of the BFS website.
+
+In this article, we search a table about students and download it.
 
 ```{r}
 library(BFS)
@@ -20,8 +22,8 @@ library(dplyr)
 
 ## Search the tables
 
-`bfs_get_catalog_tables()` has the same arguments as `bfs_get_catalog_data()`
-(see [Data catalog and PXWeb datasets](pxweb.html)).
+`bfs_get_catalog_tables()` works like `bfs_get_catalog_data()`, with the
+same arguments (see [Data catalog and PXWeb datasets](pxweb.html)).
 
 ```{r}
 tables <- bfs_get_catalog_tables(language = "en", extended_search = "students")
@@ -40,8 +42,8 @@ bfs_download_asset(number_asset = asset, destfile = "students.xlsx")
 readxl::read_excel("students.xlsx")
 ```
 
-`bfs_download_asset()` also takes a BFS number. For a PXWeb dataset too
-large for the API, download its PX file and read it with the pxR package:
+`bfs_download_asset()` also accepts a BFS number. If a PXWeb dataset is
+too big for the API, download its PX file and read it with the pxR package:
 
 ```r
 bfs_download_asset(number_bfs = "px-x-1502040100_131", destfile = "students.px")
@@ -50,12 +52,13 @@ students <- pxR::read.px("students.px") |>
   as.data.frame()
 ```
 
-The PX file is read in German only.
+The PX file is in German only.
 
 ## Metadata of a file
 
-`bfs_get_asset_metadata()` returns the metadata of a file as a nested list:
-title, description, publication date, contact, links, ...
+`bfs_get_asset_metadata()` gives the metadata of a file as a nested list:
+the title, the description, the publication date, the contact, the links,
+and more.
 
 ```{r}
 metadata <- bfs_get_asset_metadata(number_bfs = "px-x-1502040100_131", language = "en")

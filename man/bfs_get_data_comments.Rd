@@ -14,28 +14,28 @@ bfs_get_data_comments(
 }
 \arguments{
 \item{number_bfs}{The BFS number of a dataset, e.g.
-`"px-x-1502040100_131"`.}
+\code{"px-x-1502040100_131"}.}
 
-\item{language}{Language of the dataset: `"de"` (default), `"fr"`, `"it"`
-or `"en"`.}
+\item{language}{Language of the dataset: \code{"de"} (default), \code{"fr"}, \code{"it"}
+or \code{"en"}.}
 
 \item{query}{Optional selection of the data: a named list with the
-variable codes as names and the value codes as values (columns `code`
-and `values` of [bfs_get_metadata()]), e.g.
-`list(Jahr = c("40", "41"), Geschlecht = "*")`. `"*"` selects all values.
-A variable not in `query` is left out of the result (totals over it),
-if the dataset allows it. If `NULL` (default), the whole dataset is
+variable codes as names and the value codes as values (columns \code{code}
+and \code{values} of \code{\link[=bfs_get_metadata]{bfs_get_metadata()}}), e.g.
+\code{list(Jahr = c("40", "41"), Geschlecht = "*")}. \code{"*"} selects all values.
+A variable not in \code{query} is left out of the result (totals over it),
+if the dataset allows it. If \code{NULL} (default), the whole dataset is
 downloaded.}
 
-\item{clean_names}{If `TRUE`, clean the column names with
-[janitor::clean_names()].}
+\item{clean_names}{If \code{TRUE}, clean the column names with
+\code{\link[janitor:clean_names]{janitor::clean_names()}}.}
 
 \item{delay}{Optional number of seconds to wait before downloading the
 data, to avoid "Too Many Requests" errors when calling the API in a loop.}
 }
 \value{
-A tibble with one row per comment. Returns `NULL` if there is no
-  internet connection.
+A tibble with one row per comment. Returns \code{NULL} if there is no
+internet connection.
 }
 \description{
 Get the comments (footnotes) of a dataset of the PXWeb API, e.g. on
@@ -51,5 +51,5 @@ bfs_get_data_comments(number_bfs = "px-x-1502040100_131", language = "en")
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-[bfs_get_data()]
+\code{\link[=bfs_get_data]{bfs_get_data()}}
 }

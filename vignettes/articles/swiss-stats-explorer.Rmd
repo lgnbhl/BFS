@@ -1,6 +1,6 @@
 ---
 title: "Swiss Stats Explorer"
-description: "Build a query from the codelists of a dataset and download the data."
+description: "Find a dataset, choose the data you need and download it, step by step."
 ---
 
 ```{r, include = FALSE}
@@ -8,82 +8,283 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>", message = FALSE, warning 
 ```
 
 The [Swiss Stats Explorer](https://stats.swiss/) (SSE) is the new data
-platform of the BFS, based on the SDMX standard. It replaces STAT-TAB and
-its PXWeb API (see
+platform of the BFS. It uses the SDMX standard. It replaces STAT-TAB and its
+PXWeb API (see
 [Get started](introduction.html#from-stat-tab-to-the-swiss-stats-explorer)).
 
-Each dataset has dimensions
-(e.g. the commune, the year, the number of rooms), and each dimension has a
-codelist: the codes of its values. You download data in two steps:
+## Our example: the vacancy rate
 
-1. get the codelists with `bfs_get_sse_metadata()`,
-2. select the codes you need and pass them to `bfs_get_sse_data()`.
+In this article, we look at the **vacancy rate**: the share of homes that
+are empty and available, in percent. A low vacancy rate means that it is
+hard to find a home. We compare three cantons: **Geneva**, **Zurich** and
+**Bern**.
+
+The BFS publishes the vacant dwellings every year since 1995, for each
+canton, district and commune.
+
+## How it works
+
+A dataset has **dimensions**, for example the canton or the number of rooms.
+Each dimension has a list of **values**, for example `GE` for Geneva. You
+get data in three steps:
+
+1. Find the dataset with `bfs_sse_datasets()`.
+2. See its dimensions and values with `bfs_sse_dimensions()`.
+3. Choose the values you need (the `filters`) and download the data with
+   `bfs_sse_data()`.
+
+The functions are a thin layer over the API: they send your query, and the
+API does the work (for example, it finds the latest version and gives the
+labels in your language). So they keep working when the API changes.
 
 ```{r}
 library(BFS)
 library(dplyr)
 ```
 
-## Find the dataset id
+## Step 1: find the dataset
 
-The dataset id (e.g. `DF_LWZ_1`, the vacant dwellings) is in the URL of the
-dataset on [stats.swiss](https://stats.swiss/), after `df[id]=`.
-
-## Get the codelists
+`bfs_sse_datasets()` lists all the datasets. There is one row for each
+version of a dataset. Search for "vacant" in the names and the
+descriptions:
 
 ```{r}
-codelist <- bfs_get_sse_metadata("DF_LWZ_1", language = "en")
-codelist
+datasets <- bfs_sse_datasets(language = "en")
+datasets |>
+  filter(grepl("vacant", paste(name, description), ignore.case = TRUE))
 ```
 
-There is one row per value of each dimension:
-
-- `code` and `text`: the dimension code and its label,
-- `value` and `valueText`: the value code and its label.
-
-List the dimensions with:
+The description tells you more about a dataset. The first row of a dataset
+is its latest version:
 
 ```{r}
-distinct(codelist, code, text)
+datasets |>
+  filter(dataset == "DF_LWZ_1") |>
+  slice(1) |>
+  pull(description)
 ```
 
-## Build the query
+The descriptions come as the API gives them, so some have HTML tags, such
+as `<br>` for a new line.
 
-The query is a named list: the dimension codes as names, the value codes as
-values. Filter the codelist on the labels you want:
+The dataset we need is `DF_LWZ_1`. This id is the `dataset` argument of the
+other functions.
+
+You can also search on [stats.swiss](https://stats.swiss/). The id of a
+dataset is in the URL of its page, after `df[id]=`.
+
+## Step 2: see the dimensions
 
 ```{r}
-selection <- codelist |>
-  filter(
-    (code == "GR_KT_GDE" & valueText %in% c("Aarau", "Olten")) |
-      (code == "WOHN_ANZAHL" & valueText == "Total") |
-      (code == "LEERWOHN_TYP" & valueText == "Vacant dwelling for rent") |
-      (code == "MEASURE_DIMENSION" & valueText == "Observed Value")
-  )
-
-query <- split(selection$value, selection$code)
-query
+dimensions <- bfs_sse_dimensions("DF_LWZ_1", language = "en")
+dimensions
 ```
 
-A dimension not in the query keeps all its values.
+There is one row for each value of each dimension:
 
-## Download the data
+- `dimension` and `dimension_label`: the id and the name of the dimension.
+- `value` and `value_label`: the code and the name of the value.
+
+The dimensions of the dataset:
 
 ```{r}
-bfs_get_sse_data(
-  number_bfs = "DF_LWZ_1",
-  language = "en",
-  query = query,
-  start_period = "2020",
-  end_period = "2023"
+distinct(dimensions, dimension, dimension_label)
+```
+
+### Find the codes you need
+
+We need the codes of our three cantons. Search them by their name:
+
+```{r}
+filter(dimensions, value_label %in% c("Geneva", "Zurich", "Bern"))
+```
+
+Be careful: one name can have several codes. Here, a canton and its main
+city have the same name. For example, `ZH` is the canton of Zurich and
+`261` is the city of Zurich. We need the cantons: `GE`, `ZH` and `BE`.
+
+### Find all the communes of a canton
+
+The column `parent` gives the value above each value. For the regions, the
+parent of a commune is its district, and the parent of a district is its
+canton. For example, the city of Zurich (`261`) is in the district `B_112`,
+which is in the canton `ZH`:
+
+```{r}
+filter(dimensions, value %in% c("261", "B_112", "ZH"))
+```
+
+So you can find all the communes of a canton in two steps: first its
+districts, then the communes of these districts. The communes of Geneva:
+
+```{r}
+districts_ge <- filter(dimensions, dimension == "GR_KT_GDE", parent == "GE")
+communes_ge <- filter(dimensions, dimension == "GR_KT_GDE", parent %in% districts_ge$value)
+communes_ge
+```
+
+You can use `communes_ge$value` in the filters. In the same way, `parent`
+gives the total of a dimension, e.g. `_T` for all numbers of rooms.
+
+The levels are not the same in all datasets: in some datasets, a commune
+has no district. Check the parents of a few values first, as above.
+
+The codes of the other dimensions:
+
+```{r}
+filter(dimensions, dimension != "GR_KT_GDE")
+```
+
+### Write the filters
+
+The filters are a named list. The names are the dimensions, and the values
+are the codes you want:
+
+```{r}
+filters <- list(
+  GR_KT_GDE = c("GE", "ZH", "BE"), # the three cantons
+  WOHN_ANZAHL = "_T",              # all numbers of rooms
+  LEERWOHN_TYP = "_T",             # all types of vacant dwellings
+  MEASURE_DIMENSION = "RATE"       # the vacancy rate, in %
 )
 ```
 
-Use `column_name_type = "text"` for the dimension labels as column names,
-`variable_value_type = "code"` for the codes instead of the labels, and
-`clean_names = TRUE` for snake_case column names.
+A dimension that is not in the filters keeps all its values. If you make a
+typo in the name of a dimension, you get an error. An empty vector of codes,
+or `NA`, is also an error. So you never download all the data by mistake.
+
+The API checks the codes. A code that does not exist gives no data. Some
+values have no data, too. If no value of your query has data, you get the
+error "No records found for the specified query.".
+
+## Step 3: download the data
+
+Download the vacancy rate since 2020 with the filters:
+
+```{r}
+rates <- bfs_sse_data(
+  "DF_LWZ_1",
+  filters = filters,
+  start_period = "2020",
+  language = "en"
+)
+rates
+```
+
+Put the three cantons side by side. Geneva has the lowest vacancy rate:
+
+```{r}
+rates |>
+  select(GR_KT_GDE, TIME_PERIOD, value) |>
+  tidyr::pivot_wider(names_from = GR_KT_GDE, values_from = value)
+```
+
+### The latest value
+
+With `last_n = 1`, you get the last period of each series, without knowing
+the year. The latest vacancy rate of the three cantons:
+
+```{r}
+bfs_sse_data(
+  "DF_LWZ_1",
+  filters = filters,
+  last_n = 1,
+  language = "en"
+) |>
+  select(GR_KT_GDE, TIME_PERIOD, value)
+```
+
+`last_n = 3` gives the last three periods, and `first_n` the first periods.
+You can use them with `start_period` and `end_period`.
+
+### The columns
+
+- Two columns for each dimension: the codes (e.g. `GR_KT_GDE`) and the
+  names (e.g. `GR_KT_GDE_label`). The column names are the dimension ids,
+  in all languages.
+- `TIME_PERIOD`: the period, e.g. the year.
+- `value`: the number.
+
+Other options:
+
+- `labels = "code"` gives only the codes, and `labels = "label"` only the
+  names. Be careful with `"label"`: two codes can have the same name (the
+  canton and the city of Zurich), so use it only to show the data.
+- `attributes = TRUE` adds information about each value, e.g.
+  `OBS_STATUS` (for example, if the value is provisional). You get the codes
+  and the names, as for the dimensions.
 
 ::: {.callout .callout-warning}
-Without `query`, `bfs_get_sse_data()` downloads the whole dataset, which can
-be large and slow.
+Without `filters`, `bfs_sse_data()` downloads all the data of the dataset.
+This can be large and slow: some datasets have millions of values.
 :::
+
+### Dates
+
+`TIME_PERIOD` is text, as the API gives it, for example `"2024"`,
+`"2024-Q1"` or `"2024-01"`. For a plot, make a date from it. Download the
+whole series since 1997 and make a date for each year:
+
+```{r}
+rates_all <- bfs_sse_data(
+  "DF_LWZ_1",
+  filters = filters,
+  start_period = "1997",
+  language = "en"
+) |>
+  mutate(date = as.Date(paste0(TIME_PERIOD, "-01-01")))
+rates_all
+```
+
+Plot the vacancy rate of the three cantons:
+
+```{r, eval = FALSE}
+library(ggplot2)
+
+ggplot(rates_all, aes(date, value, color = GR_KT_GDE_label)) +
+  geom_line() +
+  labs(x = NULL, y = "Vacancy rate (%)", color = NULL)
+```
+
+The year with the lowest vacancy rate in each canton:
+
+```{r}
+rates_all |>
+  group_by(GR_KT_GDE) |>
+  slice_min(value, n = 1) |>
+  select(GR_KT_GDE, TIME_PERIOD, value)
+```
+
+## In a data pipeline
+
+A dataset can have several versions. A new version can change the
+dimensions, and your code can stop working. By default, the API uses the
+latest version. To always get the same structure, set `version`:
+
+```{r, eval = FALSE}
+bfs_sse_data("DF_LWZ_1", filters = filters, version = "1.1.0")
+```
+
+`bfs_sse_datasets()` lists the versions of each dataset. On stats.swiss,
+the version is in the URL of the query, e.g. `1.1.0` in
+`CH1.LWZ,DF_LWZ_1,1.1.0`.
+
+Each type of error has its own class, so you can handle it in your code:
+
+- `bfs_no_records`: there is no data for your query.
+- `bfs_sse_filter_error`: there is a problem with the filters.
+- `bfs_sse_argument_error`: there is a problem with another argument.
+- `bfs_sse_dataset_error`: the dataset or the version does not exist.
+- `bfs_sse_query_error`: the API does not accept your query, e.g. a period
+  in a wrong format or too many codes in the filters. The error gives the
+  message of the API.
+- `bfs_http_error`: the API is not available (see
+  [API errors and rate limits](troubleshooting.html)).
+
+## Moving from `bfs_get_sse_data()`
+
+`bfs_get_sse_metadata()` and `bfs_get_sse_data()` are the old functions.
+They are deprecated: they still work the same way, so your code does not
+break, but they give a warning. To learn why
+there are new functions and how to change your code, see
+[Moving to the new Swiss Stats Explorer functions](sse-migration.html).

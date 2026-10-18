@@ -7,17 +7,17 @@
 bfs_get_catalog(language = "de", type = "data")
 }
 \arguments{
-\item{language}{Language of the catalog: `"de"` (default), `"fr"`, `"it"`
-or `"en"`.}
+\item{language}{Language of the catalog: \code{"de"} (default), \code{"fr"}, \code{"it"}
+or \code{"en"}.}
 
-\item{type}{`"data"` (default) or `"tables"`.}
+\item{type}{\code{"data"} (default) or \code{"tables"}.}
 }
 \value{
-The result of [bfs_get_catalog_data()] or
-  [bfs_get_catalog_tables()].
+The result of \code{\link[=bfs_get_catalog_data]{bfs_get_catalog_data()}} or
+\code{\link[=bfs_get_catalog_tables]{bfs_get_catalog_tables()}}.
 }
 \description{
-Deprecated since BFS 0.5.6: use [bfs_get_catalog_data()] or
-[bfs_get_catalog_tables()] instead.
+Deprecated since BFS 0.5.6: use \code{\link[=bfs_get_catalog_data]{bfs_get_catalog_data()}} or
+\code{\link[=bfs_get_catalog_tables]{bfs_get_catalog_tables()}} instead.
 }
 \keyword{internal}

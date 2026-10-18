@@ -7,13 +7,13 @@
 \format{
 A data frame with 41 rows and 3 columns:
 \describe{
-  \item{GDENR}{BFS number of the lake share.}
-  \item{GDENAME}{Name of the lake share.}
-  \item{KTNR}{Canton number.}
+\item{GDENR}{BFS number of the lake share.}
+\item{GDENAME}{Name of the lake share.}
+\item{KTNR}{Canton number.}
 }
 }
 \source{
-<https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html>
+\url{https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html}
 }
 \usage{
 register_kt_seeanteile

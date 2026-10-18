@@ -5,6 +5,7 @@ test_that("an unavailable API gives an informative bfs_http_error", {
   if (!curl::has_internet()) {
     skip("No internet connection")
   }
+  rlang::local_options(lifecycle_verbosity = "quiet")
   httr2::with_mocked_responses(mock_429, {
     expect_error(bfs_get_metadata(number_bfs = "px-x-1502040100_131"), class = "bfs_http_error")
     expect_error(bfs_get_data(number_bfs = "px-x-1502040100_131"), class = "httr2_http_429")

@@ -1,4 +1,13 @@
-#' Get data from the Swiss Stats Explorer
+#' Get data from the Swiss Stats Explorer (deprecated)
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' Deprecated since BFS 0.8.0: use [bfs_sse_data()] instead. It downloads the
+#' data faster and stops on a query that wouldn't filter the data. This
+#' function still works and gets only bug fixes, e.g. the labels of codes
+#' with no name in `language` (see NEWS). To move your code, see the article
+#' [Moving to the new Swiss Stats Explorer functions](https://felixluginbuhl.com/BFS/articles/sse-migration.html).
 #'
 #' Download a dataset of the Swiss Stats Explorer (SSE) API
 #' (<https://stats.swiss/>). Select the data you need with `query`, built
@@ -23,7 +32,8 @@
 #' @returns A tibble with one column per dimension and the observations in
 #'   the `value` column. Returns `NULL` if there is no internet connection.
 #'
-#' @seealso [bfs_get_sse_metadata()]
+#' @author Marius Hodel
+#' @seealso [bfs_sse_data()], [bfs_get_sse_metadata()]
 #' @export
 #'
 #' @examplesIf interactive()
@@ -42,8 +52,17 @@ bfs_get_sse_data <-
   function(number_bfs, language = "de", start_period = NULL, end_period = NULL, 
            query = NULL, column_name_type = "code", variable_value_type = "text", 
            clean_names = FALSE) {
-    
-    language <- match.arg(arg = language, choices = c("de", "fr", "it", "en"))
+
+    lifecycle::deprecate_soft(
+      "0.8.0", "bfs_get_sse_data()", "bfs_sse_data()",
+      details = c(
+        i = "`bfs_sse_data()` is faster and stops on filters that don't filter the data.",
+        i = "Arguments: `number_bfs` is now `dataset`, `query` is now `filters`, `variable_value_type` is now `labels`.",
+        i = "How to move your code: <https://felixluginbuhl.com/BFS/articles/sse-migration.html>"
+      )
+    )
+
+    language <-match.arg(arg = language, choices = c("de", "fr", "it", "en"))
     
     if (is.null(query)) {
       message(paste("Parameter 'query' is NULL. This will return all data for the specified BFS number,", 
@@ -111,11 +130,13 @@ bfs_get_sse_data <-
       if (body == "NoRecordsFound") {
         stop("No records found for the specified query.")
       }
-      rlang::abort(
-        c("The BFS API is not available.", i = paste0("HTTP error: ", status, " ", body)),
-        class = "bfs_http_error",
-        call = NULL
-      )
+      # the API is not available: error of class "bfs_http_error", keeping
+      # the httr2 classes and fields (e.g. `e$resp`)
+      if (status == 429 || status >= 500) {
+        abort_on_http_error(httr2::resp_check_status(resp))
+      }
+      # the API refuses the query (e.g. a wrong period): same error as before
+      stop("HTTP error: ", status, " ", body)
     }
     
     # Parse XML response

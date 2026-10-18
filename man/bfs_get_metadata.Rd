@@ -8,26 +8,26 @@ bfs_get_metadata(number_bfs, language = "de")
 }
 \arguments{
 \item{number_bfs}{The BFS number of a dataset, e.g.
-`"px-x-1502040100_131"`.}
+\code{"px-x-1502040100_131"}.}
 
-\item{language}{Language of the dataset: `"de"` (default), `"fr"`, `"it"`
-or `"en"`.}
+\item{language}{Language of the dataset: \code{"de"} (default), \code{"fr"}, \code{"it"}
+or \code{"en"}.}
 }
 \value{
-A tibble with one row per variable and the columns `code` and
-  `text` (variable code and label), `values` and `valueTexts` (list
-  columns with the value codes and labels) and `title` (title of the
-  dataset). Use `tidyr::unnest_longer(metadata, c(values, valueTexts))` to
-  get one row per value. Returns `NULL` if there is no internet
-  connection.
+A tibble with one row per variable and the columns \code{code} and
+\code{text} (variable code and label), \code{values} and \code{valueTexts} (list
+columns with the value codes and labels) and \code{title} (title of the
+dataset). Use \code{tidyr::unnest_longer(metadata, c(values, valueTexts))} to
+get one row per value. Returns \code{NULL} if there is no internet
+connection.
 }
 \description{
 Get the variables of a dataset of the PXWeb API and the values each
-variable can take. Use them to build the `query` of [bfs_get_data()].
+variable can take. Use them to build the \code{query} of \code{\link[=bfs_get_data]{bfs_get_data()}}.
 }
 \details{
 The PXWeb API is the API of STAT-TAB, which the BFS is replacing with the
-Swiss Stats Explorer (see [bfs_get_sse_metadata()]).
+Swiss Stats Explorer (see \code{\link[=bfs_sse_dimensions]{bfs_sse_dimensions()}}).
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
@@ -39,5 +39,5 @@ tidyr::unnest_longer(metadata, c(values, valueTexts))
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-[bfs_get_data()]
+\code{\link[=bfs_get_data]{bfs_get_data()}}
 }

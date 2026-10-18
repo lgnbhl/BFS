@@ -7,22 +7,22 @@
 bfs_get_catalog_geodata(include_metadata = TRUE)
 }
 \arguments{
-\item{include_metadata}{If `TRUE` (default), add the metadata of each
+\item{include_metadata}{If \code{TRUE} (default), add the metadata of each
 collection (title, description, dates, license, ...). This sends one
 request per collection (several hundred), so it takes a few minutes:
-save the result rather than calling it often. If `FALSE`, return
+save the result rather than calling it often. If \code{FALSE}, return
 only the collection ids and URLs.}
 }
 \value{
-A tibble with one row per collection: `collection_id`, `type` and
-  `href`, and with `include_metadata = TRUE`, `title`, `description`,
-  `created`, `updated`, `crs`, `license`, `provider_name`, `bbox` and
-  `inverval`. Returns `NULL` if there is no internet connection.
+A tibble with one row per collection: \code{collection_id}, \code{type} and
+\code{href}, and with \code{include_metadata = TRUE}, \code{title}, \code{description},
+\code{created}, \code{updated}, \code{crs}, \code{license}, \code{provider_name}, \code{bbox} and
+\code{inverval}. Returns \code{NULL} if there is no internet connection.
 }
 \description{
 List the geodata collections of the STAC API of the Swiss geo-portal
-(<https://data.geo.admin.ch/>), from the BFS and other federal offices.
-Download a collection with [bfs_download_geodata()].
+(\url{https://data.geo.admin.ch/}), from the BFS and other federal offices.
+Download a collection with \code{\link[=bfs_download_geodata]{bfs_download_geodata()}}.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
@@ -33,5 +33,5 @@ catalog_geodata[grepl("^ch.bfs", catalog_geodata$collection_id), ]
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-[bfs_download_geodata()]
+\code{\link[=bfs_download_geodata]{bfs_download_geodata()}}
 }

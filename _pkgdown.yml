@@ -54,6 +54,8 @@ navbar:
       menu:
       - text: Swiss Stats Explorer
         href: articles/swiss-stats-explorer.html
+      - text: Moving to the new SSE functions
+        href: articles/sse-migration.html
       - text: Data catalog and PXWeb datasets
         href: articles/pxweb.html
     files:
@@ -90,6 +92,7 @@ articles:
 - title: Data
   contents:
   - articles/swiss-stats-explorer
+  - articles/sse-migration
   - articles/pxweb
 - title: Files and maps
   contents:
@@ -101,6 +104,15 @@ reference:
   desc: >
     The Swiss Stats Explorer (<https://stats.swiss/>) is the newer data API
     of the BFS, based on the SDMX standard.
+  contents:
+  - bfs_sse_datasets
+  - bfs_sse_dimensions
+  - bfs_sse_data
+- title: Swiss Stats Explorer (deprecated)
+  desc: >
+    Deprecated since BFS 0.8.0, and kept unchanged for the code using them.
+    Use the functions above, see the article "Moving to the new Swiss Stats
+    Explorer functions".
   contents:
   - bfs_get_sse_metadata
   - bfs_get_sse_data

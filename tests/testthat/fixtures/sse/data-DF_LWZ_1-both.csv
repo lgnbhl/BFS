@@ -1,0 +1,5 @@
+DATAFLOW,"GR_KT_GDE: Cantons, districts and communes",WOHN_ANZAHL: Number of rooms,LEERWOHN_TYP: Type of vacant dwelling,MEASURE_DIMENSION: Measure type,FREQ: Frequency of observation,TIME_PERIOD: Time Period,OBS_VALUE,DATAFLOW: dotStat DATAFLOW ID,DECIMALS: Decimals,OBS_STATUS: Observation Status
+CH1.LWZ:DF_LWZ_1(1.1.0),ZH: Zurich,_T: Total,_T: Vacant dwellings (all types),OBS: Observed Value,A: Annual,2025,3815,,0: Zero,A: Normal value
+CH1.LWZ:DF_LWZ_1(1.1.0),ZH: Zurich,_T: Total,_T: Vacant dwellings (all types),OBS: Observed Value,A: Annual,2026,4189,,0: Zero,A: Normal value
+CH1.LWZ:DF_LWZ_1(1.1.0),ZG: Zug,_T: Total,_T: Vacant dwellings (all types),OBS: Observed Value,A: Annual,2025,261,,0: Zero,A: Normal value
+CH1.LWZ:DF_LWZ_1(1.1.0),ZG: Zug,_T: Total,_T: Vacant dwellings (all types),OBS: Observed Value,A: Annual,2026,126,,0: Zero,A: Normal value

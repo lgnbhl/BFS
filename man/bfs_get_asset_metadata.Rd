@@ -11,24 +11,24 @@ bfs_get_asset_metadata(
 )
 }
 \arguments{
-\item{number_asset}{The asset number of the file, e.g. `"24025646"`. It
-is the `number_asset` column of [bfs_get_catalog_tables()] and
-[bfs_get_catalog_data()], and the number at the end of the "assetdetail"
+\item{number_asset}{The asset number of the file, e.g. \code{"24025646"}. It
+is the \code{number_asset} column of \code{\link[=bfs_get_catalog_tables]{bfs_get_catalog_tables()}} and
+\code{\link[=bfs_get_catalog_data]{bfs_get_catalog_data()}}, and the number at the end of the "assetdetail"
 URLs of the BFS website.}
 
 \item{number_bfs}{The BFS number of the file, e.g.
-`"px-x-1502040100_131"`. Use either `number_asset` or `number_bfs`.}
+\code{"px-x-1502040100_131"}. Use either \code{number_asset} or \code{number_bfs}.}
 
-\item{language}{Language of the metadata: `"de"` (default), `"fr"`, `"it"`
-or `"en"`.}
+\item{language}{Language of the metadata: \code{"de"} (default), \code{"fr"}, \code{"it"}
+or \code{"en"}.}
 }
 \value{
-A nested list with the metadata. Returns `NULL` if there is no
-  internet connection.
+A nested list with the metadata. Returns \code{NULL} if there is no
+internet connection.
 }
 \description{
 Get the metadata of a BFS file from the DAM API
-(<https://dam-api.bfs.admin.ch/hub/swagger-ui/index.html>) with its asset
+(\url{https://dam-api.bfs.admin.ch/hub/swagger-ui/index.html}) with its asset
 number or its BFS number: title, description, publication date, contact,
 links, ...
 }
@@ -39,5 +39,5 @@ metadata$description$titles$main
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-[bfs_download_asset()]
+\code{\link[=bfs_download_asset]{bfs_download_asset()}}
 }

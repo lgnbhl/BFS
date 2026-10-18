@@ -8,7 +8,7 @@
 #'
 #' The PXWeb API is the API of STAT-TAB, which the BFS is replacing with the
 #' Swiss Stats Explorer: check first if the statistic is on
-#' <https://stats.swiss/> and use [bfs_get_sse_data()].
+#' <https://stats.swiss/> and use [bfs_sse_data()].
 #'
 #' @param number_bfs The BFS number of a dataset, e.g.
 #'   `"px-x-1502040100_131"`.

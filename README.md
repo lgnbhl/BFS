@@ -18,26 +18,29 @@ coverage](https://codecov.io/gh/lgnbhl/BFS/graph/badge.svg)](https://app.codecov
 
 BFS gives you the open data of the [Swiss Federal Statistical
 Office](https://www.bfs.admin.ch/bfs/en/home/statistics/catalogue.html)
-(BFS, *Bundesamt für Statistik*) in R, as tidy data frames, in German,
-French, Italian or English. It covers the four APIs of the BFS:
+(BFS, *Bundesamt für Statistik*) in R. You get tidy data frames, in
+German, French, Italian or English. The package works with the four APIs
+of the BFS:
 
 | You want | Use | API |
 |----|----|----|
-| Statistics of the Swiss Stats Explorer | `bfs_get_sse_metadata()`, `bfs_get_sse_data()` | [Swiss Stats Explorer](https://stats.swiss/) |
+| Statistics of the Swiss Stats Explorer | `bfs_sse_datasets()`, `bfs_sse_dimensions()`, `bfs_sse_data()` | [Swiss Stats Explorer](https://stats.swiss/) |
 | Datasets of the BFS data catalog | `bfs_get_catalog_data()`, `bfs_get_data()` | [PXWeb](https://www.pxweb.bfs.admin.ch/pxweb/en/) |
 | Tables and files (Excel, CSV, PX, …) | `bfs_get_catalog_tables()`, `bfs_download_asset()` | [DAM](https://dam-api.bfs.admin.ch/hub/swagger-ui/index.html) |
 | Maps and geodata | `bfs_get_base_maps()`, `bfs_get_catalog_geodata()`, `bfs_download_geodata()` | [ThemaKart](https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.html), [STAC](https://data.geo.admin.ch/api/stac/v0.9/) |
 
-The BFS is replacing STAT-TAB, the platform of the PXWeb API, with the
-Swiss Stats Explorer: see [Get
+The BFS is replacing STAT-TAB (the platform of the PXWeb API) with the
+Swiss Stats Explorer. See [Get
 started](https://felixluginbuhl.com/BFS/articles/introduction.html#from-stat-tab-to-the-swiss-stats-explorer).
 
 <p class="buttons">
 
 <a href="https://felixluginbuhl.com/BFS/articles/introduction.html">Get
 started</a>
-<a href="https://felixluginbuhl.com/BFS/reference/index.html">Reference</a>
-<a href="https://github.com/lgnbhl/BFS">GitHub</a>
+<a href="https://felixluginbuhl.com/BFS/articles/swiss-stats-explorer.html">Swiss
+Stats Explorer</a>
+<a href="https://felixluginbuhl.com/BFS/articles/tables-and-files.html">Tables
+and files</a>
 </p>
 
 ## Installation
@@ -58,60 +61,69 @@ library(BFS)
 
 ### Swiss Stats Explorer
 
-Get the codelists of a dataset, pick the codes you need, and download
-the data. The dataset id (here `DF_LWZ_1`, the vacant dwellings) is in
-the URL of the dataset on [stats.swiss](https://stats.swiss/).
+Let’s get the vacancy rate (the share of empty homes, in %) of the
+cantons of Geneva, Zurich and Bern. The dataset is `DF_LWZ_1`, the
+vacant dwellings. You find this id with `bfs_sse_datasets()`, or in the
+URL of the dataset on [stats.swiss](https://stats.swiss/).
+
+First, see the dimensions of the dataset and the codes of their values.
+Then download the data with the codes you need:
 
 ``` r
-codelist <- bfs_get_sse_metadata("DF_LWZ_1", language = "en")
-codelist
+dimensions <- bfs_sse_dimensions("DF_LWZ_1", language = "en")
+dimensions
 ```
 
-    ## # A tibble: 2,317 × 5
-    ##    code      text                            value valueText  position_dimension
-    ##    <chr>     <chr>                           <chr> <chr>                   <int>
-    ##  1 GR_KT_GDE Cantons, districts and communes 1     Aeugst am…                  1
-    ##  2 GR_KT_GDE Cantons, districts and communes 10    Obfelden                    1
-    ##  3 GR_KT_GDE Cantons, districts and communes 100   Stadel                      1
-    ##  4 GR_KT_GDE Cantons, districts and communes 1001  Dopplesch…                  1
-    ##  5 GR_KT_GDE Cantons, districts and communes 1002  Entlebuch                   1
-    ##  6 GR_KT_GDE Cantons, districts and communes 1004  Flühli                      1
-    ##  7 GR_KT_GDE Cantons, districts and communes 1005  Hasle (LU)                  1
-    ##  8 GR_KT_GDE Cantons, districts and communes 1007  Romoos                      1
-    ##  9 GR_KT_GDE Cantons, districts and communes 1008  Schüpfheim                  1
-    ## 10 GR_KT_GDE Cantons, districts and communes 1009  Werthenst…                  1
+    ## # A tibble: 2,317 × 6
+    ##    dimension dimension_label                 value value_label   position parent
+    ##    <chr>     <chr>                           <chr> <chr>            <int> <chr> 
+    ##  1 GR_KT_GDE Cantons, districts and communes 1     Aeugst am Al…        1 B_101 
+    ##  2 GR_KT_GDE Cantons, districts and communes 10    Obfelden             1 B_101 
+    ##  3 GR_KT_GDE Cantons, districts and communes 100   Stadel               1 B_104 
+    ##  4 GR_KT_GDE Cantons, districts and communes 1001  Doppleschwand        1 B_316 
+    ##  5 GR_KT_GDE Cantons, districts and communes 1002  Entlebuch            1 B_316 
+    ##  6 GR_KT_GDE Cantons, districts and communes 1004  Flühli               1 B_316 
+    ##  7 GR_KT_GDE Cantons, districts and communes 1005  Hasle (LU)           1 B_316 
+    ##  8 GR_KT_GDE Cantons, districts and communes 1007  Romoos               1 B_316 
+    ##  9 GR_KT_GDE Cantons, districts and communes 1008  Schüpfheim           1 B_316 
+    ## 10 GR_KT_GDE Cantons, districts and communes 1009  Werthenstein         1 B_316 
     ## # ℹ 2,307 more rows
 
 ``` r
-bfs_get_sse_data(
-  number_bfs = "DF_LWZ_1",
-  language = "en",
-  query = list(
-    GR_KT_GDE = c("4001", "2581"), # Aarau and Olten
-    WOHN_ANZAHL = "_T",            # all numbers of rooms
-    LEERWOHN_TYP = "4",            # vacant dwellings for rent
-    MEASURE_DIMENSION = "OBS"      # number of dwellings (not the rate)
+bfs_sse_data(
+  "DF_LWZ_1",
+  filters = list(
+    GR_KT_GDE = c("GE", "ZH", "BE"), # the cantons of Geneva, Zurich and Bern
+    WOHN_ANZAHL = "_T",              # all numbers of rooms
+    LEERWOHN_TYP = "_T",             # all types of vacant dwellings
+    MEASURE_DIMENSION = "RATE"       # the vacancy rate, in %
   ),
   start_period = "2020",
-  end_period = "2023"
+  language = "en"
 )
 ```
 
-    ## # A tibble: 8 × 7
-    ##   TIME_PERIOD GR_KT_GDE WOHN_ANZAHL LEERWOHN_TYP   MEASURE_DIMENSION FREQ  value
-    ##   <chr>       <chr>     <chr>       <chr>          <chr>             <chr> <dbl>
-    ## 1 2020        Olten     Total       Vacant dwelli… Observed Value    Annu…   350
-    ## 2 2021        Olten     Total       Vacant dwelli… Observed Value    Annu…   393
-    ## 3 2022        Olten     Total       Vacant dwelli… Observed Value    Annu…   418
-    ## 4 2023        Olten     Total       Vacant dwelli… Observed Value    Annu…   266
-    ## 5 2020        Aarau     Total       Vacant dwelli… Observed Value    Annu…   110
-    ## 6 2021        Aarau     Total       Vacant dwelli… Observed Value    Annu…    85
-    ## 7 2022        Aarau     Total       Vacant dwelli… Observed Value    Annu…    61
-    ## 8 2023        Aarau     Total       Vacant dwelli… Observed Value    Annu…    49
+    ## # A tibble: 21 × 12
+    ##    GR_KT_GDE GR_KT_GDE_label WOHN_ANZAHL WOHN_ANZAHL_label LEERWOHN_TYP
+    ##    <chr>     <chr>           <chr>       <chr>             <chr>       
+    ##  1 ZH        Zurich          _T          Total             _T          
+    ##  2 ZH        Zurich          _T          Total             _T          
+    ##  3 ZH        Zurich          _T          Total             _T          
+    ##  4 ZH        Zurich          _T          Total             _T          
+    ##  5 ZH        Zurich          _T          Total             _T          
+    ##  6 ZH        Zurich          _T          Total             _T          
+    ##  7 ZH        Zurich          _T          Total             _T          
+    ##  8 BE        Bern            _T          Total             _T          
+    ##  9 BE        Bern            _T          Total             _T          
+    ## 10 BE        Bern            _T          Total             _T          
+    ## # ℹ 11 more rows
+    ## # ℹ 7 more variables: LEERWOHN_TYP_label <chr>, MEASURE_DIMENSION <chr>,
+    ## #   MEASURE_DIMENSION_label <chr>, FREQ <chr>, FREQ_label <chr>,
+    ## #   TIME_PERIOD <chr>, value <dbl>
 
 ### Data catalog
 
-Search the BFS data catalog, then download a dataset with its BFS
+Search the BFS data catalog. Then download a dataset with its BFS
 number.
 
 ``` r
@@ -147,8 +159,8 @@ bfs_get_data(number_bfs = "px-x-1502040100_131", language = "en")
 
 ### Tables and files
 
-Many statistics are published as Excel or CSV tables. Search them, then
-download the file with its asset number.
+The BFS publishes many statistics as Excel or CSV tables. Search them.
+Then download a file with its asset number.
 
 ``` r
 tables <- bfs_get_catalog_tables(language = "en", extended_search = "students")
@@ -171,8 +183,8 @@ bfs_download_asset(number_asset = tables$number_asset[1], destfile = "students.x
 
 ### Maps
 
-Get the official borders of Switzerland, the cantons, districts or
-communes as sf objects.
+Get the official borders of Switzerland, the cantons, the districts or
+the communes as sf objects.
 
 ``` r
 library(ggplot2)
@@ -190,7 +202,7 @@ ggplot(bfs_get_base_maps(geom = "kant")) +
   Stats Explorer.
 - [Swiss Stats
   Explorer](https://felixluginbuhl.com/BFS/articles/swiss-stats-explorer.html):
-  build a query from the codelists.
+  find a dataset, choose the data and download it, step by step.
 - [Data catalog and PXWeb
   datasets](https://felixluginbuhl.com/BFS/articles/pxweb.html): search
   the catalog and download all or part of a dataset.

@@ -1,0 +1,324 @@
+---
+title: "Moving to the new Swiss Stats Explorer functions"
+description: "Why BFS 0.8.0 has new functions for the Swiss Stats Explorer, how they are different from bfs_get_sse_data() and bfs_get_sse_metadata(), and how to change your code."
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", message = FALSE, warning = FALSE)
+```
+
+BFS 0.8.0 has three new functions for the
+[Swiss Stats Explorer](https://stats.swiss/) (SSE): `bfs_sse_datasets()`,
+`bfs_sse_dimensions()` and `bfs_sse_data()`. They replace the old functions
+`bfs_get_sse_metadata()` and `bfs_get_sse_data()`.
+
+**Your code keeps working.** The old functions get only bug fixes. For
+example, some labels were wrong when a code has no name in your language:
+they are now correct (see the NEWS of BFS 0.8.0). But the old functions are now
+**deprecated**: when your code uses them, you get a warning (at most once
+every 8 hours) that tells you to use the new functions. Please move your
+code to the new functions, with the help of this article.
+
+If a package that you use calls the old functions, you get no warning. Only
+the authors of this package see the warning, when they test their package.
+
+To hide the warning, for example in a pipeline that you can't change now:
+
+```{r, eval = FALSE}
+options(lifecycle_verbosity = "quiet")
+```
+
+In the examples, we use the same data as in the article
+[Swiss Stats Explorer](swiss-stats-explorer.html): the vacancy rate (the
+share of empty homes, in %) of the cantons of Geneva, Zurich and Bern.
+
+```{r}
+library(BFS)
+library(dplyr)
+```
+
+## Why new functions?
+
+Marius Hodel wrote `bfs_get_sse_metadata()` and `bfs_get_sse_data()` for
+BFS 0.7. With them, you could use the Swiss Stats Explorer in R for the
+first time. With time, data pipelines showed some limits. We can't fix them
+without changing the results of the old functions:
+
+- **Speed.** The old functions download the data as XML (SDMX-ML), the
+  biggest format of the API, and read it in R. For the same query, the
+  CSV format (SDMX-CSV) is about 10 times smaller and much faster to read.
+- **Data that is not filtered.** If a name in `query` is not a dimension of
+  the dataset (for example, a typo), the old functions ignore it. The data
+  is not filtered on this dimension, and nothing tells you.
+- **Versions.** A dataset can have several versions, and a new version can
+  change the dimensions. The old functions always use the latest version.
+  So your pipeline can break when the BFS publishes a new version.
+- **Labels.** The names of the dimensions come from the codelists. They are
+  sometimes technical (for example "Code list for the 'Statistical
+  operation' concept") or not translated.
+- **Missing information.** The old functions remove the attributes of each
+  value, for example its status (provisional or not).
+
+If we changed the old functions, the results of your pipelines would
+change. So the old functions stay the same, and the improvements are in new
+functions with new names.
+
+The Swiss Stats Explorer uses a standard SDMX server, the
+[.Stat Suite](https://sis-cc.gitlab.io/dotstatsuite-documentation/). The new
+functions are a thin layer over its API. They only use what the SDMX
+standard defines, and let the server do as much work as possible: it
+creates the CSV, gives the labels in your language, finds the latest
+version and checks the codes. This means less code in R, and less code
+that can break when the API changes.
+
+## The functions side by side
+
+| Old | New | What changes |
+|---|---|---|
+| (none) | `bfs_sse_datasets()` | New: lists the datasets, with all their versions and their descriptions. |
+| `bfs_get_sse_metadata(number_bfs)` | `bfs_sse_dimensions(dataset)` | New column names, better dimension names. |
+| `bfs_get_sse_data(number_bfs, query)` | `bfs_sse_data(dataset, filters)` | Faster, checks the filters, same column names in all languages, attributes. |
+
+The arguments:
+
+| `bfs_get_sse_data()` | `bfs_sse_data()` |
+|---|---|
+| `number_bfs` | `dataset` |
+| `query` | `filters` (checked, see below) |
+| `start_period`, `end_period` | `start_period`, `end_period` |
+| (none) | `first_n`, `last_n`, e.g. `last_n = 1` for the latest value |
+| `language` | `language` |
+| `variable_value_type = "text"` / `"code"` | `labels = "label"` / `"code"`, or `"both"` (default) |
+| `column_name_type = "code"` / `"text"` | (always the dimension ids) |
+| `clean_names` | (use `janitor::clean_names()` if you need it) |
+| (always the latest version) | `version` |
+| (no attributes) | `attributes = TRUE` |
+
+The columns of `bfs_get_sse_metadata()` and `bfs_sse_dimensions()`:
+
+| `bfs_get_sse_metadata()` | `bfs_sse_dimensions()` |
+|---|---|
+| `code` | `dimension` |
+| `text` | `dimension_label` |
+| `value` | `value` |
+| `valueText` | `value_label` |
+| `position_dimension` | `position` |
+| (none) | `parent`: the value above, e.g. the canton of a district |
+
+The first five columns are in the same order, so code that selects them by
+position keeps working.
+
+## The same query, before and after
+
+Our filters: the vacancy rate of the cantons of Geneva, Zurich and Bern.
+
+```{r}
+filters <- list(
+  GR_KT_GDE = c("GE", "ZH", "BE"), # the three cantons
+  WOHN_ANZAHL = "_T",              # all numbers of rooms
+  LEERWOHN_TYP = "_T",             # all types of vacant dwellings
+  MEASURE_DIMENSION = "RATE"       # the vacancy rate, in %
+)
+```
+
+Before, with the old function. You get the deprecation warning:
+
+```{r, warning = TRUE}
+old <- bfs_get_sse_data(
+  number_bfs = "DF_LWZ_1",
+  query = filters,
+  start_period = "2020",
+  language = "en"
+)
+old
+```
+
+After, with the new function. `labels = "label"` gives the names only, as
+`bfs_get_sse_data()` does by default:
+
+```{r}
+new <- bfs_sse_data(
+  "DF_LWZ_1",
+  filters = filters,
+  start_period = "2020",
+  labels = "label",
+  language = "en"
+)
+new
+```
+
+The values are the same. Only the order of the columns is different:
+`TIME_PERIOD` now comes after the dimensions.
+
+```{r}
+all.equal(
+  arrange(old, across(everything())),
+  arrange(select(new, all_of(names(old))), across(everything()))
+)
+```
+
+## What is different
+
+### A typo in the filters is an error
+
+With `bfs_get_sse_data()`, a dimension with a typo is ignored. This query
+has a typo in `MEASURE_DIMENSION`. So it returns both measures (the number
+of vacant dwellings and the rate), not only the rate:
+
+```{r}
+typo <- list(GR_KT_GDE = "GE", WOHN_ANZAHL = "_T", LEERWOHN_TYP = "_T",
+             MEASURE_DIMENSON = "RATE")
+
+old_typo <- bfs_get_sse_data("DF_LWZ_1", query = typo, start_period = "2020")
+n_distinct(old_typo$MEASURE_DIMENSION)
+```
+
+`bfs_sse_data()` stops with an error:
+
+```{r, error = TRUE}
+bfs_sse_data("DF_LWZ_1", filters = typo, start_period = "2020")
+```
+
+You also get an error for `TIME_PERIOD` in `filters`, for filters without a
+name, for a dimension given twice, and for an empty vector of codes or
+`NA`. The API checks the codes: a code that is not in the dataset gives no
+data.
+
+### You can choose the version
+
+`bfs_sse_datasets()` lists all the versions of each dataset:
+
+```{r}
+bfs_sse_datasets() |>
+  filter(dataset == "DF_LWZ_1")
+```
+
+By default, the API uses the latest version. In a pipeline, set `version`
+to keep the same structure until you update your code:
+
+```{r, eval = FALSE}
+bfs_sse_data("DF_LWZ_1", filters = filters, version = "1.1.0")
+```
+
+### The column names are the same in all languages
+
+`bfs_sse_data()` always uses the dimension ids as column names, for example
+`GR_KT_GDE`, in all languages. So your code does not break if you change
+the language, or if a label changes. By default (`labels = "both"`), you
+get the codes, and the labels in a new `<dimension>_label` column:
+
+```{r}
+bfs_sse_data(
+  "DF_LWZ_1",
+  filters = filters,
+  start_period = "2026",
+  language = "fr"
+)
+```
+
+Why both by default? Two codes can have the same label. For example, in
+`DF_LWZ_1`, the canton of Zurich (`ZH`) and the city of Zurich (`261`) are
+both "Zürich". With the labels only, you can't tell their rows apart.
+
+If you used `column_name_type = "text"`, rename the columns with the labels
+of `bfs_sse_dimensions()`:
+
+```{r}
+dims <- bfs_sse_dimensions("DF_LWZ_1", language = "en") |>
+  distinct(dimension, dimension_label)
+
+new |>
+  rename_with(~ dims$dimension_label[match(.x, dims$dimension)], all_of(dims$dimension))
+```
+
+### Better names for the dimensions
+
+`bfs_get_sse_metadata()` uses the name of the codelist of each dimension.
+`bfs_sse_dimensions()` uses the name of its concept. This is the name you
+see on stats.swiss:
+
+```{r}
+old_labels <- bfs_get_sse_metadata("DF_LWZ_1", language = "en") |>
+  distinct(code, old_label = text)
+new_labels <- bfs_sse_dimensions("DF_LWZ_1", language = "en") |>
+  distinct(dimension, new_label = dimension_label)
+
+left_join(old_labels, new_labels, by = c("code" = "dimension"))
+```
+
+The names of the values do not change.
+
+### You can keep the attributes
+
+With `attributes = TRUE`, `bfs_sse_data()` adds the attributes of each
+value after `value`, with their labels as for the dimensions. For example,
+`OBS_STATUS` is the status of the value (provisional, estimated, ...). The
+attributes can change from one version of a dataset to another:
+
+```{r}
+bfs_sse_data(
+  "DF_LWZ_1",
+  filters = filters,
+  start_period = "2026",
+  attributes = TRUE,
+  language = "en"
+)
+```
+
+### Each error has a class
+
+| Situation | `bfs_get_sse_data()` | `bfs_sse_data()` |
+|---|---|---|
+| No data for the query | error without a class: "No records found" for most datasets, "HTTP error: 404" for some | error `bfs_no_records` |
+| Unknown dimension in the filters | ignored | error `bfs_sse_filter_error` |
+| Old argument name, e.g. `query` | (not possible) | error `bfs_sse_argument_error` |
+| Unknown dataset or version | error | error `bfs_sse_dataset_error` |
+| Query refused by the API, e.g. a wrong period | error without a class: "HTTP error", with the message of the API | error `bfs_sse_query_error`, with the message of the API |
+| API not available | error `bfs_http_error` | error `bfs_http_error` |
+
+Handle them in a pipeline with `tryCatch()`:
+
+```{r, eval = FALSE}
+tryCatch(
+  bfs_sse_data("DF_LWZ_1", filters = filters),
+  bfs_no_records = function(e) NULL
+)
+```
+
+### It is faster
+
+For small queries, both functions take about one second. The new function
+first gets the dimensions of the dataset (a few kilobytes), then the data.
+The bigger the data, the bigger the difference: in our tests, for a dataset
+of 344,000 values, `bfs_sse_data()` took 6 seconds and
+`bfs_get_sse_data()` 28 seconds, with 6 times more memory.
+
+## How to change your code
+
+If you only change the name of the function, and keep the old arguments,
+you get an error. It tells you the new name of each argument:
+
+```{r, error = TRUE}
+bfs_sse_data(number_bfs = "DF_LWZ_1", query = filters)
+```
+
+After `dataset`, you must write the name of each argument. For example,
+`bfs_sse_data("DF_LWZ_1", "en")` is an error: write
+`bfs_sse_data("DF_LWZ_1", language = "en")`.
+
+The steps:
+
+1. Replace `bfs_get_sse_metadata()` with `bfs_sse_dimensions()`. Rename the
+   columns you use (see the table above).
+2. Replace `bfs_get_sse_data(number_bfs = ..., query = ...)` with
+   `bfs_sse_data(dataset = ..., filters = ...)`. Replace
+   `variable_value_type` with `labels`. If you used the default
+   (`variable_value_type = "text"`), use `labels = "label"`.
+3. Remove `column_name_type` and `clean_names`. If your code uses the
+   labels as column names, rename the columns as shown above.
+4. If your code selects columns by their position: `TIME_PERIOD` now comes
+   after the dimensions. It is safer to select columns by their name.
+5. Set `version` to the version you use today (see `bfs_sse_datasets()`).
+6. Compare the old and the new results once, as in
+   [the same query, before and after](#the-same-query-before-and-after).
+   Then switch.

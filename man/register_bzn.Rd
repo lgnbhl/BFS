@@ -7,13 +7,13 @@
 \format{
 A data frame with 143 rows and 3 columns:
 \describe{
-  \item{GDEKT}{Canton abbreviation, e.g. "ZH".}
-  \item{GDEBZNR}{District number.}
-  \item{GDEBZNA}{District name.}
+\item{GDEKT}{Canton abbreviation, e.g. "ZH".}
+\item{GDEBZNR}{District number.}
+\item{GDEBZNA}{District name.}
 }
 }
 \source{
-<https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html>
+\url{https://www.bfs.admin.ch/bfs/en/home/basics/swiss-official-commune-register.html}
 }
 \usage{
 register_bzn

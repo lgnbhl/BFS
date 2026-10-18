@@ -2,33 +2,40 @@
 % Please edit documentation in R/bfs_get_sse_metadata.R
 \name{bfs_get_sse_metadata}
 \alias{bfs_get_sse_metadata}
-\title{Get the codelists of a Swiss Stats Explorer dataset}
+\title{Get the codelists of a Swiss Stats Explorer dataset (deprecated)}
 \usage{
 bfs_get_sse_metadata(number_bfs, language = "de")
 }
 \arguments{
-\item{number_bfs}{The id of an SSE dataset (dataflow), e.g. `"DF_LWZ_1"`.
-It is shown in the URL of the dataset on <https://stats.swiss/>.}
+\item{number_bfs}{The id of an SSE dataset (dataflow), e.g. \code{"DF_LWZ_1"}.
+It is shown in the URL of the dataset on \url{https://stats.swiss/}.}
 
-\item{language}{Language of the labels: `"de"` (default), `"fr"`, `"it"`
-or `"en"`. A label missing in this language falls back to another
+\item{language}{Language of the labels: \code{"de"} (default), \code{"fr"}, \code{"it"}
+or \code{"en"}. A label missing in this language falls back to another
 language.}
 }
 \value{
 A tibble with one row per value of each dimension:
 \describe{
-  \item{code}{The dimension code, to use as a name in `query`.}
-  \item{text}{The dimension label.}
-  \item{value}{The value code, to use as a value in `query`.}
-  \item{valueText}{The value label.}
-  \item{position_dimension}{The position of the dimension in the dataset.}
+\item{code}{The dimension code, to use as a name in \code{query}.}
+\item{text}{The dimension label.}
+\item{value}{The value code, to use as a value in \code{query}.}
+\item{valueText}{The value label.}
+\item{position_dimension}{The position of the dimension in the dataset.}
 }
-Returns `NULL` if there is no internet connection.
+Returns \code{NULL} if there is no internet connection.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+Deprecated since BFS 0.8.0: use \code{\link[=bfs_sse_dimensions]{bfs_sse_dimensions()}} instead. This
+function still works and gets only bug fixes, e.g. the labels of codes
+with no name in \code{language} (see NEWS). To move your code, see the article
+\href{https://felixluginbuhl.com/BFS/articles/sse-migration.html}{Moving to the new Swiss Stats Explorer functions}.
+
 Get the dimensions of a dataset of the Swiss Stats Explorer (SSE) API
-(<https://stats.swiss/>) and the values each dimension can take. Use them
-to build the `query` of [bfs_get_sse_data()].
+(\url{https://stats.swiss/}) and the values each dimension can take. Use them
+to build the \code{query} of \code{\link[=bfs_get_sse_data]{bfs_get_sse_data()}}.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
@@ -40,5 +47,8 @@ unique(codelist[c("code", "text")])
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-[bfs_get_sse_data()]
+\code{\link[=bfs_sse_dimensions]{bfs_sse_dimensions()}}, \code{\link[=bfs_get_sse_data]{bfs_get_sse_data()}}
+}
+\author{
+Marius Hodel
 }

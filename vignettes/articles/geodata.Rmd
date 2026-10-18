@@ -16,11 +16,11 @@ library(sf) # install.packages("sf")
 
 ## Base maps
 
-`bfs_get_base_maps()` returns the
+`bfs_get_base_maps()` gives you the
 [cartographic base maps](https://www.bfs.admin.ch/bfs/en/home/statistics/regional-statistics/base-maps/cartographic-bases.html)
-of the BFS ThemaKart project as sf objects. The first call downloads the
-base maps (a zip file of several hundred files) and caches them;
-`bfs_clear_cache()` deletes the cache.
+of the BFS (the ThemaKart project) as sf objects. The first time, it
+downloads a zip file with several hundred files and saves it on your disk
+(a cache). `bfs_clear_cache()` deletes the cache.
 
 ```r
 switzerland <- bfs_get_base_maps(geom = "suis")
@@ -46,23 +46,24 @@ ggplot() +
 
 ### Choose a file
 
-Each file name combines the arguments of `bfs_get_base_maps()`, e.g.
-`K4kant20220101gf_ch2007Poly.shp`: geometry `kant`, date `20220101`, category
-`gf` (total area), type `Poly`, format `shp`.
+The name of each file is made of the arguments of `bfs_get_base_maps()`.
+For example, `K4kant20220101gf_ch2007Poly.shp` has the geometry `kant`, the
+date `20220101`, the category `gf` (total area), the type `Poly` and the
+format `shp`.
 
 <p align="center" class="screenshot"><img src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/base_maps_file.png" alt="Structure of a ThemaKart file name" width="600"></p>
 
-By default you get the most recent file; use `date` for another date of
-validity, e.g. `date = "20230101"`. With `return_sf = FALSE` you get the
-file path instead of an sf object. An argument set to `""` matches any
-value, so to list all the river files:
+By default, you get the most recent file. Use `date` for another date,
+for example `date = "20230101"`. With `return_sf = FALSE`, you get the path
+of the file instead of an sf object. An argument set to `""` matches all
+the values. For example, to list all the river files:
 
 ```r
 bfs_get_base_maps(geom = "flus", category = "", type = "", date = "", return_sf = FALSE)
 ```
 
-The default `asset_number` is the 2024 edition of ThemaKart. Pass another
-asset number for another edition, e.g. `"11927607"` for 2020.
+By default, `asset_number` is the 2024 edition of ThemaKart. For another
+edition, give its asset number, for example `"11927607"` for 2020.
 
 ### Interactive maps
 
@@ -77,9 +78,9 @@ bfs_get_base_maps(geom = "bezk") |>
 
 ### Join statistics
 
-The communes have their BFS number in the `id` column. Join it with the
-commune register included in the package (`register_gde`) or with any BFS
-dataset by commune:
+Each commune has its BFS number in the `id` column. You can join it with
+the list of communes in the package (`register_gde`), or with any BFS
+dataset by commune. For example, the communes of the canton of Geneva:
 
 ```r
 communes_ge <- bfs_get_base_maps(geom = "polg", date = "20230101") |>
@@ -101,16 +102,17 @@ ggplot(communes_ge) +
 
 <p align="center" class="screenshot"><img src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/base_maps_ge.png" alt="Map of the communes of the canton of Geneva" width="700"></p>
 
-For the communes at another date, or their history (mergers, renamings),
-see the [swissMunicipalities](https://github.com/SwissStatsR/swissMunicipalities)
+For the communes at another date, or for their history (mergers, new
+names), see the
+[swissMunicipalities](https://github.com/SwissStatsR/swissMunicipalities)
 package.
 
 ## Geodata of the Swiss geo-portal
 
-The [Swiss geo-portal](https://data.geo.admin.ch/) publishes the geodata of
-the BFS and other federal offices in a STAC API. `bfs_get_catalog_geodata()`
-lists its collections. With their metadata, it sends one request per
-collection and takes a few minutes, so save the result:
+The [Swiss geo-portal](https://data.geo.admin.ch/) publishes the geodata
+of the BFS and of other federal offices in a STAC API.
+`bfs_get_catalog_geodata()` lists its collections. It sends one request for
+each collection, so it takes a few minutes. Save the result:
 
 ```r
 catalog_geodata <- bfs_get_catalog_geodata()
@@ -120,8 +122,8 @@ catalog_geodata |>
   select(collection_id, title)
 ```
 
-Download the files of a collection with `bfs_download_geodata()` (requires
-the rstac package). Zip files are not extracted:
+Download the files of a collection with `bfs_download_geodata()` (you need
+the rstac package). The zip files are not extracted:
 
 ```r
 files <- bfs_download_geodata(
@@ -131,7 +133,8 @@ files <- bfs_download_geodata(
 files
 ```
 
-Some layers are also available as a Web Map Service (WMS), e.g. with leaflet:
+Some layers are also available as a Web Map Service (WMS). For example,
+with leaflet:
 
 ```r
 library(leaflet)
@@ -148,5 +151,6 @@ leaflet() |>
 
 <p align="center" class="screenshot"><img src="https://raw.githubusercontent.com/lgnbhl/BFS/master/man/figures/leaflet_g1.png" alt="Leaflet map with the generalised borders of the BFS" width="700"></p>
 
-The use of the geodata is free but subject to the
-[terms of use](https://www.geo.admin.ch/terms-of-use) of the Swiss geo-portal.
+You can use the geodata for free, but you must follow the
+[terms of use](https://www.geo.admin.ch/terms-of-use) of the Swiss
+geo-portal.

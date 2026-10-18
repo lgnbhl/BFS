@@ -1,4 +1,12 @@
-#' Get the codelists of a Swiss Stats Explorer dataset
+#' Get the codelists of a Swiss Stats Explorer dataset (deprecated)
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' Deprecated since BFS 0.8.0: use [bfs_sse_dimensions()] instead. This
+#' function still works and gets only bug fixes, e.g. the labels of codes
+#' with no name in `language` (see NEWS). To move your code, see the article
+#' [Moving to the new Swiss Stats Explorer functions](https://felixluginbuhl.com/BFS/articles/sse-migration.html).
 #'
 #' Get the dimensions of a dataset of the Swiss Stats Explorer (SSE) API
 #' (<https://stats.swiss/>) and the values each dimension can take. Use them
@@ -20,7 +28,8 @@
 #' }
 #' Returns `NULL` if there is no internet connection.
 #'
-#' @seealso [bfs_get_sse_data()]
+#' @author Marius Hodel
+#' @seealso [bfs_sse_dimensions()], [bfs_get_sse_data()]
 #' @export
 #'
 #' @importFrom magrittr %>%
@@ -32,7 +41,15 @@
 #' # the dimensions and their codes
 #' unique(codelist[c("code", "text")])
 bfs_get_sse_metadata <- function(number_bfs, language = "de") {
-  
+
+  lifecycle::deprecate_soft(
+    "0.8.0", "bfs_get_sse_metadata()", "bfs_sse_dimensions()",
+    details = c(
+      i = "New column names: `code` is now `dimension`, `text` is now `dimension_label`, `valueText` is now `value_label`, `position_dimension` is now `position`.",
+      i = "How to move your code: <https://felixluginbuhl.com/BFS/articles/sse-migration.html>"
+    )
+  )
+
   language <- match.arg(arg = language, choices = c("de", "fr", "it", "en"))
   
   # fail gracefully if no internet connection
@@ -52,7 +69,7 @@ bfs_get_sse_metadata <- function(number_bfs, language = "de") {
 #' Used by [bfs_get_sse_metadata()] and [bfs_get_sse_data()], which already
 #' knows the metadata URL and so avoids requesting the dataflow list twice.
 #'
-#' @param meta_url The SSE metadata URL, see [bfs_get_sse_url()].
+#' @param meta_url The SSE metadata URL, see `bfs_get_sse_url()`.
 #' @param language The desired language code ("de", "fr", "it", "en").
 #'
 #' @importFrom magrittr %>%

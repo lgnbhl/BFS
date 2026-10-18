@@ -10,10 +10,12 @@ bfs_clear_cache()
 Invisibly, the path of the deleted cache folder.
 }
 \description{
-Delete the base maps cached by [bfs_get_base_maps()] in
-`tools::R_user_dir(package = "BFS")` and the list of Swiss Stats Explorer
-dataflows cached for the R session by [bfs_get_sse_data()] and
-[bfs_get_sse_metadata()]. The cached data is downloaded again when needed.
+Delete the base maps cached by \code{\link[=bfs_get_base_maps]{bfs_get_base_maps()}} in
+\code{tools::R_user_dir(package = "BFS")} and the list of Swiss Stats Explorer
+datasets cached for the R session by \code{\link[=bfs_get_sse_data]{bfs_get_sse_data()}} and
+\code{\link[=bfs_get_sse_metadata]{bfs_get_sse_metadata()}}. The cached data is downloaded again when needed.
+\code{\link[=bfs_sse_datasets]{bfs_sse_datasets()}}, \code{\link[=bfs_sse_dimensions]{bfs_sse_dimensions()}} and \code{\link[=bfs_sse_data]{bfs_sse_data()}} don't
+cache anything.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
