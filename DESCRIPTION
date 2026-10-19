@@ -42,7 +42,7 @@ Imports:
     fs,
     tools,
     lifecycle,
-    rlang,
+    rlang (>= 1.0.0),
     tidyr
 Suggests: 
     knitr,
