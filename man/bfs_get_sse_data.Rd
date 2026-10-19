@@ -56,6 +56,12 @@ Download a dataset of the Swiss Stats Explorer (SSE) API
 (\url{https://stats.swiss/}). Select the data you need with \code{query}, built
 from the codelists of \code{\link[=bfs_get_sse_metadata]{bfs_get_sse_metadata()}}.
 }
+\details{
+The list of the SSE datasets is cached for the R session. A long-running
+R session, e.g. a Shiny app, keeps using the version of a dataset it saw
+first: call \code{\link[=bfs_clear_cache]{bfs_clear_cache()}} to use a new version, or use
+\code{\link[=bfs_sse_data]{bfs_sse_data()}}, which caches nothing.
+}
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 bfs_get_sse_data(

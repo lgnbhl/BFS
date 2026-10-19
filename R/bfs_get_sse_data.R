@@ -13,6 +13,12 @@
 #' (<https://stats.swiss/>). Select the data you need with `query`, built
 #' from the codelists of [bfs_get_sse_metadata()].
 #'
+#' @details
+#' The list of the SSE datasets is cached for the R session. A long-running
+#' R session, e.g. a Shiny app, keeps using the version of a dataset it saw
+#' first: call [bfs_clear_cache()] to use a new version, or use
+#' [bfs_sse_data()], which caches nothing.
+#'
 #' @inheritParams bfs_get_sse_metadata
 #' @param language Language of the labels: `"de"` (default), `"fr"`, `"it"`
 #'   or `"en"`.
@@ -62,7 +68,7 @@ bfs_get_sse_data <-
       )
     )
 
-    language <-match.arg(arg = language, choices = c("de", "fr", "it", "en"))
+    language <- match.arg(arg = language, choices = c("de", "fr", "it", "en"))
     
     if (is.null(query)) {
       message(paste("Parameter 'query' is NULL. This will return all data for the specified BFS number,", 

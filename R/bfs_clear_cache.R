@@ -4,6 +4,8 @@
 #' `tools::R_user_dir(package = "BFS")` and the list of Swiss Stats Explorer
 #' datasets cached for the R session by [bfs_get_sse_data()] and
 #' [bfs_get_sse_metadata()]. The cached data is downloaded again when needed.
+#' In a long-running R session, e.g. a Shiny app, call it so that these two
+#' functions use the new version of a dataset.
 #' [bfs_sse_datasets()], [bfs_sse_dimensions()] and [bfs_sse_data()] don't
 #' cache anything.
 #'

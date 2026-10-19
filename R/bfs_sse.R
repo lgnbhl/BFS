@@ -268,6 +268,14 @@ bfs_sse_data <- function(dataset, ..., filters = NULL, start_period = NULL, end_
   ids <- sse_csv_code(names(csv))
   obs <- match("OBS_VALUE", ids)
   time <- match("TIME_PERIOD", ids)
+  if (is.na(obs)) {
+    rlang::abort(
+      c("The SSE API returned data in an unexpected format.",
+        i = "The SDMX-CSV data has no column `OBS_VALUE`."),
+      class = "bfs_sse_format_error",
+      call = NULL
+    )
+  }
   attribute_cols <- if (attributes) setdiff(which(seq_along(csv) > obs), which(ids == "DATAFLOW"))
 
   dat <- list()

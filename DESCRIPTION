@@ -33,7 +33,7 @@ Imports:
     xml2,
     rvest,
     tibble,
-    magrittr,
+    magrittr (>= 2.0.0),
     janitor,
     purrr (>= 1.0.0),
     dplyr,
@@ -47,7 +47,7 @@ Imports:
 Suggests: 
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0),
+    testthat (>= 3.1.7),
     rstac,
     sf
 Encoding: UTF-8

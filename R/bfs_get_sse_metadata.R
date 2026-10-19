@@ -12,6 +12,12 @@
 #' (<https://stats.swiss/>) and the values each dimension can take. Use them
 #' to build the `query` of [bfs_get_sse_data()].
 #'
+#' @details
+#' The list of the SSE datasets is cached for the R session. A long-running
+#' R session, e.g. a Shiny app, keeps using the version of a dataset it saw
+#' first: call [bfs_clear_cache()] to use a new version, or use
+#' [bfs_sse_dimensions()], which caches nothing.
+#'
 #' @param number_bfs The id of an SSE dataset (dataflow), e.g. `"DF_LWZ_1"`.
 #'   It is shown in the URL of the dataset on <https://stats.swiss/>.
 #' @param language Language of the labels: `"de"` (default), `"fr"`, `"it"`

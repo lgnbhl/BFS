@@ -827,6 +827,18 @@ test_that("the errors of the API are classed", {
     expect_error(bfs_sse_data("DF_LWZ_1"), "unexpected format", class = "bfs_sse_format_error"),
     data_type = "application/vnd.sdmx.genericdata+xml"
   )
+  with_sse_api(
+    expect_error(bfs_sse_data("DF_LWZ_1"), "no column `OBS_VALUE`", class = "bfs_sse_format_error"),
+    data_body = "DATAFLOW,GR_KT_GDE,TIME_PERIOD
+CH1.LWZ:DF_LWZ_1(1.1.0),ZH,2025"
+  )
+})
+
+test_that("numeric filter values are written without scientific notation", {
+  keys <- c("GR_KT_GDE", "WOHN_ANZAHL")
+  expect_identical(sse_key(list(GR_KT_GDE = c(1e5, 261)), keys), "100000+261.")
+  expect_identical(sse_key(list(WOHN_ANZAHL = "_T"), keys), "._T")
+  expect_identical(sse_key(NULL, keys), "all")
 })
 
 # ---- cache -------------------------------------------------------------------
@@ -876,4 +888,7 @@ test_that("the arguments of the old SSE functions give their new name", {
   expect_error(bfs_sse_dimensions("DF_TEST", "en"), class = "rlib_error_dots_nonempty")
   # a typo in an argument name
   expect_error(bfs_sse_data("DF_TEST", filter = list(SEX = "M")), class = "rlib_error_dots_nonempty")
+  # with the class of the other argument errors
+  expect_error(bfs_sse_data("DF_TEST", "en"), class = "bfs_sse_argument_error")
+  expect_error(bfs_sse_dimensions("DF_TEST", "en"), class = "bfs_sse_argument_error")
 })

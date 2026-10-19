@@ -201,8 +201,11 @@ sse_check_filter_names <- function(filters, keys) {
 # SDMX key of `filters`: one part per dimension, in the order of `keys`, the
 # values joined with "+", or "all" if nothing is filtered
 sse_key <- function(filters, keys) {
+  # format() writes 1e5 as "100000"
   key <- vapply(keys, function(dim) {
-    paste(filters[[dim]], collapse = "+")
+    values <- filters[[dim]]
+    if (is.numeric(values)) values <- format(values, scientific = FALSE, trim = TRUE)
+    paste(values, collapse = "+")
   }, character(1))
   if (all(key == "")) "all" else paste(key, collapse = ".")
 }
@@ -351,5 +354,12 @@ sse_check_dots <- function(fn, ...) {
       call = NULL
     )
   }
-  rlang::check_dots_empty(call = NULL)
+  # the error of rlang, with the class of the other argument errors
+  tryCatch(
+    rlang::check_dots_empty(env = rlang::current_env(), call = NULL),
+    rlib_error_dots_nonempty = function(e) {
+      rlang::abort(conditionMessage(e), class = c("bfs_sse_argument_error", class(e)[1]),
+                   call = NULL)
+    }
+  )
 }

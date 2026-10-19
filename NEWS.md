@@ -117,6 +117,9 @@ Please read "Breaking changes" before you update.
   `bfs_get_sse_data()` and `bfs_get_sse_metadata()` send one request fewer
   after the first call. If a dataset is not in the cached list, the list is
   downloaded again, so a dataset published since the first call is found.
+  But a long-running R session (e.g. a Shiny app) keeps using the version of
+  a dataset it saw first: call `bfs_clear_cache()` to use a new version, or
+  use the new functions, which cache nothing.
   `bfs_get_sse_data()` also sends one request fewer for the metadata.
 
 ### Data catalog and assets
