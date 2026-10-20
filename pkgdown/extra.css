@@ -111,23 +111,16 @@ main :is(p, li, td):not(.buttons) > a:not(.anchor):not(:has(img)):hover {
   .page-header img.logo, main a { transition: none; }
 }
 
-/* --- footer: signature and package family ---------------------------------- */
-/* The components are in _pkgdown.yml (footer: components:). */
+/* --- footer: package family ------------------------------------------------- */
+/* The component is in _pkgdown.yml (footer: components:), the stickers come
+   from pkgdown/extra.js. */
 
 footer .pkgdown-footer-left { flex: 1 1 100%; }
-.wordmark {
-  font-family: var(--site-heading);
-  font-weight: 600;
-  font-size: 1.05rem;
-  letter-spacing: -0.02em;
-  color: var(--site-ink-strong);
-  text-decoration: none;
-}
-.wordmark:hover { color: var(--site-primary); }
 .hexfamily { display: flex; flex-wrap: wrap; gap: 6px; margin: 0.4rem 0 1rem; }
 .hexfamily a { display: block; }
 .hexfamily img {
   width: 40px;
+  aspect-ratio: auto 181 / 209;
   height: auto;
   display: block;
   filter: grayscale(0.75);

@@ -30,14 +30,15 @@ authors:
     href: "https://felixluginbuhl.com"
 
 # Footer: the package family (the honeycomb of felixluginbuhl.com, in small)
-# and the site signature. Styles in pkgdown/extra.css.
+# and pkgdown's "Developed by" line. The family is a plain link here;
+# pkgdown/extra.js fills it from felixluginbuhl.com/stickers.json, so the
+# list of packages lives in one place. Styles in pkgdown/extra.css.
 footer:
   structure:
-    left: [family, signature]
+    left: [family, developed_by]
     right: built_with
   components:
-    family: '<nav class="hexfamily" aria-label="R packages by Felix Luginbuhl"><a class="current" href="https://felixluginbuhl.com/BFS/" title="BFS"><img src="https://felixluginbuhl.com/BFS/logo.png" alt="BFS"></a><a href="https://felixluginbuhl.com/I14Y/" title="I14Y"><img src="https://felixluginbuhl.com/assets/I14Y-logo.png" alt="I14Y"></a><a href="https://felixluginbuhl.com/muiMaterial/" title="muiMaterial"><img src="https://felixluginbuhl.com/assets/muiMaterial-logo.png" alt="muiMaterial"></a><a href="https://felixluginbuhl.com/muiChat/" title="muiChat"><img src="https://felixluginbuhl.com/muiChat/logo.png" alt="muiChat"></a><a href="https://felixluginbuhl.com/reactRouter/" title="reactRouter"><img src="https://felixluginbuhl.com/assets/reactRouter-logo.png" alt="reactRouter"></a><a href="https://felixluginbuhl.com/xlcharts/" title="xlcharts"><img src="https://felixluginbuhl.com/assets/xlcharts-logo.png" alt="xlcharts"></a><a href="https://felixluginbuhl.com/colornames/" title="colornames"><img src="https://felixluginbuhl.com/assets/colornames-logo.png" alt="colornames"></a><a href="https://felixluginbuhl.com/gotop/" title="gotop"><img src="https://felixluginbuhl.com/assets/gotop-logo.png" alt="gotop"></a><a href="https://felixluginbuhl.com/aos/" title="aos"><img src="https://felixluginbuhl.com/assets/aos-logo.png" alt="aos"></a><a href="https://felixluginbuhl.com/scroller/" title="scroller"><img src="https://felixluginbuhl.com/assets/scroller-logo.png" alt="scroller"></a><a href="https://felixluginbuhl.com/aniview/" title="aniview"><img src="https://felixluginbuhl.com/assets/aniview-logo.png" alt="aniview"></a><a href="https://felixluginbuhl.com/polyglot/" title="polyglot"><img src="https://felixluginbuhl.com/assets/polyglot-logo.png" alt="polyglot"></a></nav>'
-    signature: '<a class="wordmark" href="https://felixluginbuhl.com">felix luginbühl</a> &middot; Data scientist and R developer'
+    family: '<nav class="hexfamily" aria-label="More R packages"><a href="https://felixluginbuhl.com/#packages">More R packages</a></nav>'
 
 llm-docs: true
 
