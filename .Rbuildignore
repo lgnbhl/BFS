@@ -10,6 +10,7 @@
 ^CODE_OF_CONDUCT\.md$
 ^codemeta.json
 ^codecov\.yml$
+^vignettes/articles$
 ^doc$
 ^Meta$
 ^cran-comments\.md$
